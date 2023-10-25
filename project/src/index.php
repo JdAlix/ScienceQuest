@@ -4,6 +4,7 @@
 test
 
 <?php
+use model\Connection;
 
 require_once("Connection.php");
 
