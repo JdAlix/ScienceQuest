@@ -22,6 +22,8 @@ class ComposerStaticInit4845da43985be0aafc245ed5e55a3280
         'model\\' => 
         array (
             0 => __DIR__ . '/../..' . '/model',
+            1 => __DIR__ . '/../..' . '/model/gateways',
+            2 => __DIR__ . '/../..' . '/model/metier',
         ),
         'controller\\' => 
         array (
