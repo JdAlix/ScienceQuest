@@ -4,16 +4,10 @@
 test
 
 <?php
-use model\Connection;
-
-require_once("Connection.php");
-
-//A CHANGER
-$user= 'sasa';
-$pass='sasa';
-$dsn='mysql:host=localhost;dbname=siteperso';
+require_once(__DIR__.'/config/config.php');
+require_once(__DIR__."/config/Connection.php");
 try{
-    $con=new Connection($dsn,$user,$pass);
+    $con=new Connection($dsn,$login,$mdp);
 
     $query = "SELECT * FROM categorie WHERE id=:id";
 
