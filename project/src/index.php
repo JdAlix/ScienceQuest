@@ -4,8 +4,8 @@
 test
 
 <?php
+require_once(__DIR__.'/vendor/autoload.php');
 require_once(__DIR__.'/config/config.php');
-require_once(__DIR__."/model/Connection.php");
 try{
     $con=new model\Connection($dsn,$login,$mdp);
 
