@@ -5,7 +5,7 @@ test
 
 <?php
 require_once(__DIR__.'/config/config.php');
-require_once(__DIR__."/config/Connection.php");
+require_once(__DIR__."/model/Connection.php");
 try{
     $con=new Connection($dsn,$login,$mdp);
 
