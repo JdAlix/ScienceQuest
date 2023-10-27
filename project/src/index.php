@@ -7,7 +7,7 @@ test
 require_once(__DIR__.'/config/config.php');
 require_once(__DIR__."/model/Connection.php");
 try{
-    $con=new Connection($dsn,$login,$mdp);
+    $con=new model\Connection($dsn,$login,$mdp);
 
     $query = "SELECT * FROM categorie WHERE id=:id";
 
