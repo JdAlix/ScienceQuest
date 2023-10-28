@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>Créer une partie</title>
+        <style>
+            p,
+            label {
+                font:
+                        1rem 'Fira Sans',
+                        sans-serif;
+            }
+
+            input {
+                margin: 0.4rem;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Créer une partie</h1>
+
+        <br><br><br>
+
+        <center>
+            <p>Pour créer votre partie, merci de faire vos choix et de cliquer sur valider</p>
+            <form action="#" method="post">
+                <fieldset>
+                    <legend>Mini-jeux disponibles</legend>
+                    {% if dVueCreate is defined %}
+                        {% for value in dVueCreate %}
+                            <div>
+                                <input type="radio" name="game" id="{{value[0]}}">
+                                <label for="{{value[0]}}">{{value[0]}}</label>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </fieldset>
+                <input type="submit" value="Valider">
+            </form>
+        </center>
+    </body>
+</html>
