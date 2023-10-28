@@ -8,6 +8,9 @@
 
   <body>
     <h1>Bienvenue sur Mini-Jeux</h1>
+    {% if dVue is defined %}
+      <p>{{dVue.info}}</p>
+    {% endif %}
     <br><br><br><br>
     <center>
       <a href="?action=join">Rejoindre une partie</a>
