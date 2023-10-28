@@ -1,11 +1,20 @@
-<html>
-
-<body>
-test
-
 <?php
-require_once(__DIR__.'/vendor/autoload.php');
-require_once(__DIR__.'/config/config.php');
+    require_once(__DIR__.'/vendor/autoload.php');
+    require_once(__DIR__.'/config/config.php');
+
+
+    use controller\FrontController;
+
+    //twig
+    $loader = new \Twig\Loader\FilesystemLoader('templates');
+    $twig   = new \Twig\Environment($loader, [
+        'cache' => false,
+    ]);
+
+    $cont = new FrontController();
+
+
+/*
 try{
     $con=new model\Connection($dsn,$login,$mdp);
 
@@ -23,7 +32,4 @@ try{
 catch( PDOException $Exception ) {
     echo 'erreur';
     echo $Exception->getMessage();}
-?>
-
-</body>
-</html>
+*/
