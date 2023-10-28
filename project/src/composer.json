@@ -5,6 +5,8 @@
         "config\\": "config/",
         "model\\": ["model/", "model/gateways/", "model/metier/"]
       }
+    },
+    "require": {
+        "twig/twig": "^3.0"
     }
-  }
-  
+}
