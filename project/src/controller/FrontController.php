@@ -28,7 +28,9 @@ class FrontController
                 case 'validationFormulaire':
                     $this->ValidationFormulaire($dVueErreur);
                     break;
-
+                case 'admin':
+                    new AdminController();
+                    break;
                 //mauvaise action
                 default:
                     $dVueErreur[] = "Erreur d'appel php";
