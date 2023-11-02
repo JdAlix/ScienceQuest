@@ -1,0 +1,53 @@
+Logiciel : plantuml 
+https://plantuml.com/fr/
+
+@startuml
+
+class Scientifique{
+    nom : String
+    prenom : String
+    photo : Raw
+    dateNaissance : Date
+    descriptif : String
+    ratioTrouvee : Float
+}
+
+class Thematique{
+    libelle : String
+}
+
+class "Difficulté"{
+    libelle: String
+}
+
+Scientifique "*" --> "1..*" Thematique
+Scientifique "*" --> "1" "Difficulté"
+Scientifique <-- Utilisateur : A découvert <
+Scientifique .. Admin : Gérer <
+
+
+abstract Compte{
+    email : String
+    motDePasse : Hash
+}
+
+class Utilisateur{
+    pseudo : String
+}
+
+class Admin{
+
+}
+
+Compte <|-- Utilisateur
+Compte <|-- Admin
+
+
+class Jeu{
+    nom : String
+    nbrParties : Integer
+}
+
+Jeu .. Scientifique
+
+@enduml
