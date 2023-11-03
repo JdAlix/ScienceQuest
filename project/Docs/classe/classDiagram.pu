@@ -48,6 +48,6 @@ class Jeu{
     nbrParties : Integer
 }
 
-Jeu .. Scientifique
+Jeu .. Scientifique  : Accède >
 
 @enduml
