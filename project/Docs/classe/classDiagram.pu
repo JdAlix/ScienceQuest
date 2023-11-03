@@ -1,5 +1,4 @@
-Logiciel : plantuml 
-https://plantuml.com/fr/
+```plantuml 
 
 @startuml "BDD"
 
@@ -51,3 +50,4 @@ class Jeu{
 Jeu .. Scientifique  : Accède >
 
 @enduml
+```
