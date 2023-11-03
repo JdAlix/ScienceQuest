@@ -10,7 +10,10 @@
 - *id* : clef primaire de la table Thematique
 
 **Difficulté(<ins>id</ins>, libelle)**
-- *id* : clef primaire de la table Diffculté
+- *id* : clef primaire de la table Difficulté
+
+**Sexe(<ins>id</ins>, libelle)**
+- *id* : clef primaire de la table Sexe
 
 **Joueur(<ins>id</ins>, pseudo)**
 - *id* : clef primaire de la table Joueur

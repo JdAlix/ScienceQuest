@@ -15,6 +15,10 @@ class Thematique{
     libelle : String
 }
 
+class Sexe{
+    libelle : String
+}
+
 class "Difficulte"{
     libelle: String
 }
@@ -24,6 +28,7 @@ class Indice{
 }
 
 Scientifique "*" --> "1..*" Thematique
+Scientifique "*" --> "1" Sexe
 Scientifique "*" --> "1" "Difficulte"
 Scientifique "*" <-- "*"Utilisateur : A découvert <
 Scientifique .. Admin : Gérer <
