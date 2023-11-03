@@ -1,7 +1,7 @@
 Logiciel : plantuml 
 https://plantuml.com/fr/
 
-@startuml
+@startuml "BDD"
 
 class Scientifique{
     nom : String
