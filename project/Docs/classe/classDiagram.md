@@ -60,6 +60,8 @@ class Partie{
     codeInvidation : String
 }
 
+Partie "*" --> "1" Jeu
+
 Partie "1" --> "*" Joueur
 
 @enduml
