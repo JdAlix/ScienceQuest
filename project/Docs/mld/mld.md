@@ -1,10 +1,11 @@
 **Jeu(<ins>id</ins>, nom, nbrParties)**
 - *id* : clef primaire de la table Jeu
 
-**Scientifique(<ins>id</ins>, nom, prenom, photo, dateNaissance, descriptif, ratioTrouvee, #idThematique, #idDifficulte)**
+**Scientifique(<ins>id</ins>, nom, prenom, photo, dateNaissance, descriptif, ratioTrouvee, #idThematique, #idDifficulte, #idSexe)**
 - *id* : clef primaire de la table Scientifique
 - *#idThematique* clef étrangère en référence à *id* de la table Thematique
 - *#idDifficulte* clef étrangère en référence à *id* de la table Difficulté
+- *#idSexe* clef étrangère en référence à *id* de la table Sexe
 
 **Thematique(<ins>id</ins>, libelle)**
 - *id* : clef primaire de la table Thematique
