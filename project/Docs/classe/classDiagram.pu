@@ -22,7 +22,7 @@ class "Difficulté"{
 
 Scientifique "*" --> "1..*" Thematique
 Scientifique "*" --> "1" "Difficulté"
-Scientifique <-- Utilisateur : A découvert <
+Scientifique "*" <-- "*"Utilisateur : A découvert <
 Scientifique .. Admin : Gérer <
 
 
