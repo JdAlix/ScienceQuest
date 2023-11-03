@@ -25,21 +25,28 @@ Scientifique "*" <-- "*"Utilisateur : A découvert <
 Scientifique .. Admin : Gérer <
 
 
-abstract Compte{
+abstract Joueur{
+    pseudo : String {unique}
+}
+
+class Utilisateur{
     email : String {unique}
     motDePasse : Hash
 }
 
-class Utilisateur{
-    pseudo : String {unique}
+class Invite{
+    idSession : Integer
 }
+
+Joueur <|-- Utilisateur
+Joueur <|-- Invite
 
 class Admin{
-
+    email : String {unique}
+    motDePasse : Hash
 }
 
-Compte <|-- Utilisateur
-Compte <|-- Admin
+
 
 
 class Jeu{
@@ -48,6 +55,12 @@ class Jeu{
 }
 
 Jeu .. Scientifique  : Accède >
+
+class Partie{
+    codeInvidation : String
+}
+
+Partie "1" --> "*" Joueur
 
 @enduml
 ```
