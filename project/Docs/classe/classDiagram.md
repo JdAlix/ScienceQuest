@@ -26,12 +26,12 @@ Scientifique .. Admin : Gérer <
 
 
 abstract Compte{
-    email : String
+    email : String {unique}
     motDePasse : Hash
 }
 
 class Utilisateur{
-    pseudo : String
+    pseudo : String {unique}
 }
 
 class Admin{
