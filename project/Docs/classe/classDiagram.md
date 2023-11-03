@@ -25,7 +25,7 @@ Scientifique "*" <-- "*"Utilisateur : A découvert <
 Scientifique .. Admin : Gérer <
 
 
-abstract Joueur{
+class Joueur{
     pseudo : String {unique}
 }
 
