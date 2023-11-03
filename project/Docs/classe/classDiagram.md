@@ -15,12 +15,12 @@ class Thematique{
     libelle : String
 }
 
-class "Difficulté"{
+class "Difficulte"{
     libelle: String
 }
 
 Scientifique "*" --> "1..*" Thematique
-Scientifique "*" --> "1" "Difficulté"
+Scientifique "*" --> "1" "Difficulte"
 Scientifique "*" <-- "*"Utilisateur : A découvert <
 Scientifique .. Admin : Gérer <
 
@@ -57,7 +57,7 @@ class Jeu{
 Jeu .. Scientifique  : Accède >
 
 class Partie{
-    codeInvidation : String
+    codeInvitation : String
 }
 
 Partie "*" --> "1" Jeu
