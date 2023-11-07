@@ -1,23 +1,33 @@
 <?php
 namespace controller;
 
+use config\Validation;
+use model\Connection;
+use model\UserGateway;
+
 class FrontController
 {
     public function __construct()
     {
         global $twig;
 
-        session_start();
+        $con = new Connection("mysql:host=mysql;dbname=iut", "aljeudilem", "22061337");
 
         // Tableau qui contient les messages d'erreur
         $dVueErreur = [];
+        $dVue = [];
+
+        session_start();
+
+        if(isset($_SESSION['pseudo']))
+            $dVue['pseudo'] = $_SESSION['pseudo'];
 
         try {
             $action = $_REQUEST['action'] ?? null;
 
             switch($action) {
                 case null:
-                    echo $twig->render('accueil.html');
+                    echo $twig->render('accueil.html', ['dVue' => $dVue]);
                     break;
                 case 'join':
                     echo $twig->render('join.html');
@@ -26,10 +36,32 @@ class FrontController
                     $this->CreateParty();
                     break;
                 case 'validationFormulaire':
-                    $this->ValidationFormulaire($dVueErreur);
+                    $this->ValidationFormulaire($dVueErreur, $dVue);
                     break;
                 case 'admin':
                     new AdminController();
+                    break;
+                case 'login':
+                    if(empty($_SESSION) && !isset($_REQUEST['login']))
+                        echo $twig->render('login.html');
+                    elseif(isset($_REQUEST['login'])) {
+                        Validation::valUserLogin($_REQUEST['login'], $dVueErreur);
+                        $ug = new UserGateway($con);
+                        if($ug->login($_REQUEST['login'], $_REQUEST['password'])) {
+                            $_SESSION['pseudo'] = $_REQUEST['login'];
+                            header("Location: .");
+                        } else {
+                            $dVueErreur[] = "Connexion échouée";
+                            throw new LoginException("Connexion err");
+                        }
+                    } else
+                        header("Location: .");
+                    break;
+                case 'disconnect':
+                    session_unset();
+                    session_destroy();
+                    $_SESSION = array();
+                    header("Location: .");
                     break;
                 //mauvaise action
                 default:
@@ -40,6 +72,9 @@ class FrontController
         } catch (\PDOException $e) {
             $dVueErreur[] = 'Erreur avec la base de données !';
             echo $twig->render('erreur.html', ['dVueErreur' => $dVueErreur]);
+        } catch (LoginException $e) {
+            echo $twig->render('erreur.html', ['dVueErreur' => $dVueErreur]);
+            echo $twig->render('login.html');
         } catch (\Exception $e2) {
             $dVueErreur[] = 'Erreur inattendue !';
             echo $twig->render('erreur.html', ['dVueErreur' => $dVueErreur]);
@@ -56,7 +91,7 @@ class FrontController
         echo $twig->render('create.html', ['dVueCreate' => $dVueCreate]);
     }
 
-    public function ValidationFormulaire(array &$dVueErreur)
+    public function ValidationFormulaire(array &$dVueErreur, array &$dVue)
     {
         global $twig;
 
@@ -64,9 +99,7 @@ class FrontController
         $difficulty = $_POST['difficulty'] ?? '';
         \config\Validation::val_form($game, $difficulty, $dVueErreur);
 
-        $dVue = [
-            'info' => "Jeu '$game' créé avec la difficulté $difficulty"
-        ];
+        $dVue['info'] = "Jeu '$game' créé avec la difficulté $difficulty";
 
         echo $twig->render('accueil.html', ['dVue' => $dVue, 'dVueErreur' => $dVueErreur]);
     }
