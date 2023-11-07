@@ -4,14 +4,26 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+      body {
+        margin: 10px;
+      }
+    </style>
     <title>Accueil</title>
   </head>
 
   <body>
     <h1>Bienvenue sur Mini-Jeux</h1>
-    {% if dVue is defined %}
+    {% if dVue.info is defined %}
       <p>{{dVue.info}}</p>
     {% endif %}
+
+    {% if dVue.pseudo is defined %}
+      <p align="right"><a href="?action=disconnect">{{dVue.pseudo}}</a></p>
+    {% else %}
+      <p align="right"><a href="?action=login">Se connecter</a></p>
+    {% endif %}
+
     <br><br><br><br>
     <center>
       <a href="?action=join">Rejoindre une partie</a>
