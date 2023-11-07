@@ -1,4 +1,4 @@
-```
+```plantuml
 @startuml "BDD"
 
 class Scientifique{
