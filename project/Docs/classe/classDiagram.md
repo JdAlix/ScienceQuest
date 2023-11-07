@@ -76,6 +76,7 @@ Jeu .. Scientifique  : Accède >
 
 class Partie{
     codeInvitation : String
+    isFinished : Boolean
 }
 
 Partie "*" --> "1" Jeu
