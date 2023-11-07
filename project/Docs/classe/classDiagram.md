@@ -1,3 +1,4 @@
+```
 @startuml "BDD"
 
 class Scientifique{
@@ -86,3 +87,4 @@ Partie "*" --> "1" Jeu
 Partie "1" --> "1..*" Joueur
 
 @enduml
+```
