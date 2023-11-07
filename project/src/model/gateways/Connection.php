@@ -31,6 +31,9 @@ class Connection extends PDO {
 
     public function getResults() : array {
         return $this->stmt->fetchall();
+    }
 
+    public function getOneResult() : array {
+        return $this->stmt->fetch();
     }
 }
