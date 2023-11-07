@@ -1,5 +1,3 @@
-```plantuml 
-
 @startuml "BDD"
 
 class Scientifique{
@@ -67,12 +65,16 @@ class Admin{
     motDePasse : Hash
 }
 
-class Jeu{
+abstract class Jeu{
     nom : String
     nbrParties : Integer
 }
 
 Jeu .. Scientifique  : Accède >
+
+class Pendu extends Jeu
+
+Pendu "1" --> "1..*" Scientifique
 
 class Partie{
     codeInvitation : String
@@ -84,4 +86,3 @@ Partie "*" --> "1" Jeu
 Partie "1" --> "1..*" Joueur
 
 @enduml
-```
