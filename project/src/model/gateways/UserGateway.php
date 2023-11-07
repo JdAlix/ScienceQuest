@@ -6,20 +6,21 @@ class UserGateway
 {
     private \PDO $con;
     private \PDOStatement $stmt;
-    public function __construct(\PDO $con, \PDOStatement $stmt)
+    public function __construct(Connection $con)
     {
         $this->con=$con;
-        $this->stmt=$stmt;
     }
 
     public function login(string $username, string $password): bool
     {
         $sql = "SELECT * FROM user WHERE username=:username";
-        $stmt = $this->con->prepare($sql);
-        $stmt->bindValue(':username', $username);
-        $stmt->execute();
-        $result = $stmt->fetch();
-        if ($result && password_verify($password, $result['password'])) {
+        $this->con->executeQuery($sql, array(
+            ':username' => array($username, \PDO::PARAM_STR)
+        ));
+
+        $result = $this->con->getOneResult();
+
+        if (!empty($result) && md5($password) == $result['password']) {
             return true;
         }
         return false;
@@ -29,7 +30,7 @@ class UserGateway
         $sql = "INSERT INTO user (username, password) VALUES (:username, :password)";
         $stmt = $this->con->prepare($sql);
         $stmt->bindValue(':username', $username);
-        $stmt->bindValue(':password', $password);
+        $stmt->bindValue(':password', password_hash($password, 'md5'));
         $stmt->execute();
     }
     public function deleteUser(int $id): void
