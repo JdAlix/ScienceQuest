@@ -24,4 +24,13 @@ class Validation
             throw new \Exception("Erreur difficulté");
         }
     }
+
+    public static function valUserLogin(string &$user, &$dVueErreur)
+    {
+        if ($user == '' || !filter_var($user, FILTER_SANITIZE_STRING)) {
+            $dVueErreur[] = 'Identifiant invalide';
+            $jeu          = 0;
+            throw new \Exception("Erreur identifiant");
+        }
+    }
 }
