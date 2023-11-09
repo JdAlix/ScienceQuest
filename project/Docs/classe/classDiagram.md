@@ -45,7 +45,7 @@ class Reponse{
 Question "1" --> "1..*" Reponse
 Reponse "0..*" --> "1" Scientifique
 
-absract class Joueur{
+abstract class Joueur{
     pseudo : String {unique}
 }
 
