@@ -11,7 +11,7 @@ class FrontController
     {
         global $twig, $router;
 
-        //$con = new Connection("mysql:host=mysql;dbname=iut", "aljeudilem", "22061337");
+        $con = new Connection("mysql:host=mysql;dbname=iut", "aljeudilem", "22061337");
 
         $router->map('GET|POST', '/', 'null');
         $router->map('GET|POST', '/join', 'join');
