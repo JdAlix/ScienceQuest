@@ -4,11 +4,8 @@ use Exception;
 
 //gerer la connexion des admins
 class AdminController {
-	public function __construct(){
-		//TODO actions, liste actions, actions autorisées
+	public function __construct(string $action){
 		global $twig;
-		//on démarre ou reprend la session, obtenir $_SESSION
-		session_start();
 		//on initialise un tableau d'erreur pour etre utilisé par la vue erreur
 		$dVueEreur = [];
 		
@@ -17,17 +14,18 @@ class AdminController {
 			if($_SESSION["isAdmin"]==true){
 			//donner la page admin a l'admin
 			try {
-				$action = $_REQUEST['admin'] ?? null;
-	
 				switch($action) {
-					case null:
-						echo $twig->render('admin/accueil.html');
+					case '':
+						echo "accueil admin";exit;
+					//	echo $twig->render('admin/accueil.html');
 						break;
 					case 'stats':
-						echo $twig->render('admin/stats.html');
+						echo "stats admin";exit;
+					//	echo $twig->render('admin/stats.html');
 						break;
 					case 'ajouterScientifiques':
-						echo $twig->render('admin/ajouter.html');
+						echo "page ajout scientifiques admin";exit;
+					//	echo $twig->render('admin/ajouter.html');
 						break;
 					//mauvaise action
 					default:

@@ -9,9 +9,18 @@ class FrontController
 {
     public function __construct()
     {
-        global $twig;
+        global $twig, $router;
 
-        $con = new Connection("mysql:host=mysql;dbname=iut", "aljeudilem", "22061337");
+        //$con = new Connection("mysql:host=mysql;dbname=iut", "aljeudilem", "22061337");
+
+        $router->map('GET|POST', '/', 'null');
+        $router->map('GET|POST', '/join', 'join');
+        $router->map('GET|POST', '/create', 'create');
+        $router->map('GET|POST', '/login', 'login');
+        $router->map('GET|POST', '/admin/[a:action]?', 'admin');
+        $router->map('GET|POST', '/validationFormulaire', 'validationFormulaire');
+        $router->map('GET|POST', '/logout', 'disconnect');
+
 
         // Tableau qui contient les messages d'erreur
         $dVueErreur = [];
@@ -23,10 +32,17 @@ class FrontController
             $dVue['pseudo'] = $_SESSION['pseudo'];
 
         try {
-            $action = $_REQUEST['action'] ?? null;
+            $match = $router->match();
+            if (!$match) {
+                throw new \Exception('Wrong call');
+            }
+            $action=$match['params']['action'] ?? "";
+            //$id=$match['params']['id'] ?? null;
 
-            switch($action) {
-                case null:
+            
+
+            switch($match['target']) {
+                case 'null':
                     echo $twig->render('accueil.html', ['dVue' => $dVue]);
                     break;
                 case 'join':
@@ -39,7 +55,7 @@ class FrontController
                     $this->ValidationFormulaire($dVueErreur, $dVue);
                     break;
                 case 'admin':
-                    new AdminController();
+                    new AdminController($action);
                     break;
                 case 'login':
                     if(empty($_SESSION) && !isset($_REQUEST['login']))
@@ -76,7 +92,7 @@ class FrontController
             echo $twig->render('erreur.html', ['dVueErreur' => $dVueErreur]);
             echo $twig->render('login.html');
         } catch (\Exception $e2) {
-            $dVueErreur[] = 'Erreur inattendue !';
+            $dVueErreur[] = 'Erreur inattendue !'.$e2->getMessage();
             echo $twig->render('erreur.html', ['dVueErreur' => $dVueErreur]);
         }
 
