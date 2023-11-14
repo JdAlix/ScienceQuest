@@ -37,7 +37,6 @@ class FrontController
                 throw new \Exception('Wrong call');
             }
             $action=$match['params']['action'] ?? "";
-            //$id=$match['params']['id'] ?? null;
 
             
 

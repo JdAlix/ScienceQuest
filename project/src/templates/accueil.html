@@ -19,15 +19,15 @@
     {% endif %}
 
     {% if dVue.pseudo is defined %}
-      <p align="right"><a href="?action=disconnect">{{dVue.pseudo}}</a></p>
+      <p align="right"><a href="/logout">{{dVue.pseudo}}</a></p>
     {% else %}
-      <p align="right"><a href="?action=login">Se connecter</a></p>
+      <p align="right"><a href="/login">Se connecter</a></p>
     {% endif %}
 
     <br><br><br><br>
     <center>
-      <a href="?action=join">Rejoindre une partie</a>
-      <a href="?action=create">Créer une partie</a>
+      <a href="/join">Rejoindre une partie</a>
+      <a href="/create">Créer une partie</a>
     </center>
 
 
