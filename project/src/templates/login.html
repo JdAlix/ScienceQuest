@@ -17,6 +17,12 @@
                 <input type="password" name="password" id="password">
                 <br><br>
                 <input type="submit" value="Valider">
+                { % for error in dErreur % }
+                <br>
+                <p style="color: red">
+                    {{error}}
+                </p>
+                {% endfor %}
             </form>
         </center>
         

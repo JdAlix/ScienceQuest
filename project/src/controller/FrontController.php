@@ -2,7 +2,9 @@
 namespace controller;
 
 use config\Validation;
+use http\Params;
 use model\Connection;
+use model\ModelAdmin;
 use model\UserGateway;
 
 class FrontController
@@ -10,14 +12,23 @@ class FrontController
     public function __construct()
     {
         global $twig, $router;
+        global $login;
+        global $mdp;
+        global $base;
 
-        $con = new Connection("mysql:host=mysql;dbname=iut", "aljeudilem", "22061337");
+        $con = new Connection($base, $login, $mdp);
 
-        $router->map('GET|POST', '/', 'null');
-        $router->map('GET|POST', '/join', 'join');
-        $router->map('GET|POST', '/create', 'create');
-        $router->map('GET|POST', '/login', 'login');
-        $router->map('GET|POST', '/admin/[a:action]?', 'admin');
+        //altorouter
+        $router = new \AltoRouter();
+        $router->setBasePath('~rebeuret/ScienceQuest/Project/src/');
+
+        $router->map('GET|POST','/[a:action]?','UserController');
+        $router->map('GET|POST','/admin/[a:action]','AdminController');
+        // $router->map('GET|POST', '/', 'null');
+        // $router->map('GET|POST', '/join', 'join');
+        // $router->map('GET|POST', '/create', 'create');
+        // $router->map('GET|POST', '/login', 'login');
+        // $router->map('GET|POST', '/admin/[a:action]?', 'admin');
         $router->map('GET|POST', '/validationFormulaire', 'validationFormulaire');
         $router->map('GET|POST', '/logout', 'disconnect');
 
@@ -33,52 +44,29 @@ class FrontController
 
         try {
             $match = $router->match();
+
             if (!$match) {
                 throw new \Exception('Wrong call');
             }
             $action=$match['params']['action'] ?? "";
 
-            
-
             switch($match['target']) {
-                case 'null':
-                    echo $twig->render('accueil.html', ['dVue' => $dVue]);
+                case 'UserController':
+                    $this->callController('UserController',$match);
                     break;
-                case 'join':
-                    echo $twig->render('join.html');
+
+                case 'AdminController':
+                    $action = $match['params']['action'];
+                    if (!ModelAdmin::isAdmin()) {
+                        $action = 'login';
+                    }
+                    $this->callController('AdminController',$action);
                     break;
-                case 'create':
-                    $this->CreateParty();
-                    break;
+
                 case 'validationFormulaire':
                     $this->ValidationFormulaire($dVueErreur, $dVue);
                     break;
-                case 'admin':
-                    new AdminController($action);
-                    break;
-                case 'login':
-                    if(empty($_SESSION) && !isset($_REQUEST['login']))
-                        echo $twig->render('login.html');
-                    elseif(isset($_REQUEST['login'])) {
-                        Validation::valUserLogin($_REQUEST['login'], $dVueErreur);
-                        $ug = new UserGateway($con);
-                        if($ug->login($_REQUEST['login'], $_REQUEST['password'])) {
-                            $_SESSION['pseudo'] = $_REQUEST['login'];
-                            header("Location: .");
-                        } else {
-                            $dVueErreur[] = "Connexion échouée";
-                            throw new LoginException("Connexion err");
-                        }
-                    } else
-                        header("Location: .");
-                    break;
-                case 'disconnect':
-                    session_unset();
-                    session_destroy();
-                    $_SESSION = array();
-                    header("Location: .");
-                    break;
-                //mauvaise action
+
                 default:
                     $dVueErreur[] = "Erreur d'appel php";
                     echo $twig->render('accueil.html', ['dVueErreur' => $dVueErreur]);
@@ -98,12 +86,18 @@ class FrontController
         exit(0);
     }
 
-    public function CreateParty() : void
-    {
+    private function callController(string $cont, array $match) {
         global $twig;
 
-        $dVueCreate = \model\GameGateway::getGames();
-        echo $twig->render('create.html', ['dVueCreate' => $dVueCreate]);
+        $controller = '\\controller\\'.$cont;
+        $controller = new $controller;
+        $action = $match['params']['action'] ?? 'accueil';
+
+        if (is_callable(array($controller,$action))) {
+            call_user_func_array(array($controller,$action),array($match['params']));
+        } else {
+            echo $twig->render('erreur.html', ['dVueErreur' => array('Page inconnue')]);
+        }
     }
 
     public function ValidationFormulaire(array &$dVueErreur, array &$dVue)

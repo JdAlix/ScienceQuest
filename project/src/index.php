@@ -11,11 +11,6 @@
         'cache' => false,
     ]);
 
-    //altorouter
-    $router = new AltoRouter();
-    $router->setBasePath('/public_html/ScienceQuest');
-
-
     $cont = new FrontController();
     
 

@@ -11,10 +11,9 @@ $rep=__DIR__.'/../';
 
 //BD
 
-$dsn="sasa";
-$login="";
-$mdp="";
-
+$base  = 'mysql:host=londres.uca.local;dbname=dbrebeuret';
+$login = 'rebeuret';
+$mdp   = 'achanger';
 //Vues
 
 $vues['index']='vues/index.php';
