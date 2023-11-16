@@ -3,6 +3,7 @@ namespace controller;
 
 use config\Validation;
 use model\Connection;
+use model\LoginException;
 use model\UserGateway;
 
 class FrontController
