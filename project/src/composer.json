@@ -8,6 +8,15 @@
     },
     "require": {
         "altorouter/altorouter": "^2.0",
-        "twig/twig": "^3.7"
+        "twig/twig": "^3.7",
+        "twbs/bootstrap": "^5.3"
+    },
+    "scripts": {
+      "post-update-cmd": [
+        "rm -f ./js/bootstrap*.js*",
+        "rm -f ./css/bootstrap*.css*",
+        "cp ./vendor/twbs/bootstrap/dist/js/* ./js/",
+        "cp ./vendor/twbs/bootstrap/dist/css/* ./css/"
+      ]
     }
 }
