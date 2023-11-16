@@ -73,7 +73,8 @@ CREATE TABLE Scientifique(
 
 CREATE TABLE Indice(
     id SERIAL PRIMARY KEY,
-    libelle varchar(512) NOT NULL UNIQUE
+    libelle varchar(512) NOT NULL UNIQUE,
+    idScientifique integer REFERENCES Scientifique(id)
 );
 
 
@@ -115,7 +116,7 @@ CREATE TABLE Joueur(
 -- Invite
 
 CREATE TABLE Invite(
-    id SERIAL PRIMARY KEY,
+    idJoueur integer PRIMARY KEY REFERENCES Joueur(id),
     idSession varchar(255) NOT NULL UNIQUE
 );
 
@@ -123,7 +124,7 @@ CREATE TABLE Invite(
 -- Utilisateur
 
 CREATE TABLE Utilisateur(
-    id SERIAL PRIMARY KEY,
+    idJoueur integer PRIMARY KEY REFERENCES Joueur(id),
     email varchar(255) NOT NULL UNIQUE,
     motDePasse varchar(255) NOT NULL
 );
@@ -132,7 +133,7 @@ CREATE TABLE Utilisateur(
 -- Decouvrir
 
 CREATE TABLE Decouvrir(
-    idUtilisateur integer REFERENCES Utilisateur(id),
+    idUtilisateur integer REFERENCES Utilisateur(idJoueur),
     idScientifique integer REFERENCES Scientifique(id),
     PRIMARY KEY (idUtilisateur, idScientifique)
 );
