@@ -13,7 +13,7 @@
 
     //altorouter
     $router = new AltoRouter();
-    $router->setBasePath('/public_html/ScienceQuest');
+    $router->setBasePath('');
 
 
     $cont = new FrontController();
