@@ -15,20 +15,16 @@ class FrontController
         global $login;
         global $mdp;
         global $base;
+        global $basePath;
 
         $con = new Connection($base, $login, $mdp);
 
         //altorouter
         $router = new \AltoRouter();
-        $router->setBasePath('~rebeuret/ScienceQuest/Project/src/');
+        $router->setBasePath('ScienceQuest/Project/src/');
 
         $router->map('GET|POST','/[a:action]?','UserController');
         $router->map('GET|POST','/admin/[a:action]','AdminController');
-        // $router->map('GET|POST', '/', 'null');
-        // $router->map('GET|POST', '/join', 'join');
-        // $router->map('GET|POST', '/create', 'create');
-        // $router->map('GET|POST', '/login', 'login');
-        // $router->map('GET|POST', '/admin/[a:action]?', 'admin');
         $router->map('GET|POST', '/validationFormulaire', 'validationFormulaire');
         $router->map('GET|POST', '/logout', 'disconnect');
 
@@ -36,6 +32,7 @@ class FrontController
         // Tableau qui contient les messages d'erreur
         $dVueErreur = [];
         $dVue = [];
+        $dVue['basePath'] = $basePath;
 
         session_start();
 
@@ -48,7 +45,6 @@ class FrontController
             if (!$match) {
                 throw new \Exception('Wrong call');
             }
-            $action=$match['params']['action'] ?? "";
 
             switch($match['target']) {
                 case 'UserController':
@@ -74,6 +70,7 @@ class FrontController
             }
         } catch (\PDOException $e) {
             $dVueErreur[] = 'Erreur avec la base de données !';
+            $dVueErreur[] = $e->getMessage();
             echo $twig->render('erreur.html', ['dVueErreur' => $dVueErreur]);
         } catch (LoginException $e) {
             echo $twig->render('erreur.html', ['dVueErreur' => $dVueErreur]);

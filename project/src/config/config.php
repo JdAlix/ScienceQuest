@@ -11,9 +11,9 @@ $rep=__DIR__.'/../';
 
 //BD
 
-$base  = 'mysql:host=londres.uca.local;dbname=dbrebeuret';
-$login = 'rebeuret';
-$mdp   = 'achanger';
+$base  = 'mysql:host=localhost;dbname=sae';
+$login = 'root';
+$mdp   = '';
 //Vues
 
 $vues['index']='vues/index.php';

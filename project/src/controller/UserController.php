@@ -20,8 +20,8 @@ class UserController {
         global $mdp;
 
         $con = new Connection($base, $login, $mdp);
-
         $gg = new GameGateway($con);
+
         if(!isset($_REQUEST['code'])) {
             echo $twig->render('join.html');
         } elseif (empty($_REQUEST['code']) || !sizeof($gg->getGameByCode($_REQUEST['code']))) {
@@ -34,8 +34,7 @@ class UserController {
 
     public function accueil(array $params) {
         global $twig;
-        global $dVue;
 
-        echo $twig->render('accueil.html',['dVue' => $dVue]);
+        echo $twig->render('accueil.html');
     }
 }
