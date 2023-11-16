@@ -9,9 +9,9 @@ class FrontController
 {
     public function __construct()
     {
-        global $twig, $router;
+        global $twig, $router, $config;
 
-        $con = new Connection("mysql:host=mysql;dbname=iut", "aljeudilem", "22061337");
+        $con = new Connection($config["db"]["dsn"], $config["db"]["login"], $config["db"]["mdp"]);
 
         $router->map('GET|POST', '/', 'null');
         $router->map('GET|POST', '/join', 'join');
