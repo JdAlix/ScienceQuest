@@ -144,7 +144,7 @@ CREATE TABLE Decouvrir(
 CREATE TABLE Jeu(
     id SERIAL PRIMARY KEY,
     nom varchar(128) NOT NULL UNIQUE,
-    nbrParties integer NOT NULL
+    nbrParties integer NOT NULL DEFAULT 0
 );
 
 
