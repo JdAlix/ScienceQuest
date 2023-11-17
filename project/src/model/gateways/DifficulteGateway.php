@@ -18,4 +18,12 @@ class DifficulteGateway
         }
         return $listDifficulte;
     }
+
+    public function getFromId(int $id): Difficulte
+    {
+        $this->con->executeQuery("SELECT id, libelle FROM Difficulte WHERE id=:id;",
+                                [':id' => [$id, $this->con::PARAM_INT]]);
+        $row = $this->con->getOneResult();
+        return new Difficulte($row['id'], $row['libelle']);
+    }
 }

@@ -2,6 +2,8 @@
 
 namespace model;
 
+use PDO;
+
 class JeuGateway
 {
     private $con;
@@ -17,5 +19,13 @@ class JeuGateway
             $listJeu[] = new Jeu($row['id'], $row['nom'], $row['nbrparties']);
         }
         return $listJeu;
+    }
+
+    public function getFromId(int $id): Jeu
+    {
+        $this->con->executeQuery("SELECT id, nom, nbrparties FROM Jeu WHERE id=:id;",
+                                [':id' => [$id, $this->con::PARAM_INT]]);
+        $row = $this->con->getOneResult();
+        return new Jeu($row['id'], $row['nom'], $row['nbrparties']);
     }
 }
