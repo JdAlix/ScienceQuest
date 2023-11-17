@@ -6,18 +6,18 @@ class Jeu
 {
     private int $id;
     private string $nom;
-    private int $nbParties;
+    private int $nbrParties;
 
     /**
      * @param int $id
      * @param string $nom
      * @param string $nbParties
      */
-    public function __construct(int $id, string $nom, int $nbParties)
+    public function __construct(int $id, string $nom, int $nbrParties)
     {
         $this->id=$id;
         $this->nom=$nom;
-        $this->nbParties=$nbParties;
+        $this->nbrParties=$nbrParties;
     }
 
     /**
@@ -38,14 +38,14 @@ class Jeu
      * @return int
      */
     public function getNbParties():int{
-        return $this->nbParties;
+        return $this->nbrParties;
     }
 
     /**
      * @return int
      */
     public function incrementNbParties(): int{
-        $this->nbParties += 1;
-        return $this->nbParties;
+        $this->nbrParties += 1;
+        return $this->nbrParties;
     }
 }

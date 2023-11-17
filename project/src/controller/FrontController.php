@@ -8,11 +8,12 @@ use model\UserGateway;
 
 class FrontController
 {
+    private Connection $con;
     public function __construct()
     {
         global $twig, $router, $config;
 
-        $con = new Connection($config["db"]["dsn"], $config["db"]["login"], $config["db"]["mdp"]);
+        $this->con = new Connection($config["db"]["dsn"], $config["db"]["login"], $config["db"]["mdp"]);
 
         $router->map('GET|POST', '/', 'null');
         $router->map('GET|POST', '/join', 'join');
@@ -66,7 +67,7 @@ class FrontController
                         echo $twig->render('login.html');
                     elseif(isset($_REQUEST['login'])) {
                         Validation::valUserLogin($_REQUEST['login'], $dVueErreur);
-                        $ug = new UserGateway($con);
+                        $ug = new UserGateway($this->con);
                         if($ug->login($_REQUEST['login'], $_REQUEST['password'])) {
                             $_SESSION['pseudo'] = $_REQUEST['login'];
                             header("Location: .");
@@ -106,8 +107,11 @@ class FrontController
     public function CreateParty() : void
     {
         global $twig;
-
-        $dVueCreate = \model\GameGateway::getGames();
+        $listJeu = (new \model\JeuGateway($this->con))->getAll();
+        $dVueCreate = [];
+        foreach($listJeu as $jeu){
+            $dVueCreate[] = ['id' => $jeu->getId(), 'nom' => $jeu->getNom()];
+        }
         echo $twig->render('create.html', ['dVueCreate' => $dVueCreate]);
     }
 

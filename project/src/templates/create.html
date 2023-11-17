@@ -30,8 +30,8 @@
                     {% if dVueCreate is defined %}
                         {% for value in dVueCreate %}
                             <div>
-                                <input type="radio" name="game" id="{{value[0]}}" value="{{value[0]}}">
-                                <label for="{{value[0]}}">{{value[0]}}</label>
+                                <input type="radio" name="jeu" id="{{value['id']}}" value="{{value[0]}}">
+                                <label for="{{value['id']}}">{{value['nom']}}</label>
                             </div>
                         {% endfor %}
                     {% endif %}
