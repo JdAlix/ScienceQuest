@@ -156,3 +156,6 @@ CREATE TABLE Partie(
     idJoueur integer REFERENCES Joueur(id),
     idJeu integer REFERENCES Jeu(id)
 );
+
+
+INSERT INTO Jeu(nom) VALUES ('Qui-est-ce ?'),('Kahoot'), ('Pendu');
