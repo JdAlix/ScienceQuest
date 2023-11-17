@@ -28,18 +28,28 @@
                 <fieldset>
                     <legend>Mini-jeux disponibles</legend>
                     {% if dVueCreate is defined %}
-                        {% for value in dVueCreate %}
-                            <div>
-                                <input type="radio" name="jeu" id="{{value['id']}}" value="{{value['id']}}">
-                                <label for="{{value['id']}}">{{value['nom']}}</label>
-                            </div>
-                        {% endfor %}
-                    {% endif %}
+                            {% if dVueCreate["jeux"] is defined %}
+                            {% for value in dVueCreate["jeux"] %}
+                                <div>
+                                    <input type="radio" name="jeu" id="{{value['id']}}" value="{{value['id']}}">
+                                    <label for="{{value['id']}}">{{value['nom']}}</label>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
                 </fieldset>
+                
+                            {% if dVueCreate["difficultes"] is defined %}
+                <label for="difficulte">Difficulté</label>
+                <select name="difficulte" id="difficulte">
+                                {% for diff in dVueCreate["difficultes"] %}
+                                    <option value="{{diff['id']}}">{{diff['libelle']}}</option>
+                                {% endfor %}
+                </select>
+                            {% endif %}
 
-                <label for="difficulty">Difficulté</label>
-                <input type="number" name="difficulty" id="difficulty">
                 <input type="submit" value="Valider">
+                {% endif %}
+
             </form>
         </center>
 

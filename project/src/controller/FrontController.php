@@ -108,19 +108,27 @@ class FrontController
     {
         global $twig;
         $listJeu = (new \model\JeuGateway($this->con))->getAll();
-        $dVueCreate = [];
+        $listDifficulte = (new \model\DifficulteGateway($this->con))->getAll();
+        
+        $dVueCreateJeu = [];
         foreach($listJeu as $jeu){
-            $dVueCreate[] = ['id' => $jeu->getId(), 'nom' => $jeu->getNom()];
+            $dVueCreateJeu[] = ['id' => $jeu->getId(), 'nom' => $jeu->getNom()];
         }
-        echo $twig->render('create.html', ['dVueCreate' => $dVueCreate]);
+
+        $dVueCreateDifficulte = [];
+        foreach($listDifficulte as $difficulte){
+            $dVueCreateDifficulte[] = ['id' => $difficulte->getId(), 'libelle' => $difficulte->getLibelle()];
+        }
+
+        echo $twig->render('create.html', ['dVueCreate' => ["jeux" => $dVueCreateJeu, "difficultes" => $dVueCreateDifficulte]]);
     }
 
     public function ValidationFormulaire(array &$dVueErreur, array &$dVue)
     {
         global $twig;
 
-        $game = $_POST['game'] ?? '';
-        $difficulty = $_POST['difficulty'] ?? '';
+        $game = $_POST['jeu'] ?? '';
+        $difficulty = $_POST['difficulte'] ?? '';
         \config\Validation::val_form($game, $difficulty, $dVueErreur);
 
         $dVue['info'] = "Jeu '$game' créé avec la difficulté $difficulty";
