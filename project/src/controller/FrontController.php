@@ -127,11 +127,12 @@ class FrontController
     {
         global $twig;
 
-        $game = $_POST['jeu'] ?? '';
-        $difficulty = $_POST['difficulte'] ?? '';
-        \config\Validation::val_form($game, $difficulty, $dVueErreur);
+        $id_jeu = $_POST['jeu'] ?? '';
+        $id_difficulte = $_POST['difficulte'] ?? '';
+        \config\Validation::val_form($id_jeu, $id_difficulte, $dVueErreur);
 
-        $dVue['info'] = "Jeu '$game' créé avec la difficulté $difficulty";
+        $dVue['nomJeu'] = (new \model\JeuGateway($this->con))->getFromId($id_jeu)->getNom();
+        $dVue['libelleDifficulte'] = (new \model\DifficulteGateway($this->con))->getFromId($id_difficulte)->getLibelle();
 
         echo $twig->render('accueil.html', ['dVue' => $dVue, 'dVueErreur' => $dVueErreur]);
     }
