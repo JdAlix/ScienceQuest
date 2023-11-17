@@ -46,7 +46,11 @@ class FrontController
                     echo $twig->render('accueil.html', ['dVue' => $dVue]);
                     break;
                 case 'join':
-                    echo $twig->render('join.html');
+                    if(isset($_POST['codeInvitation'])){
+                        $codeInvitation = $_POST['codeInvitation'];
+                        Validation::valCodeInvitation($codeInvitation, $dVueErreur);
+                        echo $twig->render('join.html');
+                    }
                     break;
                 case 'create':
                     $this->CreateParty();

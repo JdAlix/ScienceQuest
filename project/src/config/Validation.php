@@ -33,4 +33,13 @@ class Validation
             throw new \Exception("Erreur identifiant");
         }
     }
+
+    public static function valCodeInvitation(string &$codeInvitation, &$dVueErreur){
+        if($codeInvitation == ''){
+            $dVueErreur[] = 'Code d\'invitation invalide';
+            throw new \Exception("Code d'invitation invalide");
+        }
+        return htmlspecialchars($codeInvitation);
+    }
+
 }
