@@ -158,4 +158,8 @@ CREATE TABLE Partie(
 );
 
 
+-- INSERTS
+
 INSERT INTO Jeu(nom) VALUES ('Qui-est-ce ?'),('Kahoot'), ('Pendu');
+
+INSERT INTO Difficulte(libelle) VALUES ('Facile'),('Intermédiaire'),('Difficile');
