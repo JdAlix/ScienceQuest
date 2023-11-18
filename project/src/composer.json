@@ -3,7 +3,7 @@
       "psr-4": {
         "controller\\": "controller/",
         "config\\": "config/",
-        "model\\": ["model/", "model/gateways/", "model/metier/", "model/exception"]
+        "model\\": ["model/", "model/mdl/", "model/gateways/", "model/metier/", "model/exception/"]
       }
     },
     "require": {
