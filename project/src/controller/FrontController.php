@@ -20,6 +20,7 @@ class FrontController
         $router->map('GET|POST', '/create', 'create');
         $router->map('GET|POST', '/login', 'login');
         $router->map('GET|POST', '/pseudo', 'pseudo');
+        $router->map('GET|POST', '/jouer', 'jouer');
         $router->map('GET|POST', '/admin/[a:action]?', 'admin');
         $router->map('GET|POST', '/validationFormulaire', 'validationFormulaire');
         $router->map('GET|POST', '/logout', 'disconnect');
@@ -65,6 +66,9 @@ class FrontController
                     break;
                 case 'pseudo':
                     new PseudoController();
+                    break;
+                case 'jouer':
+                    new JouerController();
                     break;
                 case 'login':
                     if(empty($_SESSION) && !isset($_REQUEST['login']))
@@ -139,12 +143,14 @@ class FrontController
         }
 
         if(count($dVueErreur) == 0){
-            $dVue['nomJeu'] = (new \model\MdlJeu())->getFromId($id_jeu)->getNom();
-            $dVue['libelleDifficulte'] = (new \model\MdlDifficulte())->getFromId($id_difficulte)->getLibelle();
-            #a seauvegarder en session, object Configuration ?
+            $jeu = (new \model\MdlJeu())->getFromId($id_jeu);
+            $difficulte = (new \model\MdlDifficulte())->getFromId($id_difficulte);
+            $_SESSION['configuration'] = new \model\ConfigurationJeu($jeu, $difficulte);
 
             header("Location: /pseudo");
             #echo $twig->render('accueil.html', ['dVue' => $dVue, 'dVueErreur' => $dVueErreur]);    
+        }else{
+            $this->CreateParty($dVueErreur);
         }
        }
 }

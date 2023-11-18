@@ -27,6 +27,11 @@ class PseudoController{
             }catch(IdSessionDoubleException $e){
                 $role = $mdlInvite->setPseudo($e->getIdJoueur(), $pseudo);
             }
+
+            if(isset($role)){
+                $_SESSION['role'] = $role;
+                header('Location: jouer');
+            }
         }
         echo $twig->render($config['templates']['pseudo'], ["dVue" => $dVue, "dVueErreur" => $dVueErreur]);
     }
