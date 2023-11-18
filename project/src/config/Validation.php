@@ -1,5 +1,7 @@
 <?php
 namespace config;
+
+
 use model\ValidationException;
 
 class Validation
@@ -52,6 +54,24 @@ class Validation
             throw new ValidationException("Pseudo invalide");
         }
         return $pseudo;
+    }
+
+    public static function valRole(&$role, &$dVueErreur){
+        if(! $role instanceof \model\Joueur){
+            $role = NULL;
+            $dVueErreur[] = 'Role invalide';
+            throw new ValidationException('Role invalide');
+        }
+        return $role;
+    }
+
+    public static function valConfigurationJeu(&$configurationJeu, &$dVueErreur){
+        if(! $configurationJeu instanceof \model\ConfigurationJeu){
+            $role = NULL;
+            $dVueErreur[] = 'Configuration du jeu invalide';
+            throw new ValidationException('Configuration du jeu');
+        }
+        return $configurationJeu;
     }
 
 }
