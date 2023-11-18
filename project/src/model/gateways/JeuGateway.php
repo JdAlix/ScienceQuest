@@ -14,18 +14,13 @@ class JeuGateway
     public function getAll() : array
     {
         $this->con->executeQuery("SELECT id, nom, nbrparties FROM Jeu;");
-        $listJeu = [];
-        foreach($this->con->getResults() as $row){
-            $listJeu[] = new Jeu($row['id'], $row['nom'], $row['nbrparties']);
-        }
-        return $listJeu;
+        return $this->con->getResults();
     }
 
-    public function getFromId(int $id): Jeu
+    public function getFromId(int $id): array
     {
         $this->con->executeQuery("SELECT id, nom, nbrparties FROM Jeu WHERE id=:id;",
                                 [':id' => [$id, $this->con::PARAM_INT]]);
-        $row = $this->con->getOneResult();
-        return new Jeu($row['id'], $row['nom'], $row['nbrparties']);
+        return $this->con->getOneResult();
     }
 }
