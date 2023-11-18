@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>Saisir Pseudo</title>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+    </head>
+    <body>
+        <center>
+            {% if dVue is defined %}
+                <p>Jeu : {{ dVue.nomJeu }}</p>
+                <p>Pseudo : {{ dVue.pseudo }} </p>
+                <p>Difficulte : {{ dVue.libelleDifficulte }}</p>
+            {% endif %}
+        </center>
+
+        <script src="js/bootstrap.min.js"></script>
+    </body>
+</html>

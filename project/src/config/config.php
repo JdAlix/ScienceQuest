@@ -7,6 +7,7 @@ $config = [
              "login" => 'postgres',
              "mdp" =>''],
     "templates" => ["index" => 'vues/index.php',
-               "pseudo" => 'pseudo.html']
+               "pseudo" => 'pseudo.html',
+               "jouer" => "jouer.html"]
 ];
 ?>
