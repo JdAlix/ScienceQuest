@@ -107,8 +107,8 @@ class FrontController
     public function CreateParty() : void
     {
         global $twig;
-        $listJeu = (new \model\JeuGateway($this->con))->getAll();
-        $listDifficulte = (new \model\DifficulteGateway($this->con))->getAll();
+        $listJeu = (new \model\MdlJeu())->getAll();
+        $listDifficulte = (new \model\MdlDifficulte())->getAll();
         
         $dVueCreateJeu = [];
         foreach($listJeu as $jeu){
@@ -131,8 +131,8 @@ class FrontController
         $id_difficulte = $_POST['difficulte'] ?? '';
         \config\Validation::val_form($id_jeu, $id_difficulte, $dVueErreur);
 
-        $dVue['nomJeu'] = (new \model\JeuGateway($this->con))->getFromId($id_jeu)->getNom();
-        $dVue['libelleDifficulte'] = (new \model\DifficulteGateway($this->con))->getFromId($id_difficulte)->getLibelle();
+        $dVue['nomJeu'] = (new \model\MdlJeu())->getFromId($id_jeu)->getNom();
+        $dVue['libelleDifficulte'] = (new \model\MdlDifficulte())->getFromId($id_difficulte)->getLibelle();
 
         echo $twig->render('accueil.html', ['dVue' => $dVue, 'dVueErreur' => $dVueErreur]);
     }
