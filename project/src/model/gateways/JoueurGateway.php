@@ -4,20 +4,20 @@ namespace model;
 
 abstract class JoueurGateway
 {
-    private $con;
+    protected $con;
 
     function __construct(Connection $con) {
         $this->con = $con;
     }
 
-    public function getFromPseudo($pseudo): array|bool
+    protected function getFromPseudo($pseudo): array|bool
     {
         $this->con->executeQuery("SELECT id, pseudo FROM Joueur WHERE pseudo = :pseudo;",
         [":pseudo" => [$pseudo, $this->con::PARAM_STR]]);
         return $this->con->getOneResult();
     }
 
-    public function insertJoueur(string $pseudo): int{
+    protected function insertJoueur(string $pseudo): int{
         if($this->getFromPseudo($pseudo) != false){
             throw new PseudoDejaPrisException();
         }else{
@@ -25,5 +25,11 @@ abstract class JoueurGateway
             [":pseudo" => [$pseudo, $this->con::PARAM_STR]]);
             return $this->getFromPseudo($pseudo)["id"];
         }
+    }
+
+    public function setPseudo(int $id, string $pseudo){
+        $this->con->executeQuery("UPDATE Joueur SET pseudo=:pseudo WHERE id=:id",
+         [":pseudo" => [$pseudo, $this->con::PARAM_STR],
+          ":id" => [$id, $this->con::PARAM_INT]]);
     }
 }
