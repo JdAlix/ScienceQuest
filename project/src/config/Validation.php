@@ -43,4 +43,15 @@ class Validation
         return htmlspecialchars($codeInvitation);
     }
 
+    public static function valPseudo(string &$pseudo, &$dVueErreur){
+        $pseudo = trim($pseudo);
+        $pseudo = htmlspecialchars($pseudo);
+        $pseudo = filter_var($pseudo, FILTER_UNSAFE_RAW);
+        if($pseudo == '' ){
+            $dVueErreur[] = 'Pseudo invalide';
+            throw new ValidationException("Pseudo invalide");
+        }
+        return $pseudo;
+    }
+
 }
