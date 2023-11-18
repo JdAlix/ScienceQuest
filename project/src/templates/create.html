@@ -27,11 +27,19 @@
             <form action="validationFormulaire" method="post">
                 <fieldset>
                     <legend>Mini-jeux disponibles</legend>
+                    {% if dVueErreur|length > 0 %}
+                        <div>
+                            <h5>Erreur : </h5>
+                            {% for erreur in dVueErreur %}
+                                <p>{{erreur}}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                     {% if dVueCreate is defined %}
                             {% if dVueCreate["jeux"] is defined %}
                             {% for value in dVueCreate["jeux"] %}
                                 <div>
-                                    <input type="radio" name="jeu" id="{{value['id']}}" value="{{value['id']}}">
+                                    <input required type="radio" name="jeu" id="{{value['id']}}" value="{{value['id']}}">
                                     <label for="{{value['id']}}">{{value['nom']}}</label>
                                 </div>
                             {% endfor %}
@@ -40,7 +48,7 @@
                 
                             {% if dVueCreate["difficultes"] is defined %}
                 <label for="difficulte">Difficulté</label>
-                <select name="difficulte" id="difficulte">
+                <select required name="difficulte" id="difficulte">
                                 {% for diff in dVueCreate["difficultes"] %}
                                     <option value="{{diff['id']}}">{{diff['libelle']}}</option>
                                 {% endfor %}

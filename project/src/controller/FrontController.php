@@ -54,7 +54,7 @@ class FrontController
                     }
                     break;
                 case 'create':
-                    $this->CreateParty();
+                    $this->CreateParty($dVueErreur);
                     break;
                 case 'validationFormulaire':
                     $this->ValidationFormulaire($dVueErreur, $dVue);
@@ -67,7 +67,7 @@ class FrontController
                         echo $twig->render('login.html');
                     elseif(isset($_REQUEST['login'])) {
                         Validation::valUserLogin($_REQUEST['login'], $dVueErreur);
-                        $ug = new UserGateway($this->con);
+                        $ug = new UserGateway($this->con); #TODO: utiliser le modele plutot que la gw puis supprimer attribut this->$con
                         if($ug->login($_REQUEST['login'], $_REQUEST['password'])) {
                             $_SESSION['pseudo'] = $_REQUEST['login'];
                             header("Location: .");
@@ -104,7 +104,7 @@ class FrontController
         exit(0);
     }
 
-    public function CreateParty() : void
+    public function CreateParty(array &$dVueErreur) : void
     {
         global $twig;
         $listJeu = (new \model\MdlJeu())->getAll();
@@ -119,8 +119,7 @@ class FrontController
         foreach($listDifficulte as $difficulte){
             $dVueCreateDifficulte[] = ['id' => $difficulte->getId(), 'libelle' => $difficulte->getLibelle()];
         }
-
-        echo $twig->render('create.html', ['dVueCreate' => ["jeux" => $dVueCreateJeu, "difficultes" => $dVueCreateDifficulte]]);
+        echo $twig->render('create.html', ["dVueErreur" => $dVueErreur, 'dVueCreate' => ["jeux" => $dVueCreateJeu, "difficultes" => $dVueCreateDifficulte]]);
     }
 
     public function ValidationFormulaire(array &$dVueErreur, array &$dVue)
@@ -129,11 +128,17 @@ class FrontController
 
         $id_jeu = $_POST['jeu'] ?? '';
         $id_difficulte = $_POST['difficulte'] ?? '';
-        \config\Validation::val_form($id_jeu, $id_difficulte, $dVueErreur);
+        try{
+            \config\Validation::val_form($id_jeu, $id_difficulte, $dVueErreur);
+        }catch (\model\ValidationException){
+            $this->CreateParty($dVueErreur);
+        }
 
-        $dVue['nomJeu'] = (new \model\MdlJeu())->getFromId($id_jeu)->getNom();
-        $dVue['libelleDifficulte'] = (new \model\MdlDifficulte())->getFromId($id_difficulte)->getLibelle();
-
-        echo $twig->render('accueil.html', ['dVue' => $dVue, 'dVueErreur' => $dVueErreur]);
-    }
+        if(count($dVueErreur) == 0){
+            $dVue['nomJeu'] = (new \model\MdlJeu())->getFromId($id_jeu)->getNom();
+            $dVue['libelleDifficulte'] = (new \model\MdlDifficulte())->getFromId($id_difficulte)->getLibelle();
+    
+            echo $twig->render('accueil.html', ['dVue' => $dVue, 'dVueErreur' => $dVueErreur]);    
+        }
+       }
 }
