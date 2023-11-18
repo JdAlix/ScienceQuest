@@ -12,18 +12,13 @@ class DifficulteGateway
     public function getAll() : array
     {
         $this->con->executeQuery("SELECT id, libelle FROM Difficulte;");
-        $listDifficulte = [];
-        foreach($this->con->getResults() as $row){
-            $listDifficulte[] = new Difficulte($row['id'], $row['libelle']);
-        }
-        return $listDifficulte;
+        return $this->con->getResults();
     }
 
-    public function getFromId(int $id): Difficulte
+    public function getFromId(int $id): array
     {
         $this->con->executeQuery("SELECT id, libelle FROM Difficulte WHERE id=:id;",
                                 [':id' => [$id, $this->con::PARAM_INT]]);
-        $row = $this->con->getOneResult();
-        return new Difficulte($row['id'], $row['libelle']);
+        return $this->con->getOneResult();
     }
 }
