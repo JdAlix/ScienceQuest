@@ -23,15 +23,7 @@ class JouerController{
             }
             
             if(count($dVueErreur) == 0){
-                // $pseudo = $role->getPseudo();
                 $idJeu = $configurationJeu->getJeu()->getId();
-                // $libelleDifficulte = $configurationJeu->getDifficulte()->getLibelle();
-
-                // $dVue["nomJeu"] = $nomJeu;
-                // $dVue["pseudo"] = $pseudo;
-                // $dVue["libelleDifficulte"] = $libelleDifficulte;
-
-                //echo $twig->render($config["templates"]["jouer"], ["dVue"=>$dVue]);
                 switch($idJeu){
                     case 3:
                         new PenduController($role, $configurationJeu);
