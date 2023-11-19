@@ -2,6 +2,7 @@
 namespace controller;
 
 use config\Validation;
+use Exception;
 use model\ValidationException;
 
 class JouerController{
@@ -22,15 +23,23 @@ class JouerController{
             }
             
             if(count($dVueErreur) == 0){
-                $pseudo = $role->getPseudo();
-                $nomJeu = $configurationJeu->getJeu()->getNom();
-                $libelleDifficulte = $configurationJeu->getDifficulte()->getLibelle();
+                // $pseudo = $role->getPseudo();
+                $idJeu = $configurationJeu->getJeu()->getId();
+                // $libelleDifficulte = $configurationJeu->getDifficulte()->getLibelle();
 
-                $dVue["nomJeu"] = $nomJeu;
-                $dVue["pseudo"] = $pseudo;
-                $dVue["libelleDifficulte"] = $libelleDifficulte;
+                // $dVue["nomJeu"] = $nomJeu;
+                // $dVue["pseudo"] = $pseudo;
+                // $dVue["libelleDifficulte"] = $libelleDifficulte;
 
-                echo $twig->render($config["templates"]["jouer"], ["dVue"=>$dVue]);
+                //echo $twig->render($config["templates"]["jouer"], ["dVue"=>$dVue]);
+                switch($idJeu){
+                    case 3:
+                        new PenduController($role, $configurationJeu);
+                        break;
+                    default:
+                        throw new Exception("Jeu non défini !");
+                        break;
+                }
             }
         }else{
             header("Location: .");
