@@ -8,6 +8,7 @@ $config = [
              "mdp" =>''],
     "templates" => ["index" => 'vues/index.php',
                "pseudo" => 'pseudo.html',
-               "jouer" => "jouer.html"]
+               "pendu" => "pendu.html",
+               "penduScore" => 'penduScore.html']
 ];
 ?>
