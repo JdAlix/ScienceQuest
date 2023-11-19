@@ -121,4 +121,12 @@ class Scientifique
     {
         return $this->difficulte;
     }
+
+    /**
+     * @return Sexe
+     */
+    public function getSexe(): Sexe
+    {
+        return $this->sexe;
+    }
 }
