@@ -25,7 +25,11 @@ class PseudoController{
             }catch(PseudoDejaPrisException){
                 $dVueErreur[] = "Pseudo déjà pris";
             }catch(IdSessionDoubleException $e){
-                $role = $mdlInvite->setPseudo($e->getIdJoueur(), $pseudo);
+                try{
+                    $role = $mdlInvite->setPseudo($e->getIdJoueur(), $pseudo);
+                }catch(PseudoDejaPrisException){
+                    $dVueErreur[] = "Pseudo déjà pris";
+                }
             }
 
             if(isset($role)){

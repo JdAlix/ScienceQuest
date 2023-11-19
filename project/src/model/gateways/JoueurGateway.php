@@ -28,8 +28,12 @@ abstract class JoueurGateway
     }
 
     public function setPseudo(int $id, string $pseudo){
-        $this->con->executeQuery("UPDATE Joueur SET pseudo=:pseudo WHERE id=:id",
+        if($this->getFromPseudo($pseudo) != false){
+            throw new PseudoDejaPrisException();
+        }else{
+            $this->con->executeQuery("UPDATE Joueur SET pseudo=:pseudo WHERE id=:id",
          [":pseudo" => [$pseudo, $this->con::PARAM_STR],
           ":id" => [$id, $this->con::PARAM_INT]]);
+        }
     }
 }
