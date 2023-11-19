@@ -170,5 +170,5 @@ INSERT INTO Thematique(libelle) VALUES ('Nucléaire'),('Mathématiques');
 
 INSERT INTO Scientifique(nom, prenom, photo, dateNaissance, descriptif, ratioTrouvee, idThematique, idDifficulte, idSexe)
 VALUES
-    ('nom0', 'prenom0', '', CURRENT_DATE, 'desc0', 0, 1, 1, 1),
-    ('nom1', 'prenom1', '', CURRENT_DATE, 'desc1', 0, 2, 2, 2);
+    ('nomToto', 'prenomToto', '', CURRENT_DATE, 'desc', 0, 1, 1, 1),
+    ('nomTiti', 'prenomTiti', '', CURRENT_DATE, 'desc', 0, 2, 2, 2);
