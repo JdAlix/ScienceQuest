@@ -74,4 +74,13 @@ class Validation
         return $configurationJeu;
     }
 
+    public static function valMdlPendu(&$pendu, &$dVueErreur){
+        if(! $pendu instanceof \model\MdlPendu){
+            $role = NULL;
+            $dVueErreur[] = 'Erreur mauvais jeu en utilisation';
+            throw new ValidationException('Erreur mauvais jeu en utilisation');
+        }
+        return $pendu;
+    }
+
 }
