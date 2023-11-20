@@ -4,8 +4,8 @@ namespace controller;
 use config\Validation;
 use model\Connection;
 use model\LoginException;
+use model\MdlAdmin;
 use model\MdlUser;
-use model\UserGateway;
 
 class FrontController
 {
@@ -79,8 +79,16 @@ class FrontController
                             $_SESSION['pseudo'] = $_REQUEST['login'];
                             header("Location: .");
                         } else {
-                            $dVueErreur[] = "Connexion échouée";
-                            throw new LoginException("Connexion err");
+                            //todo : verifier si utilisateur existe dans User ou Admin au lieu de login les 2 a la fois
+                            //voir si c'est un admin
+                            $ug = new MdlAdmin();
+                            if($ug->login($_REQUEST['login'], $_REQUEST['password'])) {
+                            $_SESSION['pseudo'] = $_REQUEST['login'];
+                            header("Location: .");
+                            } else {
+                                $dVueErreur[] = "Connexion échouée";
+                                throw new LoginException("Connexion err");
+                            }
                         }
                     } else
                         header("Location: .");

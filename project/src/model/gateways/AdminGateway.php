@@ -2,7 +2,7 @@
 
 namespace model;
 
-class UserGateway
+class AdminGateway
 {
     private \PDO $con;
     private \PDOStatement $stmt;
