@@ -172,3 +172,7 @@ INSERT INTO Scientifique(nom, prenom, photo, dateNaissance, descriptif, ratioTro
 VALUES
     ('nomToto', 'prenomToto', '', CURRENT_DATE, 'desc', 0, 1, 1, 1),
     ('nomTiti', 'prenomTiti', '', CURRENT_DATE, 'desc', 0, 2, 2, 2);
+
+
+INSERT INTO Joueur(id,pseudo) VALUES (1337, 'moi, le meilleur admin du monde');
+INSERT INTO Utilisateur(idJoueur,email,motDePasse) VALUES (1337, 'admin','admin');

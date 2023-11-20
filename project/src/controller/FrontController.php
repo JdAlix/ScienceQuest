@@ -4,6 +4,7 @@ namespace controller;
 use config\Validation;
 use model\Connection;
 use model\LoginException;
+use model\MdlUser;
 use model\UserGateway;
 
 class FrontController
@@ -12,9 +13,7 @@ class FrontController
     public function __construct()
     {
         global $twig, $router, $config;
-
-        $this->con = new Connection($config["db"]["dsn"], $config["db"]["login"], $config["db"]["mdp"]);
-
+    
         $router->map('GET|POST', '/', 'null');
         $router->map('GET|POST', '/join', 'join');
         $router->map('GET|POST', '/create', 'create');
@@ -75,7 +74,8 @@ class FrontController
                         echo $twig->render('login.html');
                     elseif(isset($_REQUEST['login'])) {
                         Validation::valUserLogin($_REQUEST['login'], $dVueErreur);
-                        $ug = new UserGateway($this->con); #TODO: utiliser le modele plutot que la gw puis supprimer attribut this->$con
+                        //$ug = new UserGateway($this->con); #TODO: utiliser le modele plutot que la gw puis supprimer attribut this->$con
+                        $ug = new MdlUser();
                         if($ug->login($_REQUEST['login'], $_REQUEST['password'])) {
                             $_SESSION['pseudo'] = $_REQUEST['login'];
                             header("Location: .");
@@ -100,6 +100,7 @@ class FrontController
             }
         } catch (\PDOException $e) {
             $dVueErreur[] = 'Erreur avec la base de données !';
+            $dVueErreur[] = 'Erreur avec la base de données !'.$e;
             echo $twig->render('erreur.html', ['dVueErreur' => $dVueErreur]);
         } catch (LoginException $e) {
             echo $twig->render('erreur.html', ['dVueErreur' => $dVueErreur]);

@@ -20,7 +20,7 @@ class UserGateway
 
         $result = $this->con->getOneResult();
 
-        if (!empty($result) && password_hash($motDePasse, 'md5') == $result['motDePasse']) {
+        if (!empty($result) && password_hash($motDePasse,  PASSWORD_DEFAULT) == $result['motDePasse']) {
             return true;
         }
         return false;
@@ -30,7 +30,7 @@ class UserGateway
         $sql = "INSERT INTO utilisateur (email, motDePasse) VALUES (:email, :motDePasse)";
         $stmt = $this->con->prepare($sql);
         $stmt->bindValue(':email', $email);
-        $stmt->bindValue(':motDePasse', password_hash($motDePasse, 'md5'));
+        $stmt->bindValue(':motDePasse', password_hash($motDePasse,  PASSWORD_DEFAULT));
         $stmt->execute();
     }
     public function deleteUser(int $id): void
@@ -46,7 +46,7 @@ class UserGateway
         $stmt = $this->con->prepare($sql);
         $stmt->bindValue(':id', $id);
         $stmt->bindValue(':email', $email);
-        $stmt->bindValue(':motDePasse', password_hash($motDePasse, 'md5'));
+        $stmt->bindValue(':motDePasse', password_hash($motDePasse,  PASSWORD_DEFAULT));
         $stmt->execute();
     }
     public function getUser(int $id): User
@@ -93,7 +93,7 @@ class UserGateway
         $sql = "SELECT * FROM utilisateur WHERE email=:email AND motDePasse=:motDePasse";
         $stmt = $this->con->prepare($sql);
         $stmt->bindValue(':email', $email);
-        $stmt->bindValue(':motDePasse', password_hash($motDePasse, 'md5'));
+        $stmt->bindValue(':motDePasse', password_hash($motDePasse,  PASSWORD_DEFAULT));
         $stmt->execute();
         $result = $stmt->fetch();
         return new User($result['id'], $result['email'], $result['motDePasse']);
