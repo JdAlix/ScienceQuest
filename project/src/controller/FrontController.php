@@ -138,7 +138,9 @@ class FrontController
         $id_difficulte = $_POST['difficulte'] ?? '';
         try{
             \config\Validation::val_form($id_jeu, $id_difficulte, $dVueErreur);
-        }catch (\model\ValidationException){
+        }catch (\model\ValidationException $ex){
+            $this->CreateParty($dVueErreur);
+        }catch (\Exception $ex){
             $this->CreateParty($dVueErreur);
         }
 
