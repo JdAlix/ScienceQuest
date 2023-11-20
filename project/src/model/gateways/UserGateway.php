@@ -11,91 +11,91 @@ class UserGateway
         $this->con=$con;
     }
 
-    public function login(string $username, string $password): bool
+    public function login(string $email, string $motDePasse): bool
     {
-        $sql = "SELECT * FROM user WHERE username=:username";
+        $sql = "SELECT * FROM Utilisateur WHERE email=:email";
         $this->con->executeQuery($sql, array(
-            ':username' => array($username, \PDO::PARAM_STR)
+            ':email' => array($email, \PDO::PARAM_STR)
         ));
 
         $result = $this->con->getOneResult();
 
-        if (!empty($result) && md5($password) == $result['password']) {
+        if (!empty($result) && password_hash($motDePasse, 'md5') == $result['motDePasse']) {
             return true;
         }
         return false;
     }
-    public function addUser(string $username, string $password): void
+    public function addUser(string $email, string $motDePasse): void
     {
-        $sql = "INSERT INTO user (username, password) VALUES (:username, :password)";
+        $sql = "INSERT INTO utilisateur (email, motDePasse) VALUES (:email, :motDePasse)";
         $stmt = $this->con->prepare($sql);
-        $stmt->bindValue(':username', $username);
-        $stmt->bindValue(':password', password_hash($password, 'md5'));
+        $stmt->bindValue(':email', $email);
+        $stmt->bindValue(':motDePasse', password_hash($motDePasse, 'md5'));
         $stmt->execute();
     }
     public function deleteUser(int $id): void
     {
-        $sql = "DELETE FROM user WHERE id=:id";
+        $sql = "DELETE FROM utilisateur WHERE id=:id";
         $stmt = $this->con->prepare($sql);
         $stmt->bindValue(':id', $id);
         $stmt->execute();
     }
-    public function updateUser(int $id, string $username, string $password): void
+    public function updateUser(int $id, string $email, string $motDePasse): void
     {
-        $sql = "UPDATE user SET username=:username, password=:password WHERE id=:id";
+        $sql = "UPDATE utilisateur SET email=:email, motDePasse=:motDePasse WHERE id=:id";
         $stmt = $this->con->prepare($sql);
         $stmt->bindValue(':id', $id);
-        $stmt->bindValue(':username', $username);
-        $stmt->bindValue(':password', $password);
+        $stmt->bindValue(':email', $email);
+        $stmt->bindValue(':motDePasse', password_hash($motDePasse, 'md5'));
         $stmt->execute();
     }
     public function getUser(int $id): User
     {
-        $sql = "SELECT * FROM user WHERE id=:id";
+        $sql = "SELECT * FROM utilisateur WHERE id=:id";
         $stmt = $this->con->prepare($sql);
         $stmt->bindValue(':id', $id);
         $stmt->execute();
         $result = $stmt->fetch();
-        return new User($result['id'], $result['username'], $result['password']);
+        return new User($result['id'], $result['email'], $result['motDePasse']);
     }
     public function getUsers(): array
     {
-        $sql = "SELECT * FROM user";
+        $sql = "SELECT * FROM utilisateur";
         $stmt = $this->con->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll();
         $users = [];
         foreach ($result as $user) {
-            $users[] = new User($user['id'], $user['username'], $user['password']);
+            $users[] = new User($user['id'], $user['email'], $user['motDePasse']);
         }
         return $users;
     }
     public function getHashedPasswordById(int $id): string
     {
-        $sql = "SELECT password FROM user WHERE id=:id";
+        $sql = "SELECT motDePasse FROM utilisateur WHERE id=:id";
         $stmt = $this->con->prepare($sql);
         $stmt->bindValue(':id', $id);
         $stmt->execute();
         $result = $stmt->fetch();
-        return $result['password'];
+        return $result['motDePasse'];
     }
-    public function getUserId(string $username): int
+    public function getUserId(string $email): int
     {
-        $sql = "SELECT id FROM user WHERE username=:username";
+        $sql = "SELECT id FROM utilisateur WHERE email=:email";
         $stmt = $this->con->prepare($sql);
-        $stmt->bindValue(':username', $username);
+        $stmt->bindValue(':email', $email);
         $stmt->execute();
         $result = $stmt->fetch();
         return $result['id'];
     }
-    public function getUserByUsernameAndPassword(string $username, string $password): User
+    public function getUserByEmailAndPassword(string $email, string $motDePasse): User
     {
-        $sql = "SELECT * FROM user WHERE username=:username AND password=:password";
+        $sql = "SELECT * FROM utilisateur WHERE email=:email AND motDePasse=:motDePasse";
         $stmt = $this->con->prepare($sql);
-        $stmt->bindValue(':username', $username);
-        $stmt->bindValue(':password', $password);
+        $stmt->bindValue(':email', $email);
+        $stmt->bindValue(':motDePasse', password_hash($motDePasse, 'md5'));
         $stmt->execute();
         $result = $stmt->fetch();
-        return new User($result['id'], $result['username'], $result['password']);
+        return new User($result['id'], $result['email'], $result['motDePasse']);
     }
 }
