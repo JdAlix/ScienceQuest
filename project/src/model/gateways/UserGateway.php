@@ -4,7 +4,7 @@ namespace model;
 
 class UserGateway
 {
-    private \PDO $con;
+    private Connection $con;
     private \PDOStatement $stmt;
     public function __construct(Connection $con)
     {
