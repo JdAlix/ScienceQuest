@@ -74,7 +74,6 @@ class FrontController
                         echo $twig->render('login.html');
                     elseif(isset($_REQUEST['login'])) {
                         Validation::valUserLogin($_REQUEST['login'], $dVueErreur);
-                        //$ug = new UserGateway($this->con); #TODO: utiliser le modele plutot que la gw puis supprimer attribut this->$con
                         $ug = new MdlUser();
                         if($ug->login($_REQUEST['login'], $_REQUEST['password'])) {
                             $_SESSION['pseudo'] = $_REQUEST['login'];
@@ -100,7 +99,6 @@ class FrontController
             }
         } catch (\PDOException $e) {
             $dVueErreur[] = 'Erreur avec la base de données !';
-            $dVueErreur[] = 'Erreur avec la base de données !'.$e;
             echo $twig->render('erreur.html', ['dVueErreur' => $dVueErreur]);
         } catch (LoginException $e) {
             echo $twig->render('erreur.html', ['dVueErreur' => $dVueErreur]);
