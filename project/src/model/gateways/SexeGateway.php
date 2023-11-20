@@ -16,4 +16,10 @@ class SexeGateway
                                 [':id' => [$id, $this->con::PARAM_INT]]);
         return $this->con->getOneResult();
     }
+    
+    public function getSexes(): array
+    {
+        $this->con->executeQuery("SELECT id, libelle FROM Sexe;");
+        return $this->con->getResults();
+    }
 }

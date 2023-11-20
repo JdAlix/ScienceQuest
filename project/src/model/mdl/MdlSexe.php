@@ -14,4 +14,12 @@ class MdlSexe extends MdlBase{
         $row = $this->gw->getFromId($id);
         return new Sexe($row['id'], $row['libelle']);
     }
+    public function getSexes(): array {
+        $ret=array();
+        $row = $this->gw->getSexes();
+        for($i=0; $i< count($row); $i++){
+            array_push($ret, new Sexe($row[$i]['id'], $row[$i]['libelle']));
+        }
+        return $ret;
+    }
 }
