@@ -174,5 +174,9 @@ VALUES
     ('nomTiti', 'prenomTiti', '', CURRENT_DATE, 'desc', 0, 2, 2, 2);
 
 
-INSERT INTO Joueur(id,pseudo) VALUES (1337, 'moi, le meilleur admin du monde');
-INSERT INTO Utilisateur(idJoueur,email,motDePasse) VALUES (1337, 'admin','admin');
+INSERT INTO Joueur(id,pseudo) VALUES (1337, 'moi, le meilleur joueur du monde');
+INSERT INTO Utilisateur(idJoueur,email,motDePasse) VALUES (1337, 'joueur','$2y$10$juGnlWC9cS19popEKLZsYeir0Jl39k6hDl0dpaCix00FDcdiEbtmS');
+-- mdp = test
+
+INSERT INTO Admin(id,email,motDePasse) VALUES (1, 'admin','$2y$10$juGnlWC9cS19popEKLZsYeir0Jl39k6hDl0dpaCix00FDcdiEbtmS');
+-- mdp = test
