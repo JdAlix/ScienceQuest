@@ -19,9 +19,9 @@ class UserGateway
         ));
 
         $result = $this->con->getOneResult();
-
-        if (!empty($result) && password_hash($motDePasse,  PASSWORD_DEFAULT) == $result['motDePasse']) {
-            return true;
+        
+        if (!empty($result)) {
+            return password_verify($motDePasse,$result['motdepasse']);
         }
         return false;
     }
