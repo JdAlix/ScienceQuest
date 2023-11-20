@@ -11,7 +11,7 @@ class UserGateway
         $this->con=$con;
     }
 
-    public function login(string $email, string $motDePasse): bool
+    public function login(string $email, string $password): bool
     {
         $sql = "SELECT * FROM Utilisateur WHERE email=:email";
         $this->con->executeQuery($sql, array(
@@ -21,16 +21,16 @@ class UserGateway
         $result = $this->con->getOneResult();
         
         if (!empty($result)) {
-            return password_verify($motDePasse,$result['motdepasse']);
+            return password_verify($password,$result['password']);
         }
         return false;
     }
-    public function addUser(string $email, string $motDePasse): void
+    public function addUser(string $email, string $password): void
     {
-        $sql = "INSERT INTO utilisateur (email, motDePasse) VALUES (:email, :motDePasse)";
+        $sql = "INSERT INTO utilisateur (email, password) VALUES (:email, :password)";
         $stmt = $this->con->prepare($sql);
         $stmt->bindValue(':email', $email);
-        $stmt->bindValue(':motDePasse', password_hash($motDePasse,  PASSWORD_DEFAULT));
+        $stmt->bindValue(':password', password_hash($password,  PASSWORD_DEFAULT));
         $stmt->execute();
     }
     public function deleteUser(int $id): void
@@ -40,13 +40,13 @@ class UserGateway
         $stmt->bindValue(':id', $id);
         $stmt->execute();
     }
-    public function updateUser(int $id, string $email, string $motDePasse): void
+    public function updateUser(int $id, string $email, string $password): void
     {
-        $sql = "UPDATE utilisateur SET email=:email, motDePasse=:motDePasse WHERE id=:id";
+        $sql = "UPDATE utilisateur SET email=:email, password=:password WHERE id=:id";
         $stmt = $this->con->prepare($sql);
         $stmt->bindValue(':id', $id);
         $stmt->bindValue(':email', $email);
-        $stmt->bindValue(':motDePasse', password_hash($motDePasse,  PASSWORD_DEFAULT));
+        $stmt->bindValue(':password', password_hash($password,  PASSWORD_DEFAULT));
         $stmt->execute();
     }
     public function getUser(int $id): User
@@ -56,7 +56,7 @@ class UserGateway
         $stmt->bindValue(':id', $id);
         $stmt->execute();
         $result = $stmt->fetch();
-        return new User($result['id'], $result['email'], $result['motDePasse']);
+        return new User($result['id'], $result['email'], $result['password']);
     }
     public function getUsers(): array
     {
@@ -66,18 +66,27 @@ class UserGateway
         $result = $stmt->fetchAll();
         $users = [];
         foreach ($result as $user) {
-            $users[] = new User($user['id'], $user['email'], $user['motDePasse']);
+            $users[] = new User($user['id'], $user['email'], $user['password']);
         }
         return $users;
     }
     public function getHashedPasswordById(int $id): string
     {
-        $sql = "SELECT motDePasse FROM utilisateur WHERE id=:id";
+        $sql = "SELECT password FROM utilisateur WHERE id=:id";
         $stmt = $this->con->prepare($sql);
         $stmt->bindValue(':id', $id);
         $stmt->execute();
         $result = $stmt->fetch();
-        return $result['motDePasse'];
+        return $result['password'];
+    }
+    public function getHashedPassword(int $email): string
+    {
+        $sql = "SELECT password FROM utilisateur WHERE email=:email";
+        $stmt = $this->con->prepare($sql);
+        $stmt->bindValue(':email', $email);
+        $stmt->execute();
+        $result = $stmt->fetch();
+        return $result['password'];
     }
     public function getUserId(string $email): int
     {
@@ -88,14 +97,14 @@ class UserGateway
         $result = $stmt->fetch();
         return $result['id'];
     }
-    public function getUserByEmailAndPassword(string $email, string $motDePasse): User
+    public function getUserByEmailAndPassword(string $email, string $password): User
     {
-        $sql = "SELECT * FROM utilisateur WHERE email=:email AND motDePasse=:motDePasse";
+        $sql = "SELECT * FROM utilisateur WHERE email=:email AND password=:password";
         $stmt = $this->con->prepare($sql);
         $stmt->bindValue(':email', $email);
-        $stmt->bindValue(':motDePasse', password_hash($motDePasse,  PASSWORD_DEFAULT));
+        $stmt->bindValue(':password', password_hash($password,  PASSWORD_DEFAULT));
         $stmt->execute();
         $result = $stmt->fetch();
-        return new User($result['id'], $result['email'], $result['motDePasse']);
+        return new User($result['id'], $result['email'], $result['password']);
     }
 }

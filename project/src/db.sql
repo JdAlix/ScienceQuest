@@ -101,7 +101,7 @@ CREATE TABLE Reponse(
 CREATE TABLE Admin(
     id SERIAL PRIMARY KEY,
     email varchar(255) NOT NULL UNIQUE,
-    motDePasse varchar(255) NOT NULL
+    password varchar(255) NOT NULL
 );
 
 
@@ -126,7 +126,7 @@ CREATE TABLE Invite(
 CREATE TABLE Utilisateur(
     idJoueur integer PRIMARY KEY REFERENCES Joueur(id),
     email varchar(255) NOT NULL UNIQUE,
-    motDePasse varchar(255) NOT NULL
+    password varchar(255) NOT NULL
 );
 
 
@@ -175,8 +175,8 @@ VALUES
 
 
 INSERT INTO Joueur(id,pseudo) VALUES (1337, 'moi, le meilleur joueur du monde');
-INSERT INTO Utilisateur(idJoueur,email,motDePasse) VALUES (1337, 'joueur','$2y$10$juGnlWC9cS19popEKLZsYeir0Jl39k6hDl0dpaCix00FDcdiEbtmS');
+INSERT INTO Utilisateur(idJoueur,email,password) VALUES (1337, 'joueur','$2y$10$juGnlWC9cS19popEKLZsYeir0Jl39k6hDl0dpaCix00FDcdiEbtmS');
 -- mdp = test
 
-INSERT INTO Admin(id,email,motDePasse) VALUES (1, 'admin','$2y$10$juGnlWC9cS19popEKLZsYeir0Jl39k6hDl0dpaCix00FDcdiEbtmS');
+INSERT INTO Admin(id,email,password) VALUES (1, 'admin','$2y$10$juGnlWC9cS19popEKLZsYeir0Jl39k6hDl0dpaCix00FDcdiEbtmS');
 -- mdp = test
