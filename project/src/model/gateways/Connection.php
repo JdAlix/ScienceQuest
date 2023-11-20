@@ -33,7 +33,7 @@ class Connection extends PDO {
         return $this->stmt->fetchall();
     }
 
-    public function getOneResult() : array|bool {
+    public function getOneResult() : mixed {
         return $this->stmt->fetch();
     }
 }
