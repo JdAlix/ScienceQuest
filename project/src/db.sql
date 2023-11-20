@@ -1,3 +1,4 @@
+
 -- Testé sous pgsql 15
 
 DROP TABLE IF EXISTS Reponse;
@@ -76,7 +77,6 @@ CREATE TABLE Indice(
     libelle varchar(512) NOT NULL UNIQUE,
     idScientifique integer REFERENCES Scientifique(id)
 );
-
 
 -- QUESTION
 

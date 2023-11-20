@@ -13,6 +13,7 @@ class FrontController
     private Connection $con;
     public function __construct()
     {
+
         global $twig, $router;
         global $basePath;
 
@@ -22,6 +23,7 @@ class FrontController
 
         $router->map('GET|POST','/[a:action]?','UserController');
         $router->map('GET|POST','/admin/[a:action]','AdminController');
+
         $router->map('GET|POST', '/validationFormulaire', 'validationFormulaire');
         $router->map('GET|POST', '/logout', 'disconnect');
 
@@ -84,7 +86,6 @@ class FrontController
 
         exit(0);
     }
-
 
     private function callController(string $cont, array $match) {
         global $twig;
