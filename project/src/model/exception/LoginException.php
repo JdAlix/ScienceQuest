@@ -1,6 +1,6 @@
 <?php
 
-namespace controller;
+namespace model;
 
 class LoginException extends \Exception
 {

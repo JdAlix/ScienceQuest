@@ -4,24 +4,21 @@ namespace controller;
 use config\Validation;
 use http\Params;
 use model\Connection;
-use model\ModelAdmin;
-use model\UserGateway;
+use model\LoginException;
+use model\MdlAdmin;
+use model\MdlUser;
 
 class FrontController
 {
+    private Connection $con;
     public function __construct()
     {
         global $twig, $router;
-        global $login;
-        global $mdp;
-        global $base;
         global $basePath;
-
-        $con = new Connection($base, $login, $mdp);
 
         //altorouter
         $router = new \AltoRouter();
-        $router->setBasePath('ScienceQuest/Project/src/');
+        $router->setBasePath($basePath);
 
         $router->map('GET|POST','/[a:action]?','UserController');
         $router->map('GET|POST','/admin/[a:action]','AdminController');
@@ -47,22 +44,27 @@ class FrontController
             }
 
             switch($match['target']) {
+
                 case 'UserController':
                     $this->callController('UserController',$match);
                     break;
 
                 case 'AdminController':
                     $action = $match['params']['action'];
-                    if (!ModelAdmin::isAdmin()) {
+                    if (!MdlAdmin::isAdmin()) {
                         $action = 'login';
                     }
                     $this->callController('AdminController',$action);
+
+                case 'PseudoController':
+                    $this->callController('PseudoController',$match);
                     break;
 
                 case 'validationFormulaire':
                     $this->ValidationFormulaire($dVueErreur, $dVue);
                     break;
 
+                //mauvaise action
                 default:
                     $dVueErreur[] = "Erreur d'appel php";
                     echo $twig->render('accueil.html', ['dVueErreur' => $dVueErreur]);
@@ -83,6 +85,7 @@ class FrontController
         exit(0);
     }
 
+
     private function callController(string $cont, array $match) {
         global $twig;
 
@@ -101,12 +104,25 @@ class FrontController
     {
         global $twig;
 
-        $game = $_POST['game'] ?? '';
-        $difficulty = $_POST['difficulty'] ?? '';
-        \config\Validation::val_form($game, $difficulty, $dVueErreur);
+        $id_jeu = $_POST['jeu'] ?? '';
+        $id_difficulte = $_POST['difficulte'] ?? '';
+        try{
+            \config\Validation::val_form($id_jeu, $id_difficulte, $dVueErreur);
+        }catch (\model\ValidationException $ex){
+            $this->CreateParty($dVueErreur);
+        }catch (\Exception $ex){
+            $this->CreateParty($dVueErreur);
+        }
 
-        $dVue['info'] = "Jeu '$game' créé avec la difficulté $difficulty";
+        if(count($dVueErreur) == 0){
+            $jeu = (new \model\MdlJeu())->getFromId($id_jeu);
+            $difficulte = (new \model\MdlDifficulte())->getFromId($id_difficulte);
+            $_SESSION['configuration'] = new \model\ConfigurationJeu($jeu, $difficulte);
 
-        echo $twig->render('accueil.html', ['dVue' => $dVue, 'dVueErreur' => $dVueErreur]);
-    }
+            header("Location: /pseudo");
+            #echo $twig->render('accueil.html', ['dVue' => $dVue, 'dVueErreur' => $dVueErreur]);    
+        }else{
+            $this->CreateParty($dVueErreur);
+        }
+       }
 }

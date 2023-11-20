@@ -6,7 +6,7 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'model\\' => array($baseDir . '/model', $baseDir . '/model/gateways', $baseDir . '/model/metier'),
+    'model\\' => array($baseDir . '/model', $baseDir . '/model/mdl', $baseDir . '/model/gateways', $baseDir . '/model/metier', $baseDir . '/model/exception'),
     'controller\\' => array($baseDir . '/controller'),
     'config\\' => array($baseDir . '/config'),
     'Twig\\' => array($vendorDir . '/twig/twig/src'),

@@ -14,9 +14,14 @@
 
   <body>
     <h1>Bienvenue sur Mini-Jeux</h1>
-    {% if dVue.info is defined %}
-      <p>{{dVue.info}}</p>
+    <!--TODO A DEPLACER DANS SA PROPRE VUE-->
+    {% if dVue.nomJeu is defined %}
+      <p>Jeu selectionné : {{dVue.nomJeu}}</p>
     {% endif %}
+    {% if dVue.libelleDifficulte is defined %}
+     <p>Difficulte selectionné : {{dVue.libelleDifficulte}}</p>
+    {% endif %}
+    <!--FIN TODO-->
 
     {% if dVue.pseudo is defined %}
       <p align="right"><a href="logout">{{dVue.pseudo}}</a></p>
@@ -26,8 +31,8 @@
 
     <br><br><br><br>
     <center>
-      <a href="JoinParty">Rejoindre une partie</a>
-      <a href="CreateParty">Créer une partie</a>
+      <a href="joinParty">Rejoindre une partie</a>
+      <a href="createParty">Créer une partie</a>
     </center>
 
 

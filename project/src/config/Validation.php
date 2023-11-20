@@ -1,12 +1,15 @@
 <?php
 namespace config;
 
+
+use model\ValidationException;
+
 class Validation
 {
     public static function val_action($action)
     {
         if (!isset($action)) {
-            throw new \Exception('pas d\'action');
+            throw new ValidationException('pas d\'action');
         }
     }
 
@@ -15,13 +18,13 @@ class Validation
         if ($jeu == '' || !filter_var($jeu, FILTER_SANITIZE_STRING)) {
             $dVueErreur[] = 'Aucun jeu selectionné';
             $jeu          = 0;
-            throw new \Exception("Erreur jeu");
+            throw new ValidationException("Erreur jeu");
         }
 
         if ($difficulty == '' || !filter_var($difficulty, FILTER_VALIDATE_INT)) {
             $dVueErreur[] = "Aucune difficultée séléctionnée";
             $difficulty   = 0;
-            throw new \Exception("Erreur difficulté");
+            throw new ValidationException("Erreur difficulté");
         }
     }
 
@@ -30,7 +33,54 @@ class Validation
         if ($user == '' || !filter_var($user, FILTER_SANITIZE_STRING)) {
             $dVueErreur[] = 'Identifiant invalide';
             $jeu          = 0;
-            throw new \Exception("Erreur identifiant");
+            throw new ValidationException("Erreur identifiant");
         }
     }
+
+    public static function valCodeInvitation(string &$codeInvitation, &$dVueErreur){
+        if($codeInvitation == ''){
+            $dVueErreur[] = 'Code d\'invitation invalide';
+            throw new ValidationException("Code d'invitation invalide");
+        }
+        return htmlspecialchars($codeInvitation);
+    }
+
+    public static function valPseudo(string &$pseudo, &$dVueErreur){
+        $pseudo = trim($pseudo);
+        $pseudo = htmlspecialchars($pseudo);
+        $pseudo = filter_var($pseudo, FILTER_UNSAFE_RAW);
+        if($pseudo == '' ){
+            $dVueErreur[] = 'Pseudo invalide';
+            throw new ValidationException("Pseudo invalide");
+        }
+        return $pseudo;
+    }
+
+    public static function valRole(&$role, &$dVueErreur){
+        if(! $role instanceof \model\Joueur){
+            $role = NULL;
+            $dVueErreur[] = 'Role invalide';
+            throw new ValidationException('Role invalide');
+        }
+        return $role;
+    }
+
+    public static function valConfigurationJeu(&$configurationJeu, &$dVueErreur){
+        if(! $configurationJeu instanceof \model\ConfigurationJeu){
+            $role = NULL;
+            $dVueErreur[] = 'Configuration du jeu invalide';
+            throw new ValidationException('Configuration du jeu');
+        }
+        return $configurationJeu;
+    }
+
+    public static function valMdlPendu(&$pendu, &$dVueErreur){
+        if(! $pendu instanceof \model\MdlPendu){
+            $role = NULL;
+            $dVueErreur[] = 'Erreur mauvais jeu en utilisation';
+            throw new ValidationException('Erreur mauvais jeu en utilisation');
+        }
+        return $pendu;
+    }
+
 }

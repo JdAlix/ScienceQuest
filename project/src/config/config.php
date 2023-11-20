@@ -1,21 +1,15 @@
 <?php
 namespace config;
 
-//gen
-$rep=__DIR__.'/../';
-
-// liste des modules à inclure
-
-//$dConfig['includes']= array('controleur/Validation.php');
-
-
-//BD
-
-$base  = 'mysql:host=localhost;dbname=sae';
-$login = 'root';
-$mdp   = '';
-//Vues
-
-$vues['index']='vues/index.php';
+$config = [
+    "rep" => __DIR__.'/../',
+    "db" => ["dsn" => 'pgsql:host=localhost;dbname=dbrebeuret',
+             "login" => 'rebeuret',
+             "mdp" => 'achanger'],
+    "templates" => ["index" => 'vues/index.php',
+               "pseudo" => 'pseudo.html',
+               "pendu" => "pendu.html",
+               "penduScore" => 'penduScore.html']
+];
 
 ?>

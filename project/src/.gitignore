@@ -1,0 +1,4 @@
+vendor/
+composer.lock
+js/bootstrap*.js*
+css/bootstrap*.css*
