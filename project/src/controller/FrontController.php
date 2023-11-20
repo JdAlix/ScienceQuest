@@ -77,14 +77,16 @@ class FrontController
                         $ug = new MdlUser();
                         if($ug->login($_REQUEST['login'], $_REQUEST['password'])) {
                             $_SESSION['pseudo'] = $_REQUEST['login'];
+                            $_SESSION['isLogged'] = true;
                             header("Location: .");
                         } else {
-                            //todo : verifier si utilisateur existe dans User ou Admin au lieu de login les 2 a la fois
                             //voir si c'est un admin
                             $ug = new MdlAdmin();
                             if($ug->login($_REQUEST['login'], $_REQUEST['password'])) {
-                            $_SESSION['pseudo'] = $_REQUEST['login'];
-                            header("Location: .");
+                                $_SESSION['pseudo'] = $_REQUEST['login'];
+                                $_SESSION['isAdmin'] = true;
+                                $_SESSION['isLogged'] = true;
+                                header("Location: .");
                             } else {
                                 $dVueErreur[] = "Connexion échouée";
                                 throw new LoginException("Connexion err");
