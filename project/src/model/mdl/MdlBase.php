@@ -8,6 +8,6 @@ abstract class MdlBase{
     public function __construct()
     {
         global $config;
-        $this->con = new Connection($config["db"]["dsn"], $config["db"]["login"], $config["db"]["login"]);
+        $this->con = new Connection($config["db"]["dsn"], $config["db"]["login"], $config["db"]["mdp"]);
     }
 }
