@@ -37,4 +37,7 @@ class MdlScientifique extends MdlBase{
                                 $difficulte,
                                 $sexe);
     }
+    public function addScientifique(Scientifique $s){
+		return $this->gw->addScientifique($s);
+	}
 }

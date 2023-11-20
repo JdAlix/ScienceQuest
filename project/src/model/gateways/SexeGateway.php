@@ -17,7 +17,7 @@ class SexeGateway
         return $this->con->getOneResult();
     }
     
-    public function getSexes(): array
+    public function getAll(): array
     {
         $this->con->executeQuery("SELECT id, libelle FROM Sexe;");
         return $this->con->getResults();

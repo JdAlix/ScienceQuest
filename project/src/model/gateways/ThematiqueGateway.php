@@ -16,4 +16,9 @@ class ThematiqueGateway
                                 [':id' => [$id, $this->con::PARAM_INT]]);
         return $this->con->getOneResult();
     }
+    public function getAll(): array
+    {
+        $this->con->executeQuery("SELECT id, libelle FROM Thematique;");
+        return $this->con->getResults();
+    }
 }
