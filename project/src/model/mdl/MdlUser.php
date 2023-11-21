@@ -28,8 +28,12 @@ class MdlUser extends MdlBase{
         return new Utilisateur($row['idjoueur'], $row['pseudo'], $row['email'], $row['password']);
     }
 
-    public function getFromPseudo(string $pseudo): Utilisateur{
-        $row = $this->gw->getFromPseudo($pseudo);
+    public function getFromEmail(string $email): Utilisateur{
+        $row = $this->gw->getFromEmail($email);
         return new Utilisateur($row['idjoueur'], $row['pseudo'], $row['email'], $row['password']);
+    }
+
+    public function addScientifiqueDecouvert(int $idUtilisateur, int $idScientifique){
+        $this->gw->addScientifiqueDecouvert($idUtilisateur, $idScientifique);
     }
 }
