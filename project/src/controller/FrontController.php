@@ -32,17 +32,9 @@ class FrontController
         $router = new AltoRouter();
         $router->setBasePath($basePath);
 
-        $router->map('GET|POST','/[a:action]?','UserController');
+        $router->map('GET|POST','/pseudo/[a:action]?','PseudoController');
         $router->map('GET|POST','/admin/[a:action]','AdminController');
-
-        $router->map('GET|POST', '/validationFormulaire', 'validationFormulaire');
-        $router->map('GET|POST', '/logout', 'disconnect');
-
-
-        // Tableau qui contient les messages d'erreur
-        $dVueErreur = [];
-        $dVue = [];
-        $dVue['basePath'] = $basePath;
+        $router->map('GET|POST','/[a:action]?','UserController');
 
         session_start();
 
@@ -74,10 +66,6 @@ class FrontController
                     $this->callController('PseudoController',$match);
                     break;
 
-                case 'validationFormulaire':
-                    $this->ValidationFormulaire($dVueErreur, $dVue);
-                    break;
-
                 //mauvaise action
                 default:
                     $dVueErreur[] = "Erreur d'appel php";
@@ -104,40 +92,12 @@ class FrontController
 
         $controller = '\\controller\\'.$cont;
         $controller = new $controller;
-        $action = $match['params']['action'] ?? 'accueil';
+        $action = $match['params']['action'] ?? 'defaultAction';
 
         if (is_callable(array($controller,$action))) {
             call_user_func_array(array($controller,$action),array($match['params']));
         } else {
             echo $twig->render('erreur.html', ['dVueErreur' => array('Page inconnue')]);
         }
-    }
-
-    public function ValidationFormulaire(array &$dVueErreur, array &$dVue)
-    {
-        global $twig;
-
-        $id_jeu = $_POST['jeu'] ?? '';
-        $id_difficulte = $_POST['difficulte'] ?? '';
-        try{
-            Validation::val_form($id_jeu, $id_difficulte, $dVueErreur);
-        }catch (ValidationException|Exception $ex){
-            $this->CreateParty($dVueErreur);
-        }
-
-        if(count($dVueErreur) == 0){
-            $jeu = (new MdlJeu())->getFromId($id_jeu);
-            $difficulte = (new MdlDifficulte())->getFromId($id_difficulte);
-            $_SESSION['configuration'] = new ConfigurationJeu($jeu, $difficulte);
-
-            header("Location: /pseudo");
-            #echo $twig->render('accueil.html', ['dVue' => $dVue, 'dVueErreur' => $dVueErreur]);    
-        }else{
-            $this->CreateParty($dVueErreur);
-        }
-    }
-
-    private function CreateParty(array $dVueErreur)
-    {
     }
 }

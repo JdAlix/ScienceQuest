@@ -4,6 +4,7 @@ namespace controller;
 
 use config\Validation;
 use Exception;
+use model\ConfigurationJeu;
 use model\Connection;
 use model\GameGateway;
 use model\MdlDifficulte;
@@ -12,7 +13,7 @@ use model\ValidationException;
 
 class UserController {
 
-    public function accueil(array $params) {
+    public function defaultAction(array $params) {
         global $twig;
 
         echo $twig->render('accueil.html');
@@ -80,5 +81,32 @@ class UserController {
         }
 
         echo $twig->render('create.html', ["dVueErreur" => $dVueErreur, 'dVueCreate' => ["jeux" => $dVueCreateJeu, "difficultes" => $dVueCreateDifficulte]]);
+    }
+
+    public function ValidationFormulaire(array $params)
+    {
+        global $twig;
+        global $dVue;
+        global $dVueErreur;
+        global $basePath;
+
+        $id_jeu = $_POST['jeu'] ?? '';
+        $id_difficulte = $_POST['difficulte'] ?? '';
+        try{
+            Validation::val_form($id_jeu, $id_difficulte, $dVueErreur);
+        }catch (ValidationException|Exception $ex){
+            $this->CreateParty($dVueErreur);
+        }
+
+        if(count($dVueErreur) == 0){
+            $jeu = (new MdlJeu())->getFromId($id_jeu);
+            $difficulte = (new MdlDifficulte())->getFromId($id_difficulte);
+            $_SESSION['configuration'] = new ConfigurationJeu($jeu, $difficulte);
+
+            header("Location: ".$basePath."/pseudo");
+            #echo $twig->render('accueil.html', ['dVue' => $dVue, 'dVueErreur' => $dVueErreur]);
+        }else{
+            $this->CreateParty($dVueErreur);
+        }
     }
 }

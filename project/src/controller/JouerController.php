@@ -12,8 +12,9 @@ class JouerController{
      */
     public function __construct(){
         global $twig, $config;
-        $dVue = [];
-        $dVueErreur = [];
+        global $dVue;
+        global $dVueErreur;
+        global $basePath;
 
         if(isset($_SESSION["configuration"]) && isset($_SESSION['role'])){
             try{
@@ -22,7 +23,7 @@ class JouerController{
                 $configurationJeu = $_SESSION['configuration'];
                 $configurationJeu = Validation::valConfigurationJeu($configurationJeu, $dVueErreur);
             }catch(ValidationException $e){
-                header('Location: .');
+                header('Location: '.$basePath);
             }
             
             if(count($dVueErreur) == 0){
@@ -36,7 +37,7 @@ class JouerController{
                 }
             }
         }else{
-            header("Location: .");
+            header("Location: ".$basePath);
         }
     }
 }

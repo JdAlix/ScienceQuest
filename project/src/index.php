@@ -12,8 +12,12 @@
         'cache' => false,
     ]);
 
-    $dVueErreur = array();
     $basePath = preg_replace('/\/index.php/i', '', $_SERVER['PHP_SELF']);
+
+    // Tableau qui contient les messages d'erreur
+    $dVueErreur = [];
+    $dVue = [];
+    $dVue['basePath'] = $basePath;
 
     $cont = new FrontController();
     

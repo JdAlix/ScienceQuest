@@ -9,8 +9,9 @@ use model\MdlInvite;
 
 class PseudoController{
 
-    public function __construct(){
+    public function defaultAction(){
         global $twig, $config;
+        global $basePath;
         $dVue = [];
         $dVueErreur = [];
 
@@ -35,7 +36,7 @@ class PseudoController{
 
             if(isset($role)){
                 $_SESSION['role'] = $role;
-                header('Location: jouer');
+                header('Location: '.$basePath.'/jouer');
             }
         }
         echo $twig->render($config['templates']['pseudo'], ["dVue" => $dVue, "dVueErreur" => $dVueErreur]);
