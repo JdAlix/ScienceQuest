@@ -10,15 +10,20 @@ class MdlAdmin extends MdlBase{
         $this->gw = new AdminGateway($this->con);
     }
     public function login(string $username, string $password): bool{
-        return $this->gw->login($username, $password);
+        if ($this->gw->login($username, $password)) {
+            $_SESSION['pseudo'] = $username;
+            $_SESSION['admin'] = true;
+            return true;
+        }
+        return false;
     }
 
     public static function isAdmin(): bool
     {
         if(!isset($_SESSION['admin'])
             || !$_SESSION['admin']
-            || !isset($_SESSION['email'])
-            || $_SESSION['email'] == null) {
+            || !isset($_SESSION['pseudo'])
+            || $_SESSION['pseudo'] == null) {
             return false;
         }
 

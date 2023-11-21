@@ -7,8 +7,7 @@ use PDOStatement;
 
 class AdminGateway
 {
-    private PDO $con;
-    private PDOStatement $stmt;
+    private Connection $con;
     public function __construct(Connection $con)
     {
         $this->con=$con;

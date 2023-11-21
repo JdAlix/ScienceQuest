@@ -11,24 +11,12 @@ use model\Scientifique;
 
 //gerer la connexion des admins
 class AdminController {
-	//public function __construct(array $params)
-    //{
-//
-    //    //verifier si l'utilisateur est connecté et admin
-    //    if (isset($_SESSION["isAdmin"])) {
-    //        if ($_SESSION["isAdmin"] == true) {
-    //        } else if (isset($_SESSION["isLogged"])) {
-    //            //verifier si l'utilisateur est connecté mais pas admin
-    //            if ($_SESSION["isLogged"] == true) {
-    //                exit(0);
-    //            }
-    //        } else {
-    //            //renvoyer a la page de connexion pour les non connectés
-    //            echo '<meta http-equiv="refresh" content="0; url=login">';
-    //        }
-    //    }
-    //}
 
+    public function defaultAction(array $params) {
+        global $twig;
+
+        echo $twig->render('admin/accueil.html');
+    }
     public function notLogged(array $params) {
         global $twig;
         //dire acces interdit aux non admins
@@ -78,7 +66,7 @@ class AdminController {
 
         echo $twig->render('admin/ajouterScientifiques.html',['sexe' => $sexe->getAll(), 'themes' => $theme->getAll(), 'difficultes' => $diff->getAll(), 'scientifique' => $scient]);
     }
-    public function listeScientifique() {
+    public function listeScientifiques(array $params) {
        global $twig;
 
        $ms = new MdlScientifique();

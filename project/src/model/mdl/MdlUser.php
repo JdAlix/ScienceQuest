@@ -7,7 +7,7 @@ class MdlUser extends MdlBase{
 
     public function __construct(){
         parent::__construct();
-        $this->gw = new JoueurGateway($this->con);
+        $this->gw = new UtilisateurConnecteGateway($this->con);
     }
     public function login(string $username, string $password): bool{
         return $this->gw->login($username, $password);
