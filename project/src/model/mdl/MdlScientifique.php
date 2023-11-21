@@ -77,10 +77,41 @@ class MdlScientifique extends MdlBase{
         }
         return $scientifiques;
     }
-
+    public function getHistoriqueParPage(string $pseudoJoueur,int $page) {
+        $nbElemParPage = 20;
+        $pageMax = ceil($this->gw->getNbScientifiqueHistorique($pseudoJoueur)/$nbElemParPage);
+        print($pageMax);
+        if ($page <= 0) {
+            $page = 1;
+        } elseif ($page > $pageMax) {
+            $page = $pageMax;
+        }
+        $result = $this->gw->getHistorique($pseudoJoueur,$page,$nbElemParPage);
+        $scientifiques = array();
+        foreach ($result as $scientifique) {
+            $sexe = $this->mdlSexe->getFromId($scientifique['idsexe']);
+            $difficulte = $this->mdlDifficulte->getFromId($scientifique['iddifficulte']);
+            $thematique = $this->mdlThematique->getFromId($scientifique['idthematique']);
+            $scientifiques[] = new Scientifique($scientifique['id'],
+                $scientifique['nom'],
+                $scientifique['prenom'],
+                $scientifique['photo'],
+                new DateTime($scientifique['datenaissance']),
+                $scientifique['descriptif'],
+                $scientifique['ratiotrouvee'],
+                $thematique,
+                $difficulte,
+                $sexe);
+        }
+        return $scientifiques;
+    }
     public function getMaxPages() : int {
         $nbElemParPage = 20;
         return ceil($this->gw->getNbScientifique()/$nbElemParPage);
+    }
+    public function getMaxPagesHistorique(string $pseudo) : int {
+        $nbElemParPage = 20;
+        return ceil($this->gw->getNbScientifiqueHistorique($pseudo)/$nbElemParPage);
     }
 
     public function editScientifique(Scientifique $s){

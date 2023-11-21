@@ -58,12 +58,40 @@ class ScientifiqueGateway
         return $this->con->getResults();
     }
 
+    public function getHistorique(string $pseudoJoueur, int $currentPage, int $nbElemByPage) : array {
+        $query = 'SELECT s.*
+                  FROM Scientifique s, Decouvrir d, Utilisateur u
+                  WHERE s.id = d.idscientifique
+                    AND d.idutilisateur = u.idJoueur
+                    AND u.email = :pseudo
+                  LIMIT :nbElem OFFSET :ind ';
+        $index = ($currentPage-1)*$nbElemByPage;
+        $this->con->executeQuery($query,array(
+            ':ind' => array($index,\PDO::PARAM_INT),
+            ':nbElem' => array($nbElemByPage,\PDO::PARAM_INT),
+            ':pseudo' => array($pseudoJoueur,\PDO::PARAM_STR)
+        ));
+        return $this->con->getResults();
+    }
+
     public function getNbScientifique() : int {
         $query = 'SELECT DISTINCT count(*) as val FROM Scientifique';
         $this->con->executeQuery($query);
         return $this->con->getResults()[0]['val'];
     }
 
+    public function getNbScientifiqueHistorique(string $pseudoJoueur) : int {
+        $query = 'SELECT count(s.*) as val
+                  FROM Scientifique s, Decouvrir d, Utilisateur u
+                  WHERE s.id = d.idscientifique
+                    AND d.idutilisateur = u.idJoueur
+                    AND u.email = :pseudo';
+        $params = array(
+            ':pseudo' => array($pseudoJoueur,\PDO::PARAM_STR)
+        );
+        $this->con->executeQuery($query,$params);
+        return $this->con->getResults()[0]['val'];
+    }
 
     /**
      * @throws Exception
@@ -117,7 +145,6 @@ class ScientifiqueGateway
           JOIN Reponse r ON q.id = r.idQuestion
           WHERE r.idScientifique = :idScientifique
           ORDER BY RANDOM() LIMIT 5";
-
         $params = [":idScientifique" => [$idScientifique, $this->con::PARAM_INT]];
 
         $this->con->executeQuery($query, $params);

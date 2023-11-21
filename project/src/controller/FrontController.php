@@ -38,7 +38,7 @@ class FrontController
 
         $router->map('GET|POST','/pseudo/[a:action]?','PseudoController');
         $router->map('GET|POST','/admin/[a:action]?/[i:id]?','AdminController');
-        $router->map('GET|POST','/[a:action]?','UserController');
+        $router->map('GET|POST','/[a:action]?/[i:id]?','UserController');
 
         try {
             session_start();
@@ -46,8 +46,17 @@ class FrontController
             die('Session start failed: ' . $e->getMessage());
         }
 
-        if(isset($_SESSION['pseudo']))
+        $dVue['idAdmin'] = false;
+        $dVue['idUser'] = false;
+
+        if(isset($_SESSION['pseudo'])) {
             $dVue['pseudo'] = $_SESSION['pseudo'];
+            if (isset($_SESSION['isUser']) && $_SESSION['isUser']) {
+                $dVue['isUser'] = true;
+            } elseif (isset($_SESSION['idAdmin']) && $_SESSION['idAdmin']) {
+                $dVue['isAdmin'] = true;
+            }
+        }
 
         try {
             $match = $router->match();
@@ -84,6 +93,7 @@ class FrontController
             echo $twig->render('login.html');
         } catch (Exception $e2) {
             $dVueErreur[] = 'Erreur inattendue !';
+            $dVueErreur[] = $e2->getMessage();
             echo $twig->render('erreur.html', ['dVueErreur' => $dVueErreur]);
         }
 

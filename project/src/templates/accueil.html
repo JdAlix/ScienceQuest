@@ -23,11 +23,14 @@
     {% endif %}
     <!--FIN TODO-->
 
+    <div align="right">
     {% if dVue.pseudo is defined %}
-      <p align="right"><a href="logout">{{dVue.pseudo}}</a></p>
+      <p><a href="logout">{{dVue.pseudo}}</a></p>
+      <p><a href="historique">Historique</a></p>
     {% else %}
-      <p align="right"><a href="login">Se connecter</a></p>
+      <p><a href="login">Se connecter</a></p>
     {% endif %}
+    </div>
 
     <br><br><br><br>
     <center>

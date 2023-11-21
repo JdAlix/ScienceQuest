@@ -9,6 +9,7 @@ use model\Connection;
 use model\GameGateway;
 use model\MdlDifficulte;
 use model\MdlJeu;
+use model\MdlScientifique;
 use model\PseudoDejaPrisException;
 use model\ValidationException;
 use model\MdlUser;
@@ -21,6 +22,39 @@ class UserController {
         global $twig, $dVue;
 
         echo $twig->render('accueil.html', ["dVue"=>$dVue]);
+    }
+
+    public function historique(array $params) {
+        global $twig;
+        global $dVueErreur;
+        global $dVue;
+
+        $ms = new MdlScientifique();
+
+        if (!isset($params['id'])) {
+            $page = 1;
+        } else {
+            $page = Validation::valPosInt($params['id']);
+        }
+
+        $pseudo = Validation::valPseudo($_SESSION['pseudo'],$dVueErreur);
+
+        $dVue['listeScientifiques'] = $ms->getHistoriqueParPage($pseudo,$page);
+        $dVue['pageMax'] = $ms->getMaxPagesHistorique($pseudo);
+        $dVue['page'] = $page;
+
+        if ($page - 1 <= 0) {
+            $dVue['pagePrec'] = 1;
+        } else {
+            $dVue['pagePrec'] = $page - 1;
+        }
+        if ($page + 1 >= $dVue['pageMax']) {
+            $dVue['pageSuiv'] = $dVue['pageMax'];
+        } else {
+            $dVue['pageSuiv'] = $page + 1;
+        }
+
+        echo $twig->render('historique.html',['dVue' => $dVue]);
     }
 
     public function joinParty(array $params) {
@@ -76,6 +110,7 @@ class UserController {
             $ug = new MdlUser();
             if ($ug->login($_REQUEST['login'], $_REQUEST['password'])) {
                 $_SESSION['pseudo'] = $_REQUEST['login'];
+                $_SESSION['idUser'] = true;
                 $_SESSION['isLogged'] = true;
                 header("Location: .");
             } else {

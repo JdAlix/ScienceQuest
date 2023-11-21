@@ -191,5 +191,7 @@ INSERT INTO Joueur(id,pseudo) VALUES (1337, 'moi, le meilleur joueur du monde');
 INSERT INTO Utilisateur(idJoueur,email,password) VALUES (1337, 'joueur','$2y$10$juGnlWC9cS19popEKLZsYeir0Jl39k6hDl0dpaCix00FDcdiEbtmS');
 -- mdp = test
 
+INSERT INTO decouvrir(idUtilisateur,idScientifique) VALUES (1337,1);
+
 INSERT INTO Admin(id,email,password) VALUES (1, 'admin','$2y$10$juGnlWC9cS19popEKLZsYeir0Jl39k6hDl0dpaCix00FDcdiEbtmS');
 -- mdp = test
