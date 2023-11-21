@@ -13,7 +13,8 @@ class MdlAdmin extends MdlBase{
         return $this->gw->login($username, $password);
     }
 
-    public static function isAdmin() {
+    public static function isAdmin(): bool
+    {
         if(!isset($_SESSION['admin'])
             || !$_SESSION['admin']
             || !isset($_SESSION['email'])

@@ -1,5 +1,7 @@
 <?php
 namespace model;
 
-class ValidationException extends \RuntimeException{
+use RuntimeException;
+
+class ValidationException extends RuntimeException{
 }

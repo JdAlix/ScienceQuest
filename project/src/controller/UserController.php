@@ -3,8 +3,11 @@
 namespace controller;
 
 use config\Validation;
+use Exception;
 use model\Connection;
 use model\GameGateway;
+use model\MdlDifficulte;
+use model\MdlJeu;
 use model\ValidationException;
 
 class UserController {
@@ -25,6 +28,9 @@ class UserController {
         }
     }
 
+    /**
+     * @throws Exception
+     */
     public function jouer(array $params) {
         global $twig, $config;
         $dVue = [];
@@ -48,7 +54,6 @@ class UserController {
                         break;
                     default:
                         throw new Exception("Jeu non défini !");
-                        break;
                 }
             }
         }else{
@@ -61,8 +66,8 @@ class UserController {
         global $twig;
         global $dVueErreur;
 
-        $listJeu = (new \model\MdlJeu())->getAll();
-        $listDifficulte = (new \model\MdlDifficulte())->getAll();
+        $listJeu = (new MdlJeu())->getAll();
+        $listDifficulte = (new MdlDifficulte())->getAll();
 
         $dVueCreateJeu = [];
         foreach($listJeu as $jeu){

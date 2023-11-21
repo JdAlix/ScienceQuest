@@ -3,10 +3,11 @@
 namespace model;
 
 use PDO;
+use PDOStatement;
 
 class Connection extends PDO {
 
-    private $stmt;
+    private PDOStatement $stmt;
 
     public function __construct(string $dsn, string $username, string $password) {
 

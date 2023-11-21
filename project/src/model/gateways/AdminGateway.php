@@ -2,10 +2,13 @@
 
 namespace model;
 
+use PDO;
+use PDOStatement;
+
 class AdminGateway
 {
-    private \PDO $con;
-    private \PDOStatement $stmt;
+    private PDO $con;
+    private PDOStatement $stmt;
     public function __construct(Connection $con)
     {
         $this->con=$con;
@@ -15,7 +18,7 @@ class AdminGateway
     {
         $sql = "SELECT * FROM Admin WHERE email=:email";
         $this->con->executeQuery($sql, array(
-            ':email' => array($email, \PDO::PARAM_STR)
+            ':email' => array($email, PDO::PARAM_STR)
         ));
 
         $result = $this->con->getOneResult();

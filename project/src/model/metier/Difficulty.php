@@ -2,9 +2,12 @@
 
 namespace model;
 
-enum Difficulty
+class Difficulty
 {
-    case Easy;
-    case Medium;
-    case Hard;
+    const EASY = 'Easy';
+    const MEDIUM = 'Medium';
+    const HARD = 'Hard';
 }
+
+// Usage
+// $difficulty = Difficulty::EASY;

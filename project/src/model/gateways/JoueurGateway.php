@@ -4,21 +4,33 @@ namespace model;
 
 abstract class JoueurGateway
 {
-    protected $con;
+    protected Connection $con;
 
     function __construct(Connection $con) {
         $this->con = $con;
     }
 
-    protected function getFromPseudo($pseudo): array|bool
-    {
-        $this->con->executeQuery("SELECT id, pseudo FROM Joueur WHERE pseudo = :pseudo;",
-        [":pseudo" => [$pseudo, $this->con::PARAM_STR]]);
+//    protected function getFromPseudo($pseudo): array|bool <- autorisé seulement en PHP 8
+//    {
+//        $this->con->executeQuery("SELECT id, pseudo FROM Joueur WHERE pseudo = :pseudo;",
+//        [":pseudo" => [$pseudo, $this->con::PARAM_STR]]);
+//        return $this->con->getOneResult();
+//    }
+
+    /**
+     * @param string $pseudo
+     * @return array|bool
+     */
+    protected function getFromPseudo(string $pseudo) { // <- PHP 7.4
+        $this->con->executeQuery(
+            "SELECT id, pseudo FROM Joueur WHERE pseudo = :pseudo;",
+            [":pseudo" => [$pseudo, $this->con::PARAM_STR]]
+        );
         return $this->con->getOneResult();
     }
 
     protected function insertJoueur(string $pseudo): int{
-        if($this->getFromPseudo($pseudo) != false){
+        if($this->getFromPseudo($pseudo)){
             throw new PseudoDejaPrisException();
         }else{
             $this->con->executeQuery("INSERT INTO Joueur(pseudo) VALUES(:pseudo);",
@@ -28,7 +40,7 @@ abstract class JoueurGateway
     }
 
     public function setPseudo(int $id, string $pseudo){
-        if($this->getFromPseudo($pseudo) != false){
+        if($this->getFromPseudo($pseudo)){
             throw new PseudoDejaPrisException();
         }else{
             $this->con->executeQuery("UPDATE Joueur SET pseudo=:pseudo WHERE id=:id",

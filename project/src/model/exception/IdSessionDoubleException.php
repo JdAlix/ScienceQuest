@@ -2,7 +2,9 @@
 
 namespace model;
 
-class IdSessionDoubleException extends \RuntimeException
+use RuntimeException;
+
+class IdSessionDoubleException extends RuntimeException
 {
     private int $idJoueur;
     private string $idSession;

@@ -10,11 +10,12 @@ class MdlPendu{
     private array $lettreExceptees;
     private array $lettreUtilisees;
 
-    private static $nbFailsMax = 8;
+    private static int $nbFailsMax = 8;
 
     public function __construct(Scientifique $scientifiqueATrouver){
         $this->scientifiqueATrouver = $scientifiqueATrouver;
-        $this->aTrouver = strtr($scientifiqueATrouver->getPrenom()." ".$scientifiqueATrouver->getNom(), 'áàâäãåçéèêëíìîïñóòôöõúùûüýÿ', 'aaaaaaceeeeiiiinooooouuuuyy'); #suppression des accents
+        $this->aTrouver = iconv('UTF-8', 'ASCII//TRANSLIT', $scientifiqueATrouver->getPrenom()." ".$scientifiqueATrouver->getNom()); #suppression des accents
+        $this->aTrouver = preg_replace('/[^A-Za-z0-9 ]/', '', $this->aTrouver); // Retire les caractères non-alphanumeric
         $this->nbFail = 0;
         $this->nbTours = 0;
         $this->lettreExceptees = [' ', '-'];
@@ -24,13 +25,18 @@ class MdlPendu{
     public function jouerLettre(string $lettre): string{
         $lettre = strtolower($lettre);
         if(strlen($lettre) != 1){ throw new ValidationException("Veuillez fournir une seule lettre");}
-        if(!ctype_alpha($lettre)){ throw new ValidationException("Veuillez fournir une caractère alphabétique");}
+        if(!ctype_alpha($lettre)){ throw new ValidationException("Veuillez fournir un caractère alphabétique");}
         if(in_array($lettre, $this->lettreUtilisees)){ throw new ValidationException("Vous avez déjà joué cette lettre");}
         $this->nbTours += 1;
 
-        if(!str_contains($this->aTrouver, $lettre)){
+//        if(!str_contains($this->aTrouver, $lettre)){ // UNIQUEMENT EN PHP 8.0
+//            $this->nbFail += 1;
+//        }
+
+        if (strpos($this->aTrouver, $lettre) === false) { // PHP 7.4
             $this->nbFail += 1;
         }
+
         $this->lettreUtilisees[] = $lettre;
         return $this->getDecouvert();
     }

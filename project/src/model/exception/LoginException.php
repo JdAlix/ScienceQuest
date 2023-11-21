@@ -2,6 +2,8 @@
 
 namespace model;
 
-class LoginException extends \Exception
+use Exception;
+
+class LoginException extends Exception
 {
 }

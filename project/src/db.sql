@@ -1,4 +1,3 @@
-
 -- Testé sous pgsql 15
 
 DROP TABLE IF EXISTS Reponse;

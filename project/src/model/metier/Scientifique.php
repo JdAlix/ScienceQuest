@@ -22,7 +22,9 @@ class Scientifique
      * @param string $nom
      * @param string $prenom
      * @param string $photo
+     * @param DateTime $dateNaiss
      * @param string $descriptif
+     * @param float $ratioTrouvee
      * @param Thematique $thematique
      * @param Difficulte $difficulte
      * @param Sexe $sexe

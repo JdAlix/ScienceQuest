@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Saisir Pseudo</title>
-        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="../css/bootstrap.min.css">
         <style>
             p,
             label {
@@ -35,7 +35,9 @@
                         </div>
                     {% endif %}
                     <div>
-                        <input required type="text" name="pseudo" id="txt_pseudo">
+                        <label for="txt_pseudo">
+                            <input required type="text" name="pseudo" id="txt_pseudo">
+                        </label>
                     </div>
                 </fieldset>
                 <input type="submit" value="Valider">
@@ -43,6 +45,6 @@
             </form>
         </center>
 
-        <script src="js/bootstrap.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
     </body>
 </html>

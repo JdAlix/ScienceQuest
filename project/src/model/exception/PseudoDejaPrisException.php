@@ -2,7 +2,9 @@
 
 namespace model;
 
-class PseudoDejaPrisException extends \RuntimeException
+use RuntimeException;
+
+class PseudoDejaPrisException extends RuntimeException
 {
 
 }

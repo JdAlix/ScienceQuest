@@ -2,10 +2,13 @@
 
 namespace model;
 
+use PDO;
+use PDOStatement;
+
 class UserGateway
 {
     private Connection $con;
-    private \PDOStatement $stmt;
+    private PDOStatement $stmt;
     public function __construct(Connection $con)
     {
         $this->con=$con;
@@ -15,7 +18,7 @@ class UserGateway
     {
         $sql = "SELECT * FROM Utilisateur WHERE email=:email";
         $this->con->executeQuery($sql, array(
-            ':email' => array($email, \PDO::PARAM_STR)
+            ':email' => array($email, PDO::PARAM_STR)
         ));
 
         $result = $this->con->getOneResult();
@@ -27,7 +30,7 @@ class UserGateway
     }
     public function addUser(string $email, string $password): void
     {
-        $sql = "INSERT INTO utilisateur (email, password) VALUES (:email, :password)";
+        $sql = "INSERT INTO Utilisateur (email, password) VALUES (:email, :password)";
         $stmt = $this->con->prepare($sql);
         $stmt->bindValue(':email', $email);
         $stmt->bindValue(':password', password_hash($password,  PASSWORD_DEFAULT));
@@ -35,14 +38,14 @@ class UserGateway
     }
     public function deleteUser(int $id): void
     {
-        $sql = "DELETE FROM utilisateur WHERE id=:id";
+        $sql = "DELETE FROM Utilisateur WHERE idJoueur=:id";
         $stmt = $this->con->prepare($sql);
         $stmt->bindValue(':id', $id);
         $stmt->execute();
     }
     public function updateUser(int $id, string $email, string $password): void
     {
-        $sql = "UPDATE utilisateur SET email=:email, password=:password WHERE id=:id";
+        $sql = "UPDATE Utilisateur SET email=:email, password=:password WHERE idJoueur=:id";
         $stmt = $this->con->prepare($sql);
         $stmt->bindValue(':id', $id);
         $stmt->bindValue(':email', $email);
@@ -51,7 +54,7 @@ class UserGateway
     }
     public function getUser(int $id): User
     {
-        $sql = "SELECT * FROM utilisateur WHERE id=:id";
+        $sql = "SELECT * FROM Utilisateur WHERE idJoueur=:id";
         $stmt = $this->con->prepare($sql);
         $stmt->bindValue(':id', $id);
         $stmt->execute();
@@ -72,7 +75,7 @@ class UserGateway
     }
     public function getHashedPasswordById(int $id): string
     {
-        $sql = "SELECT password FROM utilisateur WHERE id=:id";
+        $sql = "SELECT password FROM Utilisateur WHERE idJoueur=:id";
         $stmt = $this->con->prepare($sql);
         $stmt->bindValue(':id', $id);
         $stmt->execute();
@@ -81,7 +84,7 @@ class UserGateway
     }
     public function getHashedPassword(int $email): string
     {
-        $sql = "SELECT password FROM utilisateur WHERE email=:email";
+        $sql = "SELECT password FROM Utilisateur WHERE email=:email";
         $stmt = $this->con->prepare($sql);
         $stmt->bindValue(':email', $email);
         $stmt->execute();
@@ -90,7 +93,7 @@ class UserGateway
     }
     public function getUserId(string $email): int
     {
-        $sql = "SELECT id FROM utilisateur WHERE email=:email";
+        $sql = "SELECT idJoueur FROM Utilisateur WHERE email=:email";
         $stmt = $this->con->prepare($sql);
         $stmt->bindValue(':email', $email);
         $stmt->execute();

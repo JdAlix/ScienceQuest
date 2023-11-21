@@ -7,6 +7,9 @@ use model\ValidationException;
 
 class JouerController{
 
+    /**
+     * @throws Exception
+     */
     public function __construct(){
         global $twig, $config;
         $dVue = [];
@@ -30,7 +33,6 @@ class JouerController{
                         break;
                     default:
                         throw new Exception("Jeu non défini !");
-                        break;
                 }
             }
         }else{

@@ -3,6 +3,7 @@
 namespace model;
 
 use DateTime;
+use Exception;
 use RuntimeException;
 
 class MdlScientifique extends MdlBase{
@@ -19,9 +20,12 @@ class MdlScientifique extends MdlBase{
         $this->mdlThematique = new MdlThematique();
     }
 
+    /**
+     * @throws Exception
+     */
     public function getRandom(): Scientifique{
         $row = $this->gw->getRandom();
-        if($row == false) throw new RuntimeException("Erreur aucun scientifique trouvé");
+        if(!$row) throw new RuntimeException("Erreur aucun scientifique trouvé");
         $sexe = $this->mdlSexe->getFromId($row['idsexe']);
         $difficulte = $this->mdlDifficulte->getFromId($row['iddifficulte']);
         $thematique = $this->mdlThematique->getFromId($row['idthematique']);

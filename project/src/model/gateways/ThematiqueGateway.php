@@ -4,7 +4,7 @@ namespace model;
 
 class ThematiqueGateway
 {
-    private $con;
+    private Connection $con;
 
     function __construct(Connection $con) {
         $this->con = $con;

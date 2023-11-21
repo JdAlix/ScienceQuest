@@ -2,11 +2,9 @@
 
 namespace model;
 
-use PDO;
-
 class JeuGateway
 {
-    private $con;
+    private Connection $con;
 
     function __construct(Connection $con) {
         $this->con = $con;

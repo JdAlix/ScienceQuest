@@ -1,13 +1,14 @@
 <?php
 
 namespace model;
+use PDO;
 
 class GameGateway
 {
-    private $con;
+    private Connection $con;
 
-    function __construct(Connection $co) {
-        $this->con = $co;
+    function __construct(Connection $con) {
+        $this->con = $con;
     }
     public static function getGames() : array
     {
@@ -21,7 +22,7 @@ class GameGateway
     public function getGameByCode(int $code) : array {
         $query = 'SELECT * FROM Partie WHERE codeInvitation=:id';
         $this->con->executeQuery($query,array(
-            ':id' => array($code,\PDO::PARAM_INT)
+            ':id' => [$code, PDO::PARAM_INT]
         ));
         return $this->con->getResults();
     }

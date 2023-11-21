@@ -2,6 +2,9 @@
 namespace config;
 
 
+use model\ConfigurationJeu;
+use model\Joueur;
+use model\MdlPendu;
 use model\ValidationException;
 
 class Validation
@@ -22,13 +25,13 @@ class Validation
         }
 
         if ($difficulty == '' || !filter_var($difficulty, FILTER_VALIDATE_INT)) {
-            $dVueErreur[] = "Aucune difficultée séléctionnée";
+            $dVueErreur[] = "Aucune difficulté séléctionnée";
             $difficulty   = 0;
             throw new ValidationException("Erreur difficulté");
         }
     }
 
-    public static function valUserLogin(string &$user, &$dVueErreur)
+    public static function valUserLogin(string $user, &$dVueErreur)
     {
         if ($user == '' || !filter_var($user, FILTER_SANITIZE_STRING)) {
             $dVueErreur[] = 'Identifiant invalide';
@@ -37,7 +40,8 @@ class Validation
         }
     }
 
-    public static function valCodeInvitation(string &$codeInvitation, &$dVueErreur){
+    public static function valCodeInvitation(string $codeInvitation, &$dVueErreur): string
+    {
         if($codeInvitation == ''){
             $dVueErreur[] = 'Code d\'invitation invalide';
             throw new ValidationException("Code d'invitation invalide");
@@ -56,8 +60,9 @@ class Validation
         return $pseudo;
     }
 
-    public static function valRole(&$role, &$dVueErreur){
-        if(! $role instanceof \model\Joueur){
+    public static function valRole(&$role, &$dVueErreur): Joueur
+    {
+        if(! $role instanceof Joueur){
             $role = NULL;
             $dVueErreur[] = 'Role invalide';
             throw new ValidationException('Role invalide');
@@ -65,8 +70,9 @@ class Validation
         return $role;
     }
 
-    public static function valConfigurationJeu(&$configurationJeu, &$dVueErreur){
-        if(! $configurationJeu instanceof \model\ConfigurationJeu){
+    public static function valConfigurationJeu($configurationJeu, &$dVueErreur): ConfigurationJeu
+    {
+        if(! $configurationJeu instanceof ConfigurationJeu){
             $role = NULL;
             $dVueErreur[] = 'Configuration du jeu invalide';
             throw new ValidationException('Configuration du jeu');
@@ -74,8 +80,9 @@ class Validation
         return $configurationJeu;
     }
 
-    public static function valMdlPendu(&$pendu, &$dVueErreur){
-        if(! $pendu instanceof \model\MdlPendu){
+    public static function valMdlPendu($pendu, &$dVueErreur): MdlPendu
+    {
+        if(! $pendu instanceof MdlPendu){
             $role = NULL;
             $dVueErreur[] = 'Erreur mauvais jeu en utilisation';
             throw new ValidationException('Erreur mauvais jeu en utilisation');

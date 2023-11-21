@@ -4,7 +4,7 @@ namespace model;
 
 class DifficulteGateway
 {
-    private $con;
+    private Connection $con;
 
     function __construct(Connection $con) {
         $this->con = $con;

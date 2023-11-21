@@ -1,16 +1,27 @@
 <?php
 namespace controller;
 
+use AltoRouter;
 use config\Validation;
+use Exception;
 use http\Params;
+use model\ConfigurationJeu;
 use model\Connection;
 use model\LoginException;
 use model\MdlAdmin;
+use model\MdlDifficulte;
+use model\MdlJeu;
 use model\MdlUser;
+use model\ValidationException;
+use PDOException;
 
 class FrontController
 {
     private Connection $con;
+
+    /**
+     * @throws Exception
+     */
     public function __construct()
     {
 
@@ -18,7 +29,7 @@ class FrontController
         global $basePath;
 
         //altorouter
-        $router = new \AltoRouter();
+        $router = new AltoRouter();
         $router->setBasePath($basePath);
 
         $router->map('GET|POST','/[a:action]?','UserController');
@@ -42,7 +53,7 @@ class FrontController
             $match = $router->match();
 
             if (!$match) {
-                throw new \Exception('Wrong call');
+                throw new Exception('Wrong call');
             }
 
             switch($match['target']) {
@@ -57,6 +68,7 @@ class FrontController
                         $action = 'login';
                     }
                     $this->callController('AdminController',$action);
+                    break;
 
                 case 'PseudoController':
                     $this->callController('PseudoController',$match);
@@ -72,14 +84,14 @@ class FrontController
                     echo $twig->render('accueil.html', ['dVueErreur' => $dVueErreur]);
                     break;
             }
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             $dVueErreur[] = 'Erreur avec la base de données !';
             $dVueErreur[] = $e->getMessage();
             echo $twig->render('erreur.html', ['dVueErreur' => $dVueErreur]);
         } catch (LoginException $e) {
             echo $twig->render('erreur.html', ['dVueErreur' => $dVueErreur]);
             echo $twig->render('login.html');
-        } catch (\Exception $e2) {
+        } catch (Exception $e2) {
             $dVueErreur[] = 'Erreur inattendue !'.$e2->getMessage();
             echo $twig->render('erreur.html', ['dVueErreur' => $dVueErreur]);
         }
@@ -108,22 +120,24 @@ class FrontController
         $id_jeu = $_POST['jeu'] ?? '';
         $id_difficulte = $_POST['difficulte'] ?? '';
         try{
-            \config\Validation::val_form($id_jeu, $id_difficulte, $dVueErreur);
-        }catch (\model\ValidationException $ex){
-            $this->CreateParty($dVueErreur);
-        }catch (\Exception $ex){
+            Validation::val_form($id_jeu, $id_difficulte, $dVueErreur);
+        }catch (ValidationException|Exception $ex){
             $this->CreateParty($dVueErreur);
         }
 
         if(count($dVueErreur) == 0){
-            $jeu = (new \model\MdlJeu())->getFromId($id_jeu);
-            $difficulte = (new \model\MdlDifficulte())->getFromId($id_difficulte);
-            $_SESSION['configuration'] = new \model\ConfigurationJeu($jeu, $difficulte);
+            $jeu = (new MdlJeu())->getFromId($id_jeu);
+            $difficulte = (new MdlDifficulte())->getFromId($id_difficulte);
+            $_SESSION['configuration'] = new ConfigurationJeu($jeu, $difficulte);
 
             header("Location: /pseudo");
             #echo $twig->render('accueil.html', ['dVue' => $dVue, 'dVueErreur' => $dVueErreur]);    
         }else{
             $this->CreateParty($dVueErreur);
         }
-       }
+    }
+
+    private function CreateParty(array $dVueErreur)
+    {
+    }
 }

@@ -2,12 +2,13 @@
     require_once(__DIR__.'/vendor/autoload.php');
     require_once(__DIR__.'/config/config.php');
 
-
     use controller\FrontController;
+    use Twig\Environment;
+    use Twig\Loader\FilesystemLoader;
 
-    //twig
-    $loader = new \Twig\Loader\FilesystemLoader('templates');
-    $twig   = new \Twig\Environment($loader, [
+//twig
+    $loader = new FilesystemLoader('templates');
+    $twig   = new Environment($loader, [
         'cache' => false,
     ]);
 

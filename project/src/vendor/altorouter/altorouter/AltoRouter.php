@@ -17,22 +17,22 @@ class AltoRouter
     /**
      * @var array Array of all routes (incl. named routes).
      */
-    protected $routes = [];
+    protected array $routes = [];
 
     /**
      * @var array Array of all named routes.
      */
-    protected $namedRoutes = [];
+    protected array $namedRoutes = [];
 
     /**
      * @var string Can be used to ignore leading part of the Request URL (if main file lives in subdirectory of host)
      */
-    protected $basePath = '';
+    protected string $basePath = '';
 
     /**
      * @var array Array of default match types (regex helpers)
      */
-    protected $matchTypes = [
+    protected array $matchTypes = [
         'i'  => '[0-9]++',
         'a'  => '[0-9A-Za-z]++',
         'h'  => '[0-9A-Fa-f]++',
@@ -49,7 +49,7 @@ class AltoRouter
      * @param array $matchTypes
      * @throws Exception
      */
-    public function __construct(array $routes = [], $basePath = '', array $matchTypes = [])
+    public function __construct(array $routes = [], string $basePath = '', array $matchTypes = [])
     {
         $this->addRoutes($routes);
         $this->setBasePath($basePath);
@@ -61,7 +61,7 @@ class AltoRouter
      * Useful if you want to process or display routes.
      * @return array All routes.
      */
-    public function getRoutes()
+    public function getRoutes(): array
     {
         return $this->routes;
     }
@@ -75,14 +75,14 @@ class AltoRouter
      *
      * @param array $routes
      * @return void
-     * @author Koen Punt
      * @throws Exception
+     *@author Koen Punt
      */
-    public function addRoutes($routes)
+    public function addRoutes(array $routes)
     {
-        if (!is_array($routes) && !$routes instanceof Traversable) {
-            throw new RuntimeException('Routes should be an array or an instance of Traversable');
-        }
+//        if (!is_array($routes) && !$routes instanceof Traversable) {
+//            throw new RuntimeException('Routes should be an array or an instance of Traversable');
+//        }
         foreach ($routes as $route) {
             call_user_func_array([$this, 'map'], $route);
         }
@@ -93,7 +93,7 @@ class AltoRouter
      * Useful if you are running your application from a subdirectory.
      * @param string $basePath
      */
-    public function setBasePath($basePath)
+    public function setBasePath(string $basePath)
     {
         $this->basePath = $basePath;
     }
@@ -114,22 +114,20 @@ class AltoRouter
      * @param string $method One of 5 HTTP Methods, or a pipe-separated list of multiple HTTP Methods (GET|POST|PATCH|PUT|DELETE)
      * @param string $route The route regex, custom regex must start with an @. You can use multiple pre-set regex filters, like [i:id]
      * @param mixed $target The target where this route should point to. Can be anything.
-     * @param string $name Optional name of this route. Supply if you want to reverse route this url in your application.
+     * @param string|null $name Optional name of this route. Supply if you want to reverse route this url in your application.
      * @throws Exception
      */
-    public function map($method, $route, $target, $name = null)
+    public function map(string $method, string $route, $target, string $name = null)
     {
 
         $this->routes[] = [$method, $route, $target, $name];
 
         if ($name) {
             if (isset($this->namedRoutes[$name])) {
-                throw new RuntimeException("Can not redeclare route '{$name}'");
+                throw new RuntimeException("Can not redeclare route '$name'");
             }
             $this->namedRoutes[$name] = $route;
         }
-
-        return;
     }
 
     /**
@@ -138,16 +136,16 @@ class AltoRouter
      * Generate the URL for a named route. Replace regexes with supplied parameters
      *
      * @param string $routeName The name of the route.
-     * @param array @params Associative array of parameters to replace placeholders with.
+     * @param array $params @params Associative array of parameters to replace placeholders with.
      * @return string The URL of the route with named parameters in place.
      * @throws Exception
      */
-    public function generate($routeName, array $params = [])
+    public function generate(string $routeName, array $params = []): string
     {
 
         // Check if named route exists
         if (!isset($this->namedRoutes[$routeName])) {
-            throw new RuntimeException("Route '{$routeName}' does not exist.");
+            throw new RuntimeException("Route '$routeName' does not exist.");
         }
 
         // Replace named parameters
@@ -156,7 +154,7 @@ class AltoRouter
         // prepend base path to route url again
         $url = $this->basePath . $route;
 
-        if (preg_match_all('`(/|\.|)\[([^:\]]*+)(?::([^:\]]*+))?\](\?|)`', $route, $matches, PREG_SET_ORDER)) {
+        if (preg_match_all('`(/|\.|)\[([^:\]]*+)(?::([^:\]]*+))?](\?|)`', $route, $matches, PREG_SET_ORDER)) {
             foreach ($matches as $index => $match) {
                 list($block, $pre, $type, $param, $optional) = $match;
 
@@ -182,18 +180,18 @@ class AltoRouter
 
     /**
      * Match a given Request Url against stored routes
-     * @param string $requestUrl
-     * @param string $requestMethod
+     * @param string|null $requestUrl
+     * @param string|null $requestMethod
      * @return array|boolean Array with route information on success, false on failure (no match).
      */
-    public function match($requestUrl = null, $requestMethod = null)
+    public function match(string $requestUrl = null, string $requestMethod = null)
     {
 
         $params = [];
 
         // set Request Url if it isn't passed as parameter
         if ($requestUrl === null) {
-            $requestUrl = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/';
+            $requestUrl = $_SERVER['REQUEST_URI'] ?? '/';
         }
 
         // strip base path from request url
@@ -208,7 +206,7 @@ class AltoRouter
 
         // set Request Method if it isn't passed as a parameter
         if ($requestMethod === null) {
-            $requestMethod = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'GET';
+            $requestMethod = $_SERVER['REQUEST_METHOD'] ?? 'GET';
         }
 
         foreach ($this->routes as $handler) {
@@ -267,9 +265,9 @@ class AltoRouter
      * @param $route
      * @return string
      */
-    protected function compileRoute($route)
+    protected function compileRoute($route): string
     {
-        if (preg_match_all('`(/|\.|)\[([^:\]]*+)(?::([^:\]]*+))?\](\?|)`', $route, $matches, PREG_SET_ORDER)) {
+        if (preg_match_all('`(/|\.|)\[([^:\]]*+)(?::([^:\]]*+))?](\?|)`', $route, $matches, PREG_SET_ORDER)) {
             $matchTypes = $this->matchTypes;
             foreach ($matches as $match) {
                 list($block, $pre, $type, $param, $optional) = $match;

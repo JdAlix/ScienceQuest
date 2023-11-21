@@ -11,7 +11,7 @@ class Jeu
     /**
      * @param int $id
      * @param string $nom
-     * @param string $nbParties
+     * @param int $nbrParties
      */
     public function __construct(int $id, string $nom, int $nbrParties)
     {
