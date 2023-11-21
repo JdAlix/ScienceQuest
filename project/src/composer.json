@@ -9,7 +9,10 @@
     "require": {
         "altorouter/altorouter": "^2.0",
         "twig/twig": "^3.7",
-        "twbs/bootstrap": "^5.3"
+        "twbs/bootstrap": "^5.3",
+        "ext-iconv": "*",
+        "ext-pdo": "*",
+        "ext-http": "*"
     },
     "scripts": {
       "post-update-cmd": [
