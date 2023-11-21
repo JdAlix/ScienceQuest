@@ -83,14 +83,12 @@ class ScienceQuizzController
 
         $this->dVue['statJeu'] = $dStatJeu;
 
-        $this->dVue['Jeu'] = $this->scienceQuizz->getJeu();
-
         echo $twig->render($config['templates']['scienceQuizz'], ['dVue' => $this->dVue, 'dVueErreur' => $this->dVueErreur]);
         ?>
         <script>
             setTimeout(function() {
-                window.location.href = "/ScienceQuizzReponse.php";
-            }, 10000);
+                window.location.href = "/scienceQuizzReponse.html";
+            }, 30000);
         </script>
         <?php
     }
