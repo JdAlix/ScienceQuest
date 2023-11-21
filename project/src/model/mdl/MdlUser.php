@@ -12,6 +12,11 @@ class MdlUser extends MdlBase{
     public function login(string $username, string $password): bool{
         return $this->gw->login($username, $password);
     }
+    public function register(string $username, string $password): bool{
+        $temp = new JoueurGateway($this->con);
+        $temp->insertJoueur($username);
+        return $this->gw->register($username, $password, $temp->getFromPseudo($username)["id"]);
+    }
 /*
     public function setPseudo(int $id, string $pseudo): User{
         $this->gw->setPseudo($id, $pseudo);

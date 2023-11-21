@@ -22,4 +22,14 @@ class UtilisateurConnecteGateway extends JoueurGateway {
         }
         return false;
     }
+    public function register(string $email, string $password, int $idjoueur): bool
+    {
+        $sql = "INSERT INTO Utilisateur(email, password,idjoueur) VALUES (:email,:password,:idjoueur);";
+        return $this->con->executeQuery($sql, [
+        ':email' => array($email, \PDO::PARAM_STR),
+        ':password' => array(password_hash($password, PASSWORD_BCRYPT), \PDO::PARAM_STR),
+        ':idjoueur' => array($idjoueur, \PDO::PARAM_INT)
+        ]
+        );
+    }
 }

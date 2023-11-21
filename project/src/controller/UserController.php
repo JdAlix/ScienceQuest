@@ -9,6 +9,7 @@ use model\Connection;
 use model\GameGateway;
 use model\MdlDifficulte;
 use model\MdlJeu;
+use model\PseudoDejaPrisException;
 use model\ValidationException;
 use model\MdlUser;
 use model\MdlAdmin;
@@ -92,6 +93,35 @@ class UserController {
             }
         } else {
             echo $twig->render('login.html');
+        }
+    }
+
+    public function register() {
+        global $twig, $dVueErreur;
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if($_REQUEST['password']!=$_REQUEST['cpassword']){
+                $dVueErreur[]="Mots de passe différents.";
+                echo $twig->render('erreur.html',["dVueErreur" => $dVueErreur]);
+                return;
+            }
+            $ug = new MdlUser();
+            try{
+            if($ug->register($_REQUEST['login'], $_REQUEST['password'])){
+                header('Location: login');
+            } else {
+                $dVueErreur[]="Erreur de création de compte. Le compte doit déjà exister.";
+                echo $twig->render('erreur.html',["dVueErreur" => $dVueErreur]);
+            }
+        } catch (PseudoDejaPrisException $ex){
+            $dVueErreur[]="Erreur de création de compte. Le compte existe déjà.";
+                echo $twig->render('erreur.html',["dVueErreur" => $dVueErreur]);
+        }catch(Exception $ex){
+            $dVueErreur[]="Erreur de création de compte.";
+            echo $twig->render('erreur.html',["dVueErreur" => $dVueErreur]);
+        }
+
+        } else {
+            echo $twig->render('register.html');
         }
     }
 

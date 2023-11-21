@@ -2,7 +2,7 @@
 
 namespace model;
 
-abstract class JoueurGateway
+class JoueurGateway
 {
     protected Connection $con;
 
@@ -21,7 +21,7 @@ abstract class JoueurGateway
      * @param string $pseudo
      * @return array|bool
      */
-    protected function getFromPseudo(string $pseudo) { // <- PHP 7.4
+    public function getFromPseudo(string $pseudo) { // <- PHP 7.4
         $this->con->executeQuery(
             "SELECT id, pseudo FROM Joueur WHERE pseudo = :pseudo;",
             [":pseudo" => [$pseudo, $this->con::PARAM_STR]]
@@ -29,7 +29,7 @@ abstract class JoueurGateway
         return $this->con->getOneResult();
     }
 
-    protected function insertJoueur(string $pseudo): int{
+    public function insertJoueur(string $pseudo): int{
         if($this->getFromPseudo($pseudo)){
             throw new PseudoDejaPrisException();
         }else{
