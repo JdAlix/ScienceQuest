@@ -25,7 +25,7 @@ class FrontController
     public function __construct()
     {
 
-        global $twig, $router;
+        global $twig, $router,  $dVue;
         global $basePath;
 
         //altorouter
@@ -38,7 +38,6 @@ class FrontController
         $router->map('GET|POST','/pseudo/[a:action]?','PseudoController');
         $router->map('GET|POST','/admin/[a:action]','AdminController');
         $router->map('GET|POST','/[a:action]?','UserController');
-        $router->map('GET|POST','/login','login');
 
         session_start();
 

@@ -17,9 +17,9 @@ use model\LoginException;
 class UserController {
 
     public function defaultAction(array $params) {
-        global $twig;
+        global $twig, $dVue;
 
-        echo $twig->render('accueil.html');
+        echo $twig->render('accueil.html', ["dVue"=>$dVue]);
     }
 
     public function joinParty(array $params) {
