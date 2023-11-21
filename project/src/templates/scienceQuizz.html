@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Science Quizz</title>
+    <!-- CSS -->
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .game-container {
+            text-align: center;
+        }
+
+        .answer-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+<div class="game-container">
+    <h1>Science Quizz</h1>
+    <div>
+        <p>Question {{ dVue.statJeu.numQuestion }}:</p>
+        <p>{{ dVue.statJeu.question.question }}</p>
+
+        <!-- Boutons des réponses -->
+        <button class="answer-button" type="submit" name="reponse" value="{{ dVue.statJeu.question.answer }}">
+            Show Answer
+        </button>
+    </div>
+
+    <!-- Gestion des erreurs -->
+    {% if dVueErreur %}
+    <div style="color: red;">
+        <ul>
+            {% for error in dVueErreur %}
+            <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+</div>
+<!-- JS -->
+</body>
+
+</html>

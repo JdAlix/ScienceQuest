@@ -41,14 +41,28 @@ class MdlScientifique extends MdlBase{
                                 $difficulte,
                                 $sexe);
     }
-    public function addScientifique(Scientifique $s){
+
+    /**
+     * @throws Exception
+     */
+    public function addScientifique(Scientifique $s): bool
+    {
 		return $this->gw->addScientifique($s);
 	}
-    public function editScientifique(Scientifique $s){
+
+    /**
+     * @throws Exception
+     */
+    public function editScientifique(Scientifique $s): bool
+    {
 		return $this->gw->editScientifique($s);
 	}
 
-    public function getScientifique(int $id){
+    /**
+     * @throws Exception
+     */
+    public function getScientifique(int $id): Scientifique
+    {
         $t=$this->gw->getScientifique($id);
         if(gettype($t)!="array"){
             throw new Exception("Scientifique non trouvé");
@@ -75,7 +89,24 @@ class MdlScientifique extends MdlBase{
             $diff,
             $sexe
         );
-        
-
 	}
+
+    /**
+     * @throws Exception
+     */
+    public function getQuestions(int $id): array
+    {
+        $t = $this->gw->getQuestions($id);
+
+        if (gettype($t) != "array") {
+            throw new Exception("Scientifique non trouvé");
+        }
+
+        $questions = [];
+
+        foreach ($t as $question) {
+            $questions[] = $question["libelle"];
+        }
+        return $questions;
+    }
 }

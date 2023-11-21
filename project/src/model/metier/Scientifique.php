@@ -16,6 +16,7 @@ class Scientifique
     private Thematique $thematique;
     private Difficulte $difficulte;
     private Sexe $sexe;
+    private array $questions;
 
     /**
      * @param int $id
@@ -28,6 +29,7 @@ class Scientifique
      * @param Thematique $thematique
      * @param Difficulte $difficulte
      * @param Sexe $sexe
+     * @param array $questions
      */
     public function __construct(int $id, 
                                 string $nom, 
@@ -38,7 +40,8 @@ class Scientifique
                                 float $ratioTrouvee,
                                 Thematique $thematique, 
                                 Difficulte $difficulte,
-                                Sexe $sexe)
+                                Sexe $sexe,
+                                array $questions = [])
     {
         $this->id = $id;
         $this->nom = $nom;
@@ -50,6 +53,7 @@ class Scientifique
         $this->thematique = $thematique;
         $this->difficulte = $difficulte;
         $this->sexe = $sexe;
+        $this->questions = $questions;
     }
 
     /**

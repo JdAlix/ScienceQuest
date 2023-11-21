@@ -2,6 +2,8 @@
 
 namespace model;
 
+use Exception;
+
 class ScientifiqueGateway
 {
     private Connection $con;
@@ -18,6 +20,7 @@ class ScientifiqueGateway
 
     /**
      * @return array|bool
+     * @throws Exception
      */
     public function getRandom() { // PHP 7.4
         $this->con->executeQuery(
@@ -26,6 +29,9 @@ class ScientifiqueGateway
         return $this->con->getOneResult();
     }
 
+    /**
+     * @throws Exception
+     */
     public function addScientifique(Scientifique $sci): bool{
         return $this->con->executeQuery(
             "INSERT INTO Scientifique(nom, prenom, photo, dateNaissance, descriptif, ratioTrouvee, idThematique, idDifficulte, idSexe) VALUES (:nom, :prenom, :photo, :dateNaissance, :descriptif, :ratioTrouvee, :idThematique, :idDifficulte, :idSexe);"
@@ -41,6 +47,10 @@ class ScientifiqueGateway
             ":idSexe"=>[$sci->getSexe()->getId(),$this->con::PARAM_STR]
         ]);
     }
+
+    /**
+     * @throws Exception
+     */
     public function editScientifique(Scientifique $sci): bool{
         return $this->con->executeQuery(
             "UPDATE Scientifique SET nom = :nom, prenom = :prenom, photo = :photo, dateNaissance = :dateNaissance, descriptif = :descriptif, ratioTrouvee = :ratioTrouvee, idThematique = :idThematique, idDifficulte = :idDifficulte, idSexe = :idSexe WHERE id=:id;"
@@ -57,6 +67,10 @@ class ScientifiqueGateway
             ":id"=>[$sci->getId(),$this->con::PARAM_INT]
         ]);
     }
+
+    /**
+     * @throws Exception
+     */
     public function deleteScientifique(int $id): bool{
         return $this->con->executeQuery(
             "DELETE FROM Scientifique WHERE id=:id;"
@@ -65,6 +79,9 @@ class ScientifiqueGateway
         ]);
     }
 
+    /**
+     * @throws Exception
+     */
     public function getScientifique(int $id) {
         $this->con->executeQuery(
             "SELECT id, nom, prenom, photo, dateNaissance, descriptif, ratioTrouvee, idThematique, idDifficulte, idSexe FROM Scientifique WHERE id=:id;"
@@ -72,5 +89,22 @@ class ScientifiqueGateway
             ":id"=>[$id,$this->con::PARAM_INT]
         ]);
         return $this->con->getOneResult();
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function getQuestions(int $idScientifique): array
+    {
+        $query = "SELECT q.* FROM Question q
+          JOIN Reponse r ON q.id = r.idQuestion
+          WHERE r.idScientifique = :idScientifique
+          ORDER BY RANDOM() LIMIT 5";
+
+        $params = [":idScientifique" => [$idScientifique, $this->con::PARAM_INT]];
+
+        $this->con->executeQuery($query, $params);
+
+        return $this->con->getResults();
     }
 }

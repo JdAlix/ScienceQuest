@@ -39,7 +39,11 @@ class FrontController
         $router->map('GET|POST','/admin/[a:action]','AdminController');
         $router->map('GET|POST','/[a:action]?','UserController');
 
-        session_start();
+        try {
+            session_start();
+        } catch (Exception $e) {
+            die('Session start failed: ' . $e->getMessage());
+        }
 
         if(isset($_SESSION['pseudo']))
             $dVue['pseudo'] = $_SESSION['pseudo'];

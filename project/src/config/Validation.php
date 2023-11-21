@@ -5,6 +5,7 @@ namespace config;
 use model\ConfigurationJeu;
 use model\Joueur;
 use model\MdlPendu;
+use model\MdlScienceQuizz;
 use model\ValidationException;
 
 class Validation
@@ -88,6 +89,16 @@ class Validation
             throw new ValidationException('Erreur mauvais jeu en utilisation');
         }
         return $pendu;
+    }
+
+    public static function valMdlScienceQuizz($scienceQuizz, array &$dVueErreur): MdlScienceQuizz
+    {
+        if(! $scienceQuizz instanceof MdlScienceQuizz){
+            $role = NULL;
+            $dVueErreur[] = 'Erreur, mauvais jeu en utilisation';
+            throw new ValidationException('Erreur, mauvais jeu en utilisation');
+        }
+        return $scienceQuizz;
     }
 
 }

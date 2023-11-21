@@ -29,6 +29,9 @@ class JouerController{
             if(count($dVueErreur) == 0){
                 $idJeu = $configurationJeu->getJeu()->getId();
                 switch($idJeu){
+                    case 2:
+                        new ScienceQuizzController($role, $configurationJeu);
+                        break;
                     case 3:
                         new PenduController($role, $configurationJeu);
                         break;
