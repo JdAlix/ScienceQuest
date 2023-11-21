@@ -79,7 +79,7 @@ class FrontController
             echo $twig->render('erreur.html', ['dVueErreur' => $dVueErreur]);
             echo $twig->render('login.html');
         } catch (Exception $e2) {
-            $dVueErreur[] = 'Erreur inattendue !'.$e2->getMessage();
+            $dVueErreur[] = 'Erreur inattendue !';
             echo $twig->render('erreur.html', ['dVueErreur' => $dVueErreur]);
         }
 
