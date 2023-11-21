@@ -57,8 +57,15 @@ class ScientifiqueGateway
             ":id"=>[$sci->getId(),$this->con::PARAM_INT]
         ]);
     }
+    public function deleteScientifique(int $id): bool{
+        return $this->con->executeQuery(
+            "DELETE FROM Scientifique WHERE id=:id;"
+        ,[
+            ":id"=>[$id,$this->con::PARAM_INT]
+        ]);
+    }
 
-    public function getScientifique(int $id): b {
+    public function getScientifique(int $id) {
         $this->con->executeQuery(
             "SELECT id, nom, prenom, photo, dateNaissance, descriptif, ratioTrouvee, idThematique, idDifficulte, idSexe FROM Scientifique WHERE id=:id;"
         ,[
