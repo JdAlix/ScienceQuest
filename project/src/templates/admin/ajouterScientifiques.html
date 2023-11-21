@@ -2,7 +2,7 @@
 <html lang="fr">
     <head>
         <meta charset="UTF-8">
-        <title>Créer une partie</title>
+        <title>Créer un.e scientifique</title>
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <style>
             p,
@@ -21,34 +21,45 @@
         <h1>ajouterScientifiques</h1>
 
         <br><br><br>
-            
         <center>
             <form action="" method="post">
                 <div>
                     <label for="name">Nom :</label>
-                    <input type="text" id="name" name="name" required minlength="1" maxlength="128"/>
+                    <input type="text" id="name" name="name" required minlength="1" maxlength="128"
+                    value="{% if scientifique is not null %}{{ scientifique.nom }}{% endif %}"/>
                 </div>
                 <div>
                     <label for="name">Prénom :</label>
-                    <input type="text" id="prenom" name="prenom" required minlength="1" maxlength="128"/>
+                    <input type="text" id="prenom" name="prenom" required minlength="1" maxlength="128"
+                    value="{% if scientifique is not null %}{{ scientifique.prenom }}{% endif %}"/>
                 </div>
                 <div>
                     <label for="name">URL de la photo :</label>
-                    <input type="text" id="url" name="url" required minlength="1" maxlength="512"/>
+                    <input type="text" id="url" name="url" required minlength="1" maxlength="512"
+                    value="{% if scientifique is not null %}{{ scientifique.photo }}{% endif %}"/>
                 </div>
                 <div>
                     <label for="name">Date de naissance :</label>
-                    <input type="date" id="date" name="date" required/>
+                    <input type="date" id="date" name="date" required
+                    value="{% if scientifique is not null %}{{ scientifique.date|date('Y-m-d') }}{% endif %}"/>
                 </div>
                 <div>
                     <label for="name">Description (histoire, accomplissements...) :</label>
-                    <textarea name="description" cols="40" rows="5"></textarea>
+                    <textarea name="description" cols="40" rows="5">{% if scientifique is not null %}{{ scientifique.descriptif }}{% endif %}</textarea>
                 </div>
                 <fieldset>
                     <legend>Sexe :</legend>
                     {% for se in sexe %}
                     <div>
-                    <input type="radio" id="sexe{{se.id}}" name="sexe" value="{{se.id}}" />
+                    <input type="radio" id="sexe{{se.id}}" name="sexe" value="{{se.id}}"
+                    {% if scientifique is not null %}
+                    {% if scientifique.sexe.getId == se.id  %}
+                    checked
+                    {% endif %}
+                    {% endif %}
+                    
+                    
+                    />
                     <label for="{{se.id}}">{{se.libelle}}</label>
                     </div>
                     {% endfor %}
@@ -57,7 +68,14 @@
                     <legend>Thematique :</legend>
                     {% for se in themes %}
                     <div>
-                    <input type="radio" id="theme{{se.id}}" name="theme" value="{{se.id}}" />
+                    <input type="radio" id="theme{{se.id}}" name="theme" value="{{se.id}}" 
+                    {% if scientifique is not null %}
+                    {% if scientifique.thematique.getId == se.id  %}
+                    checked
+                    {% endif %}
+                    {% endif %}
+                    
+                    />
                     <label for="{{se.id}}">{{se.libelle}}</label>
                     </div>
                     {% endfor %}
@@ -66,7 +84,14 @@
                     <legend>Difficulté :</legend>
                     {% for se in difficultes %}
                     <div>
-                    <input type="radio" id="diff{{se.id}}" name="difficulte" value="{{se.id}}" />
+                    <input type="radio" id="diff{{se.id}}" name="difficulte" value="{{se.id}}" 
+                    {% if scientifique is not null %}
+                    {% if scientifique.difficulte.getId == se.id  %}
+                    checked
+                    {% endif %}
+                    {% endif %}
+
+                    />
                     <label for="{{se.id}}">{{se.libelle}}</label>
                     </div>
                     {% endfor %}
