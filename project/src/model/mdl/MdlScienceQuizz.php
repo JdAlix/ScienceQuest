@@ -89,7 +89,7 @@ class MdlScienceQuizz
     /**
      * @throws Exception
      */
-    public function getRandomQuestion(array $questions): array
+    public function getRandomQuestion(array $questions): string
     {
         $randomNum=random_int(0, count($questions)-1);
         $question=$questions[$randomNum];
