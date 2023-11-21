@@ -60,10 +60,10 @@ class FrontController
 
                 case 'AdminController':
                     $action = $match['params']['action'] ?? '';
-                    //if (!MdlAdmin::isAdmin()) {
-                    //    $action = 'login';
-                    //}
-                    new AdminController($match['params']);
+                    if (!MdlAdmin::isAdmin()) {
+                        $match['params']['action'] = 'notLogged';
+                    }
+                    $this->callController('AdminController',$match);
                     break;
 
                 case 'PseudoController':

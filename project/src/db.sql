@@ -159,20 +159,34 @@ CREATE TABLE Partie(
 
 -- INSERTS
 
-INSERT INTO Jeu(nom) VALUES ('Qui-est-ce ?'),('Kahoot'), ('Pendu');
-
+-- Scientifiques
 INSERT INTO Difficulte(libelle) VALUES ('Facile'),('Intermédiaire'),('Difficile');
-
 INSERT INTO Sexe(libelle) VALUES ('Homme'),('Femme');
-
 INSERT INTO Thematique(libelle) VALUES ('Nucléaire'),('Mathématiques');
-
 INSERT INTO Scientifique(nom, prenom, photo, dateNaissance, descriptif, ratioTrouvee, idThematique, idDifficulte, idSexe)
 VALUES
-    ('nomToto', 'prenomToto', '', CURRENT_DATE, 'desc', 0, 1, 1, 1),
-    ('nomTiti', 'prenomTiti', '', CURRENT_DATE, 'desc', 0, 2, 2, 2);
+    ('Marie', 'Curie', '', CURRENT_DATE, 'desc', 0, 1, 1, 2),
+    ('Albert', 'Einstein', '', CURRENT_DATE, 'desc', 0, 2, 1, 1),
+    ('Sophie', 'Germain', '', CURRENT_DATE, 'desc', 0, 2, 2, 2);
 
+-- Jeu
+INSERT INTO Jeu(nom) VALUES ('Qui-est-ce ?'),('Science Quizz'), ('Pendu');
 
+-- Questions
+INSERT INTO Question(question)
+VALUES
+    ('Qui a reçu le prix Nobel de chimie en 1911, pour avoir réussi à isoler un gramme de radium ?'),
+    ('Quel mathématicien a dit : « Dieu existe, c’est les mathématiques » ?'),
+    ('Quel mathématicienne utilisa comme nom d"emprunt « Antoine Auguste Le Blanc » ?');
+
+-- Réponses
+INSERT INTO Reponse(reponse, idQuestion, idScientifique)
+VALUES
+    ('Marie Curie', 1, 1),
+    ('Albert Einstein', 2, 2),
+    ('Sophie Germain', 3, 3);
+
+-- Utilisateurs
 INSERT INTO Joueur(id,pseudo) VALUES (1337, 'moi, le meilleur joueur du monde');
 INSERT INTO Utilisateur(idJoueur,email,password) VALUES (1337, 'joueur','$2y$10$juGnlWC9cS19popEKLZsYeir0Jl39k6hDl0dpaCix00FDcdiEbtmS');
 -- mdp = test

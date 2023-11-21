@@ -77,4 +77,37 @@ class MdlScientifique extends MdlBase{
         $nbElemParPage = 20;
         return ceil($this->gw->getNbScientifique()/$nbElemParPage);
     }
+
+    public function editScientifique(Scientifique $s){
+		return $this->gw->editScientifique($s);
+	}
+
+    public function getScientifique(int $id){
+        $t=$this->gw->getScientifique($id);
+        if(gettype($t)!="array"){
+            throw new Exception("Scientifique non trouvé");
+        }
+
+        $sexe=new MdlSexe();
+        $sexe=$sexe->getFromId($t["idsexe"]);
+
+        $diff=new MdlDifficulte();
+        $diff=$diff->getFromId($t["iddifficulte"]);
+
+        $theme=new MdlThematique();
+        $theme=$theme->getFromId($t["idthematique"]);
+
+        return new Scientifique(
+            $id,
+            $t["nom"],
+            $t["prenom"],
+            $t["photo"],
+            DateTime::createFromFormat("Y-m-d", $t["datenaissance"]),
+            $t["descriptif"],
+            $t["ratiotrouvee"],
+            $theme,
+            $diff,
+            $sexe
+        );
+	}
 }
