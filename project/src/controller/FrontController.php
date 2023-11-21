@@ -31,6 +31,9 @@ class FrontController
         //altorouter
         $router = new AltoRouter();
         $router->setBasePath($basePath);
+        
+        // Correspond à action = null et permet d'éviter une erreur sur la page /index.php
+        $router->map('GET|POST','/index.php','UserController');
 
         $router->map('GET|POST','/pseudo/[a:action]?','PseudoController');
         $router->map('GET|POST','/admin/[a:action]','AdminController');
