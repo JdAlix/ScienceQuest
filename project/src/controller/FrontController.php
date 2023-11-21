@@ -27,6 +27,7 @@ class FrontController
 
         global $twig, $router,  $dVue;
         global $basePath;
+        global $dVueErreur;
 
         //altorouter
         $router = new AltoRouter();
@@ -36,7 +37,7 @@ class FrontController
         $router->map('GET|POST','/index.php','UserController');
 
         $router->map('GET|POST','/pseudo/[a:action]?','PseudoController');
-        $router->map('GET|POST','/admin/[a:action]','AdminController');
+        $router->map('GET|POST','/admin/[a:action]?/[i:id]?','AdminController');
         $router->map('GET|POST','/[a:action]?','UserController');
 
         session_start();
@@ -58,11 +59,11 @@ class FrontController
                     break;
 
                 case 'AdminController':
-                    $action = $match['params']['action'];
+                    $action = $match['params']['action'] ?? '';
                     //if (!MdlAdmin::isAdmin()) {
                     //    $action = 'login';
                     //}
-                    new AdminController($action);
+                    new AdminController($match['params']);
                     break;
 
                 case 'PseudoController':
@@ -74,10 +75,6 @@ class FrontController
                     echo $twig->render('accueil.html', ['dVueErreur' => $dVueErreur]);
                     break;
             }
-        } catch (PDOException $e) {
-            $dVueErreur[] = 'Erreur avec la base de données !';
-            $dVueErreur[] = $e->getMessage();
-            echo $twig->render('erreur.html', ['dVueErreur' => $dVueErreur]);
         } catch (LoginException $e) {
             echo $twig->render('erreur.html', ['dVueErreur' => $dVueErreur]);
             echo $twig->render('login.html');

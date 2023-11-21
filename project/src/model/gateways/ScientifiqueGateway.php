@@ -41,4 +41,20 @@ class ScientifiqueGateway
             ":idSexe"=>[$sci->getSexe()->getId(),$this->con::PARAM_STR]
         ]);
     }
+
+    public function getScientifiquesParPages(int $currentPage, int $nbElemByPage) : array {
+        $query = 'SELECT * FROM Scientifique LIMIT :nbElem OFFSET :ind ';
+        $index = ($currentPage-1)*$nbElemByPage;
+        $this->con->executeQuery($query,array(
+            ':ind' => array($index,\PDO::PARAM_INT),
+            ':nbElem' => array($nbElemByPage,\PDO::PARAM_INT)
+        ));
+        return $this->con->getResults();
+    }
+
+    public function getNbScientifique() : int {
+        $query = 'SELECT DISTINCT count(*) as val FROM Scientifique';
+        $this->con->executeQuery($query);
+        return $this->con->getResults()[0]['val'];
+    }
 }

@@ -16,7 +16,6 @@
 
     // Tableau qui contient les messages d'erreur
     $dVueErreur = [];
-    $dVue = [];
     $dVue['basePath'] = $basePath;
 
     $cont = new FrontController();

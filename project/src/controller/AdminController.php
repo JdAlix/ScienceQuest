@@ -1,5 +1,6 @@
 <?php
 namespace controller;
+use config\Validation;
 use Exception;
 use PDOException;
 use model\MdlDifficulte;
@@ -10,8 +11,9 @@ use model\Scientifique;
 
 //gerer la connexion des admins
 class AdminController {
-	public function __construct(string $action){
+	public function __construct(array $params){
 		global $twig;
+        global $dVue;
 		//on initialise un tableau d'erreur pour être utilisé par la vue erreur
 		$dVueErreur = [];
 		
@@ -20,13 +22,16 @@ class AdminController {
 			if($_SESSION["isAdmin"]==true){
 			//donner la page admin a l'admin
 			try {
-				switch($action) {
+				switch($params['action']) {
+
 					case '':
 						echo $twig->render('admin/accueil.html');
 						break;
+
 					case 'stats':
 						echo $twig->render('admin/stats.html');
 						break;
+
 					case 'ajouterScientifiques':
 						$sexe = new MdlSexe();
 						$theme = new MdlThematique();
@@ -47,15 +52,36 @@ class AdminController {
 						}
 						echo $twig->render('admin/ajouterScientifiques.html',['sexe' => $sexe->getAll(), 'themes' => $theme->getAll(), 'difficultes' => $diff->getAll()]);
 						break;
-					//mauvaise action
+
+                    case 'listeScientifiques':
+                        $ms = new MdlScientifique();
+                        if (!isset($params['id'])) {
+                            $page = 1;
+                        } else {
+                            $page = Validation::valPosInt($params['id']);
+                        }
+                        $dVue['listeScientifiques'] = $ms->getScientifiquesParPage($page);
+                        $dVue['pageMax'] = $ms->getMaxPages();
+                        $dVue['page'] = $page;
+                        if ($page - 1 <= 0) {
+                            $dVue['pagePrec'] = 1;
+                        } else {
+                            $dVue['pagePrec'] = $page - 1;
+                        }
+                        if ($page + 1 >= $dVue['pageMax']) {
+                            $dVue['pageSuiv'] = $dVue['pageMax'];
+                        } else {
+                            $dVue['pageSuiv'] = $page + 1;
+                        }
+                        echo $twig->render('admin/listeScientifiques.html',['dVue' => $dVue]);
+                        break;
+
+                    //mauvaise action
 					default:
 						$dVueErreur[] = "Erreur d'appel php";
 						echo $twig->render('erreur.html', ['dVueErreur' => $dVueErreur]);
 						break;
 				}
-			} catch (\PDOException $e) {
-				$dVueErreur[] = 'Erreur avec la base de données !';
-				echo $twig->render('erreur.html', ['dVueErreur' => $dVueErreur]);
 			} catch (\Exception $e2) {
 				$dVueErreur[] = 'Erreur inattendue !';
 				echo $twig->render('erreur.html', ['dVueErreur' => $dVueErreur]);

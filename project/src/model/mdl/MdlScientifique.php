@@ -44,4 +44,37 @@ class MdlScientifique extends MdlBase{
     public function addScientifique(Scientifique $s){
 		return $this->gw->addScientifique($s);
 	}
+
+    public function getScientifiquesParPage(int $page) : array {
+        $nbElemParPage = 20;
+        $pageMax = ceil($this->gw->getNbScientifique()/$nbElemParPage);
+        if ($page <= 0) {
+            $page = 1;
+        } elseif ($page > $pageMax) {
+            $page = $pageMax;
+        }
+        $result = $this->gw->getScientifiquesParPages($page,$nbElemParPage);
+        $scientifiques = array();
+        foreach ($result as $scientifique) {
+            $sexe = $this->mdlSexe->getFromId($scientifique['idsexe']);
+            $difficulte = $this->mdlDifficulte->getFromId($scientifique['iddifficulte']);
+            $thematique = $this->mdlThematique->getFromId($scientifique['idthematique']);
+            $scientifiques[] = new Scientifique($scientifique['id'],
+                $scientifique['nom'],
+                $scientifique['prenom'],
+                $scientifique['photo'],
+                new DateTime($scientifique['datenaissance']),
+                $scientifique['descriptif'],
+                $scientifique['ratiotrouvee'],
+                $thematique,
+                $difficulte,
+                $sexe);
+        }
+        return $scientifiques;
+    }
+
+    public function getMaxPages() : int {
+        $nbElemParPage = 20;
+        return ceil($this->gw->getNbScientifique()/$nbElemParPage);
+    }
 }
