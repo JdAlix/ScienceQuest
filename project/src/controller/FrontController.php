@@ -35,6 +35,7 @@ class FrontController
         $router->map('GET|POST','/pseudo/[a:action]?','PseudoController');
         $router->map('GET|POST','/admin/[a:action]','AdminController');
         $router->map('GET|POST','/[a:action]?','UserController');
+        $router->map('GET|POST','/login','login');
 
         session_start();
 
@@ -56,16 +57,15 @@ class FrontController
 
                 case 'AdminController':
                     $action = $match['params']['action'];
-                    if (!MdlAdmin::isAdmin()) {
-                        $action = 'login';
-                    }
-                    $this->callController('AdminController',$action);
+                    //if (!MdlAdmin::isAdmin()) {
+                    //    $action = 'login';
+                    //}
+                    new AdminController($action);
                     break;
 
                 case 'PseudoController':
                     $this->callController('PseudoController',$match);
                     break;
-
                 //mauvaise action
                 default:
                     $dVueErreur[] = "Erreur d'appel php";

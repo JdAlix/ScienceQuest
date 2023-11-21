@@ -11,8 +11,7 @@
         "twig/twig": "^3.7",
         "twbs/bootstrap": "^5.3",
         "ext-iconv": "*",
-        "ext-pdo": "*",
-        "ext-http": "*"
+        "ext-pdo": "*"
     },
     "scripts": {
       "post-update-cmd": [

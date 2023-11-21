@@ -10,6 +10,9 @@ use model\GameGateway;
 use model\MdlDifficulte;
 use model\MdlJeu;
 use model\ValidationException;
+use model\MdlUser;
+use model\MdlAdmin;
+use model\LoginException;
 
 class UserController {
 
@@ -60,6 +63,33 @@ class UserController {
         }else{
             header("Location: .");
         }
+    }
+
+    public function login() {
+        global $twig;
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+                        Validation::valUserLogin($_REQUEST['login'], $dVueErreur);
+                        $ug = new MdlUser();
+                        if($ug->login($_REQUEST['login'], $_REQUEST['password'])) {
+                            $_SESSION['pseudo'] = $_REQUEST['login'];
+                            $_SESSION['isLogged'] = true;
+                            header("Location: .");
+                        } else {
+                            //voir si c'est un admin
+                            $ug = new MdlAdmin();
+                            if($ug->login($_REQUEST['login'], $_REQUEST['password'])) {
+                                $_SESSION['pseudo'] = $_REQUEST['login'];
+                                $_SESSION['isAdmin'] = true;
+                                $_SESSION['isLogged'] = true;
+                                header("Location: .");
+                            } else {
+                                $dVueErreur[] = "Connexion échouée";
+                                throw new LoginException("Connexion err");
+                            }
+                        }
+                    } else {
+            echo $twig->render('login.html');
+                    }
     }
 
     public function createParty(array $params) : void
