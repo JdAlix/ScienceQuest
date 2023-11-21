@@ -14,4 +14,13 @@ class MdlThematique extends MdlBase{
         $row = $this->gw->getFromId($id);
         return new Thematique($row['id'], $row['libelle']);
     }
+
+    public function getAll(): array {
+        $ret=array();
+        $row = $this->gw->getAll();
+        for($i=0; $i< count($row); $i++){
+            array_push($ret, new Thematique($row[$i]['id'], $row[$i]['libelle']));
+        }
+        return $ret;
+    }
 }

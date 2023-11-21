@@ -6,5 +6,10 @@ $config = [
 
     "db" => ["dsn" => 'pgsql:host=localhost;dbname=dbrebeuret',
              "login" => 'rebeuret',
-             "mdp" => 'achanger']
+             "mdp" => 'achanger'],
+    "templates" => ["index" => 'vues/index.php',
+        "pseudo" => 'pseudo.html',
+        "jouer" => "jouer.html",
+        "pendu" => "pendu.html",
+        "penduScore" => 'penduScore.html']
 ];
