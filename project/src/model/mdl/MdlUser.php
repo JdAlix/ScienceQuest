@@ -3,7 +3,7 @@
 namespace model;
 
 class MdlUser extends MdlBase{
-    private JoueurGateway $gw;
+    private UtilisateurConnecteGateway $gw;
 
     public function __construct(){
         parent::__construct();
