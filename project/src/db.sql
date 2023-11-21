@@ -159,6 +159,10 @@ CREATE TABLE Partie(
 
 -- INSERTS
 
+-- Scientifiques
+INSERT INTO Difficulte(libelle) VALUES ('Facile'),('Intermédiaire'),('Difficile');
+INSERT INTO Sexe(libelle) VALUES ('Homme'),('Femme');
+INSERT INTO Thematique(libelle) VALUES ('Nucléaire'),('Mathématiques');
 INSERT INTO Scientifique(nom, prenom, photo, dateNaissance, descriptif, ratioTrouvee, idThematique, idDifficulte, idSexe)
 VALUES
     ('Marie', 'Curie', '', CURRENT_DATE, 'desc', 0, 1, 1, 2),
@@ -167,7 +171,6 @@ VALUES
 
 -- Jeu
 INSERT INTO Jeu(nom) VALUES ('Qui-est-ce ?'),('Science Quizz'), ('Pendu');
-INSERT INTO Difficulte(libelle) VALUES ('Facile'),('Intermédiaire'),('Difficile');
 
 -- Questions
 INSERT INTO Question(question)
@@ -183,13 +186,7 @@ VALUES
     ('Albert Einstein', 2, 2),
     ('Sophie Germain', 3, 3);
 
-INSERT INTO Sexe(libelle) VALUES ('Homme'),('Femme');
-
-INSERT INTO Thematique(libelle) VALUES ('Nucléaire'),('Mathématiques');
-
-
-
-
+-- Utilisateurs
 INSERT INTO Joueur(id,pseudo) VALUES (1337, 'moi, le meilleur joueur du monde');
 INSERT INTO Utilisateur(idJoueur,email,password) VALUES (1337, 'joueur','$2y$10$juGnlWC9cS19popEKLZsYeir0Jl39k6hDl0dpaCix00FDcdiEbtmS');
 -- mdp = test
