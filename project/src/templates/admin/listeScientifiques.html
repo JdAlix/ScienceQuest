@@ -19,7 +19,7 @@
     <br><br><br><br>
 
     <center>
-        <a href="../ajouterScientifiques">Ajouter un(e) scientifique</a>
+        <a href="ajouterScientifiques">Ajouter un(e) scientifique</a>
         {% for scientifique in dVue.listeScientifiques %}
             <div>
                 <h2>{{ scientifique.getNom() }} {{ scientifique.getPrenom() }}</h2>
@@ -27,7 +27,7 @@
                 <p>Né(e) le {{ scientifique.getDateNess() }}</p>
                 <p>Thematique : {{ scientifique.getThematique() }}</p>
                 <p>Difficulté à trouver : {{ scientifique.getDifficulte() }}</p>
-                <a href='../ajouterScientifiques?id={{scientifique.getId()}}'>Modifier</a>
+                <a href='ajouterScientifiques?id={{scientifique.getId()}}'>Modifier</a>
             </div>
         <br>
         <br>
