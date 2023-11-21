@@ -134,7 +134,7 @@ class MdlScientifique extends MdlBase{
         $questions = [];
 
         foreach ($t as $question) {
-            $questions[] = $question["libelle"];
+            $questions[] = $question["question"];
         }
         return $questions;
     }
