@@ -7,6 +7,7 @@ use Exception;
 use model\ConfigurationJeu;
 use model\Connection;
 use model\GameGateway;
+use model\Joueur;
 use model\MdlDifficulte;
 use model\MdlJeu;
 use model\MdlScientifique;
@@ -15,6 +16,7 @@ use model\ValidationException;
 use model\MdlUser;
 use model\MdlAdmin;
 use model\LoginException;
+use model\Utilisateur;
 
 class UserController {
 
@@ -112,6 +114,7 @@ class UserController {
                 $_SESSION['pseudo'] = $_REQUEST['login'];
                 $_SESSION['idUser'] = true;
                 $_SESSION['isLogged'] = true;
+                $_SESSION['role'] = $ug->getFromEmail($_REQUEST['login']);
                 header("Location: .");
             } else {
                 //voir si c'est un admin
@@ -120,6 +123,7 @@ class UserController {
                     $_SESSION['pseudo'] = $_REQUEST['login'];
                     $_SESSION['isAdmin'] = true;
                     $_SESSION['isLogged'] = true;
+                    unset($_SESSION['role']);
                     header("Location: .");
                 } else {
                     $dVueErreur[] = "Connexion échouée";
@@ -161,6 +165,7 @@ class UserController {
     }
 
     public function logout(){
+        session_destroy();
         $_SESSION=[];
         header("Location: .");
     }
@@ -206,7 +211,11 @@ class UserController {
             $difficulte = (new MdlDifficulte())->getFromId($id_difficulte);
             $_SESSION['configuration'] = new ConfigurationJeu($jeu, $difficulte);
 
-            header("Location: ".$basePath."/pseudo");
+            if(isset($_SESSION['role'])){
+                header('Location: '.$basePath.'/jouer');
+            }else{
+                header("Location: ".$basePath."/pseudo");
+            }
             #echo $twig->render('accueil.html', ['dVue' => $dVue, 'dVueErreur' => $dVueErreur]);
         }else{
             $this->CreateParty($dVueErreur);

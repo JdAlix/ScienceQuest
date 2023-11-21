@@ -7,14 +7,18 @@ use model\Joueur;
 use model\MdlPendu;
 use model\MdlScientifique;
 use config\Validation;
+use model\MdlUser;
+use model\Utilisateur;
 use model\ValidationException;
 
 class PenduController{
     private array $dVue;
+    private Joueur $role;
     private array $dVueErreur;
     private MdlPendu $pendu;
     public function __construct(Joueur $role, ConfigurationJeu $configJeu)
     {
+        $this->role=$role;
         $this->dVue = [];
         $this->dVueErreur = [];
         if(isset($_SESSION['pendu']) && Validation::valMdlPendu($_SESSION['pendu'], $this->dVueErreur)){
@@ -57,8 +61,15 @@ class PenduController{
         echo $twig->render($config['templates']['pendu'], ['dVue' => $this->dVue, 'dVueErreur'=>$this->dVueErreur]);
     }
 
+    private function ajouterScientifiqueDecouvert(){
+        if($this->role instanceof Utilisateur){
+           (new MdlUser())->addScientifiqueDecouvert($this->role->getId(), $this->pendu->getScientifique()->getId());
+        }
+    }
+
     private function renderAgagne(){
         $this->dVue['messageScore'] = "Vous avez gagné !";
+        $this->ajouterScientifiqueDecouvert();
         $this->renderScore();
     }
 

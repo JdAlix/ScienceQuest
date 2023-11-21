@@ -2,19 +2,21 @@
 
 namespace model;
 
-class Admin extends User
+class Admin
 {
+    private int $id;
     private string $email;
+    private string $password;
 
     /**
      * @param int $id
-     * @param string $username
      * @param string $password
      * @param string $email
      */
-    public function __construct(int $id, string $username, string $password, string $email)
+    public function __construct(int $id, string $email, string $password)
     {
-        parent::__construct($id, $username, $password);
+        $this->id=$id;
+        $this->password=$password;
         $this->email = $email;
     }
 
@@ -23,14 +25,23 @@ class Admin extends User
      */
     public function getEmail(): string
     {
-        return parent::getUsername();
+        return $this->email;
     }
 
     /**
-     * @param string $email
+     * @return int
      */
-    public function setEmail(string $email): void
+    public function getId(): int
     {
-        parent::setUsername($email);
-    }
+        return $this->id;
+    }   
+    
+    /**
+    * @return string
+    */
+   public function getPassword(): string
+   {
+       return $this->password;
+   }
+
 }

@@ -38,19 +38,9 @@ class MdlAdmin extends MdlBase{
         $_SESSION = array();
         header("Location: .");
     }
-/*
-    public function setPseudo(int $id, string $pseudo): User{
-        $this->gw->setPseudo($id, $pseudo);
-        return $this->getFromId($id);
-    }
 
-    public function insertInvite(string $pseudo, string $idSession): User{
-        $id = $this->gw->insertInvite($pseudo, $idSession);
-        return $this->getFromId($id);
+    public function getFromEmail(string $email): Admin{
+        $row = $this->gw->getFromEmail($email);
+        return new Admin($row['id'], $row['email'], $row['password']);
     }
-
-    public function getFromId(int $id): User{
-        $row = $this->gw->getFromId($id);
-        return new Invite($row['idjoueur'], $row['pseudo'], $row['idsession']);
-    }*/
 }

@@ -51,14 +51,14 @@ class AdminGateway
         $stmt->bindValue(':password', password_hash($password,  PASSWORD_DEFAULT));
         $stmt->execute();
     }
-    public function getUser(int $id): User
+    public function getUser(int $id): Admin
     {
         $sql = "SELECT * FROM Admin WHERE id=:id";
         $stmt = $this->con->prepare($sql);
         $stmt->bindValue(':id', $id);
         $stmt->execute();
         $result = $stmt->fetch();
-        return new User($result['id'], $result['email'], $result['password']);
+        return new Admin($result['id'], $result['email'], $result['password']);
     }
     public function getUsers(): array
     {
@@ -68,7 +68,7 @@ class AdminGateway
         $result = $stmt->fetchAll();
         $users = [];
         foreach ($result as $user) {
-            $users[] = new User($user['id'], $user['email'], $user['password']);
+            $users[] = new Admin($user['id'], $user['email'], $user['password']);
         }
         return $users;
     }
@@ -100,7 +100,7 @@ class AdminGateway
         $result = $stmt->fetch();
         return $result['id'];
     }
-    public function getUserByEmailAndPassword(string $email, string $password): User
+    public function getUserByEmailAndPassword(string $email, string $password): Admin
     {
         $sql = "SELECT * FROM Admin WHERE email=:email AND password=:password";
         $stmt = $this->con->prepare($sql);
@@ -108,6 +108,15 @@ class AdminGateway
         $stmt->bindValue(':password', password_hash($password,  PASSWORD_DEFAULT));
         $stmt->execute();
         $result = $stmt->fetch();
-        return new User($result['id'], $result['email'], $result['password']);
+        return new Admin($result['id'], $result['email'], $result['password']);
+    }
+
+    public function getFromEmail(string $email): array
+    {
+        $this->con->executeQuery(
+            "SELECT id, email, password FROM Admin WHERE email = :email;",
+            [":pseudo" => [$email, $this->con::PARAM_STR]]
+        );
+        return $this->con->getOneResult();
     }
 }

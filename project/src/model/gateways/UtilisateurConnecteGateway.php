@@ -32,4 +32,28 @@ class UtilisateurConnecteGateway extends JoueurGateway {
         ]
         );
     }
+
+    public function getFromId(int $id){
+        $this->con->executeQuery(
+            "SELECT idJoueur, pseudo, email, password FROM Utilisateur JOIN Joueur ON id=idJoueur WHERE id = :id;",
+            [":id" => [$id, $this->con::PARAM_INT]]
+        );
+        return $this->con->getOneResult();
+    }
+
+    public function getFromEmail(string $email){
+        $this->con->executeQuery(
+            "SELECT idJoueur, pseudo, email, password FROM Utilisateur JOIN Joueur ON id=idJoueur WHERE email = :email;",
+            [":email" => [$email, $this->con::PARAM_STR]]
+        );
+        return $this->con->getOneResult();
+    }
+
+    public function addScientifiqueDecouvert(int $idUtilisateur, int $idScientifique){
+        $this->con->executeQuery(
+            "INSERT INTO Decouvrir(idUtilisateur, idScientifique) VALUES (:idUtilisateur, :idScientifique);",
+            [":idUtilisateur" => [$idUtilisateur, $this->con::PARAM_INT],
+             ":idScientifique" => [$idScientifique, $this->con::PARAM_INT]]
+        );
+    }
 }
