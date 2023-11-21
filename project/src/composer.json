@@ -16,7 +16,7 @@
     },
     "scripts": {
       "post-update-cmd": [
-        "mkdir -p /css",
+        "mkdir -p ./css",
         "mkdir -p ./js",
         "rm -f ./js/bootstrap*.js*",
         "rm -f ./css/bootstrap*.css*",
