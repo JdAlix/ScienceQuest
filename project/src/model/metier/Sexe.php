@@ -22,4 +22,9 @@ class Sexe
     {
         return $this->libelle;
     }
+
+    public function __toString()
+    {
+        return $this->libelle;
+    }
 }

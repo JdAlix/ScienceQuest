@@ -91,6 +91,13 @@ class Validation
         return $pendu;
     }
 
+    public static function valPosInt($val) : int {
+        if(is_int($val) && $val > 0) {
+            return 0;
+        }
+        return $val;
+    }
+
     public static function valMdlScienceQuizz($scienceQuizz, array &$dVueErreur): MdlScienceQuizz
     {
         if(! $scienceQuizz instanceof MdlScienceQuizz){

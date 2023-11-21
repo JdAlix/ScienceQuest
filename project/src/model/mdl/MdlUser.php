@@ -3,11 +3,11 @@
 namespace model;
 
 class MdlUser extends MdlBase{
-    private UserGateway $gw;
+    private JoueurGateway $gw;
 
     public function __construct(){
         parent::__construct();
-        $this->gw = new UserGateway($this->con);
+        $this->gw = new UtilisateurConnecteGateway($this->con);
     }
     public function login(string $username, string $password): bool{
         return $this->gw->login($username, $password);

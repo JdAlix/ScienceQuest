@@ -30,4 +30,8 @@ class Difficulte
     public function getLibelle(): string{
         return $this->libelle;
     }
+
+    public function __toString() {
+        return $this->libelle;
+    }
 }
