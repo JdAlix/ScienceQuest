@@ -2,6 +2,7 @@
 
 namespace controller;
 
+use Exception;
 use model\ConfigurationJeu;
 use model\Joueur;
 use model\MdlPendu;
@@ -10,12 +11,19 @@ use config\Validation;
 use model\MdlUser;
 use model\Utilisateur;
 use model\ValidationException;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class PenduController{
     private array $dVue;
     private Joueur $role;
     private array $dVueErreur;
     private MdlPendu $pendu;
+
+    /**
+     * @throws Exception
+     */
     public function __construct(Joueur $role, ConfigurationJeu $configJeu)
     {
         $this->role=$role;
@@ -44,6 +52,9 @@ class PenduController{
         }
     }
 
+    /**
+     * @throws Exception
+     */
     private function reinit(){
         $mdlScientifique = new MdlScientifique();
         $scientifique = $mdlScientifique->getRandom();
@@ -51,6 +62,11 @@ class PenduController{
         $_SESSION['pendu'] = $this->pendu;
     }
 
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
     private function renderJeu(){
         global $twig, $config;
         $this->dVue['decouvert'] = $this->pendu->getDecouvert();
@@ -63,21 +79,41 @@ class PenduController{
 
     private function ajouterScientifiqueDecouvert(){
         if($this->role instanceof Utilisateur){
-           (new MdlUser())->addScientifiqueDecouvert($this->role->getId(), $this->pendu->getScientifique()->getId());
+            try{
+                (new MdlUser())->addScientifiqueDecouvert($this->role->getId(), $this->pendu->getScientifique()->getId());
+            }
+            catch(ValidationException $e){
+                $this->dVueErreur[] = $e->getMessage();
+            }
         }
     }
 
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
     private function renderAgagne(){
         $this->dVue['messageScore'] = "Vous avez gagné !";
         $this->ajouterScientifiqueDecouvert();
         $this->renderScore();
     }
 
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
     private function renderAPerdu(){
         $this->dVue['messageScore'] = "Vous avez perdu !";
         $this->renderScore();
     }
 
+    /**
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     */
     private function renderScore(){
         global $twig, $config;
         $this->dVue['nbTours'] = $this->pendu->getNbTours();
