@@ -19,11 +19,6 @@
             text-align: center;
         }
 
-        .answer-button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-        }
     </style>
 </head>
 
@@ -32,11 +27,11 @@
     <h1>Science Quizz</h1>
     <div>
         <p>Question {{ dVue.statJeu.numQuestion }}:</p>
-        <p>{{ dVue.statJeu.question.question }}</p>
+        <p>{{ dVue.statJeu.question }}</p>
 
-        <!-- Boutons des réponses -->
-        <button class="answer-button" type="submit" name="reponse" value="{{ dVue.statJeu.question.answer }}">
-            Show Answer
+        <!-- Boutons quitter -->
+        <button>
+            <a href="defaultAction">Quitter</a>
         </button>
     </div>
 

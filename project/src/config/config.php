@@ -4,9 +4,9 @@ namespace config;
 $config = [
     "rep" => __DIR__.'/../',
 
-    "db" => ["dsn" => 'pgsql:host=localhost;dbname=sae2a',
+    "db" => ["dsn" => 'pgsql:host=localhost;dbname=postgres',
              "login" => 'postgres',
-             "mdp" => 'SKf43V4hmD7a'],
+             "mdp" => 'root'],
     "templates" => ["index" => 'vues/index.php',
         "pseudo" => 'pseudo.html',
         "jouer" => "jouer.html",

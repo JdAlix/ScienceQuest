@@ -35,7 +35,6 @@ class MdlScienceQuizz
      */
     public function getQuestions(): array
     {
-        var_dump($this->questions);
         return $this->questions;
     }
 
