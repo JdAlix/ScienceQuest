@@ -45,7 +45,7 @@ class ScientifiqueGateway
             ":idThematique"=>[$sci->getThematique()->getId(),$this->con::PARAM_STR],
             ":idDifficulte"=>[$sci->getDifficulte()->getId(),$this->con::PARAM_STR],
             ":idSexe"=>[$sci->getSexe()->getId(),$this->con::PARAM_STR]
-        ]);
+        ]) ? true : false ;
     }
 
     public function getScientifiquesParPages(int $currentPage, int $nbElemByPage) : array {
@@ -110,7 +110,7 @@ class ScientifiqueGateway
             ":idDifficulte"=>[$sci->getDifficulte()->getId(),$this->con::PARAM_STR],
             ":idSexe"=>[$sci->getSexe()->getId(),$this->con::PARAM_STR],
             ":id"=>[$sci->getId(),$this->con::PARAM_INT]
-        ]);
+        ]) ? true : false ;
     }
 
     /**
