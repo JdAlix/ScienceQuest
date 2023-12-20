@@ -36,7 +36,7 @@ class FrontController
         // Correspond à action = null et permet d'éviter une erreur sur la page /index.php
         $router->map('GET|POST','/index.php','UserController');
 
-        $router->map('GET|POST','/pseudo/[a:action]?','TODELETEPseudoController');
+        $router->map('GET|POST','/pseudo/[a:action]?','_TO_DELETE__PseudoController');
         $router->map('GET|POST','/admin/[a:action]?/[i:id]?','AdminController');
         $router->map('GET|POST','/[a:action]?/[i:id]?','UserController');
 
@@ -79,8 +79,8 @@ class FrontController
                     $this->callController('AdminController',$match);
                     break;
 
-                case 'TODELETEPseudoController':
-                    $this->callController('TODELETEPseudoController',$match);
+                case '_TO_DELETE__PseudoController':
+                    $this->callController('_TO_DELETE__PseudoController',$match);
                     break;
                 //mauvaise action
                 default:
