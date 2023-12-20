@@ -22,4 +22,8 @@ class SexeGateway
         $this->con->executeQuery("SELECT id, libelle FROM Sexe;");
         return $this->con->getResults();
     }
+
+    public function getFromScientifique(int $idScientifique) : array {
+
+    }
 }

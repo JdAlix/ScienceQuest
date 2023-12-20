@@ -61,4 +61,8 @@ class InviteGateway extends JoueurGateway
             return $id;
         }
     }
+
+    public function supprimerInvite(int $id) : bool {
+
+    }
 }

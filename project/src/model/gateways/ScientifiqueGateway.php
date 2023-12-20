@@ -12,6 +12,10 @@ class ScientifiqueGateway
         $this->con = $con;
     }
 
+    public function getFromId(int $id) : array {
+
+    }
+
 //    public function getRandom(): array|bool{ <- autorisé seulement en PHP 8
 //        $this->con->executeQuery(
 //            "SELECT id, nom, prenom, photo, dateNaissance, descriptif, ratiotrouvee, idthematique, iddifficulte, index FROM Scientifique ORDER BY RANDOM() LIMIT 1;");
@@ -27,6 +31,10 @@ class ScientifiqueGateway
             "SELECT id, nom, prenom, photo, dateNaissance, descriptif, ratiotrouvee, idthematique, iddifficulte, idsexe FROM Scientifique ORDER BY RANDOM() LIMIT 1;"
         );
         return $this->con->getOneResult();
+    }
+
+    public function getRandomFromDifficulte(Difficulte $difficulte) : array {
+
     }
 
     /**

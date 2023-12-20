@@ -21,4 +21,8 @@ class ThematiqueGateway
         $this->con->executeQuery("SELECT id, libelle FROM Thematique;");
         return $this->con->getResults();
     }
+
+    public function getFromScientifique(int $idScientifique) : array {
+
+    }
 }
