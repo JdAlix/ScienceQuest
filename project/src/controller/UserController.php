@@ -21,12 +21,6 @@ use model\Utilisateur;
 class UserController extends InviteController {
 
 
-    public function __construct(Connection $con)
-    {
-        parent::__construct($con);
-
-    }
-
     public function listerLesScientifiquesDecouverts() {
 
     }
