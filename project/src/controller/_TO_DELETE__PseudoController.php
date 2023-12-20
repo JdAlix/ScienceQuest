@@ -7,7 +7,7 @@ use model\PseudoDejaPrisException;
 use model\ValidationException;
 use model\MdlInvite;
 
-class PseudoController{
+class TODELETEPseudoController{
 
     public function defaultAction(){
         global $twig, $config;

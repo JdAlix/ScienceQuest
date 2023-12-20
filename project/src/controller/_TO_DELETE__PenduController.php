@@ -15,7 +15,7 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-class PenduController{
+class TODELETEPenduController{
     private array $dVue;
     private Joueur $role;
     private array $dVueErreur;

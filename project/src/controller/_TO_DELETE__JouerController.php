@@ -5,7 +5,7 @@ use config\Validation;
 use Exception;
 use model\ValidationException;
 
-class JouerController{
+class TODELETEJouerController{
 
     /**
      * @throws Exception
@@ -30,10 +30,10 @@ class JouerController{
                 $idJeu = $configurationJeu->getJeu()->getId();
                 switch($idJeu){
                     case 2:
-                        new ScienceQuizzController($role, $configurationJeu);
+                        new TODELETEScienceQuizzController($role, $configurationJeu);
                         break;
                     case 3:
-                        new PenduController($role, $configurationJeu);
+                        new TODELETEPenduController($role, $configurationJeu);
                         break;
                     default:
                         throw new Exception("Jeu non défini !");

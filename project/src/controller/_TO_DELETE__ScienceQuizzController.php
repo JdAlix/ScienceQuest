@@ -15,7 +15,7 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-class ScienceQuizzController
+class TODELETEScienceQuizzController
 {
     private array $dVue;
     private array $dVueErreur;
