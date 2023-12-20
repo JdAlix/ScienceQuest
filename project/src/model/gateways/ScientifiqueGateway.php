@@ -67,6 +67,8 @@ class ScientifiqueGateway
     }
 
     public function getHistorique(string $pseudoJoueur, int $currentPage, int $nbElemByPage) : array {
+        if($currentPage == 0) $currentPage = 1;
+
         $query = 'SELECT s.*
                   FROM Scientifique s, Decouvrir d, Utilisateur u
                   WHERE s.id = d.idscientifique
@@ -89,7 +91,7 @@ class ScientifiqueGateway
     }
 
     public function getNbScientifiqueHistorique(string $pseudoJoueur) : int {
-        $query = 'SELECT count(s.*) as val
+        $query = 'SELECT count(*) as val
                   FROM Scientifique s, Decouvrir d, Utilisateur u
                   WHERE s.id = d.idscientifique
                     AND d.idutilisateur = u.idJoueur
