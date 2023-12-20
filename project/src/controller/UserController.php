@@ -18,91 +18,21 @@ use model\MdlAdmin;
 use model\LoginException;
 use model\Utilisateur;
 
-class UserController {
+class UserController extends InviteController {
 
-    public function defaultAction(array $params) {
-        global $twig, $dVue;
 
-        echo $twig->render('accueil.html', ["dVue"=>$dVue]);
+    public function __construct(Connection $con)
+    {
+        parent::__construct($con);
+
     }
 
-    public function historique(array $params) {
-        global $twig;
-        global $dVueErreur;
-        global $dVue;
+    public function listerLesScientifiquesDecouverts() {
 
-        $ms = new MdlScientifique();
-
-        if (!isset($params['id'])) {
-            $page = 1;
-        } else {
-            $page = Validation::valPosInt($params['id']);
-        }
-
-        $pseudo = Validation::valPseudo($_SESSION['pseudo'],$dVueErreur);
-
-        $dVue['listeScientifiques'] = $ms->getHistoriqueParPage($pseudo,$page);
-        $dVue['pageMax'] = $ms->getMaxPagesHistorique($pseudo);
-        $dVue['page'] = $page;
-
-        if ($page - 1 <= 0) {
-            $dVue['pagePrec'] = 1;
-        } else {
-            $dVue['pagePrec'] = $page - 1;
-        }
-        if ($page + 1 >= $dVue['pageMax']) {
-            $dVue['pageSuiv'] = $dVue['pageMax'];
-        } else {
-            $dVue['pageSuiv'] = $page + 1;
-        }
-
-        echo $twig->render('historique.html',['dVue' => $dVue]);
     }
 
-    public function joinParty(array $params) {
-        global $twig;
+    public function afficherDetailScientifique() {
 
-        if(isset($_POST['codeInvitation'])){
-            $codeInvitation = $_POST['codeInvitation'];
-            Validation::valCodeInvitation($codeInvitation, $dVueErreur);
-            echo $twig->render('join.html');
-        }
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function jouer(array $params) {
-        global $twig, $config;
-        $dVue = [];
-        $dVueErreur = [];
-
-        if(isset($_SESSION["configuration"]) && isset($_SESSION['role'])){
-            try{
-                $role = $_SESSION['role'];
-                $role = Validation::valRole($role, $dVueErreur);
-                $configurationJeu = $_SESSION['configuration'];
-                $configurationJeu = Validation::valConfigurationJeu($configurationJeu, $dVueErreur);
-            }catch(ValidationException $e){
-                header('Location: .');
-            }
-
-            if(count($dVueErreur) == 0){
-                $idJeu = $configurationJeu->getJeu()->getId();
-                switch($idJeu){
-                    case 2:
-                        new ScienceQuizzController($role, $configurationJeu);
-                        break;
-                    case 3:
-                        new PenduController($role, $configurationJeu);
-                        break;
-                    default:
-                        throw new Exception("Jeu non défini !");
-                }
-            }
-        }else{
-            header("Location: .");
-        }
     }
 
     public function login() {
@@ -145,19 +75,19 @@ class UserController {
             }
             $ug = new MdlUser();
             try{
-            if($ug->register($_REQUEST['login'], $_REQUEST['password'])){
-                header('Location: login');
-            } else {
-                $dVueErreur[]="Erreur de création de compte. Le compte doit déjà exister.";
+                if($ug->register($_REQUEST['login'], $_REQUEST['password'])){
+                    header('Location: login');
+                } else {
+                    $dVueErreur[]="Erreur de création de compte. Le compte doit déjà exister.";
+                    echo $twig->render('erreur.html',["dVueErreur" => $dVueErreur]);
+                }
+            } catch (PseudoDejaPrisException $ex){
+                $dVueErreur[]="Erreur de création de compte. Le compte existe déjà.";
+                echo $twig->render('erreur.html',["dVueErreur" => $dVueErreur]);
+            }catch(Exception $ex){
+                $dVueErreur[]="Erreur de création de compte.";
                 echo $twig->render('erreur.html',["dVueErreur" => $dVueErreur]);
             }
-        } catch (PseudoDejaPrisException $ex){
-            $dVueErreur[]="Erreur de création de compte. Le compte existe déjà.";
-                echo $twig->render('erreur.html',["dVueErreur" => $dVueErreur]);
-        }catch(Exception $ex){
-            $dVueErreur[]="Erreur de création de compte.";
-            echo $twig->render('erreur.html',["dVueErreur" => $dVueErreur]);
-        }
 
         } else {
             echo $twig->render('register.html');
@@ -168,57 +98,5 @@ class UserController {
         session_destroy();
         $_SESSION=[];
         header("Location: .");
-    }
-
-    public function createParty(array $params) : void
-    {
-        global $twig;
-        global $dVueErreur;
-
-        $listJeu = (new MdlJeu())->getAll();
-        $listDifficulte = (new MdlDifficulte())->getAll();
-
-        $dVueCreateJeu = [];
-        foreach($listJeu as $jeu){
-            $dVueCreateJeu[] = ['id' => $jeu->getId(), 'nom' => $jeu->getNom()];
-        }
-
-        $dVueCreateDifficulte = [];
-        foreach($listDifficulte as $difficulte){
-            $dVueCreateDifficulte[] = ['id' => $difficulte->getId(), 'libelle' => $difficulte->getLibelle()];
-        }
-
-        echo $twig->render('create.html', ["dVueErreur" => $dVueErreur, 'dVueCreate' => ["jeux" => $dVueCreateJeu, "difficultes" => $dVueCreateDifficulte]]);
-    }
-
-    public function ValidationFormulaire(array $params)
-    {
-        global $twig;
-        global $dVue;
-        global $dVueErreur;
-        global $basePath;
-
-        $id_jeu = $_POST['jeu'] ?? '';
-        $id_difficulte = $_POST['difficulte'] ?? '';
-        try{
-            Validation::val_form($id_jeu, $id_difficulte, $dVueErreur);
-        }catch (ValidationException|Exception $ex){
-            $this->CreateParty($dVueErreur);
-        }
-
-        if(count($dVueErreur) == 0){
-            $jeu = (new MdlJeu())->getFromId($id_jeu);
-            $difficulte = (new MdlDifficulte())->getFromId($id_difficulte);
-            $_SESSION['configuration'] = new ConfigurationJeu($jeu, $difficulte);
-
-            if(isset($_SESSION['role'])){
-                header('Location: '.$basePath.'/jouer');
-            }else{
-                header("Location: ".$basePath."/pseudo");
-            }
-            #echo $twig->render('accueil.html', ['dVue' => $dVue, 'dVueErreur' => $dVueErreur]);
-        }else{
-            $this->CreateParty($dVueErreur);
-        }
     }
 }
