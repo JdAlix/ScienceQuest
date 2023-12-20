@@ -80,7 +80,7 @@ class MdlScientifique extends MdlBase{
     public function getHistoriqueParPage(string $pseudoJoueur,int $page) {
         $nbElemParPage = 20;
         $pageMax = ceil($this->gw->getNbScientifiqueHistorique($pseudoJoueur)/$nbElemParPage);
-        print($pageMax);
+
         if ($page <= 0) {
             $page = 1;
         } elseif ($page > $pageMax) {
