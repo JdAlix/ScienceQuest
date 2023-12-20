@@ -15,7 +15,7 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-class TODELETEScienceQuizzController
+class _TO_DELETE__ScienceQuizzController
 {
     private array $dVue;
     private array $dVueErreur;
