@@ -1,8 +1,10 @@
 <script>
+import { NOM_APP } from "../assets/const";
+
 export default{
     data(){
         return{
-            nomApp:"ScienceQuest"
+            nomApp:NOM_APP
 
         }
     }

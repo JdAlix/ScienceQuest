@@ -1,0 +1,1 @@
+export const NOM_APP="ScienceQuest"
