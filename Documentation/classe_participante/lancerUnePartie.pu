@@ -1,0 +1,90 @@
+Logiciel : plantuml 
+https://plantuml.com/fr/
+
+@startuml "Diagramme de classes participantes lancer une partie"
+class Invité <<acteur>>{}
+
+Invité --> Accueil : 1
+Accueil --> FrontController : 2
+LancerUnJeu --> FrontController : 9
+
+class FrontController <<contrôle>>{
+
+}
+
+FrontController --> ControllerInvite : 3 , 1O, 16, 24
+
+
+class ControllerInvite <<contrôle>>{
+
+}
+
+ControllerInvite --> ControllerLancerJeu : 4, 11, 17, 25
+
+
+class ControllerLancerJeu <<contrôle>>{
+    lancerJeuAléatoirement()
+    lancerJeu()
+}
+ControllerLancerJeu --> LancerUnJeu : 6
+ControllerLancerJeu --> Jeu : 5
+ControllerLancerJeu --> SaisirPseudo : 12
+ControllerLancerJeu --> Difficulté : 18
+ControllerLancerJeu --> Thematique : 19
+ControllerLancerJeu --> ConfigurerUnjeu : 20
+ControllerLancerJeu --> VueDuJeu : 26
+
+class Accueil <<dialogue>>{
+    rejoindrePartie()
+    lancerUnJeu()
+    seConnecter()
+    seDeconnecter()
+}
+
+class VueDuJeu <<dialogue>>{
+
+}
+VueDuJeu --> Invité : 27
+
+class SaisirPseudo <<dialogue>>{
+    pseudo : String
+    valider()
+}
+SaisirPseudo --> Invité : 13
+SaisirPseudo <-- Invité : 14
+SaisirPseudo --> FrontController : 15
+
+class LancerUnJeu <<dialogue>>{
+    jeux : Array
+    choisirJeu()
+    choisirJeuAléatoirement()
+}
+
+class ConfigurerUnjeu <<dialogue>>{
+    difficulté : Integer
+    thématique : Integer
+    valider()
+}
+Invité <-- ConfigurerUnjeu : 21
+Invité --> ConfigurerUnjeu : 22
+ConfigurerUnjeu --> FrontController : 23
+
+LancerUnJeu --> Invité : 7
+LancerUnJeu <-- Invité : 8
+
+
+
+class Thematique <<entité>>{
+    libelle : String
+}
+
+class "Difficulté" <<entité>>{
+    libelle: String
+}
+
+class Jeu <<entité>>{
+    nom : String
+    nbrParties : Integer
+}
+
+@enduml

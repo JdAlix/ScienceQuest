@@ -1,0 +1,26 @@
+PHP SAE
+
+
+Actions disponibles pour admin :
+	- connexion
+	- déconnexion
+	- gestion scientifique
+	- accéder stats site
+
+Actions users :
+	- créer partie
+	- rejoindre partie
+	- historique scientifiques trouvés
+
+
+Vues nécessaires : 
+	- Accueil
+	- création partie
+	- rejoindre partie
+	- la partie (dépend des jeux)
+	- historique des scientifiques trouvés
+
+	Pour admin
+	- connexion (pop-up si possible)
+	- Gestion des scientifiques (genre une liste et on peut les supprimer)
+	- ajouter scientifique
