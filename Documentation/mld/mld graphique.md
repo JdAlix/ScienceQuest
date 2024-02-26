@@ -88,7 +88,6 @@ partie --> jeu
 partie <-- joueur
 invite --> joueur
 utilisateur --> joueur
-utilisateur --> scientifique
 scientifique --> thematique
 scientifique --> difficulte
 scientifique --> indice
