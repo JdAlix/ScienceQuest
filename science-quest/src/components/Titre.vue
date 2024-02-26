@@ -43,7 +43,7 @@ export default{
         </li>
       </ul>
       <!-- TODO : l'afficher que si on n'est pas connecté, sinon afficher l'username (qui sera surement dans le localstorage)-->
-      <li><a class="dropdown-item" href="#/login">Se connecter</a></li>
+      <a class="dropdown-item" href="#/login">Se connecter</a>
     </div>
   </div>
 </nav>
