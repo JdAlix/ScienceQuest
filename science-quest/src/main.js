@@ -12,9 +12,11 @@ import './scss/styles.scss'
 import PagePrincipale from "./components/PagePrincipale.vue"
 import NotFound from "./components/erreurs/NotFound.vue"
 import TestParametreURL from "./components/TestParametreURL.vue"
+import Login from "./components/Login.vue"
 
 const routes = [
     { path: '/', component: PagePrincipale },
+    { path: '/login', component: Login },
     { path: '/exemple/:id', component: TestParametreURL },
     { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
 ]
