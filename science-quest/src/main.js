@@ -4,6 +4,10 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import { createApp } from 'vue'
 import App from './App.vue'
 
+//importer bootstrap
+import * as bootstrap from 'bootstrap'
+import './scss/styles.scss'
+
 //importer les components pour le routing
 import PagePrincipale from "./components/PagePrincipale.vue"
 import NotFound from "./components/erreurs/NotFound.vue"

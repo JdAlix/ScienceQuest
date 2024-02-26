@@ -11,7 +11,6 @@ export default {
   <Titre />
 
   <main>
-    <!-- todo -->
     <router-view></router-view>
   </main>
 </template>
