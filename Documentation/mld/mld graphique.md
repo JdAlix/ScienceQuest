@@ -15,6 +15,7 @@ entity "Scientifique" as scientifique {
     dateNaissance : date
     descriptif : string
     ratioTrouvee : float
+    sexe: char
     #idThematique : int
     #idDifficulte : int
     #idSexe : int
@@ -26,11 +27,6 @@ entity "Thematique" as thematique {
 }
 
 entity "Difficulte" as difficulte {
-    <u>id : int
-    libelle : string
-}
-
-entity "Sexe" as sexe {
     <u>id : int
     libelle : string
 }
@@ -94,7 +90,6 @@ invite --> joueur
 utilisateur --> joueur
 utilisateur --> scientifique
 scientifique --> thematique
-scientifique --> sexe
 scientifique --> difficulte
 scientifique --> indice
 question --> reponse
