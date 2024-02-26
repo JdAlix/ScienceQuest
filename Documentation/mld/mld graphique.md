@@ -46,7 +46,6 @@ entity "Utilisateur" as utilisateur {
 
 entity "Invite" as invite {
     <u>#idJoueur : int
-    <u>idSession : int
 }
 
 entity "Partie" as partie {

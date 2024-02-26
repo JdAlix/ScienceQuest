@@ -20,7 +20,7 @@
 - *idJoueur* : clef primaire de la table Joueur
 - *#idJoueur* : clef étrangère en référence à *id* de la table Joueur
 
-**Invite(<ins>#idJoueur</ins>, idSession)**
+**Invite(<ins>#idJoueur</ins>)**
 - *idJoueur* : clef primaire de la table Joueur
 - *#idJoueur* : clef étrangère en référence à *id* de la table Joueur
 

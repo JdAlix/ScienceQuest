@@ -107,7 +107,6 @@ CREATE TABLE Joueur(
 
 CREATE TABLE Invite(
     idJoueur integer PRIMARY KEY REFERENCES Joueur(id),
-    idSession varchar(255) NOT NULL UNIQUE
 );
 
 
