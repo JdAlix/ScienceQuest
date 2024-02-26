@@ -12,7 +12,7 @@
 
 ✔ Add JSX Support? … No
 
-✔ Add Vue Router for Single Page Application development? … No
+✔ Add Vue Router for Single Page Application development? … No (ajouté par la suite)
 
 ✔ Add Pinia for state management? … No
 
