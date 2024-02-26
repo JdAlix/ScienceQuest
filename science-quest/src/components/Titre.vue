@@ -28,8 +28,8 @@ export default{
         <!-- liste de trucs a cliquer; accueil, jouer, langues?-->
         <nav>
             <!-- todo : component pour faire type de bouton (normal, menu déroulant)-->
-            <a>Accueil</a>
-            <a>Jouer</a>
+            <a href="#/">Accueil</a>
+            <a href="#/jouer">Jouer</a>
         </nav>
     </header>
 </template>
