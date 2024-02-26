@@ -56,7 +56,6 @@ CREATE TABLE Scientifique(
     sexe char(1) NOT NULL CHECK(sexe IN ('F', 'H')),
     idThematique integer REFERENCES Thematique(id),
     idDifficulte integer REFERENCES Difficulte(id),
-    idSexe integer REFERENCES Sexe(id)
 );
 
 
@@ -152,13 +151,12 @@ CREATE TABLE Partie(
 
 -- Scientifiques
 INSERT INTO Difficulte(libelle) VALUES ('Facile'),('Intermédiaire'),('Difficile');
-INSERT INTO Sexe(libelle) VALUES ('Homme'),('Femme');
 INSERT INTO Thematique(libelle) VALUES ('Nucléaire'),('Mathématiques');
 INSERT INTO Scientifique(nom, prenom, photo, dateNaissance, descriptif, ratioTrouvee, idThematique, idDifficulte, idSexe)
 VALUES
-    ('Marie', 'Curie', '', CURRENT_DATE, 'desc', 0, 1, 1, 2),
-    ('Albert', 'Einstein', '', CURRENT_DATE, 'desc', 0, 2, 1, 1),
-    ('Sophie', 'Germain', '', CURRENT_DATE, 'desc', 0, 2, 2, 2);
+    ('Marie', 'Curie', '', CURRENT_DATE, 'desc', 0, 1, 1, 'F'),
+    ('Albert', 'Einstein', '', CURRENT_DATE, 'desc', 0, 2, 1, 'H'),
+    ('Sophie', 'Germain', '', CURRENT_DATE, 'desc', 0, 2, 2, 'F');
 
 -- Jeu
 INSERT INTO Jeu(nom) VALUES ('Qui-est-ce ?'),('Science Quizz'), ('Pendu');
