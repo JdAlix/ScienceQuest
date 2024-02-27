@@ -10,7 +10,7 @@ export default {
             nbQuestions: 0,
             //rejoindre partie
             codeKahoot: "",
-            //listes parties crees ()
+            //listes parties crees ( TODO : appeler l'api pour obtenir les parties)
             partiesCrees: [
             {titreKahoot:"Titre du Kahoot", nbQuestions:10, createur:"Professeur X"},
             {titreKahoot:"Titre du Kahoot2", nbQuestions:69, createur:"Professeur Y"},
