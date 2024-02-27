@@ -2,5 +2,10 @@ package fr.iut.sciencequest.sae.repositories;
 
 import fr.iut.sciencequest.sae.entities.Indice;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.stereotype.Repository;
 
-public interface IndiceRepository extends CrudRepository<Indice, Integer> {}
+@Repository
+public interface IndiceRepository extends PagingAndSortingRepository<Indice, Integer>, CrudRepository<Indice, Integer> {
+
+}

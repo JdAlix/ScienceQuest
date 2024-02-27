@@ -55,7 +55,7 @@ public class QuestionController {
 
             return result;
         } catch (IllegalArgumentException e) {
-            throw new IncorrectPageException(request.getRequestURI(), "numéro de page incorrect");
+            throw new IncorrectPageException("numéro de page incorrect");
         }
     }
 }

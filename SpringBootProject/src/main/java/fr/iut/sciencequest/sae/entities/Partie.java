@@ -1,6 +1,7 @@
 package fr.iut.sciencequest.sae.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -15,9 +16,11 @@ import java.util.Set;
 @Table(name="partie")
 public class Partie {
     @Id
+    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "codeinvitation")
+
+    @Column(name = "codeinvitation", unique = true)
     private String codeInvitation;
     /*private Jeu jeu;
     @Getter() private Set<Joueur> joueurs;
