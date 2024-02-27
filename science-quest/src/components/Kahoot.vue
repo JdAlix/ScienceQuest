@@ -4,7 +4,7 @@ export default {
         return {
         }
     },
-    methods:{ 
+    methods:{
         
     }
 }
@@ -19,6 +19,9 @@ export default {
         <h1 style="padding-left: 0.5em;">Kahoot</h1>
         <div class="Kahoot-Header">
             <h2>Rejoindre un Kahoot</h2>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createKahootModal">
+                Créer un Kahoot
+            </button>
             <form>
                 <label for="Kahoot-Code">Code</label>
                 <input type="text" id="Kahoot-Code" name="Kahoot-Code">
@@ -26,16 +29,6 @@ export default {
             </form>
         </div>
         <div class="Kahoot-content">
-            <div class="Kahoot-Create">
-                <h2>Créer un Kahoot</h2> <!-- TODO : Il faut changer le formulaire pour juste cliquer sur un bouton et que ça affiche une pop-up -->
-                <form>
-                    <label for="Kahoot-Create-Title">Titre</label>
-                    <input type="text" id="Kahoot-Create-Title" name="Kahoot-Create-Title">
-                    <label for="Kahoot-Create-Questions">Nombre de questions</label>
-                    <input type="number" id="Kahoot-Create-Questions" name="Kahoot-Create-Questions">
-                    <button class="Kahoot-Create-Button">Créer</button>
-                </form>
-            </div>
             <div class="Kahoot-List">
                 <h2> Vos Quizz</h2>
                 <div class="Kahoot-List-Item">
@@ -56,6 +49,31 @@ export default {
                     <p>Créé par : Professeur X</p>
                     <button class="Kahoot-List-Item-Button">Jouer</button>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="createKahootModal" tabindex="-1" role="dialog" aria-labelledby="creationKahoot" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="creationKahoot">Créer un Kahoot</h2> <!-- TODO : Il faut changer le formulaire pour juste cliquer sur un bouton et que ça affiche une pop-up -->
+                </div>
+                <form>
+                <div class="modal-body">
+                    <div>
+                    <label for="Kahoot-Create-Title">Titre</label>
+                    <input type="text" id="Kahoot-Create-Title" name="Kahoot-Create-Title">
+                    </div>
+                    <div>
+                    <label for="Kahoot-Create-Questions">Nombre de questions</label>
+                    <input type="number" id="Kahoot-Create-Questions" name="Kahoot-Create-Questions">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button class="btn btn-primary">Créer</button>
+                </div>
+                </form>
             </div>
         </div>
     </div>
