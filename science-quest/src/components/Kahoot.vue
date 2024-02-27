@@ -2,8 +2,11 @@
 export default {
     data() {
         return {
+            //creer partie (ajouter verif aux inputs)
             titreKahoot:"",
             nbQuestions:0,
+            //rejoindre partie
+            codeKahoot:"",
         }
     },
     methods:{
@@ -14,7 +17,13 @@ export default {
             console.log(this.titreKahoot)
             console.log(this.nbQuestions)
             
-        }
+        },
+        // TODO : demander a l'api de rejoindre un kahoot (et rediriger vers la partie si possible via HATEOAS)
+        rejoindrePartie: function(){
+            console.log("yay")
+             //this.titreKahoot et this.nbQuestions synchronisés avec v-model
+            console.log(this.codeKahoot)
+        },
     }
 }
 </script>
@@ -31,10 +40,10 @@ export default {
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createKahootModal">
                 Créer un Kahoot
             </button>
-            <form>
+            <form @submit.prevent>
                 <label for="Kahoot-Code">Code</label>
-                <input type="text" id="Kahoot-Code" name="Kahoot-Code">
-                <button class="btn btn-light">Rejoindre</button>
+                <input type="text" id="Kahoot-Code" name="Kahoot-Code" v-model="codeKahoot">
+                <button class="btn btn-light" v-on:click="rejoindrePartie">Rejoindre</button>
             </form>
         </div>
         <div class="Kahoot-content">
