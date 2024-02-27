@@ -22,7 +22,7 @@ export default{
         -->
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#/">{{ nomApp }}</a>
+    <router-link class="navbar-brand" to="/">{{ nomApp }}</router-link>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -33,24 +33,24 @@ export default{
           <a class="nav-link active" aria-current="page" href="#">Accueil</a>
         </li-->
         <li class="nav-item">
-          <a class="nav-link" href="#">Accueil</a>
+          <router-link class="nav-link" to="/">Accueil</router-link>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Jeux
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Qui est-ce</a></li>
-            <li><a class="dropdown-item" href="#/kahoot">Kahoot</a></li>
+            <li><router-link class="dropdown-item" to="/qui_est_ce">Qui-est-ce</router-link></li>
+            <li><router-link class="dropdown-item" to="/kahoot">Kahoot</router-link></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item disabled" href="#">autre jeu</a></li>
+            <li><router-link class="dropdown-item disabled" to="/pendu">autre jeu</router-link></li>
           </ul>
         </li>
       </ul>
     </div>
     <button id="boutondarkmode" class="btn" v-on:click="changerDarkMode">💡</button>
     <!-- TODO : l'afficher que si on n'est pas connecté, sinon afficher l'username (qui sera surement dans le localstorage)-->
-    <a class="nav-link" href="#/login">Se connecter</a>
+    <router-link class="nav-link" to="/login">Se connecter</router-link>
   </div>
 </nav>
 </template>
