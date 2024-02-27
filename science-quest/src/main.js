@@ -13,7 +13,7 @@ import PagePrincipale from "./components/PagePrincipale.vue"
 import NotFound from "./components/erreurs/NotFound.vue"
 import TestParametreURL from "./components/TestParametreURL.vue"
 import Login from "./components/Login.vue"
-import KahootVue from './components/Kahoot.vue'
+import KahootVue from './components/jeux/kahoot/Kahoot.vue'
 
 const routes = [
     { path: '/', component: PagePrincipale },
