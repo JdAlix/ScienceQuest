@@ -34,7 +34,7 @@ export default {
             <form>
                 <label for="Kahoot-Code">Code</label>
                 <input type="text" id="Kahoot-Code" name="Kahoot-Code">
-                <button class="Kahoot-Join-Button">Rejoindre</button>
+                <button class="btn btn-light">Rejoindre</button>
             </form>
         </div>
         <div class="Kahoot-content">
@@ -44,19 +44,19 @@ export default {
                     <h2>Titre du Kahoot</h2>
                     <p>Nombre de questions : 10</p>
                     <p>Créé par : Professeur X</p>
-                    <button class="Kahoot-List-Item-Button">Jouer</button>
+                    <button class="btn btn-dark">Jouer</button>
                 </div>
                 <div class="Kahoot-List-Item">
                     <h2>Titre du Kahoot</h2>
                     <p>Nombre de questions : 10</p>
                     <p>Créé par : Professeur X</p>
-                    <button class="Kahoot-List-Item-Button">Jouer</button>
+                    <button class="btn btn-dark">Jouer</button>
                 </div>
                 <div class="Kahoot-List-Item">
                     <h2>Titre du Kahoot</h2>
                     <p>Nombre de questions : 10</p>
                     <p>Créé par : Professeur X</p>
-                    <button class="Kahoot-List-Item-Button">Jouer</button>
+                    <button class="btn btn-dark">Jouer</button>
                 </div>
             </div>
         </div>
