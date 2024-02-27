@@ -13,7 +13,7 @@ export default{
 
 <template>
         <!-- logo temporaire
-        <img alt="Vue logo" src="../assets/logo.svg" />
+        <img alt="Vue logo" src="../assets/logo.png" />
         -->
 <nav class="navbar navbar-expand-lg bg-light">
   <div class="container-fluid">
@@ -36,7 +36,7 @@ export default{
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="#">Qui est-ce</a></li>
-            <li><a class="dropdown-item" href="#">Kahoot</a></li>
+            <li><a class="dropdown-item" href="#/kahoot">Kahoot</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item disabled" href="#">autre jeu</a></li>
           </ul>

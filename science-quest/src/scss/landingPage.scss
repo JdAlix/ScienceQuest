@@ -1,0 +1,143 @@
+//template
+template {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+}
+
+//landing page styles
+.landingPage {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 1em;
+    justify-content: space-around;
+    height: 100vh;
+}
+
+.landingContent {
+    text-align: center;
+}
+
+.landingContent h1 {
+    font-size: 3rem;
+    animation: dropIn 2s;
+}
+
+.landingContent p {
+    font-size: 1.5rem;
+    animation: dropIn 2s;
+}
+
+.landingPage img {
+    width: 20%;
+    height: auto;
+    animation: slideInRight 2s;
+}
+
+.routes-button{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 2rem;
+    animation: dropIn 2s;
+}
+
+.button {
+        display: flex;
+        flex-direction: row;
+        padding: 0.5em 1em;
+        font-size: 1rem;
+        font-weight: bold;
+        text-align: center;
+        text-decoration: none;
+        background-color: #000;
+        color: #fff;
+        border-radius: 4px;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #333;
+}
+
+//footer
+footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 1em;
+    background-color: #000;
+    color: #fff;
+}
+
+//keyframes
+@keyframes dropIn {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInRight {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+// Media queries for responsiveness
+@media screen and (max-width: 768px) {
+    .landingPage {
+        flex-direction: row;
+        justify-content: start;
+        padding: 2rem;
+    }
+
+    .landingContent {
+        margin-bottom: 2rem;
+    }
+
+    .landingContent h1 {
+        font-size: 2rem;
+    }
+
+    .landingContent p {
+        font-size: 1rem;
+    }
+
+    .landingPage img {
+        width: 50%;
+        height: auto;
+    }
+
+    .landingContent button {
+        font-size: 1rem;
+        padding: 0.5rem 1rem;
+        margin-top: 1rem;
+    }
+}
