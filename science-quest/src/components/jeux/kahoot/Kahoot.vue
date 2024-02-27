@@ -52,7 +52,7 @@ export default {
             </button>
             <form @submit.prevent>
                 <label for="Kahoot-Code">Code</label>
-                <input class="form-control" type="text" id="Kahoot-Code" name="Kahoot-Code" v-model="codeKahoot" minlength="6" maxlength="10">
+                <input class="form-control bg-light" type="text" id="Kahoot-Code" name="Kahoot-Code" v-model="codeKahoot" minlength="6" maxlength="10">
                 <button class="btn btn-light" v-on:click="rejoindrePartie">Rejoindre</button>
             </form>
         </div>

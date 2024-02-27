@@ -7,6 +7,11 @@ export default{
             nomApp:NOM_APP
 
         }
+    },
+    methods:{
+      changerDarkMode: function(){
+        document.body.dataset.bsTheme!="dark" ? document.body.dataset.bsTheme="dark" : document.body.dataset.bsTheme="light"
+      }
     }
 }
 </script>
@@ -15,7 +20,7 @@ export default{
         <!-- logo temporaire
         <img alt="Vue logo" src="../assets/logo.png" />
         -->
-<nav class="navbar navbar-expand-lg bg-light">
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
     <a class="navbar-brand" href="#/">{{ nomApp }}</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,7 +48,7 @@ export default{
         </li>
       </ul>
     </div>
-
+    <button id="boutondarkmode" v-on:click="changerDarkMode">💡</button>
     <!-- TODO : l'afficher que si on n'est pas connecté, sinon afficher l'username (qui sera surement dans le localstorage)-->
     <a class="nav-link" href="#/login">Se connecter</a>
   </div>
