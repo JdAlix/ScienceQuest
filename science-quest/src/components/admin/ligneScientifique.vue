@@ -55,7 +55,7 @@ export default {
         <td>
             <p>{{ dateAffiche }}</p>
         </td>
-        <button v-on:click="changerModeEdition()">Modifier</button>
+        <button class="btn-outline-secondary btn" v-on:click="changerModeEdition()">Modifier</button>
     </tr>
     <tr v-if="this.modeEdition">
         
@@ -73,7 +73,7 @@ export default {
         </td>
         
         <!-- TODO : aussi faire this.modeEdition=!this.modeEdition dans sauverScientifique -->
-        <button v-on:click="sauverScientifique()">Sauvegarder</button>
-        <button v-on:click="annuler()">Annuler</button>
+        <button class="btn btn-success" v-on:click="sauverScientifique()">Sauvegarder</button>
+        <button class="btn btn-secondary" v-on:click="annuler()">Annuler</button>
     </tr>
 </template>
