@@ -48,7 +48,7 @@ export default{
         </li>
       </ul>
     </div>
-    <button id="boutondarkmode" v-on:click="changerDarkMode">💡</button>
+    <button id="boutondarkmode" class="btn" v-on:click="changerDarkMode">💡</button>
     <!-- TODO : l'afficher que si on n'est pas connecté, sinon afficher l'username (qui sera surement dans le localstorage)-->
     <a class="nav-link" href="#/login">Se connecter</a>
   </div>
