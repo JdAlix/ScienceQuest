@@ -153,6 +153,11 @@ VALUES
     ('Quel mathématicien a dit : « Dieu existe, c’est les mathématiques » ?'),
     ('Quel mathématicienne utilisa comme nom d"emprunt « Antoine Auguste Le Blanc » ?');
 
+-- Indices
+INSERT INTO Indice (id, libelle, idscientifique) VALUES
+                                                     (1, 'Indice pour aider', 1),
+                                                     (2, 'S''appelle Marie', 1);
+
 -- Réponses
 INSERT INTO Reponse(reponse, idQuestion, idScientifique)
 VALUES
