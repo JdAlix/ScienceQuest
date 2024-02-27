@@ -29,7 +29,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../scss/kahoot.scss";
+@import "../../../scss/kahoot.scss";
 </style>
 
 <template>
