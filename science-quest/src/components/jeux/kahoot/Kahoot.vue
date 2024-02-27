@@ -47,7 +47,7 @@ export default {
         <h1 style="padding-left: 0.5em;">Kahoot</h1>
         <div class="Kahoot-Header">
             <h2>Rejoindre un Kahoot</h2>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createKahootModal">
+            <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#createKahootModal">
                 Créer un Kahoot
             </button>
             <form @submit.prevent>

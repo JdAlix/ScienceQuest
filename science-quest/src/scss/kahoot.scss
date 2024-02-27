@@ -1,12 +1,14 @@
 // kahoot styles
 
+@import "styles.scss";
+
 .Kahoot-Header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1em;
-    background-color: #007bff;
-    color: #fff;
+    background-color: $primary;
+    color: $light;
 }
 
 .Kahoot-content {
@@ -23,8 +25,8 @@
 .Kahoot-Create {
     display: flex;
     align-items: center;
-    background-color: #007bff;
-    color: #fff;
+    background-color: $primary;
+    color: $light;
 }
 
 // kahoot styles
