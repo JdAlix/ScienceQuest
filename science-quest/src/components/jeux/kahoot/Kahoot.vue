@@ -1,30 +1,40 @@
-<script> //TODO définir les méthodes -> à définir grâce à l'API
+<script>
+import KahootListeParties from './KahootListeParties.vue'
+
+ //TODO définir les méthodes -> à définir grâce à l'API
 export default {
     data() {
         return {
             //creer partie (ajouter verif aux inputs)
-            titreKahoot:"",
-            nbQuestions:0,
+            titreKahoot: "",
+            nbQuestions: 0,
             //rejoindre partie
-            codeKahoot:"",
-        }
+            codeKahoot: "",
+            //listes parties crees ()
+            partiesCrees: [
+            {titreKahoot:"Titre du Kahoot", nbQuestions:10, createur:"Professeur X"},
+            {titreKahoot:"Titre du Kahoot2", nbQuestions:69, createur:"Professeur Y"},
+            {titreKahoot:"Titre du Kahoot3", nbQuestions:234, createur:"Professeur XXX"},
+                
+            ]
+        };
     },
-    methods:{
+    methods: {
         // TODO : demander a l'api de creer un kahoot (et rediriger vers la partie si possible via HATEOAS)
-        creerKahoot: function(){
-            console.log("yay")
-             //this.titreKahoot et this.nbQuestions synchronisés avec v-model
-            console.log(this.titreKahoot)
-            console.log(this.nbQuestions)
-            
+        creerKahoot: function () {
+            console.log("yay");
+            //this.titreKahoot et this.nbQuestions synchronisés avec v-model
+            console.log(this.titreKahoot);
+            console.log(this.nbQuestions);
         },
         // TODO : demander a l'api de rejoindre un kahoot (et rediriger vers la partie si possible via HATEOAS)
-        rejoindrePartie: function(){
-            console.log("yay")
-             //this.titreKahoot et this.nbQuestions synchronisés avec v-model
-            console.log(this.codeKahoot)
+        rejoindrePartie: function () {
+            console.log("yay");
+            //this.titreKahoot et this.nbQuestions synchronisés avec v-model
+            console.log(this.codeKahoot);
         },
-    }
+    },
+    components: { KahootListeParties }
 }
 </script>
 
@@ -49,24 +59,7 @@ export default {
         <div class="Kahoot-content">
             <div class="Kahoot-List">
                 <h2> Vos Quizz</h2>
-                <div class="Kahoot-List-Item">
-                    <h2>Titre du Kahoot</h2>
-                    <p>Nombre de questions : 10</p>
-                    <p>Créé par : Professeur X</p>
-                    <button class="btn btn-dark">Jouer</button>
-                </div>
-                <div class="Kahoot-List-Item">
-                    <h2>Titre du Kahoot</h2>
-                    <p>Nombre de questions : 10</p>
-                    <p>Créé par : Professeur X</p>
-                    <button class="btn btn-dark">Jouer</button>
-                </div>
-                <div class="Kahoot-List-Item">
-                    <h2>Titre du Kahoot</h2>
-                    <p>Nombre de questions : 10</p>
-                    <p>Créé par : Professeur X</p>
-                    <button class="btn btn-dark">Jouer</button>
-                </div>
+                <KahootListeParties v-for="partie in partiesCrees" :titreKahoot="partie.titreKahoot" :nbQuestions="partie.nbQuestions" :createur="partie.createur"></KahootListeParties>
             </div>
         </div>
     </div>
