@@ -1,0 +1,24 @@
+version: '3.9'
+
+services:
+
+  postgres_server:
+    image: postgres:16-alpine
+    container_name: postgres_server
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+
+    environment:
+      POSTGRES_PASSWORD: 94gg98mFnp269JY98P2pZtVnEd8UkWPm
+      POSTGRES_USER: ScienceQuest
+      POSTGRES_DB: ScienceQuest
+
+  adminer:
+    image: adminer
+    depends_on: [postgres_server]
+    restart: unless-stopped
+    environment:
+      ADMINER_DEFAULT_SERVER: postgres_server
+    ports:
+      - "8081:8080"
