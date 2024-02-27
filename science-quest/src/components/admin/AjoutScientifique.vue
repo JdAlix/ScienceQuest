@@ -5,6 +5,7 @@ export default{
             const donnees=new FormData(document.querySelector("#formajouterscientifiques"))
 
             //todo mettre lien dans const
+            //envoyer le form en JSON
             fetch("localhost/api/v1/scientifiques", {method:"POST", body:JSON.stringify(Object.fromEntries(donnees))})
             //sans le JSON.stringify et Object.fromEntries ca fait une requete en Content-Disposition
         }
