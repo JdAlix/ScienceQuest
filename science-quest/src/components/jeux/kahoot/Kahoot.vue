@@ -5,7 +5,7 @@ import KahootListeParties from './KahootListeParties.vue'
 export default {
     data() {
         return {
-            //creer partie (ajouter verif aux inputs)
+            //creer partie
             titreKahoot: "",
             nbQuestions: 0,
             //rejoindre partie
@@ -52,7 +52,7 @@ export default {
             </button>
             <form @submit.prevent>
                 <label for="Kahoot-Code">Code</label>
-                <input type="text" id="Kahoot-Code" name="Kahoot-Code" v-model="codeKahoot">
+                <input type="text" id="Kahoot-Code" name="Kahoot-Code" v-model="codeKahoot" minlength="6" maxlength="10">
                 <button class="btn btn-light" v-on:click="rejoindrePartie">Rejoindre</button>
             </form>
         </div>
@@ -73,11 +73,11 @@ export default {
                 <div class="modal-body">
                     <div>
                     <label for="Kahoot-Create-Title">Titre</label>
-                    <input type="text" id="Kahoot-Create-Title" name="Kahoot-Create-Title" v-model="titreKahoot">
+                    <input type="text" id="Kahoot-Create-Title" name="Kahoot-Create-Title" v-model="titreKahoot" required minlength="2" maxlength="255">
                     </div>
                     <div>
                     <label for="Kahoot-Create-Questions">Nombre de questions</label>
-                    <input type="number" id="Kahoot-Create-Questions" name="Kahoot-Create-Questions" v-model="nbQuestions">
+                    <input type="number" id="Kahoot-Create-Questions" name="Kahoot-Create-Questions" v-model="nbQuestions" required min="1" max="99">
                     </div>
                 </div>
                 <div class="modal-footer">
