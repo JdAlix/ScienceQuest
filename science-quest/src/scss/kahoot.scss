@@ -7,7 +7,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 1em;
-    background-color: $primary;
+    background-color: var(--bs-primary);
     color: $light;
 }
 
@@ -25,7 +25,7 @@
 .Kahoot-Create {
     display: flex;
     align-items: center;
-    background-color: $primary;
+    background-color: var(--bs-primary);
     color: $light;
 }
 
@@ -59,7 +59,7 @@
     align-items: center;
     padding: 1em;
     margin: 0.5em 0;
-    background-color: #f4f4f4;
+    background-color: var(--bs-secondary-bg);
     border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px var(--bs-border-color)
 }
