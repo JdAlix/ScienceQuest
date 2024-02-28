@@ -5,7 +5,7 @@ export default{
             nbLettresADeviner:0,
             progression:"",
             viesRestantes:0, //0 == pendu; partie terminée
-            partieTerminee:false, //plus de lettres a deviner
+            partieTerminee:true, //plus de lettres a deviner
             premierePartie:true, //ne pas afficher "Perdu" pour ceux qui viennent de rejoindre
 
             //local uniquement, le client ne saura pas le mot 
@@ -54,13 +54,15 @@ export default{
 
 <template>
     <div style="display:flex">
-        <button v-on:click="creerPartie">aéaezaeaeazeaz</button>
+        <div v-if="partieTerminee">
+            <button v-on:click="creerPartie">Créer une partie</button>
+        </div>
         <!-- TODO : dessiner le pendu -->
-        <div>
+        <div v-if="viesRestantes && !partieTerminee">
             <span>mot a deviner : </span>
             <h2 style="font-family: monospace">{{ progression }}</h2>
+            <input type="text" minlength="1" maxlength="1" @input="deviner">
         </div>
-        <input type="text" minlength="1" maxlength="1" @input="deviner" v-if="viesRestantes && !partieTerminee">
     </div>
 </template>
 
