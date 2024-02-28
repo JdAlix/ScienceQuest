@@ -38,14 +38,16 @@ export default{
             const oldprogression = this.progression;
             this.progression = this.debug_letreDevinee(lettreDevinee);
 
-            // /!\ local uniquement : normalement c'est l'api qui gere les vies
+            // /!\ code temporaire, local uniquement : TODO remplacer avec l'api
             if (oldprogression == this.progression) {
                 //si la lettre est incorrecte
                 this.viesRestantes--; //l'api devrait aussi retourner le nombre de vies restantes
                 if(this.viesRestantes<0){
                     this.partieTerminee = true
+                    this.progression = this.debug_letreDevinee(lettreDevinee);
                 }
             }
+            //fin code temporaire
 
             if (!this.progression.includes("_")) {
                 //plus de lettres a deviner
