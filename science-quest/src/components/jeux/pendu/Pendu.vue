@@ -87,6 +87,7 @@ export default{
             <p>mot a deviner : </p>
             <h2 style="font-family: monospace">{{ progression }}</h2>
             <input type="text" minlength="1" maxlength="1" @input="deviner" placeholder="Devinez la lettre ici">
+            <p>Vies restantes : {{ viesRestantes }}</p>
         </div>
     </div>
 </template>
