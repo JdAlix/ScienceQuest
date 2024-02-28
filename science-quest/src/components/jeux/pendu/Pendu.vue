@@ -1,74 +1,69 @@
 <script>
+import PenduDessin from './PenduDessin.vue'
+
 export default{
-    data(){
-        return{
-            nbLettresADeviner:0,
-            progression:"",
-            viesRestantes:0, //-1 == pendu; partie terminée, 
-            partieTerminee:true, //plus de lettres a deviner
-            premierePartie:true, //ne pas afficher "Perdu" pour ceux qui viennent de rejoindre
-            lettresDejaDevine:"",
-
+    data() {
+        return {
+            nbLettresADeviner: 0,
+            progression: "",
+            viesRestantes: 0, //-1 == pendu; partie terminée, 
+            partieTerminee: true, //plus de lettres a deviner
+            premierePartie: true, //ne pas afficher "Perdu" pour ceux qui viennent de rejoindre
+            lettresDejaDevine: "",
             //local uniquement, le client ne saura pas le mot 
-            debug_motADeviner:"einstein",
-            debug_nbLettresADeviner:8,
-            debug_lettresDejaDevine:"", //tout en minuscule*
+            debug_motADeviner: "einstein",
+            debug_nbLettresADeviner: 8,
+            debug_lettresDejaDevine: "", //tout en minuscule*
             //bloquer l'input si l'utilisateur met une lettre deja devinée
-            
-        }
+        };
     },
-    methods:{
-        creerPartie: function(){
-            this.debug_creerPartie()
-            this.premierePartie=false
-            this.partieTerminee=false
+    methods: {
+        creerPartie: function () {
+            this.debug_creerPartie();
+            this.premierePartie = false;
+            this.partieTerminee = false;
             //l'api (PATCH demarrerPartie) retournera le nombre de lettres a deviner ainsi que le nombre de vies
-            this.nbLettresADeviner=this.debug_nbLettresADeviner; //TODO utiliser l'api
-            this.viesRestantes=10 // TODO utiliser l'api
-
-            this.progression="_".repeat(this.nbLettresADeviner);
-
-            this.lettresDejaDevine=""
+            this.nbLettresADeviner = this.debug_nbLettresADeviner; //TODO utiliser l'api
+            this.viesRestantes = 10; // TODO utiliser l'api
+            this.progression = "_".repeat(this.nbLettresADeviner);
+            this.lettresDejaDevine = "";
         },
-        deviner: function(event){
+        deviner: function (event) {
             //prendre la lettre depuis l'event
-            const lettreDevinee=event.data.toLowerCase();
+            const lettreDevinee = event.data.toLowerCase();
             //vider l'input
-            event.target.value="";
-
+            event.target.value = "";
             //envoyer lettreDevinee a l'api
-            const oldprogression=this.progression;
-            this.progression=this.debug_letreDevinee(lettreDevinee)
-
+            const oldprogression = this.progression;
+            this.progression = this.debug_letreDevinee(lettreDevinee);
             // /!\ local uniquement : normalement c'est l'api qui gere les vies
-            if(oldprogression==this.progression){
+            if (oldprogression == this.progression) {
                 //si la lettre est incorrecte
-                this.viesRestantes-- //l'api devrait aussi retourner le nombre de vies restantes
+                this.viesRestantes--; //l'api devrait aussi retourner le nombre de vies restantes
             }
-    
-
-            if(!this.progression.includes("_")){
+            if (!this.progression.includes("_")) {
                 //plus de lettres a deviner
-                this.partieTerminee=true
+                this.partieTerminee = true;
             }
             //ajouter la lettre dans la liste des lettres devinées
-            if(!this.lettresDejaDevine.includes(lettreDevinee)){
-                this.lettresDejaDevine+=lettreDevinee
+            if (!this.lettresDejaDevine.includes(lettreDevinee)) {
+                this.lettresDejaDevine += lettreDevinee;
             }
         },
-        debug_letreDevinee: function(lettre){ //ce que l'api devrait faire
-            if(this.viesRestantes<0){
-                return this.debug_motADeviner //plus de vies = fin de la partie, l'api retourne le mot qu'on devait trouver
+        debug_letreDevinee: function (lettre) {
+            if (this.viesRestantes < 0) {
+                return this.debug_motADeviner; //plus de vies = fin de la partie, l'api retourne le mot qu'on devait trouver
             }
-            let progression=""
-            this.debug_lettresDejaDevine+=lettre
-            this.debug_motADeviner.split("").forEach(w=>this.debug_lettresDejaDevine.includes(w) ? progression+=w : progression+="_")
-            return progression
+            let progression = "";
+            this.debug_lettresDejaDevine += lettre;
+            this.debug_motADeviner.split("").forEach(w => this.debug_lettresDejaDevine.includes(w) ? progression += w : progression += "_");
+            return progression;
         },
-        debug_creerPartie: function(){
-            this.debug_lettresDejaDevine=""
+        debug_creerPartie: function () {
+            this.debug_lettresDejaDevine = "";
         }
-    }
+    },
+    components: { PenduDessin }
 }
 
 </script>
@@ -91,9 +86,14 @@ export default{
             </div>
             <button class="btn btn-primary" v-on:click="creerPartie">Créer une partie</button>
         </div>
+
+        <div v-if="!partieTerminee" class="divjeu">
+            <PenduDessin></PenduDessin>
+        </div>
+        
         <div v-if="!partieTerminee" class="divjeu">
             <!-- dans une partie -->
-            <!-- TODO : dessiner le pendu -->
+            
             <p>Mot a deviner ({{ nbLettresADeviner }} lettres) : </p>
             <h2 class="trous">{{ progression }}</h2>
             <input class="form-control" type="text" minlength="1" maxlength="1" @input="deviner"
