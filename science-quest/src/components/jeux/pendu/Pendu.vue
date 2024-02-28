@@ -7,6 +7,7 @@ export default{
             viesRestantes:0, //0 == pendu; partie terminée, 
             partieTerminee:true, //plus de lettres a deviner
             premierePartie:true, //ne pas afficher "Perdu" pour ceux qui viennent de rejoindre
+            lettresDejaDevine:"",
 
             //local uniquement, le client ne saura pas le mot 
             debug_motADeviner:"einstein",
@@ -18,6 +19,7 @@ export default{
     },
     methods:{
         creerPartie: function(){
+            this.debug_creerPartie()
             this.premierePartie=false
             this.partieTerminee=false
             //l'api (PATCH demarrerPartie) retournera le nombre de lettres a deviner ainsi que le nombre de vies
@@ -26,7 +28,7 @@ export default{
 
             this.progression="_".repeat(this.nbLettresADeviner);
 
-            this.debug_lettresDejaDevine=""
+            this.lettresDejaDevine=""
         },
         deviner: function(event){
             //prendre la lettre depuis l'event
@@ -49,6 +51,10 @@ export default{
                 //plus de lettres a deviner
                 this.partieTerminee=true
             }
+            //ajouter la lettre dans la liste des lettres devinées
+            if(!this.lettresDejaDevine.includes(lettreDevinee)){
+                this.lettresDejaDevine+=lettreDevinee
+            }
         },
         debug_letreDevinee: function(lettre){ //ce que l'api devrait faire
             if(this.viesRestantes<=0){
@@ -58,6 +64,9 @@ export default{
             this.debug_lettresDejaDevine+=lettre
             this.debug_motADeviner.split("").forEach(w=>this.debug_lettresDejaDevine.includes(w) ? progression+=w : progression+="_")
             return progression
+        },
+        debug_creerPartie: function(){
+            this.debug_lettresDejaDevine=""
         }
     }
 }
@@ -65,7 +74,7 @@ export default{
 </script>
 
 <template>
-    <div style="display:flex">
+    <div>
         <div v-if="partieTerminee">
             <!-- hors partie -->
             <button v-on:click="creerPartie">Créer une partie</button>
@@ -88,6 +97,7 @@ export default{
             <h2 style="font-family: monospace">{{ progression }}</h2>
             <input type="text" minlength="1" maxlength="1" @input="deviner" placeholder="Devinez la lettre ici">
             <p>Vies restantes : {{ viesRestantes }}</p>
+            <p>Lettres devinées : <span style="font-family: monospace">{{ lettresDejaDevine }}</span></p>
         </div>
     </div>
 </template>
