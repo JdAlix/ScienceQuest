@@ -1,6 +1,6 @@
 <script>
 export default{
-    props:["vieRestantes"], //maximum 10
+    props:["vieRestantes"], //maximum 10, 10 par defaut
     data(){
         return {
             ordreDessin:[
@@ -24,6 +24,18 @@ export default{
         this.$refs.pendu.height=200
         this.ctx = this.$refs.pendu.getContext("2d");
         this.viesEpuisees=this.ordreDessin.length-(this.vieRestantes??this.ordreDessin.length)
+    },
+    watch:{
+        vieRestantes: function(newVal, oldVal){
+            const viesAEpuiser=this.ordreDessin.length-(newVal??this.ordreDessin.length)
+            this.viesEpuisees=0;
+            //nettoyer le canvas
+            this.ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            for(let i=0; i<viesAEpuiser; i++){
+                this.dessiner()
+            }
+        }
     },
     methods:{
         dessiner(){
@@ -115,6 +127,5 @@ export default{
 
 
 <template>
-    <button @click="dessiner">zéearezerzergfsdfg</button>
     <canvas ref="pendu"></canvas>
 </template>
