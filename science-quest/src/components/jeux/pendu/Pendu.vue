@@ -93,8 +93,8 @@ export default{
         <div v-if="!partieTerminee">
             <!-- dans une partie -->
             <!-- TODO : dessiner le pendu -->
-            <p>mot a deviner : </p>
-            <h2 style="font-family: monospace">{{ progression }}</h2>
+            <p>mot a deviner ({{ nbLettresADeviner }} lettres) : </p>
+            <h2 class="trous">{{ progression }}</h2>
             <input type="text" minlength="1" maxlength="1" @input="deviner" placeholder="Devinez la lettre ici">
             <p>Vies restantes : {{ viesRestantes }}</p>
             <p>Lettres devinées : <span style="font-family: monospace">{{ lettresDejaDevine }}</span></p>
@@ -104,6 +104,9 @@ export default{
 
 
 <style>
-
+.trous{
+    letter-spacing:0.5em;
+    font-family: monospace;
+}
 
 </style>
