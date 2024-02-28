@@ -50,9 +50,9 @@ export default{
                 this.partieTerminee=true
             }
         },
-        debug_letreDevinee: function(lettre){
+        debug_letreDevinee: function(lettre){ //ce que l'api devrait faire
             if(this.viesRestantes<=0){
-                return this.debug_motADeviner
+                return this.debug_motADeviner //plus de vies = fin de la partie, l'api retourne le mot qu'on devait trouver
             }
             let progression=""
             this.debug_lettresDejaDevine+=lettre
