@@ -95,16 +95,21 @@ entity "Jouer" as jouer {
 }
 
 entity "ActionPendu" as actionPendu {
+    <u>#idAction
     lettre : char
+    wordToFind : string
+    lifeLeft : int
 }
 
 entity "ActionKahoot" as actionKahoot {
+    <u>#idAction
     numReponse: int
     tempsReponse: int
     #idJoueur
 }
 
 entity "ActionQuiEstCe" as actionQuiEstCe {
+    <u>#idAction
     #idJoueur
 }
 
