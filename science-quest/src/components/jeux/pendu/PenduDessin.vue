@@ -3,87 +3,110 @@ export default{
     props:["vieRestantes"], //maximum 10
     data(){
         return {
-
+            viesEpuisees:10-(this.vieRestantes??10),
+            ordreDessin:[
+                this.potenceBas,
+                this.potenceVertical,
+                this.potencePoutre,
+                this.potenceEquerre,
+                this.corde,
+                this.tete,
+                this.corps,
+                this.brasGauche,
+                this.brasDroit,
+                this.jambeDroite,
+                this.jambeGauche
+            ],
+            ctx:null
         }
     },
+    mounted(){
+        this.$refs.pendu.width=200
+        this.$refs.pendu.height=200
+        this.ctx = this.$refs.pendu.getContext("2d");
+    },
     methods:{
-        dessiner: function(){
-            // Récupérer le contexte de dessin 2D
-            this.$refs.pendu.width=200
-            this.$refs.pendu.height=200
-            
-const ctx = this.$refs.pendu.getContext("2d");
-
-// Tracer la potence (trait bas)
-ctx.beginPath();
-ctx.moveTo(50, 200);
-ctx.lineTo(150, 200);
-ctx.stroke();
-
-// Tracer la potence (trait vertical)
-ctx.beginPath();
-ctx.moveTo(100, 200);
-ctx.lineTo(100, 50);
-ctx.stroke();
-
-// Tracer la potence (poutre)
-ctx.beginPath();
-ctx.moveTo(100, 50);
-ctx.lineTo(150, 50);
-ctx.stroke();
-
-// Tracer la potence (equerre)
-ctx.beginPath();
-ctx.moveTo(100, 70);
-ctx.lineTo(130, 50);
-ctx.stroke();
-
-// Tracer la corde
-ctx.beginPath();
-ctx.moveTo(150, 50); // Déplacer le point de départ au sommet de la potence
-ctx.lineTo(150, 75); // Tracer une ligne verticale jusqu'à la tête du pendu
-ctx.stroke(); // Dessiner le trait
-
-// Tracer l'équerre
-ctx.beginPath();
-ctx.moveTo(150, 100);
-ctx.lineTo(150, 150);
-ctx.stroke();
-
-// Tracer la tête
-ctx.beginPath();
-ctx.arc(150, 87, 12, 0, Math.PI * 2);
-ctx.stroke();
-
-// Tracer le corps
-ctx.beginPath();
-ctx.moveTo(150, 100);
-ctx.lineTo(150, 150);
-ctx.stroke();
-
-// Tracer le bras gauche
-ctx.beginPath();
-ctx.moveTo(150, 110);
-ctx.lineTo(130, 130);
-ctx.stroke();
-
-// Tracer le bras droit
-ctx.beginPath();
-ctx.moveTo(150, 110);
-ctx.lineTo(170, 130);
-ctx.stroke();
-
-// Tracer la jambe gauche
-ctx.beginPath();
-ctx.moveTo(150, 150);
-ctx.lineTo(130, 180);
-ctx.stroke();
-
-// Tracer la jambe droite
-ctx.beginPath();
-ctx.moveTo(150, 150);
-ctx.lineTo(170, 180);
-ctx.stroke();
+        dessiner(){
+            if(this.viesEpuisees<=10){
+                this.ordreDessin[this.viesEpuisees]()
+                this.viesEpuisees++;
+            }
+        },
+        potenceBas: function(){
+            // Tracer la potence (trait bas)
+            this.ctx.beginPath();
+            this.ctx.moveTo(50, 200);
+            this.ctx.lineTo(150, 200);
+            this.ctx.stroke();
+        },
+        potenceVertical: function(){
+            // Tracer la potence (trait vertical)
+            this.ctx.beginPath();
+            this.ctx.moveTo(100, 200);
+            this.ctx.lineTo(100, 50);
+            this.ctx.stroke();
+        },
+        potencePoutre: function(){
+            // Tracer la potence (poutre)
+            this.ctx.beginPath();
+            this.ctx.moveTo(100, 50);
+            this.ctx.lineTo(150, 50);
+            this.ctx.stroke();
+        },
+        potenceEquerre: function(){
+            // Tracer la potence (equerre)
+            this.ctx.beginPath();
+            this.ctx.moveTo(100, 70);
+            this.ctx.lineTo(130, 50);
+            this.ctx.stroke();
+        },
+        corde: function(){
+            // Tracer la corde
+            this.ctx.beginPath();
+            this.ctx.moveTo(150, 50); // Déplacer le point de départ au sommet de la potence
+            this.ctx.lineTo(150, 75); // Tracer une ligne verticale jusqu'à la tête du pendu
+            this.ctx.stroke(); // Dessiner le trait
+        },
+        tete: function(){
+            // Tracer la tête
+            this.ctx.beginPath();
+            this.ctx.arc(150, 87, 12, 0, Math.PI * 2);
+            this.ctx.stroke();
+        },
+        corps: function(){
+            // Tracer le corps
+            this.ctx.beginPath();
+            this.ctx.moveTo(150, 100);
+            this.ctx.lineTo(150, 150);
+            this.ctx.stroke();
+        },
+        brasGauche: function(){
+            // Tracer le bras gauche
+            this.ctx.beginPath();
+            this.ctx.moveTo(150, 110);
+            this.ctx.lineTo(130, 130);
+            this.ctx.stroke();
+        },
+        brasDroit: function(){
+            // Tracer le bras droit
+            this.ctx.beginPath();
+            this.ctx.moveTo(150, 110);
+            this.ctx.lineTo(170, 130);
+            this.ctx.stroke();
+        },
+        jambeGauche: function(){
+            // Tracer la jambe gauche
+            this.ctx.beginPath();
+            this.ctx.moveTo(150, 150);
+            this.ctx.lineTo(130, 180);
+            this.ctx.stroke();
+        },
+        jambeDroite: function(){
+            // Tracer la jambe droite
+            this.ctx.beginPath();
+            this.ctx.moveTo(150, 150);
+            this.ctx.lineTo(170, 180);
+            this.ctx.stroke();
         }
     }
 }
