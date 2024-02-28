@@ -4,7 +4,7 @@ export default{
         return{
             nbLettresADeviner:0,
             progression:"",
-            viesRestantes:0, //0 == pendu; partie terminée, 
+            viesRestantes:0, //-1 == pendu; partie terminée, 
             partieTerminee:true, //plus de lettres a deviner
             premierePartie:true, //ne pas afficher "Perdu" pour ceux qui viennent de rejoindre
             lettresDejaDevine:"",
@@ -57,7 +57,7 @@ export default{
             }
         },
         debug_letreDevinee: function(lettre){ //ce que l'api devrait faire
-            if(this.viesRestantes<=0){
+            if(this.viesRestantes<0){
                 return this.debug_motADeviner //plus de vies = fin de la partie, l'api retourne le mot qu'on devait trouver
             }
             let progression=""
@@ -79,10 +79,10 @@ export default{
             <!-- hors partie -->
             <button v-on:click="creerPartie">Créer une partie</button>
             <div v-if="!premierePartie">
-                <div v-if="viesRestantes">
+                <div v-if="viesRestantes>=0">
                     Gagné
                 </div>
-                <div v-if="viesRestantes<=0">
+                <div v-if="viesRestantes<0">
                     Perdu!
                 </div>
                 <p>Le mot était : </p>
