@@ -5,7 +5,6 @@ export default{
         return {
             viesEpuisees:10-(this.vieRestantes??10),
             ordreDessin:[
-                this.potenceBas,
                 this.potenceVertical,
                 this.potencePoutre,
                 this.potenceEquerre,
@@ -40,6 +39,7 @@ export default{
             this.ctx.stroke();
         },
         potenceVertical: function(){
+            this.potenceBas()
             // Tracer la potence (trait vertical)
             this.ctx.beginPath();
             this.ctx.moveTo(100, 200);
