@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface ThematiqueRepository extends CrudRepository<Thematique, Integer> {}
+public interface ThematiqueRepository extends CrudRepository<Thematique, Integer> {
+    public boolean existsByLibelle(String libelle);
+}
