@@ -74,28 +74,30 @@ export default{
 </script>
 
 <template>
-    <div>
-        <div v-if="partieTerminee">
+    <h1 style="padding-left: 0.5em;">Pendu</h1>
+    <div class="separateur">
+        <div v-if="partieTerminee" class="divjeu">
             <!-- hors partie -->
-            <button v-on:click="creerPartie">Créer une partie</button>
             <div v-if="!premierePartie">
-                <div v-if="viesRestantes>=0">
+                <div v-if="viesRestantes >= 0">
                     Gagné!
                 </div>
-                <div v-if="viesRestantes<0">
+                <div v-if="viesRestantes < 0">
                     Perdu!
                 </div>
                 <p>Le mot était : </p>
                 <!-- l'api devrait retourner le mot entier quand la vie est a 0 -->
                 <h2 style="font-family: monospace">{{ progression }}</h2>
             </div>
+            <button class="btn btn-primary" v-on:click="creerPartie">Créer une partie</button>
         </div>
-        <div v-if="!partieTerminee">
+        <div v-if="!partieTerminee" class="divjeu">
             <!-- dans une partie -->
             <!-- TODO : dessiner le pendu -->
             <p>Mot a deviner ({{ nbLettresADeviner }} lettres) : </p>
             <h2 class="trous">{{ progression }}</h2>
-            <input type="text" minlength="1" maxlength="1" @input="deviner" placeholder="Devinez la lettre ici">
+            <input class="form-control" type="text" minlength="1" maxlength="1" @input="deviner"
+                placeholder="Devinez la lettre ici">
             <p>Vies restantes : {{ viesRestantes }}</p>
             <p>Lettres devinées : <span style="font-family: monospace">{{ lettresDejaDevine }}</span></p>
         </div>
@@ -107,6 +109,15 @@ export default{
 .trous{
     letter-spacing:0.5em;
     font-family: monospace;
+}
+.divjeu {
+    text-align: center;
+}
+
+.separateur{
+    display: flex;
+    flex:1;
+    justify-content: center;
 }
 
 </style>
