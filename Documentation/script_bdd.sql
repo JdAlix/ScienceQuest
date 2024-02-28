@@ -13,7 +13,10 @@ DROP TABLE IF EXISTS Indice CASCADE;
 DROP TABLE IF EXISTS Scientifique CASCADE;
 DROP TABLE IF EXISTS Thematique CASCADE;
 DROP TABLE IF EXISTS Difficulte;
-
+DROP TABLE IF EXISTS ActionPendu CASCADE;
+DROP TABLE IF EXISTS ActionKahoot CASCADE;
+DROP TABLE IF EXISTS ActionQuiEstCe CASCADE;
+DROP TABLE IF EXISTS Action CASCADE;
 
 -- THEMATIQUE
 
@@ -131,6 +134,38 @@ CREATE TABLE Decouvrir(
                           PRIMARY KEY (idUtilisateur, idScientifique)
 );
 
+-- Actions
+
+CREATE TABLE Action (
+                        id integer PRIMARY KEY,
+                        dateAction date NOT NULL
+);
+
+-- Action Pendu
+
+CREATE TABLE ActionPendu(
+                        idAction integer PRIMARY KEY REFERENCES Action(id),
+                        lettre char(1) NOT NULL,
+                        wordToFind varchar(255) NOT NULL,
+                        lifeLeft integer NOT NULL
+);
+
+-- Action Kahoot
+
+CREATE TABLE ActionKahoot(
+                        idAction integer PRIMARY KEY REFERENCES Action(id),
+                        idJoueur integer REFERENCES Joueur(id),
+                        numReponse integer NOT NULL,
+                        -- NOTE : temps en ms
+                        tempsReponse integer NOT NULL
+);
+
+-- Action Qui-Est-Ce
+
+CREATE TABLE ActionQuiEstCe(
+                        idAction integer PRIMARY KEY REFERENCES Action(id),
+                        idJoueur integer REFERENCES Joueur(id)
+);
 
 -- INSERTS
 
