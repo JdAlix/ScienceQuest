@@ -86,7 +86,7 @@ export default{
             <!-- TODO : dessiner le pendu -->
             <p>mot a deviner : </p>
             <h2 style="font-family: monospace">{{ progression }}</h2>
-            <input type="text" minlength="1" maxlength="1" @input="deviner">
+            <input type="text" minlength="1" maxlength="1" @input="deviner" placeholder="Devinez la lettre ici">
         </div>
     </div>
 </template>
