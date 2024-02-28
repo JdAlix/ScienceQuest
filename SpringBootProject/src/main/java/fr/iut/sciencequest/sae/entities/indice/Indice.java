@@ -1,5 +1,6 @@
-package fr.iut.sciencequest.sae.entities;
+package fr.iut.sciencequest.sae.entities.indice;
 
+import fr.iut.sciencequest.sae.entities.Scientifique;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -14,16 +15,21 @@ import lombok.NoArgsConstructor;
 @Table(name="indice")
 public class Indice {
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotBlank
+    @NotBlank(groups = {IValidateOnlyLibelle.class})
     private String libelle;
 
-    @NotNull
-    @JoinColumn(name="idscientifique")
+
     @ManyToOne
+    @NotNull
+    @JoinColumn(name="idscientifique", nullable = false)
     private Scientifique scientifique;
+    
+    public Indice(int id, String libelle) { // Used for projection
+        this.id = id;
+        this.libelle = libelle;
+    }
 }
 

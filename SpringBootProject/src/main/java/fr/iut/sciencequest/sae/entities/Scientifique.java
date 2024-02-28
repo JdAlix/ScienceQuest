@@ -9,11 +9,13 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.URL;
+import org.springframework.hateoas.server.core.Relation;
 
 import java.util.Date;
 
 @AllArgsConstructor
 @RequiredArgsConstructor
+@Relation(collectionRelation = "scientifiques", itemRelation = "scientifique")
 @Data
 @Entity
 @Table(name = "scientifique")

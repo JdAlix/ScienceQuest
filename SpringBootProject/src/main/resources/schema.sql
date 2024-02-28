@@ -51,7 +51,7 @@ CREATE TABLE Scientifique(
 
 CREATE TABLE Indice(
                        id SERIAL PRIMARY KEY,
-                       libelle varchar(512) NOT NULL UNIQUE,
+                       libelle varchar(512) NOT NULL,
                        idScientifique integer REFERENCES Scientifique(id)
 );
 

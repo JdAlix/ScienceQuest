@@ -2,7 +2,7 @@ package fr.iut.sciencequest.sae.controllers;
 
 import fr.iut.sciencequest.sae.entities.Partie;
 import fr.iut.sciencequest.sae.exceptions.DuplicatedFieldException;
-import fr.iut.sciencequest.sae.exceptions.PartieNotFoundException;
+import fr.iut.sciencequest.sae.exceptions.notFound.PartieNotFoundException;
 import fr.iut.sciencequest.sae.repositories.PartieRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.dao.DataIntegrityViolationException;

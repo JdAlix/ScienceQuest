@@ -1,27 +1,16 @@
 package fr.iut.sciencequest.sae.services;
 
-import fr.iut.sciencequest.sae.controllers.ScientifiqueController;
 import fr.iut.sciencequest.sae.entities.Scientifique;
-import fr.iut.sciencequest.sae.exceptions.IncorrectPageException;
-import fr.iut.sciencequest.sae.exceptions.ScientifiqueNotFoundException;
-import fr.iut.sciencequest.sae.repositories.IndiceRepository;
+import fr.iut.sciencequest.sae.entities.indice.IIndiceidAndLibelleOnlyProjection;
+import fr.iut.sciencequest.sae.exceptions.notFound.ScientifiqueNotFoundException;
 import fr.iut.sciencequest.sae.repositories.ScientifiqueRepository;
 import fr.iut.sciencequest.sae.services.interfaces.IScientifiqueService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class ScientifiqueService implements IScientifiqueService {
@@ -29,30 +18,11 @@ public class ScientifiqueService implements IScientifiqueService {
     private static final int PAGE_SIZE = 1;
 
     private final ScientifiqueRepository scientifiqueRepository;
+    private final IndiceService indiceService;
 
-    public ScientifiqueService(ScientifiqueRepository scientifiqueRepository) {
+    public ScientifiqueService(ScientifiqueRepository scientifiqueRepository, IndiceService indiceService) {
         this.scientifiqueRepository = scientifiqueRepository;
-    }
-
-    private <T> CollectionModel<EntityModel<T>> getPageableCollectionModel(Page<T> pagedResult, Integer page, Method method, Object... args) {
-        List<EntityModel<T>> entities = pagedResult.map(EntityModel::of).toList();
-
-        List<Object> selfObj = new ArrayList<>(List.of(args)); selfObj.add(page);
-        Link selfLink = linkTo(ScientifiqueController.class, method, selfObj.toArray()).withSelfRel().expand(page);
-
-        CollectionModel<EntityModel<T>> result = CollectionModel.of(entities, selfLink);
-
-        if (pagedResult.hasPrevious()) {
-            List<Object> previousObj = new ArrayList<>(List.of(args)); previousObj.add(pagedResult.previousPageable().getPageNumber());
-            result.add(linkTo(ScientifiqueController.class, method, previousObj.toArray()).withRel("previous"));
-        }
-
-        if (pagedResult.hasNext()) {
-            List<Object> nextObj = new ArrayList<>(List.of(args)); nextObj.add(pagedResult.nextPageable().getPageNumber());
-            result.add(linkTo(ScientifiqueController.class, method, nextObj.toArray()).withRel("next"));
-        }
-
-        return result;
+        this.indiceService = indiceService;
     }
 
     @Override
@@ -66,25 +36,21 @@ public class ScientifiqueService implements IScientifiqueService {
     }
 
     @Override
-    public CollectionModel<EntityModel<Scientifique>> findAll(Integer page) {
-        try {
-            Pageable paging = PageRequest.of(page, PAGE_SIZE);
-            Page<Scientifique> pagedResult = scientifiqueRepository.findAll(paging);
-
-            return getPageableCollectionModel(pagedResult, page, ScientifiqueController.class.getMethod("getAllScientists", Optional.class));
-        } catch (IllegalArgumentException e) {
-            throw new IncorrectPageException("numéro de page incorrect");
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException(e);
-        }
+    public Page<Scientifique> findAll(Integer page) {
+        Pageable paging = PageRequest.of(page, PAGE_SIZE);
+        return scientifiqueRepository.findAll(paging);
     }
 
     @Override
-    public EntityModel<Optional<Scientifique>> findById(int id) {
-        Optional<Scientifique> scientifiqueOptional = this.scientifiqueRepository.findById(id);
-        Scientifique scientifique = scientifiqueOptional.orElseThrow(() -> new ScientifiqueNotFoundException("Scientifique non trouvé avec l'ID : " + id));
+    public Scientifique findById(int id) {
+        return this.scientifiqueRepository.findById(id).orElseThrow(() -> new ScientifiqueNotFoundException(id));
+    }
 
-        Link selfLink = linkTo(methodOn(ScientifiqueController.class).getScientistById(id)).withSelfRel();
-        return EntityModel.of(Optional.ofNullable(scientifique), selfLink);
+    @Override
+    public Iterable<IIndiceidAndLibelleOnlyProjection> getLinkedIndicesByScientifiqueId(int id){
+        if(!this.scientifiqueRepository.existsById(id)){
+            throw new ScientifiqueNotFoundException(id);
+        }
+        return this.indiceService.findByScientifiqueId(id);
     }
 }

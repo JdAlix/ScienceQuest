@@ -1,12 +1,12 @@
-package fr.iut.sciencequest.sae.exceptions;
+package fr.iut.sciencequest.sae.exceptions.notFound;
+
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class ScientifiqueNotFoundException extends RuntimeException {
-
-    public ScientifiqueNotFoundException(String message) {
+public class PartieNotFoundException extends RuntimeException{
+    public PartieNotFoundException(String message) {
         super(message);
     }
 }

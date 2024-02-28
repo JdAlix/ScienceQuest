@@ -1,17 +1,17 @@
 package fr.iut.sciencequest.sae.services.interfaces;
 
 import fr.iut.sciencequest.sae.entities.Scientifique;
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
-
-import java.util.Optional;
+import fr.iut.sciencequest.sae.entities.indice.IIndiceidAndLibelleOnlyProjection;
+import org.springframework.data.domain.Page;
 
 public interface IScientifiqueService {
     Scientifique update(Scientifique scientifique);
 
     Scientifique create(Scientifique scientifique);
 
-    CollectionModel<EntityModel<Scientifique>> findAll(Integer page);
+    Page<Scientifique> findAll(Integer page);
 
-    EntityModel<Optional<Scientifique>> findById(int id);
+    Scientifique findById(int id);
+
+    Iterable<IIndiceidAndLibelleOnlyProjection> getLinkedIndicesByScientifiqueId(int id);
 }

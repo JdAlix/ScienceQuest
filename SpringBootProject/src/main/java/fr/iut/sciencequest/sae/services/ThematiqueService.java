@@ -3,7 +3,7 @@ package fr.iut.sciencequest.sae.services;
 import fr.iut.sciencequest.sae.entities.Thematique;
 import fr.iut.sciencequest.sae.exceptions.DuplicatedFieldException;
 import fr.iut.sciencequest.sae.exceptions.DuplicatedIdException;
-import fr.iut.sciencequest.sae.exceptions.EntityNotFoundException;
+import fr.iut.sciencequest.sae.exceptions.notFound.ThematiqueNotFoundException;
 import fr.iut.sciencequest.sae.repositories.ThematiqueRepository;
 import fr.iut.sciencequest.sae.services.interfaces.IThematiqueService;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ public class ThematiqueService implements IThematiqueService {
     @Override
     public Thematique update(Thematique thematique){
         if(!this.thematiqueRepository.existsById(thematique.getId())){
-            throw new EntityNotFoundException();
+            throw new ThematiqueNotFoundException(thematique.getId());
         }
         this.checkFieldsConstraints(thematique);
         return this.thematiqueRepository.save(thematique);
