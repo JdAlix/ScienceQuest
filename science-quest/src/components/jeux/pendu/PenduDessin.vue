@@ -3,7 +3,6 @@ export default{
     props:["vieRestantes"], //maximum 10
     data(){
         return {
-            viesEpuisees:10-(this.vieRestantes??10),
             ordreDessin:[
                 this.potenceVertical,
                 this.potencePoutre,
@@ -16,6 +15,7 @@ export default{
                 this.jambeDroite,
                 this.jambeGauche
             ],
+            viesEpuisees:0,
             ctx:null
         }
     },
@@ -23,10 +23,11 @@ export default{
         this.$refs.pendu.width=200
         this.$refs.pendu.height=200
         this.ctx = this.$refs.pendu.getContext("2d");
+        this.viesEpuisees=this.ordreDessin.length-(this.vieRestantes??this.ordreDessin.length)
     },
     methods:{
         dessiner(){
-            if(this.viesEpuisees<=10){
+            if(this.viesEpuisees<this.ordreDessin.length){
                 this.ordreDessin[this.viesEpuisees]()
                 this.viesEpuisees++;
             }
