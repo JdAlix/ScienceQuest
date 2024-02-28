@@ -32,7 +32,7 @@ export default{
         },
         deviner: function(event){
             //prendre la lettre depuis l'event
-            const lettreDevinee=event.data
+            const lettreDevinee=event.data.toLowerCase();
             //vider l'input
             event.target.value="";
 
