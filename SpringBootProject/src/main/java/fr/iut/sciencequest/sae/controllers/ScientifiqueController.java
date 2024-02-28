@@ -4,7 +4,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 import fr.iut.sciencequest.sae.entities.Indice;
 import fr.iut.sciencequest.sae.entities.Scientifique;
-import fr.iut.sciencequest.sae.exceptions.DuplicatedEntity;
+import fr.iut.sciencequest.sae.exceptions.DuplicatedFieldException;
 import fr.iut.sciencequest.sae.exceptions.IncorrectPageException;
 import fr.iut.sciencequest.sae.exceptions.ScientifiqueNotFoundException;
 import fr.iut.sciencequest.sae.repositories.IndiceRepository;
@@ -20,10 +20,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -109,7 +107,7 @@ public class ScientifiqueController {
 
             return this.indiceRepository.save(indice);
         } catch (DataIntegrityViolationException e){
-            throw new DuplicatedEntity(e.getMessage());
+            throw new DuplicatedFieldException(e.getMessage());
         }
     }
 }

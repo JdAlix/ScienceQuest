@@ -1,7 +1,7 @@
 package fr.iut.sciencequest.sae.controllers;
 
 import fr.iut.sciencequest.sae.entities.Partie;
-import fr.iut.sciencequest.sae.exceptions.DuplicatedEntity;
+import fr.iut.sciencequest.sae.exceptions.DuplicatedFieldException;
 import fr.iut.sciencequest.sae.exceptions.PartieNotFoundException;
 import fr.iut.sciencequest.sae.repositories.PartieRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,7 +13,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
-import javax.print.attribute.standard.Media;
 import java.util.Optional;
 
 @RestController
@@ -44,7 +43,7 @@ public class PartieController {
         try {
             return this.partieRepository.save(partie);
         } catch (DataIntegrityViolationException e) {
-            throw new DuplicatedEntity("ERREUR : il existe déjà une partie : " + partie.getId() + " en base");
+            throw new DuplicatedFieldException("ERREUR : il existe déjà une partie : " + partie.getId() + " en base");
         }
     }
 
