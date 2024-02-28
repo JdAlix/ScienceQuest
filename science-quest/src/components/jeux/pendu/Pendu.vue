@@ -80,7 +80,7 @@ export default{
             <button v-on:click="creerPartie">Créer une partie</button>
             <div v-if="!premierePartie">
                 <div v-if="viesRestantes>=0">
-                    Gagné
+                    Gagné!
                 </div>
                 <div v-if="viesRestantes<0">
                     Perdu!
@@ -93,7 +93,7 @@ export default{
         <div v-if="!partieTerminee">
             <!-- dans une partie -->
             <!-- TODO : dessiner le pendu -->
-            <p>mot a deviner ({{ nbLettresADeviner }} lettres) : </p>
+            <p>Mot a deviner ({{ nbLettresADeviner }} lettres) : </p>
             <h2 class="trous">{{ progression }}</h2>
             <input type="text" minlength="1" maxlength="1" @input="deviner" placeholder="Devinez la lettre ici">
             <p>Vies restantes : {{ viesRestantes }}</p>
