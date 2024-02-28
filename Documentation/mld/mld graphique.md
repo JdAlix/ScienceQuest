@@ -51,6 +51,7 @@ entity "Invite" as invite {
 entity "Partie" as partie {
     <u>id : int
     codeInvitation : string
+    isStarted: bool
     #idJeu : int
 }
 
@@ -83,6 +84,37 @@ entity "Question" as question {
   question : string
 }
 
+entity "Action" as action {
+    <u>id : int
+    dateAction : date
+}
+
+entity "Jouer" as jouer {
+    #idAction
+    #idPartie
+}
+
+entity "ActionPendu" as actionPendu {
+    lettre : char
+}
+
+entity "ActionKahoot" as actionKahoot {
+    numReponse: int
+    tempsReponse: int
+    #idJoueur
+}
+
+entity "ActionQuiEstCe" as actionQuiEstCe {
+    #idJoueur
+}
+
+actionPendu --> action
+actionQuiEstCe --> action
+actionQuiEstCe --> joueur
+actionKahoot --> action
+actionKahoot --> joueur
+jouer --> action
+jouer --> partie
 partie --> jeu
 partie <-- joueur
 invite --> joueur
