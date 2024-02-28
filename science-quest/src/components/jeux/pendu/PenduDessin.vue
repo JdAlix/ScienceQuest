@@ -61,18 +61,26 @@ ctx.moveTo(150, 100);
 ctx.lineTo(150, 150);
 ctx.stroke();
 
-// Tracer les bras
+// Tracer le bras gauche
 ctx.beginPath();
 ctx.moveTo(150, 110);
 ctx.lineTo(130, 130);
+ctx.stroke();
+
+// Tracer le bras droit
+ctx.beginPath();
 ctx.moveTo(150, 110);
 ctx.lineTo(170, 130);
 ctx.stroke();
 
-// Tracer les jambes
+// Tracer la jambe gauche
 ctx.beginPath();
 ctx.moveTo(150, 150);
 ctx.lineTo(130, 180);
+ctx.stroke();
+
+// Tracer la jambe droite
+ctx.beginPath();
 ctx.moveTo(150, 150);
 ctx.lineTo(170, 180);
 ctx.stroke();
