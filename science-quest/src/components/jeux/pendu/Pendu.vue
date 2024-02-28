@@ -10,10 +10,11 @@ export default{
             partieTerminee: true, //plus de lettres a deviner
             premierePartie: true, //ne pas afficher "Perdu" pour ceux qui viennent de rejoindre
             lettresDejaDevine: "",
+            
             //local uniquement, le client ne saura pas le mot 
             debug_motADeviner: "einstein",
             debug_nbLettresADeviner: 8,
-            debug_lettresDejaDevine: "", //tout en minuscule*
+            debug_lettresDejaDevine: "", //tout en minuscule
             //bloquer l'input si l'utilisateur met une lettre deja devinée
         };
     },
@@ -36,11 +37,16 @@ export default{
             //envoyer lettreDevinee a l'api
             const oldprogression = this.progression;
             this.progression = this.debug_letreDevinee(lettreDevinee);
+
             // /!\ local uniquement : normalement c'est l'api qui gere les vies
             if (oldprogression == this.progression) {
                 //si la lettre est incorrecte
                 this.viesRestantes--; //l'api devrait aussi retourner le nombre de vies restantes
+                if(this.viesRestantes<0){
+                    this.partieTerminee = true
+                }
             }
+
             if (!this.progression.includes("_")) {
                 //plus de lettres a deviner
                 this.partieTerminee = true;
@@ -88,7 +94,7 @@ export default{
         </div>
 
         <div v-if="!partieTerminee" class="divjeu">
-            <PenduDessin></PenduDessin>
+            <!--PenduDessin></PenduDessin-->
         </div>
         
         <div v-if="!partieTerminee" class="divjeu">
