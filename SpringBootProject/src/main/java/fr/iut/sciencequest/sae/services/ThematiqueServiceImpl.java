@@ -5,15 +5,16 @@ import fr.iut.sciencequest.sae.exceptions.DuplicatedFieldException;
 import fr.iut.sciencequest.sae.exceptions.DuplicatedIdException;
 import fr.iut.sciencequest.sae.exceptions.EntityNotFoundException;
 import fr.iut.sciencequest.sae.repositories.ThematiqueRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ThematiqueServiceImpl implements ThematiqueService{
 
-    @Autowired
-    private ThematiqueRepository thematiqueRepository;
+    private final ThematiqueRepository thematiqueRepository;
 
+    public ThematiqueServiceImpl(ThematiqueRepository thematiqueRepository){
+        this.thematiqueRepository = thematiqueRepository;
+    }
 
     private void checkFieldsConstraints(Thematique thematique){
         if(this.thematiqueRepository.existsByLibelle(thematique.getLibelle())){
