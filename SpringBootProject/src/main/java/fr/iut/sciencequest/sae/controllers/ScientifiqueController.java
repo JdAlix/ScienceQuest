@@ -20,6 +20,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +41,27 @@ public class ScientifiqueController {
         this.indiceRepository = indiceRepository;
     }
 
+    private <T> CollectionModel<EntityModel<T>> getPageableCollectionModel(Page<T> pagedResult, Optional<Integer> page, Method method, Object... args) {
+        List<EntityModel<T>> entities = pagedResult.map(EntityModel::of).toList();
+
+        List<Object> selfObj = new ArrayList<>(List.of(args)); selfObj.add(page.orElse(0));
+        Link selfLink = linkTo(ScientifiqueController.class, method, selfObj.toArray()).withSelfRel().expand(page.orElse(0));
+
+        CollectionModel<EntityModel<T>> result = CollectionModel.of(entities, selfLink);
+
+        if (pagedResult.hasPrevious()) {
+            List<Object> previousObj = new ArrayList<>(List.of(args)); previousObj.add(pagedResult.previousPageable().getPageNumber());
+            result.add(linkTo(ScientifiqueController.class, method, previousObj.toArray()).withRel("previous"));
+        }
+
+        if (pagedResult.hasNext()) {
+            List<Object> nextObj = new ArrayList<>(List.of(args)); nextObj.add(pagedResult.nextPageable().getPageNumber());
+            result.add(linkTo(ScientifiqueController.class, method, nextObj.toArray()).withRel("next"));
+        }
+
+        return result;
+    }
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public CollectionModel<EntityModel<Scientifique>> getAllScientists(@RequestParam(name = "page") Optional<Integer> page) {
@@ -44,25 +69,11 @@ public class ScientifiqueController {
             Pageable paging = PageRequest.of(page.orElse(0), PAGE_SIZE);
             Page<Scientifique> pagedResult = scientifiqueRepository.findAll(paging);
 
-            List<EntityModel<Scientifique>> scientifiques = pagedResult.map(EntityModel::of).toList();
-
-            Link selfLink = linkTo(methodOn(ScientifiqueController.class).getAllScientists(page)).withSelfRel().expand(page.map(Object::toString).orElse("0"));
-
-            CollectionModel<EntityModel<Scientifique>> result = CollectionModel.of(scientifiques, selfLink);
-
-            if (pagedResult.hasPrevious()) {
-                Link prevLink = linkTo(methodOn(ScientifiqueController.class).getAllScientists(Optional.of(pagedResult.previousPageable().getPageNumber()))).withRel("previous");
-                result.add(prevLink.expand(pagedResult.previousPageable().getPageNumber()));
-            }
-
-            if (pagedResult.hasNext()) {
-                Link nextLink = linkTo(methodOn(ScientifiqueController.class).getAllScientists(Optional.of(pagedResult.nextPageable().getPageNumber()))).withRel("next");
-                result.add(nextLink.expand(pagedResult.nextPageable().getPageNumber()));
-            }
-
-            return result;
+            return getPageableCollectionModel(pagedResult, page, ScientifiqueController.class.getMethod("getAllScientists", Optional.class));
         } catch (IllegalArgumentException e) {
             throw new IncorrectPageException("numéro de page incorrect");
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -83,25 +94,11 @@ public class ScientifiqueController {
             Pageable paging = PageRequest.of(page.orElse(0), PAGE_SIZE);
             Page<Indice> pagedResult = indiceRepository.findAll(paging);
 
-            List<EntityModel<Indice>> indices = pagedResult.map(EntityModel::of).toList();
-
-            Link selfLink = linkTo(methodOn(ScientifiqueController.class).getScientistHints(id, page)).withSelfRel().expand(page.map(Object::toString).orElse("0"));
-
-            CollectionModel<EntityModel<Indice>> result = CollectionModel.of(indices, selfLink);
-
-            if (pagedResult.hasPrevious()) {
-                Link prevLink = linkTo(methodOn(ScientifiqueController.class).getScientistHints(id, Optional.of(pagedResult.previousPageable().getPageNumber()))).withRel("previous");
-                result.add(prevLink.expand(pagedResult.previousPageable().getPageNumber()));
-            }
-
-            if (pagedResult.hasNext()) {
-                Link nextLink = linkTo(methodOn(ScientifiqueController.class).getScientistHints(id, Optional.of(pagedResult.nextPageable().getPageNumber()))).withRel("next");
-                result.add(nextLink.expand(pagedResult.nextPageable().getPageNumber()));
-            }
-
-            return result;
+            return getPageableCollectionModel(pagedResult, page, ScientifiqueController.class.getMethod("getScientistHints", int.class, Optional.class), id);
         } catch (IllegalArgumentException e) {
             throw new IncorrectPageException("numéro de page incorrect");
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
         }
     }
 

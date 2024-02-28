@@ -22,5 +22,6 @@ public class Indice {
     private String libelle;
 
     @NotNull
+    @Column(name="idscientifique")
     private int idScientifique;
 }

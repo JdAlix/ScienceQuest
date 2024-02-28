@@ -23,7 +23,7 @@ public class Utilisateur extends Joueur{
     private String email;
 
     @NotBlank
-    @Column(name = "motdepasse")
+    @Column(name = "password")
     private String motDePasse;
 }
 

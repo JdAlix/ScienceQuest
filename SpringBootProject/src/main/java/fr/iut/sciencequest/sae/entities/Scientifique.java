@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.Type;
+import org.hibernate.validator.constraints.URL;
 
 import java.util.Date;
 
@@ -32,6 +33,7 @@ public class Scientifique {
     @JoinColumn(name="idthematique")
     private Thematique thematique;
 
+    @URL
     @Column(name = "photo")
     private String pathToPhoto;
 
