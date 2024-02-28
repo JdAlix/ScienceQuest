@@ -40,10 +40,10 @@ export default{
             Jeux
           </a>
           <ul class="dropdown-menu">
-            <li><router-link class="dropdown-item" to="/qui_est_ce">Qui-est-ce</router-link></li>
+            <li><router-link class="dropdown-item" to="/pendu">Pendu</router-link></li>
             <li><router-link class="dropdown-item" to="/kahoot">Kahoot</router-link></li>
             <li><hr class="dropdown-divider"></li>
-            <li><router-link class="dropdown-item disabled" to="/pendu">autre jeu</router-link></li>
+            <li><router-link class="dropdown-item disabled" to="/qui_est_ce">Qui-est-ce</router-link></li>
           </ul>
         </li>
       </ul>
