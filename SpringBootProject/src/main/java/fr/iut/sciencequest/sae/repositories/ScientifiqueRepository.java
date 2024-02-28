@@ -6,4 +6,5 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ScientifiqueRepository extends PagingAndSortingRepository<Scientifique, Integer>, CrudRepository<Scientifique, Integer> {}
+public interface ScientifiqueRepository extends PagingAndSortingRepository<Scientifique, Integer>, CrudRepository<Scientifique, Integer> {
+}

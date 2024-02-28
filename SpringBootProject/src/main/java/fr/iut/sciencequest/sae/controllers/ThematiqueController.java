@@ -1,7 +1,7 @@
 package fr.iut.sciencequest.sae.controllers;
 
 import fr.iut.sciencequest.sae.entities.Thematique;
-import fr.iut.sciencequest.sae.services.ThematiqueService;
+import fr.iut.sciencequest.sae.services.interfaces.IThematiqueService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -10,10 +10,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/thematiques")
 public class ThematiqueController {
+    private final IThematiqueService thematiqueService;
 
-    private final ThematiqueService thematiqueService;
-
-    public ThematiqueController(ThematiqueService thematiqueService) {
+    public ThematiqueController(IThematiqueService thematiqueService) {
         this.thematiqueService = thematiqueService;
     }
 
@@ -22,7 +21,6 @@ public class ThematiqueController {
     public Iterable<Thematique> getAllThematiques() {
         return this.thematiqueService.findAll();
     }
-
 
     //TODO : gestion des erreurs remontées par @Valid
     //TODO : ajouter liens hateos

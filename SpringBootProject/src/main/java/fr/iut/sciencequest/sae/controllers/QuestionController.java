@@ -1,7 +1,5 @@
 package fr.iut.sciencequest.sae.controllers;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
-
 import fr.iut.sciencequest.sae.entities.Question;
 import fr.iut.sciencequest.sae.exceptions.IncorrectPageException;
 import fr.iut.sciencequest.sae.repositories.QuestionRepository;
@@ -13,13 +11,15 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 import java.util.List;
+import java.util.Optional;
 
-@Controller
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
+@RestController
 @RequestMapping("/api/v1/questions")
 public class QuestionController {
 
