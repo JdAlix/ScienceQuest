@@ -26,7 +26,10 @@ export default{
     },
     methods: {
         creerPartie: function () {
+            //remettre a zero les variables
             this.lettresDejaDevine = "";
+            this.lettresANePasFaireDevinerAuJoueur="";
+
             //appeler l'API
             fetch(`${REST_API}/scientifiques?page=`+this.intAleatoire(this.api_pagesMaximum)).then(response=>{
                 response.json().then(json=>{
@@ -39,8 +42,6 @@ export default{
                     this.description = scientifiqueADeviner.descriptif
 
                     //verifier que le mot a deviner ne contient pas des lettres exemptées
-                    this.lettresDejaDevine = "";
-                    this.lettresANePasFaireDevinerAuJoueur="";
                     this.motADeviner.split("").forEach(lettre=>
                         this.regexExceptions.forEach(regex=>regex.test(lettre) ? this.lettresANePasFaireDevinerAuJoueur+=lettre /* faire jouer la lettre a la place de l'utilisateur */ : null)
                     )
