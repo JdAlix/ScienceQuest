@@ -14,8 +14,6 @@ export default{
             
             //local uniquement, le client ne saura pas le mot 
             debug_motADeviner: "einstein",
-            debug_nbLettresADeviner: 8,
-            debug_lettresDejaDevine: "", //tout en minuscule
             //bloquer l'input si l'utilisateur met une lettre deja devinée
 
             api_pagesMaximum: 0, //impossible de connaitre le nombre de page a l'avance
@@ -26,7 +24,7 @@ export default{
             this.debug_creerPartie();
             this.premierePartie = false;
             //l'api (PATCH demarrerPartie) retournera le nombre de lettres a deviner ainsi que le nombre de vies
-            this.nbLettresADeviner = this.debug_nbLettresADeviner; //TODO utiliser l'api
+            this.nbLettresADeviner = this.debug_motADeviner.length
             this.viesRestantes = 10; // TODO utiliser l'api
             this.progression = "_".repeat(this.nbLettresADeviner);
             this.lettresDejaDevine = "";
@@ -65,12 +63,12 @@ export default{
                 return this.debug_motADeviner; //plus de vies = fin de la partie, l'api retourne le mot qu'on devait trouver
             }
             let progression = "";
-            this.debug_lettresDejaDevine += lettre;
-            this.debug_motADeviner.split("").forEach(w => this.debug_lettresDejaDevine.includes(w) ? progression += w : progression += "_");
+            this.lettresDejaDevine += lettre;
+            this.debug_motADeviner.split("").forEach(w => this.lettresDejaDevine.includes(w) ? progression += w : progression += "_");
             return progression;
         },
         debug_creerPartie: function () {
-            this.debug_lettresDejaDevine = "";
+            this.lettresDejaDevine = "";
             //appeler l'API
             fetch(`${REST_API}/scientifiques?page=`+this.intAleatoire(this.api_pagesMaximum)).then(response=>{
                 response.json().then(json=>{
