@@ -1,4 +1,6 @@
 <script>
+import { REST_API } from '@/assets/const';
+
 import LigneScientifique from './ligneScientifique.vue';
 
 export default{
@@ -6,10 +8,24 @@ export default{
         return {
             //données obtenues par l'api
             scientifiques: [
-            {prenom:"marie",nom:"curie",date:"1900-01-13",descriptif:"radaition qqch comme ca"},
-            {prenom:"albert",nom:"einstein",date:"1900-01-13",descriptif:"theorie"}
-            ]
+            ],
+            page:0,
         };
+    },
+    mounted(){
+        this.getScientifiques(0)
+    },
+    methods:{
+        getScientifiques(page){
+            //appeler l'API
+            fetch(`${REST_API}/scientifiques?page=${page}`).then(response=>{
+                response.json().then(json=>{
+                    //prendre le scientifique de la requete
+                    this.scientifiques=json._embedded
+
+                })
+            })
+        }
     },
     components: { LigneScientifique }
 }
@@ -31,9 +47,10 @@ export default{
     <LigneScientifique v-for="scientifique in scientifiques"
     :prenom="scientifique.prenom"
     :nom="scientifique.nom"
-    :date="scientifique.date"
+    :date="scientifique.dateNaissance"
     :descriptif="scientifique.descriptif"
     ></LigneScientifique>
 </tbody>
     </table>
+    <!-- TODO : pagination -->
 </template>
