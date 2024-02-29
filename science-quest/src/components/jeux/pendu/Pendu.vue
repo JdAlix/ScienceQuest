@@ -20,7 +20,8 @@ export default{
             regexExceptions: [ //caracteres qu'on ne fera pas deviner au joueur
                 /\W/, //caracteres blanc
                 /[^a-z]/, //non alphabetique minuscule
-            ], 
+            ],
+            lettresANePasFaireDevinerAuJoueur:"", //meme utilité que lettresDejaDevine mais n'est pas visible au joueur
         };
     },
     methods: {
@@ -41,11 +42,12 @@ export default{
 
                     //verifier que le mot a deviner ne contient pas des lettres exemptées
                     this.lettresDejaDevine = "";
+                    this.lettresANePasFaireDevinerAuJoueur="";
                     this.motADeviner.split("").forEach(lettre=>
-                        this.regexExceptions.forEach(regex=>regex.test(lettre) ? this.lettresDejaDevine+=lettre /* faire jouer la lettre a la place de l'utilisateur */ : null)
+                        this.regexExceptions.forEach(regex=>regex.test(lettre) ? this.lettresANePasFaireDevinerAuJoueur+=lettre /* faire jouer la lettre a la place de l'utilisateur */ : null)
                     )
 
-                    //rafraichir la progression
+                    //rafraichir la progression pour enlever les lettres a ne pas faire deviner
                     this.progression = this.afficherProgression()
 
                     //demarrer le jeu
@@ -90,7 +92,8 @@ export default{
                 return this.motADeviner; //plus de vies = fin de la partie, on retourne le mot qu'on devait trouver
             }
             let progression = "";
-            this.motADeviner.split("").forEach(w =>this.lettresDejaDevine.includes(w) ? progression += w : progression += "_");
+            const lettresAAfficher=this.lettresDejaDevine + this.lettresANePasFaireDevinerAuJoueur;
+            this.motADeviner.split("").forEach(w =>lettresAAfficher.includes(w) ? progression += w : progression += "_");
             return progression;
         },
         intAleatoire: function(nbPages){
