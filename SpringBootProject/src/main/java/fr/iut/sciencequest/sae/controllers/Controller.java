@@ -1,6 +1,7 @@
 package fr.iut.sciencequest.sae.controllers;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
@@ -52,10 +53,10 @@ public class Controller {
             List<EntityModel<T>> entities = pagedResult.map(EntityModel::of).toList();
 
             Class<?>[] argTypes = new Class[args.length+1];
-            for (int i = 0; i < args.length; i++) {
+            argTypes[0] = Pageable.class;
+            for (int i = 1; i < args.length; i++) {
                 argTypes[i] = args[i].getClass();
             }
-            argTypes[args.length] = Optional.class;
 
             Method finalMethod = this.getClass().getMethod(method, argTypes);
 

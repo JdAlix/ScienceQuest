@@ -18,8 +18,8 @@ public class QuestionService implements IQuestionService {
     }
 
     @Override
-    public Page<Question> findAll(Integer page) {
-        Pageable paging = PageRequest.of(page, PAGE_SIZE);
-        return questionRepository.findAll(paging);
+    public Page<Question> findAll(Pageable p) {
+        //Pageable paging = PageRequest.of(page, PAGE_SIZE);
+        return questionRepository.findAll(p);
     }
 }
