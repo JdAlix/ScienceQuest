@@ -1,5 +1,6 @@
 <script>
 import PenduDessin from './PenduDessin.vue'
+import { REST_API } from "../../../assets/const";
 
 export default{
     data() {
@@ -11,64 +12,92 @@ export default{
             premierePartie: true, //ne pas afficher "Perdu" pour ceux qui viennent de rejoindre
             lettresDejaDevine: "",
             
-            //local uniquement, le client ne saura pas le mot 
-            debug_motADeviner: "einstein",
-            debug_nbLettresADeviner: 8,
-            debug_lettresDejaDevine: "", //tout en minuscule
-            //bloquer l'input si l'utilisateur met une lettre deja devinée
+            //a recuperer a partir de l'api (prendre nom et prenom d'un scientifique nous meme) 
+            motADeviner: "einstein",
+            description: "", //s'affiche en dessous du resultat a la fin
+            api_pagesMaximum: 0, //impossible de connaitre le nombre de page a l'avance
+
+            regexExceptions: [ //caracteres qu'on ne fera pas deviner au joueur
+                /\W/, //caracteres blanc
+                /[^a-z]/, //non alphabetique minuscule
+            ],
+            lettresANePasFaireDevinerAuJoueur:"", //meme utilité que lettresDejaDevine mais n'est pas visible au joueur
         };
     },
     methods: {
         creerPartie: function () {
-            this.debug_creerPartie();
-            this.premierePartie = false;
-            this.partieTerminee = false;
-            //l'api (PATCH demarrerPartie) retournera le nombre de lettres a deviner ainsi que le nombre de vies
-            this.nbLettresADeviner = this.debug_nbLettresADeviner; //TODO utiliser l'api
-            this.viesRestantes = 10; // TODO utiliser l'api
-            this.progression = "_".repeat(this.nbLettresADeviner);
             this.lettresDejaDevine = "";
+            //appeler l'API
+            fetch(`${REST_API}/scientifiques?page=`+this.intAleatoire(this.api_pagesMaximum)).then(response=>{
+                response.json().then(json=>{
+                    //prendre le scientifique de la requete
+                    const arrayScientifique=json._embedded
+                    const scientifiqueADeviner=arrayScientifique[this.intAleatoire(arrayScientifique.length)]
+                    //prendre le mot a deviner a partir du nom du scientifique
+                    this.motADeviner = scientifiqueADeviner.nom.toLowerCase() + " " + scientifiqueADeviner.prenom.toLowerCase()
+                    this.nbLettresADeviner = this.motADeviner.length
+                    this.description = scientifiqueADeviner.descriptif
+
+                    this.viesRestantes = 10; // TODO utiliser l'api
+
+                    //verifier que le mot a deviner ne contient pas des lettres exemptées
+                    this.lettresDejaDevine = "";
+                    this.lettresANePasFaireDevinerAuJoueur="";
+                    this.motADeviner.split("").forEach(lettre=>
+                        this.regexExceptions.forEach(regex=>regex.test(lettre) ? this.lettresANePasFaireDevinerAuJoueur+=lettre /* faire jouer la lettre a la place de l'utilisateur */ : null)
+                    )
+
+                    //rafraichir la progression pour enlever les lettres a ne pas faire deviner
+                    this.progression = this.afficherProgression()
+
+                    //demarrer le jeu
+                    this.afficherLeJeu()
+                })
+            })
+        },
+        afficherLeJeu(){
+            this.partieTerminee = false;
+            this.premierePartie = false;
         },
         deviner: function (event) {
+            //TODO revoir ce truc
             //prendre la lettre depuis l'event
             const lettreDevinee = event.data.toLowerCase();
             //vider l'input
             event.target.value = "";
-            //envoyer lettreDevinee a l'api
-            const oldprogression = this.progression;
-            this.progression = this.debug_letreDevinee(lettreDevinee);
-
-            // /!\ code temporaire, local uniquement : TODO remplacer avec l'api
-            if (oldprogression == this.progression) {
-                //si la lettre est incorrecte
-                this.viesRestantes--; //l'api devrait aussi retourner le nombre de vies restantes
-                if(this.viesRestantes<0){
-                    this.partieTerminee = true
-                    this.progression = this.debug_letreDevinee(lettreDevinee);
-                }
-            }
-            //fin code temporaire
-
-            if (!this.progression.includes("_")) {
-                //plus de lettres a deviner
-                this.partieTerminee = true;
-            }
             //ajouter la lettre dans la liste des lettres devinées
             if (!this.lettresDejaDevine.includes(lettreDevinee)) {
                 this.lettresDejaDevine += lettreDevinee;
             }
+
+            //comparer la progression
+            const oldprogression = this.progression;
+            this.progression = this.afficherProgression();
+
+            if (oldprogression == this.progression) {
+                //si on n'a pas progressé = lettre incorrecte
+                this.viesRestantes--; //l'api devrait aussi retourner le nombre de vies restantes
+                
+                if(this.viesRestantes<0){
+                    this.partieTerminee = true
+                    this.progression = this.afficherProgression();
+                }
+            } else if (!this.progression.includes("_")) {
+                    //plus de lettres a deviner
+                    this.partieTerminee = true;
+            }
         },
-        debug_letreDevinee: function (lettre) {
+        afficherProgression: function () {
             if (this.viesRestantes < 0) {
-                return this.debug_motADeviner; //plus de vies = fin de la partie, l'api retourne le mot qu'on devait trouver
+                return this.motADeviner; //plus de vies = fin de la partie, on retourne le mot qu'on devait trouver
             }
             let progression = "";
-            this.debug_lettresDejaDevine += lettre;
-            this.debug_motADeviner.split("").forEach(w => this.debug_lettresDejaDevine.includes(w) ? progression += w : progression += "_");
+            const lettresAAfficher=this.lettresDejaDevine + this.lettresANePasFaireDevinerAuJoueur;
+            this.motADeviner.split("").forEach(w =>lettresAAfficher.includes(w) ? progression += w : progression += "_");
             return progression;
         },
-        debug_creerPartie: function () {
-            this.debug_lettresDejaDevine = "";
+        intAleatoire: function(nbPages){
+            return Math.floor(Math.random() * nbPages)
         }
     },
     components: { PenduDessin }
@@ -91,6 +120,7 @@ export default{
                 <p>Le mot était : </p>
                 <!-- l'api devrait retourner le mot entier quand la vie est a 0 -->
                 <h2 style="font-family: monospace">{{ progression }}</h2>
+                <p>{{ description }}</p>
             </div>
             <button class="btn btn-primary" v-on:click="creerPartie">Créer une partie</button>
         </div>
