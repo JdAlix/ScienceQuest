@@ -9,9 +9,10 @@ export default{
             //données obtenues par l'api
             scientifiques: [],
             page:0,
-            self:"",
+
             //HATEOAS
-            last:null, // a prendre a partir de la requete
+            self:"",
+            first:null, // a prendre a partir de la requete
             prev:null,
             next:null,
             last:null,
