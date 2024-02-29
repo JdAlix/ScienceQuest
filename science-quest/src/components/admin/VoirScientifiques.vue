@@ -9,23 +9,37 @@ export default{
             //données obtenues par l'api
             scientifiques: [],
             page:0,
+            self:"",
+            //HATEOAS
+            last:null, // a prendre a partir de la requete
+            prev:null,
+            next:null,
+            last:null,
         };
     },
     mounted(){
         //TODO faire route pour prendre la page a partir de l'URL
-        this.getScientifiques(this.page)
+        this.self=`${REST_API}/scientifiques?page=${this.page}`
+        this.getScientifiques(this.self)
     },
     methods:{
-        getScientifiques(page){
+        getScientifiques(url){
             //enlever les anciens du tableau
             this.scientifiques.splice(0)
             //TODO : ajouter un delai si jamais la requete est trop rapide pour VueJS
             //appeler l'API
-            fetch(`${REST_API}/scientifiques?page=${page}`).then(response=>{
+            fetch(url).then(response=>{
                 response.json().then(json=>{
                     const oldLength=this.scientifiques.length
-                    //prendre le scientifique de la requete
+                    //prendre les scientifiques de la requete
                     this.scientifiques.push(...json._embedded)
+
+                    //HATEOAS
+                    this.self=json._links.self.href;
+                    this.last=json._links.last ? json._links.last.href : null;
+                    this.prev=json._links.prev ? json._links.prev.href : null;
+                    this.next=json._links.next ? json._links.next.href : null;
+                    this.last=json._links.last ? json._links.last.href : null;
                 })
             })
         }
@@ -55,6 +69,8 @@ export default{
     ></LigneScientifique>
 </tbody>
     </table>
-    <button @click="this.getScientifiques(++this.page)">Next</button>
-    <!-- TODO : pagination -->
+    <button v-if="first" @click="this.getScientifiques(this.first)">First</button>
+    <button v-if="prev" @click="this.getScientifiques(this.prev)">Prev</button>
+    <button v-if="next" @click="this.getScientifiques(this.next)">Next</button>
+    <button v-if="last" @click="this.getScientifiques(this.last)">Last</button>
 </template>
