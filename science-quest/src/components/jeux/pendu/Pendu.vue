@@ -1,5 +1,6 @@
 <script>
 import PenduDessin from './PenduDessin.vue'
+import { REST_API } from "../../../assets/const";
 
 export default{
     data() {
@@ -16,13 +17,14 @@ export default{
             debug_nbLettresADeviner: 8,
             debug_lettresDejaDevine: "", //tout en minuscule
             //bloquer l'input si l'utilisateur met une lettre deja devinée
+
+            api_pagesMaximum: 0, //impossible de connaitre le nombre de page a l'avance
         };
     },
     methods: {
         creerPartie: function () {
             this.debug_creerPartie();
             this.premierePartie = false;
-            this.partieTerminee = false;
             //l'api (PATCH demarrerPartie) retournera le nombre de lettres a deviner ainsi que le nombre de vies
             this.nbLettresADeviner = this.debug_nbLettresADeviner; //TODO utiliser l'api
             this.viesRestantes = 10; // TODO utiliser l'api
@@ -69,6 +71,19 @@ export default{
         },
         debug_creerPartie: function () {
             this.debug_lettresDejaDevine = "";
+            //appeler l'API
+            fetch(`${REST_API}/scientifiques?page=`+this.intAleatoire(this.api_pagesMaximum)).then(response=>{
+                response.json().then(json=>{
+                    this.partieTerminee = false;
+                    const arrayScientifique=json._embedded
+                    const scientifiqueADeviner=arrayScientifique[this.intAleatoire(arrayScientifique.length)]
+                    this.debug_motADeviner = scientifiqueADeviner.nom.toLowerCase() + " " + scientifiqueADeviner.prenom.toLowerCase()
+                })
+                
+            })
+        },
+        intAleatoire: function(nbPages){
+            return Math.floor(Math.random() * nbPages)
         }
     },
     components: { PenduDessin }
