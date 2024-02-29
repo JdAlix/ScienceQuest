@@ -26,10 +26,10 @@ public class ScientifiqueDTO extends RepresentationModel<ScientifiqueDTO> {
     private int id;
     
     @NotNull
-    private Difficulte difficulte;
+    private DifficulteDTO difficulte;
 
     @NotNull
-    private Thematique thematique;
+    private ThematiqueDTO thematique;
 
     @URL
     private String pathToPhoto;

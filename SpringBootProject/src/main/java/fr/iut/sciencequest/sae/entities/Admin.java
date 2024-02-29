@@ -17,18 +17,12 @@ import lombok.NoArgsConstructor;
 @Table(name="admin")
 public class Admin extends BaseEntity {
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Email(message="Veuillez fournir une adresse mail valide")
-    @NotNull
-    @NotBlank
     @Column(unique = true)
     private String email;
 
-    @NotNull
-    @NotBlank
-    @Column()
+    @Column
     private String password;
 }

@@ -20,7 +20,6 @@ public class Thematique extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotBlank
     @Column(unique = true)
     private String libelle;
 }

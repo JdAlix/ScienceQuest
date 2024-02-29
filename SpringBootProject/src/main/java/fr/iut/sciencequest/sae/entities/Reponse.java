@@ -15,11 +15,9 @@ import lombok.NoArgsConstructor;
 @Table(name="reponse")
 public class Reponse extends BaseEntity {
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotNull
     private String reponse;
 
 }

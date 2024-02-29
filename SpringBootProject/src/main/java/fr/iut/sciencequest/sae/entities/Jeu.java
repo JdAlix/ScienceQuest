@@ -17,15 +17,12 @@ import lombok.NoArgsConstructor;
 @Table(name="jeu")
 public class Jeu extends BaseEntity {
     @Id
-    //@NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    //@NotBlank
     @Column(unique = true)
     private String nom;
 
     @Column(name = "nbrparties")
-    //@Min(0)
     private int nbrParties = 0;
 }

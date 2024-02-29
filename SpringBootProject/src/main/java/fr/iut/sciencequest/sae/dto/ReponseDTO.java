@@ -2,13 +2,12 @@ package fr.iut.sciencequest.sae.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import fr.iut.sciencequest.sae.entities.Reponse;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 
-
-import java.util.List;
 
 @Data
 @Builder
@@ -16,10 +15,11 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class IndiceDTO extends RepresentationModel<IndiceDTO> {
+public class ReponseDTO extends RepresentationModel<ReponseDTO> {
     @NotNull
     private int id;
-    private String question;
-    @NotEmpty
-    private List<Reponse> reponses;
+
+    @NotNull
+    @NotBlank
+    private String reponse;
 }

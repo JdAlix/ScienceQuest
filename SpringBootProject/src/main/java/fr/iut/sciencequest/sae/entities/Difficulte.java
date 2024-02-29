@@ -18,11 +18,9 @@ import org.modelmapper.internal.bytebuddy.implementation.bind.annotation.Super;
 @Table(name="difficulte")
 public class Difficulte extends BaseEntity  {
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotBlank
     @Column(unique = true)
     private String libelle;
 }

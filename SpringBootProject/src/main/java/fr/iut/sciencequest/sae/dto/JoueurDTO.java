@@ -2,15 +2,13 @@ package fr.iut.sciencequest.sae.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import fr.iut.sciencequest.sae.entities.Partie;
-import fr.iut.sciencequest.sae.entities.Reponse;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 
 
-import java.util.List;
 
 @Data
 @Builder
@@ -25,5 +23,5 @@ public class JoueurDTO extends RepresentationModel<JoueurDTO> {
     @NotBlank
     private String pseudo;
 
-    private Partie partie;
+    private PartieDTO partie;
 }

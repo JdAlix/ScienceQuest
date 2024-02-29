@@ -19,12 +19,9 @@ import lombok.NoArgsConstructor;
 @Table(name="utilisateur")
 @PrimaryKeyJoinColumn(name = "idjoueur")
 public class Utilisateur extends Joueur {
-    @Email(message="Veuillez fournir une adresse mail valide")
-    @NotNull
     @Column(unique = true)
     private String email;
 
-    @NotBlank
     @Column(name = "password")
     private String motDePasse;
 }
