@@ -12,6 +12,7 @@ import lombok.*;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.hateoas.RepresentationModel;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 
@@ -49,6 +50,6 @@ public class ScientifiqueDTO extends RepresentationModel<ScientifiqueDTO> {
     @NotBlank
     private Sexe sexe;
 
-    @Size(min=0, max=1)
-    private double ratioTrouvee;
+    @Size(max=1)
+    private BigDecimal ratioTrouve = BigDecimal.ZERO;
 }

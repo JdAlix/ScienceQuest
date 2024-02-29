@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.hateoas.server.core.Relation;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -53,5 +54,5 @@ public class Scientifique extends BaseEntity {
     private Sexe sexe;
 
     @Column(name = "ratiotrouvee")
-    private double ratioTrouve = 0.0;
+    private BigDecimal ratioTrouve = BigDecimal.ZERO;
 }

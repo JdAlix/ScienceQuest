@@ -139,9 +139,9 @@ INSERT INTO Difficulte(libelle) VALUES ('Facile'),('Intermédiaire'),('Difficile
 INSERT INTO Thematique(libelle) VALUES ('Nucléaire'),('Mathématiques');
 INSERT INTO Scientifique(nom, prenom, photo, dateNaissance, descriptif, ratioTrouvee, idThematique, idDifficulte, sexe)
 VALUES
-    ('Marie', 'Curie', '', CURRENT_DATE, 'desc', 0, 1, 1, 'F'),
-    ('Albert', 'Einstein', '', CURRENT_DATE, 'desc', 0, 2, 1, 'H'),
-    ('Sophie', 'Germain', '', CURRENT_DATE, 'desc', 0, 2, 2, 'F');
+    ('Marie', 'Curie', '', CURRENT_DATE, 'desc', 0.50, 1, 1, 'F'),
+    ('Albert', 'Einstein', '', CURRENT_DATE, 'desc', 0.7540, 2, 1, 'H'),
+    ('Sophie', 'Germain', '', CURRENT_DATE, 'desc', 0.1432, 2, 2, 'F');
 
 -- Jeu
 INSERT INTO Jeu(nom) VALUES ('Qui-est-ce ?'),('Science Quizz'), ('Pendu');
