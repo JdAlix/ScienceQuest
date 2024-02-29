@@ -27,7 +27,7 @@ export default{
             //HACK : s'assurer que les liens sont en HTTPS
             url=url.replace("http://", "https://")
             //enlever les anciens du tableau
-            this.scientifiques.splice(0)
+            this.scientifiques=[]
             //TODO : ajouter un delai si jamais la requete est trop rapide pour VueJS
             //appeler l'API
             fetch(url).then(response=>{
