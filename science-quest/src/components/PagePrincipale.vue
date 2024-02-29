@@ -1,5 +1,5 @@
 <script>
-import { NOM_APP } from "../assets/const";
+import { NOM_APP } from "@/assets/const";
 
 export default {
     data() {
@@ -11,7 +11,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../scss/landingPage.scss";
+@import "@/scss/landingPage.scss";
 </style>
 
 <template>
@@ -27,7 +27,7 @@ export default {
                 <router-link to="/kahoot" class="btn btn-dark">Kahoot 🚧</router-link>
                 <router-link to="/qui_est_ce" class="btn btn-dark">Qui-est-ce ? 🚧</router-link>
             </div>
-            <img src="../temporary_ressources/img/marie-curie.png" alt="Marie Curie" />
+            <img src="@/temporary_ressources/img/marie-curie.png" alt="Marie Curie" />
         </div>   
     </div>
     <footer>

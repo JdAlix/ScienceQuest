@@ -1,5 +1,5 @@
 <script>
-import { NOM_APP } from "../assets/const";
+import { NOM_APP } from "@/assets/const";
 
 export default{
     data(){
@@ -18,7 +18,7 @@ export default{
 
 <template>
         <!-- logo temporaire
-        <img alt="Vue logo" src="../assets/logo.png" />
+        <img alt="Vue logo" src="@/assets/logo.png" />
         -->
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">

@@ -1,6 +1,6 @@
 <script>
 import PenduDessin from './PenduDessin.vue'
-import { REST_API } from "../../../assets/const";
+import { REST_API } from "@/assets/const";
 
 export default{
     data() {
