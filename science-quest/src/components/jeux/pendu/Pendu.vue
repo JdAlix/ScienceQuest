@@ -38,8 +38,6 @@ export default{
                     this.nbLettresADeviner = this.motADeviner.length
                     this.description = scientifiqueADeviner.descriptif
 
-                    this.viesRestantes = 10; // TODO utiliser l'api
-
                     //verifier que le mot a deviner ne contient pas des lettres exemptées
                     this.lettresDejaDevine = "";
                     this.lettresANePasFaireDevinerAuJoueur="";
@@ -96,8 +94,8 @@ export default{
             this.motADeviner.split("").forEach(w =>lettresAAfficher.includes(w) ? progression += w : progression += "_");
             return progression;
         },
-        intAleatoire: function(nbPages){
-            return Math.floor(Math.random() * nbPages)
+        intAleatoire: function(nb){
+            return Math.floor(Math.random() * nb)
         }
     },
     components: { PenduDessin }
