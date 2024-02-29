@@ -75,17 +75,15 @@ export default{
             if (oldprogression == this.progression) {
                 //si on n'a pas progressé = lettre incorrecte
                 this.viesRestantes--; //l'api devrait aussi retourner le nombre de vies restantes
+                
                 if(this.viesRestantes<0){
                     this.partieTerminee = true
                     this.progression = this.afficherProgression();
                 }
+            } else if (!this.progression.includes("_")) {
+                    //plus de lettres a deviner
+                    this.partieTerminee = true;
             }
-
-            if (!this.progression.includes("_")) {
-                //plus de lettres a deviner
-                this.partieTerminee = true;
-            }
-            
         },
         afficherProgression: function () {
             if (this.viesRestantes < 0) {
