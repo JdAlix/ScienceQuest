@@ -37,7 +37,6 @@ export default{
                     const scientifiqueADeviner=arrayScientifique[this.intAleatoire(arrayScientifique.length)]
                     //prendre le mot a deviner a partir du nom du scientifique
                     this.motADeviner = scientifiqueADeviner.nom.toLowerCase() + " " + scientifiqueADeviner.prenom.toLowerCase()
-                    this.nbLettresADeviner = this.motADeviner.length
                     this.description = scientifiqueADeviner.descriptif
 
                     //mettre a jour le nombre de pages maximum de l'api scientifiques
@@ -50,6 +49,9 @@ export default{
 
                     //rafraichir la progression pour enlever les lettres a ne pas faire deviner
                     this.progression = this.afficherProgression()
+                    //compter le nombre de trous (enlever tout ce qui est pas underscore et compter)
+                    this.nbLettresADeviner = this.progression.replace(/[^_]/g, "").length
+
                     this.viesRestantes=10;
                     //demarrer le jeu
                     this.afficherLeJeu()
