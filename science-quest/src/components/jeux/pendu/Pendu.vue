@@ -126,7 +126,7 @@ export default{
         </div>
 
         <div v-if="!partieTerminee" class="divjeu">
-            <PenduDessin :viesRestantes="viesRestantes"></PenduDessin>
+            <!--PenduDessin :viesRestantes="viesRestantes"></PenduDessin-->
         </div>
         
         <div v-if="!partieTerminee" class="divjeu">
