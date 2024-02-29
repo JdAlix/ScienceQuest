@@ -12,22 +12,29 @@ export default{
             premierePartie: true, //ne pas afficher "Perdu" pour ceux qui viennent de rejoindre
             lettresDejaDevine: "",
             
-            //local uniquement, le client ne saura pas le mot 
-            debug_motADeviner: "einstein",
-            //bloquer l'input si l'utilisateur met une lettre deja devinée
-
+            //a recuperer a partir de l'api (prendre nom et prenom d'un scientifique nous meme) 
+            motADeviner: "einstein",
             api_pagesMaximum: 0, //impossible de connaitre le nombre de page a l'avance
         };
     },
     methods: {
         creerPartie: function () {
-            this.debug_creerPartie();
-            this.premierePartie = false;
-            //l'api (PATCH demarrerPartie) retournera le nombre de lettres a deviner ainsi que le nombre de vies
-            this.nbLettresADeviner = this.debug_motADeviner.length
-            this.viesRestantes = 10; // TODO utiliser l'api
-            this.progression = "_".repeat(this.nbLettresADeviner);
             this.lettresDejaDevine = "";
+            //appeler l'API
+            fetch(`${REST_API}/scientifiques?page=`+this.intAleatoire(this.api_pagesMaximum)).then(response=>{
+                response.json().then(json=>{
+                    this.partieTerminee = false;
+                    this.premierePartie = false;
+                    const arrayScientifique=json._embedded
+                    const scientifiqueADeviner=arrayScientifique[this.intAleatoire(arrayScientifique.length)]
+                    this.debug_motADeviner = scientifiqueADeviner.nom.toLowerCase() + " " + scientifiqueADeviner.prenom.toLowerCase()
+                    this.nbLettresADeviner = this.debug_motADeviner.length
+                    this.viesRestantes = 10; // TODO utiliser l'api
+                    this.progression = "_".repeat(this.nbLettresADeviner);
+                    this.lettresDejaDevine = "";
+                })
+            })
+            
         },
         deviner: function (event) {
             //prendre la lettre depuis l'event
@@ -66,19 +73,6 @@ export default{
             this.lettresDejaDevine += lettre;
             this.debug_motADeviner.split("").forEach(w => this.lettresDejaDevine.includes(w) ? progression += w : progression += "_");
             return progression;
-        },
-        debug_creerPartie: function () {
-            this.lettresDejaDevine = "";
-            //appeler l'API
-            fetch(`${REST_API}/scientifiques?page=`+this.intAleatoire(this.api_pagesMaximum)).then(response=>{
-                response.json().then(json=>{
-                    this.partieTerminee = false;
-                    const arrayScientifique=json._embedded
-                    const scientifiqueADeviner=arrayScientifique[this.intAleatoire(arrayScientifique.length)]
-                    this.debug_motADeviner = scientifiqueADeviner.nom.toLowerCase() + " " + scientifiqueADeviner.prenom.toLowerCase()
-                })
-                
-            })
         },
         intAleatoire: function(nbPages){
             return Math.floor(Math.random() * nbPages)
