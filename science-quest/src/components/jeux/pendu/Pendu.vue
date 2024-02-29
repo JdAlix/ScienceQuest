@@ -67,9 +67,19 @@ export default{
             const lettreDevinee = event.data.toLowerCase();
             //vider l'input
             event.target.value = "";
+            //voir si la lettre devinée est valide
+            let lettreValide=true
+            this.regexExceptions.forEach(regex=>lettreValide ? lettreValide=!regex.test(lettreDevinee) : null)
+            if(!lettreValide){
+                //ne pas faire deviner une lettre invalide
+                return
+            }
             //ajouter la lettre dans la liste des lettres devinées
             if (!this.lettresDejaDevine.includes(lettreDevinee)) {
                 this.lettresDejaDevine += lettreDevinee;
+            } else {
+                //ne pas faire deviner une lettre qui a deja été devinée
+                return
             }
 
             //comparer la progression
