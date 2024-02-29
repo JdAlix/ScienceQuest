@@ -2,25 +2,24 @@ package fr.iut.sciencequest.sae.assemblers;
 
 import fr.iut.sciencequest.sae.controllers.QuestionController;
 import fr.iut.sciencequest.sae.entities.Question;
-import fr.iut.sciencequest.sae.models.QuestionModel;
+import fr.iut.sciencequest.sae.dto.QuestionDTO;
+import jakarta.annotation.Nullable;
+import org.modelmapper.ModelMapper;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
 @Component
-public class QuestionModelAssembler extends RepresentationModelAssemblerSupport<Question, QuestionModel> {
+public class QuestionModelAssembler extends RepresentationModelAssemblerSupport<Question, QuestionDTO> {
 
     public QuestionModelAssembler() {
-        super(QuestionController.class, QuestionModel.class);
+        super(QuestionController.class, QuestionDTO.class);
     }
 
     @Override
-    public QuestionModel toModel(Question entity) {
-        QuestionModel questionModel = instantiateModel(entity);
-
-        questionModel.setQuestion(entity.getQuestion());
-        questionModel.setId(entity.getId());
-        questionModel.setReponses(entity.getReponses());
-
-        return questionModel;
+    @NonNull
+    public QuestionDTO toModel(@Nullable Question entity) {
+        ModelMapper mapper = new ModelMapper();
+        return mapper.map(entity, QuestionDTO.class);
     }
 }

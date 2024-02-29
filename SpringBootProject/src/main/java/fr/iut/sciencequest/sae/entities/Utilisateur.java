@@ -1,6 +1,7 @@
 package fr.iut.sciencequest.sae.entities;
 
 
+import fr.iut.sciencequest.sae.entities.joueur.Joueur;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -16,7 +17,8 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name="utilisateur")
-public class Utilisateur extends Joueur{
+@PrimaryKeyJoinColumn(name = "idjoueur")
+public class Utilisateur extends Joueur {
     @Email(message="Veuillez fournir une adresse mail valide")
     @NotNull
     @Column(unique = true)

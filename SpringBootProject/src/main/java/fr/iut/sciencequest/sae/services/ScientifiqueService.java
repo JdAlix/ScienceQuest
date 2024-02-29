@@ -10,8 +10,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-
 @Service
 public class ScientifiqueService implements IScientifiqueService {
 
@@ -36,9 +34,8 @@ public class ScientifiqueService implements IScientifiqueService {
     }
 
     @Override
-    public Page<Scientifique> findAll(Integer page) {
-        Pageable paging = PageRequest.of(page, PAGE_SIZE);
-        return scientifiqueRepository.findAll(paging);
+    public Page<Scientifique> findAll(Pageable page) {
+        return scientifiqueRepository.findAll(page);
     }
 
     @Override

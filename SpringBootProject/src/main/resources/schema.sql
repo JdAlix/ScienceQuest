@@ -94,7 +94,7 @@ CREATE TABLE Jeu(
 
 CREATE TABLE Partie(
                        id SERIAL PRIMARY KEY,
-                       codeInvitation varchar(10) NOT NULL UNIQUE,
+                       codeInvitation varchar(5) NOT NULL UNIQUE,
                        idJeu integer REFERENCES Jeu(id)
 );
 
@@ -166,11 +166,16 @@ VALUES
     ('Sophie Germain', 3, 3);
 
 -- Utilisateurs
-INSERT INTO Joueur(id,pseudo) VALUES (1337, 'moi, le meilleur joueur du monde');
-INSERT INTO Utilisateur(idJoueur,email,password) VALUES (1337, 'joueur','$2y$10$juGnlWC9cS19popEKLZsYeir0Jl39k6hDl0dpaCix00FDcdiEbtmS');
+INSERT INTO Joueur(pseudo) VALUES ('moi, le meilleur joueur du monde'); --id = 1
+INSERT INTO Utilisateur(idJoueur,email,password) VALUES (1, 'joueur','$2y$10$juGnlWC9cS19popEKLZsYeir0Jl39k6hDl0dpaCix00FDcdiEbtmS');
 -- mdp = test
 
-INSERT INTO decouvrir(idUtilisateur,idScientifique) VALUES (1337,1);
+-- Découvrir
+INSERT INTO decouvrir(idUtilisateur,idScientifique) VALUES (1,1);
 
+-- Admin
 INSERT INTO Admin(id,email,password) VALUES (1, 'admin','$2y$10$juGnlWC9cS19popEKLZsYeir0Jl39k6hDl0dpaCix00FDcdiEbtmS');
 -- mdp = test
+
+-- Partie
+INSERT INTO Partie(codeInvitation, idJeu) VALUES ('abcde', 1);

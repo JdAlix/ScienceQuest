@@ -6,24 +6,26 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name="jeu")
 public class Jeu extends BaseEntity {
     @Id
-    @NotNull
+    //@NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotBlank
+    //@NotBlank
     @Column(unique = true)
     private String nom;
 
     @Column(name = "nbrparties")
-    @Min(0)
+    //@Min(0)
     private int nbrParties = 0;
 }

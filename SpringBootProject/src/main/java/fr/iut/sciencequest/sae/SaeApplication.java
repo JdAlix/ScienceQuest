@@ -3,6 +3,8 @@ package fr.iut.sciencequest.sae;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -12,8 +14,10 @@ public class SaeApplication {
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
 			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedOrigins("*");
+			@NonNull
+			public void addCorsMappings(@Nullable CorsRegistry registry) {
+                assert registry != null;
+                registry.addMapping("/**").allowedOrigins("*");
 			}
 		};
 	}
