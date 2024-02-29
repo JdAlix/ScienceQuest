@@ -15,6 +15,11 @@ export default{
             //a recuperer a partir de l'api (prendre nom et prenom d'un scientifique nous meme) 
             motADeviner: "einstein",
             api_pagesMaximum: 0, //impossible de connaitre le nombre de page a l'avance
+
+            regexExceptions: [ //caracteres qu'on ne fera pas deviner au joueur
+                /\W/, //caracteres blanc
+                /[^a-z]/, //non alphabetique minuscule
+            ], 
         };
     },
     methods: {
@@ -23,15 +28,21 @@ export default{
             //appeler l'API
             fetch(`${REST_API}/scientifiques?page=`+this.intAleatoire(this.api_pagesMaximum)).then(response=>{
                 response.json().then(json=>{
+                    //todo commenter ce truc
                     this.partieTerminee = false;
                     this.premierePartie = false;
                     const arrayScientifique=json._embedded
                     const scientifiqueADeviner=arrayScientifique[this.intAleatoire(arrayScientifique.length)]
-                    this.debug_motADeviner = scientifiqueADeviner.nom.toLowerCase() + " " + scientifiqueADeviner.prenom.toLowerCase()
-                    this.nbLettresADeviner = this.debug_motADeviner.length
+                    this.motADeviner = scientifiqueADeviner.nom.toLowerCase() + " " + scientifiqueADeviner.prenom.toLowerCase()
+                    this.nbLettresADeviner = this.motADeviner.length
                     this.viesRestantes = 10; // TODO utiliser l'api
                     this.progression = "_".repeat(this.nbLettresADeviner);
                     this.lettresDejaDevine = "";
+                    //verifier que le mot a deviner ne contient pas des lettres exemptées
+                    this.motADeviner.split("").forEach(lettre=>
+                        this.regexExceptions.forEach(regex=>regex.test(lettre) ? this.lettresDejaDevine+=lettre /* faire jouer la lettre a la place de l'utilisateur */ : null)
+                    )
+                    
                 })
             })
             
@@ -67,11 +78,11 @@ export default{
         },
         debug_letreDevinee: function (lettre) {
             if (this.viesRestantes < 0) {
-                return this.debug_motADeviner; //plus de vies = fin de la partie, l'api retourne le mot qu'on devait trouver
+                return this.motADeviner; //plus de vies = fin de la partie, l'api retourne le mot qu'on devait trouver
             }
             let progression = "";
             this.lettresDejaDevine += lettre;
-            this.debug_motADeviner.split("").forEach(w => this.lettresDejaDevine.includes(w) ? progression += w : progression += "_");
+            this.motADeviner.split("").forEach(w =>this.lettresDejaDevine.includes(w) ? progression += w : progression += "_");
             return progression;
         },
         intAleatoire: function(nbPages){
