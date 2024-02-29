@@ -28,7 +28,6 @@ export default{
         creerPartie: function () {
             this.lettresDejaDevine = "";
             this.lettresANePasFaireDevinerAuJoueur="";
-            this.viesRestantes=10;
 
             //appeler l'API
             fetch(`${REST_API}/scientifiques?page=`+this.intAleatoire(this.api_pagesMaximum)).then(response=>{
@@ -51,7 +50,7 @@ export default{
 
                     //rafraichir la progression pour enlever les lettres a ne pas faire deviner
                     this.progression = this.afficherProgression()
-
+                    this.viesRestantes=10;
                     //demarrer le jeu
                     this.afficherLeJeu()
                 })
