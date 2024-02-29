@@ -46,7 +46,7 @@ export default{
                     )
 
                     //rafraichir la progression
-                    this.progression = this.afficherProgression("")
+                    this.progression = this.afficherProgression()
 
                     //demarrer le jeu
                     this.afficherLeJeu()
@@ -63,36 +63,35 @@ export default{
             const lettreDevinee = event.data.toLowerCase();
             //vider l'input
             event.target.value = "";
-            //envoyer lettreDevinee a l'api
-            const oldprogression = this.progression;
-            this.progression = this.afficherProgression(lettreDevinee);
+            //ajouter la lettre dans la liste des lettres devinées
+            if (!this.lettresDejaDevine.includes(lettreDevinee)) {
+                this.lettresDejaDevine += lettreDevinee;
+            }
 
-            // /!\ code temporaire, local uniquement : TODO remplacer avec l'api
+            //comparer la progression
+            const oldprogression = this.progression;
+            this.progression = this.afficherProgression();
+
             if (oldprogression == this.progression) {
-                //si la lettre est incorrecte
+                //si on n'a pas progressé = lettre incorrecte
                 this.viesRestantes--; //l'api devrait aussi retourner le nombre de vies restantes
                 if(this.viesRestantes<0){
                     this.partieTerminee = true
-                    this.progression = this.afficherProgression(lettreDevinee);
+                    this.progression = this.afficherProgression();
                 }
             }
-            //fin code temporaire
 
             if (!this.progression.includes("_")) {
                 //plus de lettres a deviner
                 this.partieTerminee = true;
             }
-            //ajouter la lettre dans la liste des lettres devinées
-            if (!this.lettresDejaDevine.includes(lettreDevinee)) {
-                this.lettresDejaDevine += lettreDevinee;
-            }
+            
         },
-        afficherProgression: function (lettre) {
+        afficherProgression: function () {
             if (this.viesRestantes < 0) {
-                return this.motADeviner; //plus de vies = fin de la partie, l'api retourne le mot qu'on devait trouver
+                return this.motADeviner; //plus de vies = fin de la partie, on retourne le mot qu'on devait trouver
             }
             let progression = "";
-            this.lettresDejaDevine += lettre;
             this.motADeviner.split("").forEach(w =>this.lettresDejaDevine.includes(w) ? progression += w : progression += "_");
             return progression;
         },
