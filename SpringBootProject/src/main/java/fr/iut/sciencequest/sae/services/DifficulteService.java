@@ -3,6 +3,8 @@ package fr.iut.sciencequest.sae.services;
 import fr.iut.sciencequest.sae.entities.Difficulte;
 import fr.iut.sciencequest.sae.repositories.DifficulteRepository;
 import fr.iut.sciencequest.sae.services.interfaces.IDifficulteService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,7 +16,7 @@ public class DifficulteService implements IDifficulteService {
     }
 
     @Override
-    public Iterable<Difficulte> findAll(){
-        return this.difficulteRepository.findAll();
+    public Page<Difficulte> findAll(Pageable p){
+        return this.difficulteRepository.findAll(p);
     }
 }
