@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Inheritance ( strategy = InheritanceType.JOINED)
 @Entity
 @Table(name="joueur")
-public abstract class Joueur {
+public abstract class Joueur extends BaseEntity {
     @Id
     @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)

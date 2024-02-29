@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/indices")
-public class IndiceController {
-
+public class IndiceController extends Controller {
     private final IndiceService indiceService;
 
     public IndiceController(IndiceService indiceService) {

@@ -3,13 +3,15 @@ package fr.iut.sciencequest.sae.controllers;
 import fr.iut.sciencequest.sae.entities.Thematique;
 import fr.iut.sciencequest.sae.services.interfaces.IThematiqueService;
 import jakarta.validation.Valid;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
 @RequestMapping("/api/v1/thematiques")
-public class ThematiqueController {
+public class ThematiqueController extends Controller {
     private final IThematiqueService thematiqueService;
 
     public ThematiqueController(IThematiqueService thematiqueService) {
@@ -18,8 +20,8 @@ public class ThematiqueController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public Iterable<Thematique> getAllThematiques() {
-        return this.thematiqueService.findAll();
+    public CollectionModel<Thematique> getAllThematiques() {
+        return getSelfLinkCollectionModel(this.thematiqueService.findAll(), "getAllThematiques");
     }
 
     //TODO : gestion des erreurs remontées par @Valid

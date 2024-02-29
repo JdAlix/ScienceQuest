@@ -1,7 +1,7 @@
 package fr.iut.sciencequest.sae.services;
 
-import fr.iut.sciencequest.sae.entities.Scientifique;
-import fr.iut.sciencequest.sae.entities.indice.IIndiceidAndLibelleOnlyProjection;
+import fr.iut.sciencequest.sae.entities.scientifique.Scientifique;
+import fr.iut.sciencequest.sae.entities.indice.IIndiceidAndLibelleAndScientifiqueIdOnlyProjection;
 import fr.iut.sciencequest.sae.exceptions.notFound.ScientifiqueNotFoundException;
 import fr.iut.sciencequest.sae.repositories.ScientifiqueRepository;
 import fr.iut.sciencequest.sae.services.interfaces.IScientifiqueService;
@@ -47,7 +47,7 @@ public class ScientifiqueService implements IScientifiqueService {
     }
 
     @Override
-    public Iterable<IIndiceidAndLibelleOnlyProjection> getLinkedIndicesByScientifiqueId(int id){
+    public Iterable<IIndiceidAndLibelleAndScientifiqueIdOnlyProjection> getLinkedIndicesByScientifiqueId(int id){
         if(!this.scientifiqueRepository.existsById(id)){
             throw new ScientifiqueNotFoundException(id);
         }

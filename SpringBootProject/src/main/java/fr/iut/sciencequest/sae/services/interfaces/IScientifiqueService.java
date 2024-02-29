@@ -1,7 +1,7 @@
 package fr.iut.sciencequest.sae.services.interfaces;
 
-import fr.iut.sciencequest.sae.entities.Scientifique;
-import fr.iut.sciencequest.sae.entities.indice.IIndiceidAndLibelleOnlyProjection;
+import fr.iut.sciencequest.sae.entities.scientifique.Scientifique;
+import fr.iut.sciencequest.sae.entities.indice.IIndiceidAndLibelleAndScientifiqueIdOnlyProjection;
 import org.springframework.data.domain.Page;
 
 public interface IScientifiqueService {
@@ -13,5 +13,5 @@ public interface IScientifiqueService {
 
     Scientifique findById(int id);
 
-    Iterable<IIndiceidAndLibelleOnlyProjection> getLinkedIndicesByScientifiqueId(int id);
+    Iterable<IIndiceidAndLibelleAndScientifiqueIdOnlyProjection> getLinkedIndicesByScientifiqueId(int id);
 }

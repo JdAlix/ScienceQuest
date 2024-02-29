@@ -154,9 +154,9 @@ VALUES
     ('Quel mathématicienne utilisa comme nom d"emprunt « Antoine Auguste Le Blanc » ?');
 
 -- Indices
-INSERT INTO Indice (id, libelle, idscientifique) VALUES
-                                                     (1, 'Indice pour aider', 1),
-                                                     (2, 'S''appelle Marie', 1);
+INSERT INTO Indice (libelle, idscientifique) VALUES
+                                                     ('Indice pour aider', 1),
+                                                     ('S''appelle Marie', 1);
 
 -- Réponses
 INSERT INTO Reponse(reponse, idQuestion, idScientifique)

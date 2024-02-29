@@ -3,6 +3,7 @@ package fr.iut.sciencequest.sae.controllers;
 
 import fr.iut.sciencequest.sae.entities.Difficulte;
 import fr.iut.sciencequest.sae.services.DifficulteService;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
@@ -18,8 +19,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/api/v1/difficultes")
-public class DifficulteController {
-
+public class DifficulteController extends Controller {
     public final DifficulteService difficulteService;
 
     public DifficulteController(DifficulteService difficulteService){
@@ -28,8 +28,7 @@ public class DifficulteController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public EntityModel<Iterable<Difficulte>> getAllDifficultes(){
-        Link selfLink = linkTo(methodOn(DifficulteController.class).getAllDifficultes()).withSelfRel();
-        return EntityModel.of(this.difficulteService.findAll(), selfLink);
+    public CollectionModel<Difficulte> getAllDifficultes() {
+        return getSelfLinkCollectionModel(this.difficulteService.findAll(), "getAllDifficultes");
     }
 }

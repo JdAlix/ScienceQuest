@@ -17,9 +17,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/partie")
-public class PartieController {
-
-    private static final int PAGE_SIZE = 5;
+public class PartieController extends Controller {
     private final PartieRepository partieRepository;
 
     public PartieController(PartieRepository partieRepository) {
@@ -30,7 +28,7 @@ public class PartieController {
     public EntityModel<Optional<Partie>> getPartie(@PathVariable int id, HttpServletRequest request) {
         Optional<Partie> partieOptional = this.partieRepository.findById(id);
         Partie partie = partieOptional.orElseThrow(() ->
-                new PartieNotFoundException("Partie introuvable avec l'ID : " + id)
+                new PartieNotFoundException("Partie", id)
         );
 
         Link selfLink = linkTo(methodOn(PartieController.class).getPartie(id,request)).withSelfRel();

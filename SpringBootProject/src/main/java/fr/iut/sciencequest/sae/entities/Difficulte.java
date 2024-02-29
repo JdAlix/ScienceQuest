@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name="difficulte")
-public class Difficulte {
+public class Difficulte extends BaseEntity  {
     @Id
     @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)

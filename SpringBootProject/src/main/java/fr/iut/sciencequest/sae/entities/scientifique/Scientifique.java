@@ -1,5 +1,9 @@
-package fr.iut.sciencequest.sae.entities;
+package fr.iut.sciencequest.sae.entities.scientifique;
 
+import fr.iut.sciencequest.sae.entities.BaseEntity;
+import fr.iut.sciencequest.sae.entities.Difficulte;
+import fr.iut.sciencequest.sae.entities.Sexe;
+import fr.iut.sciencequest.sae.entities.Thematique;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -19,7 +23,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "scientifique")
-public class Scientifique {
+public class Scientifique extends BaseEntity {
     @Id
     @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)

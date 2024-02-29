@@ -16,9 +16,11 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.util.ContentCachingResponseWrapper;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 @Component
 @Order(1)
@@ -30,83 +32,41 @@ public class ApplicationFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         // Intercept and modify the JSON response
-        JsonInterceptingResponseWrapper responseWrapper = new JsonInterceptingResponseWrapper(response);
+        ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper(response);
 
         filterChain.doFilter(request, responseWrapper);
 
-        // Check if the response content type is JSON
         if (responseWrapper.getContentType() != null && responseWrapper.getContentType().startsWith(MediaType.APPLICATION_JSON_VALUE)) {
             try {
-                // Parse the JSON response
-                JsonNode root = objectMapper.readTree(responseWrapper.getContent());
+                // Récupération du contenu en byteArray
+                byte[] responseArray = responseWrapper.getContentAsByteArray();
 
-                // Check if the _embedded node exists and if it contains the tupleBackedMapList node
+                // Parse JSON
+                JsonNode root = objectMapper.readTree(new String(responseArray, StandardCharsets.UTF_8));
+
+                // Vérification de l'existance du node _embedded && s'il contient un node enfant
                 JsonNode embeddedNode = root.get("_embedded");
-                if (embeddedNode != null && embeddedNode.isObject()) {
-                    JsonNode tupleBackedMapListNode = embeddedNode.get("tupleBackedMapList");
-                    if (tupleBackedMapListNode != null && tupleBackedMapListNode.isArray()) {
-                        ArrayNode tupleBackedMapList = (ArrayNode) tupleBackedMapListNode;
+                if (embeddedNode != null && embeddedNode.isObject() && embeddedNode.size() == 1) {
+                    JsonNode subNode = embeddedNode.elements().next(); // Récupération node enfant
+                    if (subNode != null && subNode.isArray()) {
+                        ArrayNode subNodeArr = (ArrayNode) subNode;
 
-                        // Remove the _embedded node
+                        // Correction de la profondeur
                         ((ObjectNode) root).remove("_embedded");
-
-                        // Set the tupleBackedMapList directly to the root
-                        ((ObjectNode) root).set("_embedded", tupleBackedMapList);
+                        ((ObjectNode) root).set("_embedded", subNodeArr);
                     }
                 }
 
-                // Convert the modified JSON back to string
+                // Retour du JSON dans l'objectMapper en String
                 String modifiedResponseBody = objectMapper.writeValueAsString(root);
 
-                // Write the modified JSON back to the response
-                response.getOutputStream().write(modifiedResponseBody.getBytes());
-            } catch (IOException e) {
-                // Handle exception
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private static class JsonInterceptingResponseWrapper extends HttpServletResponseWrapper {
-        private ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-        public JsonInterceptingResponseWrapper(HttpServletResponse response) {
-            super(response);
-        }
-
-        @Override
-        public ServletOutputStream getOutputStream() throws IOException {
-            return new ServletOutputStreamWrapper(baos);
-        }
-
-        public String getContent() {
-            return baos.toString();
-        }
-    }
-
-    private static class ServletOutputStreamWrapper extends ServletOutputStream {
-        private ByteArrayOutputStream baos;
-
-        public ServletOutputStreamWrapper(ByteArrayOutputStream baos) {
-            this.baos = baos;
-        }
-
-        @Override
-        public void write(int b) throws IOException {
-            baos.write(b);
-        }
-
-        @Override
-        public boolean isReady() {
-            return true;
-        }
-
-        @Override
-        public void setWriteListener(WriteListener writeListener) {
-            throw new UnsupportedOperationException("Not implemented");
+                // Ecriture du JSON dans la réponse
+                response.setCharacterEncoding("UTF-8");
+                response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                response.getOutputStream().write(modifiedResponseBody.getBytes(StandardCharsets.UTF_8));
+            } catch (IOException e) { System.err.println(e.getMessage()); }
         }
     }
 
