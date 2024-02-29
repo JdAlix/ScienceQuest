@@ -26,9 +26,9 @@ export default{
     },
     methods: {
         creerPartie: function () {
-            //remettre a zero les variables
             this.lettresDejaDevine = "";
             this.lettresANePasFaireDevinerAuJoueur="";
+            this.viesRestantes=10;
 
             //appeler l'API
             fetch(`${REST_API}/scientifiques?page=`+this.intAleatoire(this.api_pagesMaximum)).then(response=>{
