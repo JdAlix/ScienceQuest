@@ -41,6 +41,9 @@ export default{
                     this.nbLettresADeviner = this.motADeviner.length
                     this.description = scientifiqueADeviner.descriptif
 
+                    //mettre a jour le nombre de pages maximum de l'api scientifiques
+                    //this.api_pagesMaximum=json.page.totalPages
+
                     //verifier que le mot a deviner ne contient pas des lettres exemptées
                     this.motADeviner.split("").forEach(lettre=>
                         this.regexExceptions.forEach(regex=>regex.test(lettre) ? this.lettresANePasFaireDevinerAuJoueur+=lettre /* faire jouer la lettre a la place de l'utilisateur */ : null)
