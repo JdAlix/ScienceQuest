@@ -1,7 +1,7 @@
 package fr.iut.sciencequest.sae.assemblers;
 
 import fr.iut.sciencequest.sae.controllers.ScientifiqueController;
-import fr.iut.sciencequest.sae.dto.ScientifiqueDTO;
+import fr.iut.sciencequest.sae.dto.scientifique.ScientifiqueDTO;
 import fr.iut.sciencequest.sae.entities.scientifique.Scientifique;
 import jakarta.annotation.Nullable;
 import org.modelmapper.ModelMapper;

@@ -2,7 +2,7 @@ package fr.iut.sciencequest.sae.assemblers;
 
 import fr.iut.sciencequest.sae.controllers.PartieController;
 import fr.iut.sciencequest.sae.entities.Partie;
-import fr.iut.sciencequest.sae.dto.PartieDTO;
+import fr.iut.sciencequest.sae.dto.partie.PartieDTO;
 import jakarta.annotation.Nullable;
 import org.modelmapper.ModelMapper;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;

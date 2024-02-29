@@ -4,7 +4,7 @@ import fr.iut.sciencequest.sae.ApplicationConfig;
 import fr.iut.sciencequest.sae.assemblers.QuestionModelAssembler;
 import fr.iut.sciencequest.sae.entities.Question;
 import fr.iut.sciencequest.sae.exceptions.IncorrectPageException;
-import fr.iut.sciencequest.sae.dto.QuestionDTO;
+import fr.iut.sciencequest.sae.dto.question.QuestionDTO;
 import fr.iut.sciencequest.sae.services.QuestionService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;

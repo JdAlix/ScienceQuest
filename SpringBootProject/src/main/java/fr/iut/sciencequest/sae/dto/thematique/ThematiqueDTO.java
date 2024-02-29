@@ -1,8 +1,6 @@
-package fr.iut.sciencequest.sae.dto;
+package fr.iut.sciencequest.sae.dto.thematique;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import fr.iut.sciencequest.sae.entities.Partie;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -16,19 +14,10 @@ import org.springframework.hateoas.RepresentationModel;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class UtilisateurDTO extends RepresentationModel<UtilisateurDTO> {
+public class ThematiqueDTO extends RepresentationModel<ThematiqueDTO> {
     @NotNull
     private int id;
 
-    @Email
-    @NotNull
-    private String email;
-
     @NotBlank
-    private String motDePasse;
-
-    @NotBlank
-    private String pseudo;
-
-    private PartieDTO partie;
+    private String libelle;
 }

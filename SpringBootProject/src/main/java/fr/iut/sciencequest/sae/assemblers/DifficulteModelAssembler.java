@@ -1,6 +1,6 @@
 package fr.iut.sciencequest.sae.assemblers;
 
-import fr.iut.sciencequest.sae.dto.DifficulteDTO;
+import fr.iut.sciencequest.sae.dto.difficulte.DifficulteDTO;
 import fr.iut.sciencequest.sae.entities.Difficulte;
 import jakarta.annotation.Nullable;
 import org.modelmapper.ModelMapper;

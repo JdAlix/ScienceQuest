@@ -3,7 +3,7 @@ package fr.iut.sciencequest.sae.controllers;
 
 import fr.iut.sciencequest.sae.ApplicationConfig;
 import fr.iut.sciencequest.sae.assemblers.DifficulteModelAssembler;
-import fr.iut.sciencequest.sae.dto.DifficulteDTO;
+import fr.iut.sciencequest.sae.dto.difficulte.DifficulteDTO;
 import fr.iut.sciencequest.sae.entities.Difficulte;
 import fr.iut.sciencequest.sae.services.DifficulteService;
 import lombok.AllArgsConstructor;

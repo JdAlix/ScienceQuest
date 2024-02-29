@@ -1,7 +1,6 @@
-package fr.iut.sciencequest.sae.dto;
+package fr.iut.sciencequest.sae.dto.difficulte;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import fr.iut.sciencequest.sae.entities.Partie;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -15,12 +14,10 @@ import org.springframework.hateoas.RepresentationModel;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class InviteDTO extends RepresentationModel<InviteDTO> {
+public class DifficulteDTO extends RepresentationModel<DifficulteDTO> {
     @NotNull
     private int id;
 
     @NotBlank
-    private String pseudo;
-
-    private PartieDTO partie;
+    private String libelle;
 }

@@ -1,11 +1,8 @@
 package fr.iut.sciencequest.sae.controllers;
 
 import fr.iut.sciencequest.sae.ApplicationConfig;
-import fr.iut.sciencequest.sae.assemblers.QuestionModelAssembler;
 import fr.iut.sciencequest.sae.assemblers.ScientifiqueModelAssembler;
-import fr.iut.sciencequest.sae.dto.QuestionDTO;
-import fr.iut.sciencequest.sae.dto.ScientifiqueDTO;
-import fr.iut.sciencequest.sae.entities.Question;
+import fr.iut.sciencequest.sae.dto.scientifique.ScientifiqueDTO;
 import fr.iut.sciencequest.sae.entities.scientifique.Scientifique;
 import fr.iut.sciencequest.sae.entities.indice.IIndiceidAndLibelleAndScientifiqueIdOnlyProjection;
 import fr.iut.sciencequest.sae.entities.indice.Indice;
@@ -14,7 +11,6 @@ import fr.iut.sciencequest.sae.exceptions.IncorrectPageException;
 import fr.iut.sciencequest.sae.services.IndiceService;
 import fr.iut.sciencequest.sae.services.interfaces.IScientifiqueService;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.PagedResourcesAssembler;
@@ -25,8 +21,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @AllArgsConstructor

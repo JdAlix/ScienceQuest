@@ -1,13 +1,14 @@
-package fr.iut.sciencequest.sae.dto;
+package fr.iut.sciencequest.sae.dto.indice;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import fr.iut.sciencequest.sae.entities.Jeu;
-import fr.iut.sciencequest.sae.entities.joueur.Joueur;
+import fr.iut.sciencequest.sae.entities.Reponse;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 
+
+import java.util.List;
 
 @Data
 @Builder
@@ -15,13 +16,10 @@ import org.springframework.hateoas.RepresentationModel;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class PartieDTO extends RepresentationModel<PartieDTO> {
+public class IndiceDTO extends RepresentationModel<IndiceDTO> {
     @NotNull
     private int id;
+    private String question;
     @NotEmpty
-    private String codeInvitation;
-    @NotEmpty
-    private Iterable<JoueurDTO> joueurs;
-    @NotEmpty
-    private JeuDTO jeu;
+    private List<Reponse> reponses;
 }

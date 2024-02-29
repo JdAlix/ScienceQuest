@@ -1,5 +1,7 @@
 package fr.iut.sciencequest.sae;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.web.accept.FixedContentNegotiationStrategy;
@@ -11,6 +13,11 @@ import java.util.List;
 @Configuration
 public class ApplicationConfig implements WebMvcConfigurer {
     public static final int DEFAULT_PAGEABLE_SIZE = 1;
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
 
     // Permet de forcer l'affichage des erreurs en JSON sans prendre en compte les headers du client
     @Override

@@ -1,7 +1,7 @@
 package fr.iut.sciencequest.sae.controllers;
 
 import fr.iut.sciencequest.sae.assemblers.PartieModelAssembler;
-import fr.iut.sciencequest.sae.dto.PartieDTO;
+import fr.iut.sciencequest.sae.dto.partie.PartieDTO;
 import fr.iut.sciencequest.sae.entities.Partie;
 import fr.iut.sciencequest.sae.services.PartieService;
 import lombok.AllArgsConstructor;

@@ -1,9 +1,9 @@
-package fr.iut.sciencequest.sae.dto;
+package fr.iut.sciencequest.sae.dto.scientifique;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import fr.iut.sciencequest.sae.entities.Difficulte;
+import fr.iut.sciencequest.sae.dto.thematique.ThematiqueDTO;
+import fr.iut.sciencequest.sae.dto.difficulte.DifficulteDTO;
 import fr.iut.sciencequest.sae.entities.Sexe;
-import fr.iut.sciencequest.sae.entities.Thematique;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
