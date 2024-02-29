@@ -41,7 +41,7 @@ export default{
                     this.description = scientifiqueADeviner.descriptif
 
                     //mettre a jour le nombre de pages maximum de l'api scientifiques
-                    //this.api_pagesMaximum=json.page.totalPages
+                    this.api_pagesMaximum=json.page.totalPages
 
                     //verifier que le mot a deviner ne contient pas des lettres exemptées
                     this.motADeviner.split("").forEach(lettre=>
