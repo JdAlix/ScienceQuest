@@ -59,7 +59,6 @@ export default{
             this.premierePartie = false;
         },
         deviner: function (event) {
-            //TODO revoir ce truc
             //prendre la lettre depuis l'event
             const lettreDevinee = event.data.toLowerCase();
             //vider l'input
@@ -76,7 +75,7 @@ export default{
             if (oldprogression == this.progression) {
                 //si on n'a pas progressé = lettre incorrecte
                 this.viesRestantes--; //l'api devrait aussi retourner le nombre de vies restantes
-                
+
                 if(this.viesRestantes<0){
                     this.partieTerminee = true
                     this.progression = this.afficherProgression();
@@ -125,7 +124,7 @@ export default{
         </div>
 
         <div v-if="!partieTerminee" class="divjeu">
-            <!--PenduDessin></PenduDessin-->
+            <PenduDessin :viesRestantes="viesRestantes"></PenduDessin>
         </div>
         
         <div v-if="!partieTerminee" class="divjeu">
