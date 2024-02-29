@@ -1,6 +1,6 @@
 <script>
 export default{
-    props:["vieRestantes"], //maximum 10, 10 par defaut
+    props:["viesRestantes"], //maximum 10, 10 par defaut
     data(){
         return {
             ordreDessin:[
@@ -23,14 +23,14 @@ export default{
         this.$refs.pendu.width=200
         this.$refs.pendu.height=200
         this.ctx = this.$refs.pendu.getContext("2d");
-        this.viesEpuisees=this.ordreDessin.length-(this.vieRestantes??this.ordreDessin.length)
+        this.viesEpuisees=this.ordreDessin.length-(this.viesRestantes??this.ordreDessin.length)
     },
     watch:{
-        vieRestantes: function(newVal, oldVal){
+        viesRestantes: function(newVal, oldVal){
             const viesAEpuiser=this.ordreDessin.length-(newVal??this.ordreDessin.length)
             this.viesEpuisees=0;
             //nettoyer le canvas
-            this.ctx.clearRect(0, 0, canvas.width, canvas.height);
+            this.ctx.clearRect(0, 0, this.$refs.width, this.$refs.height);
             
             for(let i=0; i<viesAEpuiser; i++){
                 this.dessiner()

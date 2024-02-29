@@ -27,6 +27,8 @@ export default{
     methods: {
         creerPartie: function () {
             this.lettresDejaDevine = "";
+            this.lettresANePasFaireDevinerAuJoueur="";
+
             //appeler l'API
             fetch(`${REST_API}/scientifiques?page=`+this.intAleatoire(this.api_pagesMaximum)).then(response=>{
                 response.json().then(json=>{
@@ -35,21 +37,22 @@ export default{
                     const scientifiqueADeviner=arrayScientifique[this.intAleatoire(arrayScientifique.length)]
                     //prendre le mot a deviner a partir du nom du scientifique
                     this.motADeviner = scientifiqueADeviner.nom.toLowerCase() + " " + scientifiqueADeviner.prenom.toLowerCase()
-                    this.nbLettresADeviner = this.motADeviner.length
                     this.description = scientifiqueADeviner.descriptif
 
-                    this.viesRestantes = 10; // TODO utiliser l'api
+                    //mettre a jour le nombre de pages maximum de l'api scientifiques
+                    this.api_pagesMaximum=json.page.totalPages
 
                     //verifier que le mot a deviner ne contient pas des lettres exemptées
-                    this.lettresDejaDevine = "";
-                    this.lettresANePasFaireDevinerAuJoueur="";
                     this.motADeviner.split("").forEach(lettre=>
                         this.regexExceptions.forEach(regex=>regex.test(lettre) ? this.lettresANePasFaireDevinerAuJoueur+=lettre /* faire jouer la lettre a la place de l'utilisateur */ : null)
                     )
 
                     //rafraichir la progression pour enlever les lettres a ne pas faire deviner
                     this.progression = this.afficherProgression()
+                    //compter le nombre de trous (enlever tout ce qui est pas underscore et compter)
+                    this.nbLettresADeviner = this.progression.replace(/[^_]/g, "").length
 
+                    this.viesRestantes=10;
                     //demarrer le jeu
                     this.afficherLeJeu()
                 })
@@ -60,14 +63,23 @@ export default{
             this.premierePartie = false;
         },
         deviner: function (event) {
-            //TODO revoir ce truc
             //prendre la lettre depuis l'event
             const lettreDevinee = event.data.toLowerCase();
             //vider l'input
             event.target.value = "";
+            //voir si la lettre devinée est valide
+            let lettreValide=true
+            this.regexExceptions.forEach(regex=>lettreValide ? lettreValide=!regex.test(lettreDevinee) : null)
+            if(!lettreValide){
+                //ne pas faire deviner une lettre invalide
+                return
+            }
             //ajouter la lettre dans la liste des lettres devinées
             if (!this.lettresDejaDevine.includes(lettreDevinee)) {
                 this.lettresDejaDevine += lettreDevinee;
+            } else {
+                //ne pas faire deviner une lettre qui a deja été devinée
+                return
             }
 
             //comparer la progression
@@ -77,7 +89,7 @@ export default{
             if (oldprogression == this.progression) {
                 //si on n'a pas progressé = lettre incorrecte
                 this.viesRestantes--; //l'api devrait aussi retourner le nombre de vies restantes
-                
+
                 if(this.viesRestantes<0){
                     this.partieTerminee = true
                     this.progression = this.afficherProgression();
@@ -96,8 +108,8 @@ export default{
             this.motADeviner.split("").forEach(w =>lettresAAfficher.includes(w) ? progression += w : progression += "_");
             return progression;
         },
-        intAleatoire: function(nbPages){
-            return Math.floor(Math.random() * nbPages)
+        intAleatoire: function(nb){
+            return Math.floor(Math.random() * nb)
         }
     },
     components: { PenduDessin }
@@ -126,7 +138,7 @@ export default{
         </div>
 
         <div v-if="!partieTerminee" class="divjeu">
-            <!--PenduDessin></PenduDessin-->
+            <!--PenduDessin :viesRestantes="viesRestantes"></PenduDessin-->
         </div>
         
         <div v-if="!partieTerminee" class="divjeu">
