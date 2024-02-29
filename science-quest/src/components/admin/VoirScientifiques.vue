@@ -24,6 +24,8 @@ export default{
     },
     methods:{
         getScientifiques(url){
+            //HACK : s'assurer que les liens sont en HTTPS
+            url=url.replace("http://", "https://")
             //enlever les anciens du tableau
             this.scientifiques.splice(0)
             //TODO : ajouter un delai si jamais la requete est trop rapide pour VueJS
@@ -36,7 +38,7 @@ export default{
 
                     //HATEOAS
                     this.self=json._links.self.href;
-                    this.last=json._links.last ? json._links.last.href : null;
+                    this.first=json._links.first ? json._links.first.href : null;
                     this.prev=json._links.prev ? json._links.prev.href : null;
                     this.next=json._links.next ? json._links.next.href : null;
                     this.last=json._links.last ? json._links.last.href : null;
@@ -69,8 +71,8 @@ export default{
     ></LigneScientifique>
 </tbody>
     </table>
-    <button v-if="first" @click="this.getScientifiques(this.first)">First</button>
-    <button v-if="prev" @click="this.getScientifiques(this.prev)">Prev</button>
-    <button v-if="next" @click="this.getScientifiques(this.next)">Next</button>
-    <button v-if="last" @click="this.getScientifiques(this.last)">Last</button>
+    <button :class="{ invisible: !first }" class="btn btn-secondary" @click="this.getScientifiques(this.first)">First</button>
+    <button :class="{ invisible: !prev }"  class="btn btn-secondary" @click="this.getScientifiques(this.prev)">Prev</button>
+    <button :class="{ invisible: !next }"  class="btn btn-secondary" @click="this.getScientifiques(this.next)">Next</button>
+    <button :class="{ invisible: !last }"  class="btn btn-secondary" @click="this.getScientifiques(this.last)">Last</button>
 </template>
