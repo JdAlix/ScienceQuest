@@ -28,24 +28,32 @@ export default{
             //appeler l'API
             fetch(`${REST_API}/scientifiques?page=`+this.intAleatoire(this.api_pagesMaximum)).then(response=>{
                 response.json().then(json=>{
-                    //todo commenter ce truc
-                    this.partieTerminee = false;
-                    this.premierePartie = false;
+                    //prendre le scientifique de la requete
                     const arrayScientifique=json._embedded
                     const scientifiqueADeviner=arrayScientifique[this.intAleatoire(arrayScientifique.length)]
+                    //prendre le mot a deviner a partir du nom du scientifique
                     this.motADeviner = scientifiqueADeviner.nom.toLowerCase() + " " + scientifiqueADeviner.prenom.toLowerCase()
                     this.nbLettresADeviner = this.motADeviner.length
+
                     this.viesRestantes = 10; // TODO utiliser l'api
-                    this.progression = "_".repeat(this.nbLettresADeviner);
-                    this.lettresDejaDevine = "";
+
                     //verifier que le mot a deviner ne contient pas des lettres exemptées
+                    this.lettresDejaDevine = "";
                     this.motADeviner.split("").forEach(lettre=>
                         this.regexExceptions.forEach(regex=>regex.test(lettre) ? this.lettresDejaDevine+=lettre /* faire jouer la lettre a la place de l'utilisateur */ : null)
                     )
-                    
+
+                    //rafraichir la progression
+                    this.progression = this.afficherProgression("")
+
+                    //demarrer le jeu
+                    this.afficherLeJeu()
                 })
             })
-            
+        },
+        afficherLeJeu(){
+            this.partieTerminee = false;
+            this.premierePartie = false;
         },
         deviner: function (event) {
             //prendre la lettre depuis l'event
@@ -54,7 +62,7 @@ export default{
             event.target.value = "";
             //envoyer lettreDevinee a l'api
             const oldprogression = this.progression;
-            this.progression = this.debug_letreDevinee(lettreDevinee);
+            this.progression = this.afficherProgression(lettreDevinee);
 
             // /!\ code temporaire, local uniquement : TODO remplacer avec l'api
             if (oldprogression == this.progression) {
@@ -62,7 +70,7 @@ export default{
                 this.viesRestantes--; //l'api devrait aussi retourner le nombre de vies restantes
                 if(this.viesRestantes<0){
                     this.partieTerminee = true
-                    this.progression = this.debug_letreDevinee(lettreDevinee);
+                    this.progression = this.afficherProgression(lettreDevinee);
                 }
             }
             //fin code temporaire
@@ -76,7 +84,7 @@ export default{
                 this.lettresDejaDevine += lettreDevinee;
             }
         },
-        debug_letreDevinee: function (lettre) {
+        afficherProgression: function (lettre) {
             if (this.viesRestantes < 0) {
                 return this.motADeviner; //plus de vies = fin de la partie, l'api retourne le mot qu'on devait trouver
             }
