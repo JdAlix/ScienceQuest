@@ -21,4 +21,5 @@ public class PartieModelAssembler extends RepresentationModelAssemblerSupport<Pa
         ModelMapper mapper = new ModelMapper();
         return mapper.map(entity, PartieDTO.class);
     }
+
 }
