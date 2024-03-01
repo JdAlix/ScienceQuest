@@ -4,7 +4,6 @@ import fr.iut.sciencequest.sae.dto.indice.IndiceDTO;
 import fr.iut.sciencequest.sae.dto.indice.IndiceSimpleWithScientifiquesIdDTO;
 import fr.iut.sciencequest.sae.dto.indice.IndiceWithoutIdAndScientifiqueIdOnlyForPatchDTO;
 import fr.iut.sciencequest.sae.entities.Indice;
-import fr.iut.sciencequest.sae.repositories.IndiceRepository;
 import fr.iut.sciencequest.sae.services.IndiceService;
 import jakarta.validation.Valid;
 import jakarta.validation.Validator;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/indices")
 public class IndiceController {
     private final IndiceService indiceService;
-    private final IndiceRepository indiceRepository;
     private final ModelMapper modelMapper;
     private final Validator validator;
 
