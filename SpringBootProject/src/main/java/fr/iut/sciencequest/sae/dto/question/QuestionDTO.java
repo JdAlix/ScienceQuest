@@ -1,8 +1,7 @@
 package fr.iut.sciencequest.sae.dto.question;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import fr.iut.sciencequest.sae.dto.reponse.ReponseDTO;
+import fr.iut.sciencequest.sae.dto.reponse.ReponseSimpleDTO;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -24,5 +23,5 @@ public class QuestionDTO extends RepresentationModel<QuestionDTO> {
     private String question;
 
     @NotEmpty
-    private Iterable<ReponseDTO> reponses;
+    private Iterable<ReponseSimpleDTO> reponses;
 }
