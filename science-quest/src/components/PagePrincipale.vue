@@ -25,7 +25,7 @@ export default {
             <p> Actuellement les jeux sont en cours de développement 🚧</p> <!-- TODO: Rajouter les jeux disponibles -->
             <div class="routes-button">
                 <router-link to="/kahoot" class="btn btn-dark">Kahoot 🚧</router-link>
-                <router-link to="/qui_est_ce" class="btn btn-dark">Qui-est-ce ? 🚧</router-link>
+                <router-link to="/pendu" class="btn btn-dark">Pendu 🚧</router-link>
             </div>
             <img src="@/temporary_ressources/img/marie-curie.png" alt="Marie Curie" />
         </div>   
