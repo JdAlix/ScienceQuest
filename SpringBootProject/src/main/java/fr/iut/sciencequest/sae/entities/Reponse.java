@@ -2,10 +2,8 @@ package fr.iut.sciencequest.sae.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
@@ -24,4 +22,9 @@ public class Reponse{
     @ManyToOne
     @JoinColumn(name = "idquestion", nullable = false)
     private Question question;
+
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "idscientifique", nullable = false)
+    private Scientifique scientifique;
 }
