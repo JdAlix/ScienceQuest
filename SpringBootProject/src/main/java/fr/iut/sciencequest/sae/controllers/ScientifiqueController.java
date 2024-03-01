@@ -38,10 +38,10 @@ public class ScientifiqueController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public PagedModel<ScientifiqueDTO> getAllScientists(@PageableDefault(size = ApplicationConfig.DEFAULT_PAGEABLE_SIZE) Pageable p,
-                                                        @RequestParam(value = "thematiqueId", defaultValue = "-1") Integer thematiqueId,
-                                                        @RequestParam(value = "difficulteId", defaultValue = "-1") Integer difficulteId) {
+                                                        @RequestParam(value = "thematiqueId", defaultValue = "") Integer thematiqueId,
+                                                        @RequestParam(value = "difficulteId", defaultValue = "") Integer difficulteId) {
 
-        Page<Scientifique> page = (thematiqueId.equals(-1) && difficulteId.equals(-1) ? this.scientifiqueService.findAll(p) : this.scientifiqueService.findAllWithCriteria(p, thematiqueId, difficulteId));
+        Page<Scientifique> page = (thematiqueId == null && difficulteId == null ? this.scientifiqueService.findAll(p) : this.scientifiqueService.findAllWithCriteria(p, thematiqueId, difficulteId));
         return pagedResourcesAssembler.toModel(page, scientifiqueModelAssembler);
     }
 

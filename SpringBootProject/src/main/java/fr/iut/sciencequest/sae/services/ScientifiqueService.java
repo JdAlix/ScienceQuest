@@ -40,16 +40,12 @@ public class ScientifiqueService implements IScientifiqueService {
 
     @Override
     public Page<Scientifique> findAll(Pageable page) {
-
         return scientifiqueRepository.findAll(page);
     }
 
     public Page<Scientifique> findAllWithCriteria(Pageable page, Integer tId, Integer dId) {
-        Thematique thematique = null;
-        Difficulte difficulte = null;
-
-        if (tId != -1) thematique = thematiqueRepository.findById(tId).orElseThrow(() -> new ThematiqueNotFoundException(tId));
-        if (dId != -1) difficulte = difficulteRepository.findById(dId).orElseThrow(() -> new DifficulteNotFoundException(dId));
+        Thematique thematique = (tId != null ? thematiqueRepository.findById(tId).orElseThrow(() -> new ThematiqueNotFoundException(tId)) : null);
+        Difficulte difficulte = (dId != null ? difficulteRepository.findById(dId).orElseThrow(() -> new DifficulteNotFoundException(dId)) : null);
 
         if (thematique != null && difficulte != null) {
             return scientifiqueRepository.findAllByThematiqueEqualsAndDifficulteEquals(thematique, difficulte, page);
