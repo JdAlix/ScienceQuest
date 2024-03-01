@@ -5,6 +5,7 @@ import fr.iut.sciencequest.sae.dto.partie.PartieDTO;
 import fr.iut.sciencequest.sae.entities.Partie;
 import fr.iut.sciencequest.sae.services.PartieService;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

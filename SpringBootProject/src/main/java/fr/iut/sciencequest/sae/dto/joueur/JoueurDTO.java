@@ -17,7 +17,7 @@ import org.springframework.hateoas.RepresentationModel;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class JoueurDTO extends RepresentationModel<JoueurDTO> {
     @NotNull
-    private int id;
+    private Integer id;
 
     @NotBlank
     private String pseudo;

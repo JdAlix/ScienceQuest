@@ -9,7 +9,6 @@ import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 
 
-
 @Data
 @Builder
 @NoArgsConstructor
@@ -18,14 +17,11 @@ import org.springframework.hateoas.RepresentationModel;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UtilisateurDTO extends RepresentationModel<UtilisateurDTO> {
     @NotNull
-    private int id;
+    private Integer id;
 
     @Email
     @NotNull
     private String email;
-
-    @NotBlank
-    private String motDePasse;
 
     @NotBlank
     private String pseudo;

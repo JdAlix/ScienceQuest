@@ -1,6 +1,7 @@
 package fr.iut.sciencequest.sae.dto.question;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import fr.iut.sciencequest.sae.dto.reponse.ReponseDTO;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -18,9 +19,10 @@ import org.springframework.hateoas.RepresentationModel;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class QuestionDTO extends RepresentationModel<QuestionDTO> {
     @NotNull
-    private int id;
+    private Integer id;
     @NotBlank
     private String question;
+
     @NotEmpty
     private Iterable<ReponseDTO> reponses;
 }

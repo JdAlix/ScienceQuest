@@ -1,8 +1,10 @@
 package fr.iut.sciencequest.sae.dto.scientifique;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import fr.iut.sciencequest.sae.dto.difficulte.DifficulteSimpleDTO;
 import fr.iut.sciencequest.sae.dto.thematique.ThematiqueDTO;
 import fr.iut.sciencequest.sae.dto.difficulte.DifficulteDTO;
+import fr.iut.sciencequest.sae.dto.thematique.ThematiqueSimpleDTO;
 import fr.iut.sciencequest.sae.entities.Sexe;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -21,16 +23,15 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ScientifiqueDTO extends RepresentationModel<ScientifiqueDTO> {
     @NotNull
-    private int id;
+    private Integer id;
     
     @NotNull
-    private DifficulteDTO difficulte;
+    private DifficulteSimpleDTO difficulte;
 
     @NotNull
-    private ThematiqueDTO thematique;
+    private ThematiqueSimpleDTO thematique;
 
     @URL
     private String pathToPhoto;

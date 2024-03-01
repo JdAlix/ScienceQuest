@@ -1,7 +1,7 @@
-package fr.iut.sciencequest.sae.dto.invite;
+package fr.iut.sciencequest.sae.dto.admin;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import fr.iut.sciencequest.sae.dto.partie.PartieDTO;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -15,12 +15,16 @@ import org.springframework.hateoas.RepresentationModel;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class InviteDTO extends RepresentationModel<InviteDTO> {
+public class AdminWithPasswordDTO extends RepresentationModel<AdminWithPasswordDTO> {
     @NotNull
     private Integer id;
 
+    @Email
+    @NotNull
     @NotBlank
-    private String pseudo;
+    private String email;
 
-    private PartieDTO partie;
+    @NotNull
+    @NotBlank
+    private String password;
 }

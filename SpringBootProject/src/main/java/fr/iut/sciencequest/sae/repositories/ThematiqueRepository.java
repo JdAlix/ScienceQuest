@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ThematiqueRepository extends CrudRepository<Thematique, Integer> {
     boolean existsByLibelle(String libelle);
+    Thematique findThematiqueByLibelleEqualsIgnoreCase(String thematique);
 }

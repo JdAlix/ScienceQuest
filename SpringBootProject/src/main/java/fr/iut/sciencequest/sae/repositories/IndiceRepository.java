@@ -1,6 +1,6 @@
 package fr.iut.sciencequest.sae.repositories;
 
-import fr.iut.sciencequest.sae.entities.indice.Indice;
+import fr.iut.sciencequest.sae.entities.Indice;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
@@ -11,4 +11,6 @@ public interface IndiceRepository extends PagingAndSortingRepository<Indice, Int
 
     boolean existsByScientifiqueId(int id);
     Iterable<Indice> findByScientifiqueId(int id);
+
+    Indice getById(int id);
 }

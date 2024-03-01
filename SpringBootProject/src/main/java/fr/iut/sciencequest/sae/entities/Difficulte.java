@@ -1,26 +1,37 @@
 package fr.iut.sciencequest.sae.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.modelmapper.internal.bytebuddy.implementation.bind.annotation.Super;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import java.util.List;
 
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name="difficulte")
-public class Difficulte extends BaseEntity  {
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
+public class Difficulte  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column(unique = true)
     private String libelle;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "difficulte")
+    @Fetch(FetchMode.JOIN)
+    private List<Scientifique> scientifiques;
 }

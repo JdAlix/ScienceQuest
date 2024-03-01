@@ -1,7 +1,6 @@
 package fr.iut.sciencequest.sae.services;
 
-import fr.iut.sciencequest.sae.entities.indice.IIndiceidAndLibelleAndScientifiqueIdOnlyProjection;
-import fr.iut.sciencequest.sae.entities.indice.Indice;
+import fr.iut.sciencequest.sae.entities.Indice;
 import fr.iut.sciencequest.sae.exceptions.DuplicatedIdException;
 import fr.iut.sciencequest.sae.exceptions.notFound.IndiceNotFoundException;
 import fr.iut.sciencequest.sae.repositories.IndiceRepository;
@@ -18,8 +17,8 @@ public class IndiceService implements IIndiceService {
     }
 
     @Override
-    public Iterable<IIndiceidAndLibelleAndScientifiqueIdOnlyProjection> findByScientifiqueId(int id) {
-        return this.indiceRepository.findByScientifiqueId(id, IIndiceidAndLibelleAndScientifiqueIdOnlyProjection.class);
+    public Iterable<Indice> findByScientifiqueId(int id) {
+        return this.indiceRepository.findByScientifiqueId(id);
     }
 
     @Override

@@ -1,27 +1,32 @@
 package fr.iut.sciencequest.sae.services;
 
-import fr.iut.sciencequest.sae.entities.scientifique.Scientifique;
-import fr.iut.sciencequest.sae.entities.indice.IIndiceidAndLibelleAndScientifiqueIdOnlyProjection;
+import fr.iut.sciencequest.sae.entities.Difficulte;
+import fr.iut.sciencequest.sae.entities.Scientifique;
+import fr.iut.sciencequest.sae.entities.Indice;
+import fr.iut.sciencequest.sae.entities.Thematique;
+import fr.iut.sciencequest.sae.exceptions.notFound.DifficulteNotFoundException;
 import fr.iut.sciencequest.sae.exceptions.notFound.ScientifiqueNotFoundException;
+import fr.iut.sciencequest.sae.exceptions.notFound.ThematiqueNotFoundException;
+import fr.iut.sciencequest.sae.repositories.DifficulteRepository;
 import fr.iut.sciencequest.sae.repositories.ScientifiqueRepository;
+import fr.iut.sciencequest.sae.repositories.ThematiqueRepository;
 import fr.iut.sciencequest.sae.services.interfaces.IScientifiqueService;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
+@AllArgsConstructor
 @Service
 public class ScientifiqueService implements IScientifiqueService {
-
-    private static final int PAGE_SIZE = 1;
-
     private final ScientifiqueRepository scientifiqueRepository;
+    private final ThematiqueRepository thematiqueRepository;
+    private final DifficulteRepository difficulteRepository;
     private final IndiceService indiceService;
 
-    public ScientifiqueService(ScientifiqueRepository scientifiqueRepository, IndiceService indiceService) {
-        this.scientifiqueRepository = scientifiqueRepository;
-        this.indiceService = indiceService;
-    }
 
     @Override
     public Scientifique update(Scientifique scientifique) {
@@ -35,6 +40,25 @@ public class ScientifiqueService implements IScientifiqueService {
 
     @Override
     public Page<Scientifique> findAll(Pageable page) {
+
+        return scientifiqueRepository.findAll(page);
+    }
+
+    public Page<Scientifique> findAllWithCriteria(Pageable page, Integer tId, Integer dId) {
+        Thematique thematique = null;
+        Difficulte difficulte = null;
+
+        if (tId != -1) thematique = thematiqueRepository.findById(tId).orElseThrow(() -> new ThematiqueNotFoundException(tId));
+        if (dId != -1) difficulte = difficulteRepository.findById(dId).orElseThrow(() -> new DifficulteNotFoundException(dId));
+
+        if (thematique != null && difficulte != null) {
+            return scientifiqueRepository.findAllByThematiqueEqualsAndDifficulteEquals(thematique, difficulte, page);
+        } else if (thematique != null) {
+            return scientifiqueRepository.findAllByThematiqueEquals(thematique, page);
+        } else if (difficulte != null) {
+            return scientifiqueRepository.findAllByDifficulteEquals(difficulte, page);
+        }
+
         return scientifiqueRepository.findAll(page);
     }
 
@@ -44,7 +68,7 @@ public class ScientifiqueService implements IScientifiqueService {
     }
 
     @Override
-    public Iterable<IIndiceidAndLibelleAndScientifiqueIdOnlyProjection> getLinkedIndicesByScientifiqueId(int id){
+    public Iterable<Indice> getLinkedIndicesByScientifiqueId(int id){
         if(!this.scientifiqueRepository.existsById(id)){
             throw new ScientifiqueNotFoundException(id);
         }

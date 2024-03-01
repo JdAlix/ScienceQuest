@@ -8,20 +8,21 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 
+import java.util.List;
+
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class PartieDTO extends RepresentationModel<PartieDTO> {
     @NotNull
-    private int id;
+    private Integer id;
     @NotEmpty
     private String codeInvitation;
     @NotEmpty
-    private Iterable<JoueurDTO> joueurs;
-    @NotEmpty
+    private List<JoueurDTO> joueurs;
+    @NotNull
     private JeuDTO jeu;
 }

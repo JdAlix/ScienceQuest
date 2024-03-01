@@ -12,13 +12,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name="admin")
-public class Admin extends BaseEntity {
+public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column(unique = true)
     private String email;

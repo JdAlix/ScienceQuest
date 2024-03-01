@@ -1,12 +1,9 @@
-package fr.iut.sciencequest.sae.dto.invite;
+package fr.iut.sciencequest.sae.dto.indice;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import fr.iut.sciencequest.sae.dto.partie.PartieDTO;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
-
 
 
 @Data
@@ -15,12 +12,7 @@ import org.springframework.hateoas.RepresentationModel;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class InviteDTO extends RepresentationModel<InviteDTO> {
-    @NotNull
-    private Integer id;
-
+public class IndiceLibelleOnlyDTO extends RepresentationModel<IndiceLibelleOnlyDTO> {
     @NotBlank
-    private String pseudo;
-
-    private PartieDTO partie;
+    private String libelle;
 }

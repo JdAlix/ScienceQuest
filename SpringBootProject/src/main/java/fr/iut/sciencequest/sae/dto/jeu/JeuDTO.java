@@ -17,11 +17,11 @@ import org.springframework.hateoas.RepresentationModel;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class JeuDTO extends RepresentationModel<JeuDTO> {
     @NotNull
-    private int id;
+    private Integer id;
 
     @NotBlank
     private String nom;
 
     @Min(0)
-    private int nbrParties = 0;
+    private Integer nbrParties = 0;
 }

@@ -1,9 +1,6 @@
 package fr.iut.sciencequest.sae.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,15 +10,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Entity
-@Table(name="jeu")
-public class Jeu {
+@Table(name="indice")
+public class Indice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(unique = true)
-    private String nom;
+    @Column(nullable = false)
+    private String libelle;
 
-    @Column(name = "nbrparties")
-    private Integer nbrParties = 0;
+    @ManyToOne
+    @JoinColumn(name="idscientifique", nullable = false)
+    private Scientifique scientifique;
 }
+

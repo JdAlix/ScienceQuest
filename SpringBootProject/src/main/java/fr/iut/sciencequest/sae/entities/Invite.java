@@ -1,7 +1,6 @@
 package fr.iut.sciencequest.sae.entities;
 
 
-import fr.iut.sciencequest.sae.entities.joueur.Joueur;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

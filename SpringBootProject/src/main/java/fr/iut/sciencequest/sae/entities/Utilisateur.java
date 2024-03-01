@@ -1,11 +1,7 @@
 package fr.iut.sciencequest.sae.entities;
 
 
-import fr.iut.sciencequest.sae.entities.joueur.Joueur;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

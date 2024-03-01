@@ -1,6 +1,6 @@
 package fr.iut.sciencequest.sae.dto.thematique;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import fr.iut.sciencequest.sae.entities.Scientifique;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -13,11 +13,12 @@ import org.springframework.hateoas.RepresentationModel;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ThematiqueDTO extends RepresentationModel<ThematiqueDTO> {
     @NotNull
-    private int id;
+    private Integer id;
 
     @NotBlank
     private String libelle;
+
+    private Iterable<Scientifique> scientifiques;
 }

@@ -6,4 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface DifficulteRepository extends JpaRepository<Difficulte, Integer> {}
+public interface DifficulteRepository extends JpaRepository<Difficulte, Integer> {
+    Difficulte findDifficulteByLibelleEqualsIgnoreCase(String libelle);
+}

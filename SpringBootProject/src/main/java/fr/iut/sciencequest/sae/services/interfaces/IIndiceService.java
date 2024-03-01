@@ -1,10 +1,9 @@
 package fr.iut.sciencequest.sae.services.interfaces;
 
-import fr.iut.sciencequest.sae.entities.indice.IIndiceidAndLibelleAndScientifiqueIdOnlyProjection;
-import fr.iut.sciencequest.sae.entities.indice.Indice;
+import fr.iut.sciencequest.sae.entities.Indice;
 
 public interface IIndiceService {
-    Iterable<IIndiceidAndLibelleAndScientifiqueIdOnlyProjection> findByScientifiqueId(int id);
+    Iterable<Indice> findByScientifiqueId(int id);
     Indice update(Indice indice);
     Indice create(Indice indice);
 }
