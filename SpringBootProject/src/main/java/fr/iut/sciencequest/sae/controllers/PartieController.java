@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1/partie")
-public class PartieController extends Controller {
+public class PartieController {
     private final PartieModelAssembler partieModelAssembler;
     private final PartieService partieService;
 

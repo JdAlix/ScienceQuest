@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1/difficultes")
-public class DifficulteController extends Controller {
+public class DifficulteController {
     private final DifficulteModelAssembler difficulteModelAssembler;
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     private final PagedResourcesAssembler<Difficulte> pagedResourcesAssembler;

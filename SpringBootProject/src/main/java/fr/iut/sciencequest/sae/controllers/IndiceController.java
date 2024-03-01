@@ -1,7 +1,5 @@
 package fr.iut.sciencequest.sae.controllers;
 
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.iut.sciencequest.sae.dto.indice.IndiceDTO;
 import fr.iut.sciencequest.sae.dto.indice.IndiceSimpleWithScientifiquesIdDTO;
 import fr.iut.sciencequest.sae.dto.indice.IndiceWithoutIdAndScientifiqueIdOnlyForPatchDTO;
@@ -12,7 +10,6 @@ import jakarta.validation.Valid;
 import jakarta.validation.Validator;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BeanPropertyBindingResult;
@@ -23,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1/indices")
-public class IndiceController extends Controller {
+public class IndiceController {
     private final IndiceService indiceService;
     private final IndiceRepository indiceRepository;
     private final ModelMapper modelMapper;

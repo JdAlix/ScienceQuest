@@ -2,23 +2,24 @@ package fr.iut.sciencequest.sae.controllers;
 
 import fr.iut.sciencequest.sae.ApplicationConfig;
 import fr.iut.sciencequest.sae.assemblers.QuestionModelAssembler;
-import fr.iut.sciencequest.sae.entities.Question;
-import fr.iut.sciencequest.sae.exceptions.IncorrectPageException;
 import fr.iut.sciencequest.sae.dto.question.QuestionDTO;
+import fr.iut.sciencequest.sae.entities.Question;
 import fr.iut.sciencequest.sae.services.QuestionService;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1/questions")
-public class QuestionController extends Controller {
+public class QuestionController {
     private final QuestionService questionService;
     private final QuestionModelAssembler questionModelAssembler;
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")

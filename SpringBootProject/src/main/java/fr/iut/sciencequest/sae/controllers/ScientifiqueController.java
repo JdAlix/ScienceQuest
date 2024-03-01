@@ -3,13 +3,11 @@ package fr.iut.sciencequest.sae.controllers;
 import fr.iut.sciencequest.sae.ApplicationConfig;
 import fr.iut.sciencequest.sae.assemblers.IndiceModelAssembler;
 import fr.iut.sciencequest.sae.assemblers.ScientifiqueModelAssembler;
-import fr.iut.sciencequest.sae.dto.indice.IndiceDTO;
 import fr.iut.sciencequest.sae.dto.indice.IndiceLibelleOnlyDTO;
 import fr.iut.sciencequest.sae.dto.indice.IndiceSimpleWithScientifiquesIdDTO;
 import fr.iut.sciencequest.sae.dto.scientifique.ScientifiqueDTO;
-import fr.iut.sciencequest.sae.entities.Scientifique;
 import fr.iut.sciencequest.sae.entities.Indice;
-import fr.iut.sciencequest.sae.exceptions.IncorrectPageException;
+import fr.iut.sciencequest.sae.entities.Scientifique;
 import fr.iut.sciencequest.sae.services.IndiceService;
 import fr.iut.sciencequest.sae.services.interfaces.IScientifiqueService;
 import jakarta.validation.Valid;
@@ -20,7 +18,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1/scientifiques")
-public class ScientifiqueController extends Controller {
+public class ScientifiqueController {
 
     private final IScientifiqueService scientifiqueService;
     private final ScientifiqueModelAssembler scientifiqueModelAssembler;

@@ -1,25 +1,18 @@
 package fr.iut.sciencequest.sae.controllers;
 
 import fr.iut.sciencequest.sae.ApplicationConfig;
-import fr.iut.sciencequest.sae.assemblers.IndiceModelAssembler;
 import fr.iut.sciencequest.sae.assemblers.ThematiqueModelAssembler;
 import fr.iut.sciencequest.sae.assemblers.ThematiqueSimpleModelAssembler;
-import fr.iut.sciencequest.sae.dto.thematique.ThematiqueDTO;
 import fr.iut.sciencequest.sae.dto.thematique.ThematiqueLibelleOnlyDTO;
 import fr.iut.sciencequest.sae.dto.thematique.ThematiqueSimpleDTO;
-import fr.iut.sciencequest.sae.entities.Difficulte;
 import fr.iut.sciencequest.sae.entities.Thematique;
 import fr.iut.sciencequest.sae.services.interfaces.IThematiqueService;
-import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.PagedResourcesAssembler;
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1/thematiques")
-public class ThematiqueController extends Controller {
+public class ThematiqueController {
     private final IThematiqueService thematiqueService;
     private final ThematiqueModelAssembler thematiqueModelAssembler;
     private final ThematiqueSimpleModelAssembler thematiqueSimpleModelAssembler;
