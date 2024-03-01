@@ -3,7 +3,7 @@ package fr.iut.sciencequest.sae.controllers;
 
 import fr.iut.sciencequest.sae.ApplicationConfig;
 import fr.iut.sciencequest.sae.assemblers.DifficulteModelAssembler;
-import fr.iut.sciencequest.sae.dto.difficulte.DifficulteDTO;
+import fr.iut.sciencequest.sae.dto.difficulte.DifficulteSimpleDTO;
 import fr.iut.sciencequest.sae.entities.Difficulte;
 import fr.iut.sciencequest.sae.services.DifficulteService;
 import lombok.AllArgsConstructor;
@@ -31,7 +31,7 @@ public class DifficulteController extends Controller {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public PagedModel<DifficulteDTO> getAllDifficultes(@PageableDefault(size = ApplicationConfig.DEFAULT_PAGEABLE_SIZE) Pageable p) {
+    public PagedModel<DifficulteSimpleDTO> getAllDifficultes(@PageableDefault(size = ApplicationConfig.DEFAULT_PAGEABLE_SIZE) Pageable p) {
         Page<Difficulte> difficultePage = this.difficulteService.findAll(p);
         return pagedResourcesAssembler.toModel(difficultePage, difficulteModelAssembler);
     }
