@@ -33,17 +33,15 @@ public class ApplicationFilter extends OncePerRequestFilter {
     @NonNull
     protected void doFilterInternal(@Nullable HttpServletRequest request, @Nullable HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         // Intercept and modify the JSON response
+        assert response != null;
         ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper(response);
 
         filterChain.doFilter(request, responseWrapper);
 
         if (responseWrapper.getContentType() != null && responseWrapper.getContentType().startsWith(MediaType.APPLICATION_JSON_VALUE)) {
             try {
-                // Récupération du contenu en byteArray
-                byte[] responseArray = responseWrapper.getContentAsByteArray();
-
                 // Parse JSON
-                JsonNode root = objectMapper.readTree(new String(responseArray, StandardCharsets.UTF_8));
+                JsonNode root = objectMapper.readTree(new String(responseWrapper.getContentAsByteArray(), StandardCharsets.UTF_8));
 
                 // Vérification de l'existance du node _embedded && s'il contient un node enfant
                 JsonNode embeddedNode = root.get("_embedded");
@@ -65,7 +63,7 @@ public class ApplicationFilter extends OncePerRequestFilter {
                 response.setCharacterEncoding("UTF-8");
                 response.setContentType(MediaType.APPLICATION_JSON_VALUE);
                 response.getOutputStream().write(modifiedResponseBody.getBytes(StandardCharsets.UTF_8));
-            } catch (IOException e) { System.err.println(e.getMessage()); }
+            } catch (IOException e) { System.err.println("ApplicationFilter (_embedded) : " + e.getMessage()); }
         }
     }
 
