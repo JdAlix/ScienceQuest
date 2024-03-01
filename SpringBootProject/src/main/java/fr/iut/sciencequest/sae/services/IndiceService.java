@@ -33,7 +33,7 @@ public class IndiceService implements IIndiceService {
 
     @Override
     public Indice create(Indice indice){
-        if(this.indiceRepository.existsById(indice.getId())){
+        if(indice.getId() != null && this.indiceRepository.existsById(indice.getId())){
             throw new DuplicatedIdException();
         }
         return this.indiceRepository.save(indice);
