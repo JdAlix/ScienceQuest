@@ -23,5 +23,5 @@ public class JeuDTO extends RepresentationModel<JeuDTO> {
     private String nom;
 
     @Min(0)
-    private Integer nbrParties = 0;
+    private Integer nbrParties;
 }

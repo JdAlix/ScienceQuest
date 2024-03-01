@@ -1,9 +1,6 @@
 package fr.iut.sciencequest.sae.dto.scientifique;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import fr.iut.sciencequest.sae.dto.difficulte.DifficulteSimpleDTO;
-import fr.iut.sciencequest.sae.dto.thematique.ThematiqueDTO;
-import fr.iut.sciencequest.sae.dto.difficulte.DifficulteDTO;
 import fr.iut.sciencequest.sae.dto.thematique.ThematiqueSimpleDTO;
 import fr.iut.sciencequest.sae.entities.Sexe;
 import jakarta.validation.constraints.NotBlank;
@@ -52,5 +49,5 @@ public class ScientifiqueDTO extends RepresentationModel<ScientifiqueDTO> {
     private Sexe sexe;
 
     @Size(max=1)
-    private BigDecimal ratioTrouve = BigDecimal.ZERO;
+    private BigDecimal ratioTrouve;
 }
