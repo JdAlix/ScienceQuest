@@ -6,16 +6,15 @@ import fr.iut.sciencequest.sae.exceptions.DuplicatedIdException;
 import fr.iut.sciencequest.sae.exceptions.notFound.ThematiqueNotFoundException;
 import fr.iut.sciencequest.sae.repositories.ThematiqueRepository;
 import fr.iut.sciencequest.sae.services.interfaces.IThematiqueService;
+import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+@AllArgsConstructor
 @Service
 public class ThematiqueService implements IThematiqueService {
-
     private final ThematiqueRepository thematiqueRepository;
-
-    public ThematiqueService(ThematiqueRepository thematiqueRepository){
-        this.thematiqueRepository = thematiqueRepository;
-    }
 
     private void checkFieldsConstraints(Thematique thematique){
         if(this.thematiqueRepository.existsByLibelle(thematique.getLibelle())){
@@ -41,8 +40,8 @@ public class ThematiqueService implements IThematiqueService {
     }
 
     @Override
-    public Iterable<Thematique> findAll(){
-        return this.thematiqueRepository.findAll();
+    public Page<Thematique> findAll(Pageable p){
+        return this.thematiqueRepository.findAll(p);
     }
 
 }

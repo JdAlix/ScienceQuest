@@ -7,6 +7,8 @@ import fr.iut.sciencequest.sae.repositories.IndiceRepository;
 import fr.iut.sciencequest.sae.services.interfaces.IIndiceService;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Field;
+
 @Service
 public class IndiceService implements IIndiceService {
 
@@ -35,5 +37,19 @@ public class IndiceService implements IIndiceService {
             throw new DuplicatedIdException();
         }
         return this.indiceRepository.save(indice);
+    }
+
+    public Indice patch(Indice incompleteIndice, Indice destIndice) throws IllegalAccessException {
+        Class<?> indiceClass = Indice.class;
+        Field[] indiceFields = indiceClass.getDeclaredFields();
+        for(Field field: indiceFields){
+            field.setAccessible(true);
+            Object value = field.get(incompleteIndice);
+            if(value != null){
+                field.set(destIndice, value);
+            }
+            field.setAccessible(false);
+        }
+        return destIndice;
     }
 }

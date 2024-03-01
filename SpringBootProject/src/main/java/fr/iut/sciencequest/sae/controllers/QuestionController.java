@@ -26,13 +26,11 @@ public class QuestionController extends Controller {
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public PagedModel<QuestionDTO> getAllQuestions(@PageableDefault(size = ApplicationConfig.DEFAULT_PAGEABLE_SIZE) Pageable p) {
-        try {
-            Page<Question> questionPage = questionService.findAll(p);
-            return pagedResourcesAssembler.toModel(questionPage, questionModelAssembler);
-        } catch (IllegalArgumentException e) {
-            throw new IncorrectPageException("numéro de page incorrect");
-        }
+    public PagedModel<QuestionDTO> getAllQuestions(@PageableDefault(size = ApplicationConfig.DEFAULT_PAGEABLE_SIZE) Pageable p/*,
+                                                   @RequestParam(value = "scientifiqueId", defaultValue = "-1") Integer scientifiqueId*/) {
+
+        //Page<Question> questionPage = (scientifiqueId.equals(-1) ? questionService.findAll(p) : questionService.findAll(p)); //TEMPORAIRE NE PAS ENLEVER
+        return pagedResourcesAssembler.toModel(questionService.findAll(p), questionModelAssembler);
     }
 }
 
