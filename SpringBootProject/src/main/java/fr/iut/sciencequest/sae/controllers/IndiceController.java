@@ -19,13 +19,15 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/indices")
 public class IndiceController extends Controller {
     private final IndiceService indiceService;
+    private final IndiceRepository indiceRepository;
     private final ModelMapper modelMapper;
 
     @PatchMapping(value="/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public IndiceSimpleWithScientifiquesIdDTO patchIndice(@PathVariable("id") int id, @RequestBody @Valid IndiceWithoutIdAndScientifiqueIdOnlyForPatchDTO indiceInput) throws JsonMappingException {
-        Indice indice = this.modelMapper.map(indiceInput, Indice.class);
-        indice.setId(id);
+    public IndiceSimpleWithScientifiquesIdDTO patchIndice(@PathVariable("id") int id, @RequestBody @Valid IndiceWithoutIdAndScientifiqueIdOnlyForPatchDTO indiceInput) throws IllegalAccessException {
+        Indice indicePartial = this.modelMapper.map(indiceInput, Indice.class);
+        Indice indice = this.indiceRepository.getById(id);
+        indice = this.indiceService.patch(indicePartial, indice);
 
         return this.modelMapper.map(this.indiceService.update(indice), IndiceSimpleWithScientifiquesIdDTO.class);
     }

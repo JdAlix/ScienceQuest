@@ -32,7 +32,7 @@ public class ThematiqueService implements IThematiqueService {
 
     @Override
     public Thematique create(Thematique thematique){
-        if(this.thematiqueRepository.existsById(thematique.getId())){
+        if(thematique.getId() != null && this.thematiqueRepository.existsById(thematique.getId())){
             throw new DuplicatedIdException();
         }
         this.checkFieldsConstraints(thematique);
