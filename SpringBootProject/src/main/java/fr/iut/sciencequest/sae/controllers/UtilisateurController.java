@@ -4,6 +4,7 @@ import fr.iut.sciencequest.sae.dto.utilisateur.UtilisateurDTO;
 import fr.iut.sciencequest.sae.dto.utilisateur.UtilisateurWithPasswordDTO;
 import fr.iut.sciencequest.sae.services.interfaces.IUtilisateurService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
@@ -12,15 +13,15 @@ import org.springframework.web.bind.annotation.*;
 public class UtilisateurController {
     private final IUtilisateurService utilisateurService;
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public UtilisateurDTO register(UtilisateurWithPasswordDTO user) {
+    public UtilisateurDTO register(@RequestBody UtilisateurWithPasswordDTO user) {
         return utilisateurService.save(user);
     }
 
-    @GetMapping("/connexion")
+    @PostMapping(path = "/connexion", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public UtilisateurDTO login(UtilisateurWithPasswordDTO user) {
+    public UtilisateurDTO login(@RequestBody UtilisateurWithPasswordDTO user) {
         return utilisateurService.login(user);
     }
 
