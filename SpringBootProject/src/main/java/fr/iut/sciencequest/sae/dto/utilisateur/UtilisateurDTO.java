@@ -1,7 +1,6 @@
 package fr.iut.sciencequest.sae.dto.utilisateur;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import fr.iut.sciencequest.sae.dto.partie.PartieDTO;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -26,5 +25,4 @@ public class UtilisateurDTO extends RepresentationModel<UtilisateurDTO> {
     @NotBlank
     private String pseudo;
 
-    private PartieDTO partie;
 }
