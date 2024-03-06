@@ -12,7 +12,7 @@ import java.util.List;
 
 @Configuration
 public class ApplicationConfig implements WebMvcConfigurer {
-    public static final int DEFAULT_PAGEABLE_SIZE = 1;
+    public static final int DEFAULT_PAGEABLE_SIZE = 2;
 
     @Bean
     public ModelMapper modelMapper() {
