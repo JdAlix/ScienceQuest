@@ -10,7 +10,6 @@ import fr.iut.sciencequest.sae.exceptions.notFound.ThematiqueNotFoundException;
 import fr.iut.sciencequest.sae.repositories.DifficulteRepository;
 import fr.iut.sciencequest.sae.repositories.ScientifiqueRepository;
 import fr.iut.sciencequest.sae.repositories.ThematiqueRepository;
-import fr.iut.sciencequest.sae.services.interfaces.IScientifiqueService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,24 +20,21 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Service
-public class ScientifiqueService implements IScientifiqueService {
+public class ScientifiqueService {
     private final ScientifiqueRepository scientifiqueRepository;
     private final ThematiqueRepository thematiqueRepository;
     private final DifficulteRepository difficulteRepository;
     private final IndiceService indiceService;
 
 
-    @Override
     public Scientifique update(Scientifique scientifique) {
         return null;
     }
 
-    @Override
     public Scientifique create(Scientifique scientifique) {
         return null;
     }
 
-    @Override
     public Page<Scientifique> findAll(Pageable page) {
         return scientifiqueRepository.findAll(page);
     }
@@ -58,12 +54,10 @@ public class ScientifiqueService implements IScientifiqueService {
         return scientifiqueRepository.findAll(page);
     }
 
-    @Override
     public Scientifique findById(int id) {
         return this.scientifiqueRepository.findById(id).orElseThrow(() -> new ScientifiqueNotFoundException(id));
     }
 
-    @Override
     public Iterable<Indice> getLinkedIndicesByScientifiqueId(int id){
         if(!this.scientifiqueRepository.existsById(id)){
             throw new ScientifiqueNotFoundException(id);

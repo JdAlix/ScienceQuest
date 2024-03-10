@@ -6,7 +6,7 @@ import fr.iut.sciencequest.sae.assemblers.ThematiqueSimpleModelAssembler;
 import fr.iut.sciencequest.sae.dto.thematique.ThematiqueLibelleOnlyDTO;
 import fr.iut.sciencequest.sae.dto.thematique.ThematiqueSimpleDTO;
 import fr.iut.sciencequest.sae.entities.Thematique;
-import fr.iut.sciencequest.sae.services.interfaces.IThematiqueService;
+import fr.iut.sciencequest.sae.services.ThematiqueService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 @RequestMapping("/api/v1/thematiques")
 public class ThematiqueController {
-    private final IThematiqueService thematiqueService;
+    private final ThematiqueService thematiqueService;
     private final ThematiqueModelAssembler thematiqueModelAssembler;
     private final ThematiqueSimpleModelAssembler thematiqueSimpleModelAssembler;
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")

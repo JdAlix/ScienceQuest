@@ -9,7 +9,7 @@ import fr.iut.sciencequest.sae.dto.scientifique.ScientifiqueDTO;
 import fr.iut.sciencequest.sae.entities.Indice;
 import fr.iut.sciencequest.sae.entities.Scientifique;
 import fr.iut.sciencequest.sae.services.IndiceService;
-import fr.iut.sciencequest.sae.services.interfaces.IScientifiqueService;
+import fr.iut.sciencequest.sae.services.ScientifiqueService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/scientifiques")
 public class ScientifiqueController {
 
-    private final IScientifiqueService scientifiqueService;
+    private final ScientifiqueService scientifiqueService;
     private final ScientifiqueModelAssembler scientifiqueModelAssembler;
     private final IndiceModelAssembler indiceModelAssembler;
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")

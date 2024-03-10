@@ -4,13 +4,12 @@ import fr.iut.sciencequest.sae.entities.Indice;
 import fr.iut.sciencequest.sae.exceptions.DuplicatedIdException;
 import fr.iut.sciencequest.sae.exceptions.notFound.IndiceNotFoundException;
 import fr.iut.sciencequest.sae.repositories.IndiceRepository;
-import fr.iut.sciencequest.sae.services.interfaces.IIndiceService;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
 
 @Service
-public class IndiceService implements IIndiceService {
+public class IndiceService {
 
     private final IndiceRepository indiceRepository;
 
@@ -18,12 +17,10 @@ public class IndiceService implements IIndiceService {
         this.indiceRepository = indiceRepository;
     }
 
-    @Override
     public Iterable<Indice> findByScientifiqueId(int id) {
         return this.indiceRepository.findByScientifiqueId(id);
     }
 
-    @Override
     public Indice update(Indice indice){
         if(!this.indiceRepository.existsById(indice.getId())){
             throw new IndiceNotFoundException(indice.getId());
@@ -31,7 +28,6 @@ public class IndiceService implements IIndiceService {
         return this.indiceRepository.save(indice);
     }
 
-    @Override
     public Indice create(Indice indice){
         if(indice.getId() != null && this.indiceRepository.existsById(indice.getId())){
             throw new DuplicatedIdException();

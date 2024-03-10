@@ -2,7 +2,7 @@ package fr.iut.sciencequest.sae.controllers;
 
 import fr.iut.sciencequest.sae.dto.utilisateur.UtilisateurDTO;
 import fr.iut.sciencequest.sae.dto.utilisateur.UtilisateurWithPasswordDTO;
-import fr.iut.sciencequest.sae.services.interfaces.IUtilisateurService;
+import fr.iut.sciencequest.sae.services.UtilisateurService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/utilisateur")
 public class UtilisateurController {
-    private final IUtilisateurService utilisateurService;
+    private final UtilisateurService utilisateurService;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
