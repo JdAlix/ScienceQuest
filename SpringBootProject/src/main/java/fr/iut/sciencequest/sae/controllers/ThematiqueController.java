@@ -1,11 +1,13 @@
 package fr.iut.sciencequest.sae.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.iut.sciencequest.sae.ApplicationConfig;
 import fr.iut.sciencequest.sae.assemblers.ThematiqueModelAssembler;
 import fr.iut.sciencequest.sae.assemblers.ThematiqueSimpleModelAssembler;
 import fr.iut.sciencequest.sae.dto.thematique.ThematiqueLibelleOnlyDTO;
 import fr.iut.sciencequest.sae.dto.thematique.ThematiqueSimpleDTO;
 import fr.iut.sciencequest.sae.entities.Thematique;
+import fr.iut.sciencequest.sae.services.ScientifiqueService;
 import fr.iut.sciencequest.sae.services.ThematiqueService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -24,11 +26,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/thematiques")
 public class ThematiqueController {
     private final ThematiqueService thematiqueService;
+    private final ScientifiqueService scientifiqueService;
     private final ThematiqueModelAssembler thematiqueModelAssembler;
     private final ThematiqueSimpleModelAssembler thematiqueSimpleModelAssembler;
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     private final PagedResourcesAssembler<Thematique> pagedResourcesAssembler;
     private final ModelMapper modelMapper;
+    private final ObjectMapper objectMapper;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
@@ -46,8 +50,10 @@ public class ThematiqueController {
     @PatchMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ThematiqueSimpleDTO updateThematique(@PathVariable("id") int id, @Valid @RequestBody ThematiqueLibelleOnlyDTO partialThematique) {
-        Thematique thematique = this.modelMapper.map(partialThematique, Thematique.class);
-        thematique.setId(id);
-        return thematiqueSimpleModelAssembler.toModel(this.thematiqueService.update(thematique));
+        Thematique dstThematique = this.thematiqueService.findById(id);
+        if(partialThematique.getLibelle() != null){
+            dstThematique.setLibelle(partialThematique.getLibelle());
+        }
+        return thematiqueSimpleModelAssembler.toModel(this.thematiqueService.update(dstThematique));
     }
 }

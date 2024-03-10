@@ -35,6 +35,11 @@ public class ThematiqueService {
         this.checkFieldsConstraints(thematique);
         return this.thematiqueRepository.save(thematique);
     }
+    public Thematique findById(int id) {
+        return this.thematiqueRepository.findById(id).orElseThrow(() ->
+                new ThematiqueNotFoundException(id)
+        );
+    }
 
     public Page<Thematique> findAll(Pageable p){
         return this.thematiqueRepository.findAll(p);
