@@ -40,7 +40,6 @@ public class ThematiqueController {
         return pagedResourcesAssembler.toModel(this.thematiqueService.findAll(p), thematiqueSimpleModelAssembler);
     }
 
-    //TODO : gestion des erreurs remontées par @Valid
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ThematiqueSimpleDTO createThematique(@Valid @RequestBody ThematiqueLibelleOnlyDTO thematique) {
