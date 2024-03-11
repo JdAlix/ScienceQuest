@@ -46,12 +46,12 @@ entity "Utilisateur" as utilisateur {
 
 entity "Invite" as invite {
     <u>#idJoueur : int
-    <u>idSession : int
 }
 
 entity "Partie" as partie {
     <u>id : int
     codeInvitation : string
+    isStarted: bool
     #idJeu : int
 }
 
@@ -84,11 +84,46 @@ entity "Question" as question {
   question : string
 }
 
+entity "Action" as action {
+    <u>id : int
+    dateAction : date
+}
+
+entity "Jouer" as jouer {
+    #idAction
+    #idPartie
+}
+
+entity "ActionPendu" as actionPendu {
+    <u>#idAction
+    lettre : char
+    wordToFind : string
+    lifeLeft : int
+}
+
+entity "ActionKahoot" as actionKahoot {
+    <u>#idAction
+    numReponse: int
+    tempsReponse: int
+    #idJoueur
+}
+
+entity "ActionQuiEstCe" as actionQuiEstCe {
+    <u>#idAction
+    #idJoueur
+}
+
+actionPendu --> action
+actionQuiEstCe --> action
+actionQuiEstCe --> joueur
+actionKahoot --> action
+actionKahoot --> joueur
+jouer --> action
+jouer --> partie
 partie --> jeu
 partie <-- joueur
 invite --> joueur
 utilisateur --> joueur
-utilisateur --> scientifique
 scientifique --> thematique
 scientifique --> difficulte
 scientifique --> indice
