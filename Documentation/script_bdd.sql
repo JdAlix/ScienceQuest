@@ -13,10 +13,7 @@ DROP TABLE IF EXISTS Indice CASCADE;
 DROP TABLE IF EXISTS Scientifique CASCADE;
 DROP TABLE IF EXISTS Thematique CASCADE;
 DROP TABLE IF EXISTS Difficulte;
-DROP TABLE IF EXISTS ActionPendu CASCADE;
-DROP TABLE IF EXISTS ActionKahoot CASCADE;
-DROP TABLE IF EXISTS ActionQuiEstCe CASCADE;
-DROP TABLE IF EXISTS Action CASCADE;
+
 
 -- THEMATIQUE
 
@@ -54,7 +51,7 @@ CREATE TABLE Scientifique(
 
 CREATE TABLE Indice(
                        id SERIAL PRIMARY KEY,
-                       libelle varchar(512) NOT NULL UNIQUE,
+                       libelle varchar(512) NOT NULL,
                        idScientifique integer REFERENCES Scientifique(id)
 );
 
@@ -97,7 +94,7 @@ CREATE TABLE Jeu(
 
 CREATE TABLE Partie(
                        id SERIAL PRIMARY KEY,
-                       codeInvitation varchar(10) NOT NULL UNIQUE,
+                       codeInvitation varchar(5) NOT NULL UNIQUE,
                        idJeu integer REFERENCES Jeu(id)
 );
 
@@ -134,38 +131,6 @@ CREATE TABLE Decouvrir(
                           PRIMARY KEY (idUtilisateur, idScientifique)
 );
 
--- Actions
-
-CREATE TABLE Action (
-                        id integer PRIMARY KEY,
-                        dateAction date NOT NULL
-);
-
--- Action Pendu
-
-CREATE TABLE ActionPendu(
-                        idAction integer PRIMARY KEY REFERENCES Action(id),
-                        lettre char(1) NOT NULL,
-                        wordToFind varchar(255) NOT NULL,
-                        lifeLeft integer NOT NULL
-);
-
--- Action Kahoot
-
-CREATE TABLE ActionKahoot(
-                        idAction integer PRIMARY KEY REFERENCES Action(id),
-                        idJoueur integer REFERENCES Joueur(id),
-                        numReponse integer NOT NULL,
-                        -- NOTE : temps en ms
-                        tempsReponse integer NOT NULL
-);
-
--- Action Qui-Est-Ce
-
-CREATE TABLE ActionQuiEstCe(
-                        idAction integer PRIMARY KEY REFERENCES Action(id),
-                        idJoueur integer REFERENCES Joueur(id)
-);
 
 -- INSERTS
 
@@ -174,9 +139,9 @@ INSERT INTO Difficulte(libelle) VALUES ('Facile'),('Intermédiaire'),('Difficile
 INSERT INTO Thematique(libelle) VALUES ('Nucléaire'),('Mathématiques');
 INSERT INTO Scientifique(nom, prenom, photo, dateNaissance, descriptif, ratioTrouvee, idThematique, idDifficulte, sexe)
 VALUES
-    ('Marie', 'Curie', '', CURRENT_DATE, 'desc', 0, 1, 1, 'F'),
-    ('Albert', 'Einstein', '', CURRENT_DATE, 'desc', 0, 2, 1, 'H'),
-    ('Sophie', 'Germain', '', CURRENT_DATE, 'desc', 0, 2, 2, 'F');
+    ('Marie', 'Curie', '', CURRENT_DATE, 'desc', 0.50, 1, 1, 'F'),
+    ('Albert', 'Einstein', '', CURRENT_DATE, 'desc', 0.7540, 2, 1, 'H'),
+    ('Sophie', 'Germain', '', CURRENT_DATE, 'desc', 0.1432, 2, 2, 'F');
 
 -- Jeu
 INSERT INTO Jeu(nom) VALUES ('Qui-est-ce ?'),('Science Quizz'), ('Pendu');
@@ -189,9 +154,9 @@ VALUES
     ('Quel mathématicienne utilisa comme nom d"emprunt « Antoine Auguste Le Blanc » ?');
 
 -- Indices
-INSERT INTO Indice (id, libelle, idscientifique) VALUES
-                                                     (1, 'Indice pour aider', 1),
-                                                     (2, 'S''appelle Marie', 1);
+INSERT INTO Indice (libelle, idscientifique) VALUES
+                                                     ('Indice pour aider', 1),
+                                                     ('S''appelle Marie', 1);
 
 -- Réponses
 INSERT INTO Reponse(reponse, idQuestion, idScientifique)
@@ -201,11 +166,16 @@ VALUES
     ('Sophie Germain', 3, 3);
 
 -- Utilisateurs
-INSERT INTO Joueur(id,pseudo) VALUES (1337, 'moi, le meilleur joueur du monde');
-INSERT INTO Utilisateur(idJoueur,email,password) VALUES (1337, 'joueur','$2y$10$juGnlWC9cS19popEKLZsYeir0Jl39k6hDl0dpaCix00FDcdiEbtmS');
+INSERT INTO Joueur(pseudo) VALUES ('moi, le meilleur joueur du monde'); --id = 1
+INSERT INTO Utilisateur(idJoueur,email,password) VALUES (1, 'joueur','$2y$10$juGnlWC9cS19popEKLZsYeir0Jl39k6hDl0dpaCix00FDcdiEbtmS');
 -- mdp = test
 
-INSERT INTO decouvrir(idUtilisateur,idScientifique) VALUES (1337,1);
+-- Découvrir
+INSERT INTO decouvrir(idUtilisateur,idScientifique) VALUES (1,1);
 
+-- Admin
 INSERT INTO Admin(id,email,password) VALUES (1, 'admin','$2y$10$juGnlWC9cS19popEKLZsYeir0Jl39k6hDl0dpaCix00FDcdiEbtmS');
 -- mdp = test
+
+-- Partie
+INSERT INTO Partie(codeInvitation, idJeu) VALUES ('abcde', 1);
