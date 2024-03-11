@@ -15,6 +15,7 @@ export default{
             //a recuperer a partir de l'api (prendre nom et prenom d'un scientifique nous meme) 
             motADeviner: "einstein",
             description: "", //s'affiche en dessous du resultat a la fin
+            imageScientifique: "",
             api_pagesMaximum: 0, //impossible de connaitre le nombre de page a l'avance
 
             regexExceptions: [ //caracteres qu'on ne fera pas deviner au joueur
@@ -38,6 +39,7 @@ export default{
                     //prendre le mot a deviner a partir du nom du scientifique
                     this.motADeviner = scientifiqueADeviner.nom.toLowerCase() + " " + scientifiqueADeviner.prenom.toLowerCase()
                     this.description = scientifiqueADeviner.descriptif
+                    this.imageScientifique = scientifiqueADeviner.pathToPhoto
 
                     //mettre a jour le nombre de pages maximum de l'api scientifiques
                     this.api_pagesMaximum=json.page.totalPages
@@ -133,6 +135,7 @@ export default{
                 <!-- l'api devrait retourner le mot entier quand la vie est a 0 -->
                 <h2 style="font-family: monospace">{{ progression }}</h2>
                 <p>{{ description }}</p>
+                <img :src="imageScientifique">
             </div>
             <button class="btn btn-primary" v-on:click="creerPartie">Créer une partie</button>
         </div>
