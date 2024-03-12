@@ -10,6 +10,7 @@ export default{
             //données obtenues par l'api
             scientifiques: [],
             page:0,
+            REST_API:REST_API,
 
             //HATEOAS
             self:"",
@@ -57,9 +58,10 @@ export default{
 
 <template>
     <!-- TODO : remplacer input par select ?-->
-    <label for="endpoint">Endpoint API (REST) {{ REST_API }}</label>
+    <label for="endpoint">Endpoint API (REST) {{ REST_API }}/</label>
     <input v-model="endpoint" id="endpoint">
     <button @click="rafraichirEndpoint()">Rafraichir</button>
+    <!-- TODO : popup qui affiche Ajout.vue pour ajouter une nouvelle ligne-->
     <table class="table">
         <thead>
     <tr>
