@@ -1,14 +1,14 @@
 plugins {
-    id("com.android.application")
+    id("fr.iut.application")
     id("org.jetbrains.kotlin.android")
 }
 
 android {
-    namespace = "com.example.sciencequest"
+    namespace = "fr.iut.sciencequest"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.sciencequest"
+        applicationId = "fr.iut.sciencequest"
         minSdk = 21
         targetSdk = 34
         versionCode = 1

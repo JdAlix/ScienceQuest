@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import com.example.sciencequest.R
+import fr.iut.sciencequest.R
 
 @Composable
 fun topBar(goToAccount: () -> Unit, goToHome: () -> Unit, modifier: Modifier? = Modifier.fillMaxWidth()) {
