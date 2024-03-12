@@ -24,6 +24,25 @@ export default {
             //fetch("localhost/api/v1/scientifiques", {method:"PUT", body:JSON.stringify(donnees)})
             console.log(this.champs)
             this.changerModeEdition()
+        },
+        typeDeChamp: function(champ){
+            switch(typeof champ){
+                case 'number':
+                case 'bigint':
+                    return "number"
+                case 'string':
+                    return this.estUneDate(champ) ? "date" : "text"
+                case 'boolean':
+                    return "checkbox"
+                case 'symbol':
+                case 'undefined':
+                case 'object':
+                case 'function':
+                    return "hidden" //TODO : implementer le reste
+            }
+        },
+        estUneDate: function(date) {
+            return new Date(date) != "Invalid Date";
         }
     }
 }
@@ -32,8 +51,8 @@ export default {
 
 <template>
     <tr v-if="!this.modeEdition">
-        <td v-for="item in champs">
-            <p>{{ item }}</p>
+        <td v-for="champ in champs">
+            <p>{{ this.typeDeChamp(champ)=="date" ? new Date(champ).toLocaleString() : champ }}</p>
         </td>
         <td>
             <button class="btn-outline-secondary btn" v-on:click="changerModeEdition()">Modifier</button>
@@ -44,7 +63,7 @@ export default {
         <!-- TODO : changer le type si c'est un nombre, date (voir si on peut parse la date), objet (bouton qui ouvre une popup qui propose de changer les champs de l'objet)-->
         <td v-for="cleChamp in Object.keys(champs)">
             <!-- TODO : aria label, comment trouver les noms des colonnes depuis Liste.vue-->
-            <input class="form-control" type="text" v-model="champs[cleChamp]">
+            <input class="form-control" :type="typeDeChamp(champs[cleChamp])" v-model="champs[cleChamp]" >
         </td>
         <td>
             <button class="btn btn-success" v-on:click="sauverScientifique()">Sauvegarder</button>
