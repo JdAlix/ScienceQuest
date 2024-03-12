@@ -37,7 +37,8 @@ export default {
 
     <div class="checkbox mb-3">
         <label>
-            <input type="checkbox" value="remember-me"> Se souvenir de moi
+            <label for="remember-me">Se souvenir de moi</label>
+            <input type="checkbox" value="remember-me" id="remember-me">
         </label>
     </div>
     <button class="btn btn-lg btn-primary" v-on:click="login">Se connecter</button>
