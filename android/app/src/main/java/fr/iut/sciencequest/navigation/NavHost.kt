@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import fr.iut.sciencequest.view.AccountScreen
 import fr.iut.sciencequest.view.HomeScreen
+import fr.iut.sciencequest.view.LoginScreen
 
 
 @Composable
@@ -17,7 +18,7 @@ fun NavHost() {
     NavHost(
         modifier = Modifier.fillMaxSize(),
         navController = navController,
-        startDestination = "home"
+        startDestination = "login"
     ) {
         composable(route = "home") {
             HomeScreen(goToAccount = {
@@ -37,6 +38,10 @@ fun NavHost() {
                     navController.navigate("home")
                 }
             )
+        }
+
+        composable(route = "login") {
+            LoginScreen()
         }
     }
 }

@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import fr.iut.sciencequest.R
 
@@ -20,7 +21,7 @@ fun TopBar(goToAccount: () -> Unit, goToHome: () -> Unit, modifier: Modifier? = 
         FilledIconButton(onClick = { goToHome() }) {
             Image(painter = painterResource(id = R.drawable.menu), contentDescription = "Menu")
         }
-        Text(text = "Science Quest")
+        Text(text = stringResource(id = R.string.app_name))
         FilledIconButton(onClick = { goToAccount() }) {
             Image(painter = painterResource(id = R.drawable.account_circle_outline), contentDescription = "Account")
         }

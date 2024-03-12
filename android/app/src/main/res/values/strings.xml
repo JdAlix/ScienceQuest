@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">ScienceQuest</string>
     <string name="title_activity_account">AccountActivity</string>
+    <string name="connection">Connection</string>
+    <string name="Pseudo">Pseudo</string>
+    <string name="mdp">Mot de passe</string>
+    <string name="Compte">Compte</string>
 </resources>
