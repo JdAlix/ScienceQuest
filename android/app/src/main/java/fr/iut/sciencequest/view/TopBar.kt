@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import fr.iut.sciencequest.R
 
 @Composable
-fun topBar(goToAccount: () -> Unit, goToHome: () -> Unit, modifier: Modifier? = Modifier.fillMaxWidth()) {
+fun TopBar(goToAccount: () -> Unit, goToHome: () -> Unit, modifier: Modifier? = Modifier.fillMaxWidth()) {
     Row(horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.Top) {
         FilledIconButton(onClick = { goToHome() }) {
             Image(painter = painterResource(id = R.drawable.menu), contentDescription = "Menu")
@@ -28,6 +28,6 @@ fun topBar(goToAccount: () -> Unit, goToHome: () -> Unit, modifier: Modifier? = 
 
 @Preview
 @Composable
-fun topBarPreview(){
-    topBar(goToAccount = {}, goToHome = {})
+fun TopBarPreview(){
+    TopBar(goToAccount = {}, goToHome = {})
 }

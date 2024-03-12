@@ -5,8 +5,8 @@ import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun HomeScreen(goToHome: () -> Unit, goToAccount: () -> Unit) {
-    topBar(goToAccount, goToHome)
-    mainContent()
+    TopBar(goToAccount, goToHome)
+    MainContent()
 }
 
 @Preview
@@ -16,6 +16,6 @@ fun HomeScreenPreview() {
 }
 
 @Composable
-fun mainContent() {
+fun MainContent() {
 
 }

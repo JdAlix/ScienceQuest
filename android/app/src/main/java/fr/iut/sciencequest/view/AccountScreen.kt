@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 @Composable
 fun AccountScreen(goToAccount: () -> Unit, goToHome: () -> Unit) {
     Column(modifier = Modifier.fillMaxWidth()) {
-        topBar(goToAccount, goToHome)
+        TopBar(goToAccount, goToHome)
         Text(text = "Account")
     }
 }
