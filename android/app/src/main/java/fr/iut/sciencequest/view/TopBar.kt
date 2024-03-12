@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import fr.iut.sciencequest.R
 
 @Composable
@@ -23,4 +24,10 @@ fun topBar(goToAccount: () -> Unit, goToHome: () -> Unit, modifier: Modifier? = 
             Image(painter = painterResource(id = R.drawable.account_circle_outline), contentDescription = "Account")
         }
     }
+}
+
+@Preview
+@Composable
+fun topBarPreview(){
+    topBar(goToAccount = {}, goToHome = {})
 }
