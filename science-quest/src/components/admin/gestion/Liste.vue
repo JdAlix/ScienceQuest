@@ -20,11 +20,13 @@ export default{
         };
     },
     mounted(){
-        //TODO faire route pour prendre la page a partir de l'URL
-        this.self=`${REST_API}/${this.endpoint}?page=${this.page}`
-        this.getScientifiques(this.self)
+        this.rafraichirEndpoint()
     },
     methods:{
+        rafraichirEndpoint(){
+            this.self=`${REST_API}/${this.endpoint}?page=${this.page}`
+            this.getScientifiques(this.self)
+        },
         getScientifiques(url){
             //HACK : s'assurer que les liens sont en HTTPS
             url=url.replace("http://", "https://")
@@ -57,7 +59,7 @@ export default{
     <!-- TODO : remplacer input par select ?-->
     <label for="endpoint">Endpoint API (REST) {{ REST_API }}</label>
     <input v-model="endpoint" id="endpoint">
-    <button>Rafraichir</button>
+    <button @click="rafraichirEndpoint()">Rafraichir</button>
     <table class="table">
         <thead>
     <tr>
