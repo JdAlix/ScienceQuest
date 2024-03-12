@@ -20,7 +20,7 @@ export default {
         },
         sauverScientifique: function(){
             //TODO : comme dans ajout
-
+            //TODO
             //fetch("localhost/api/v1/scientifiques", {method:"PUT", body:JSON.stringify(donnees)})
             console.log(this.champs)
             this.changerModeEdition()
@@ -41,8 +41,9 @@ export default {
     </tr>
     <tr v-if="this.modeEdition">
         
-        <td v-for="item in champs">
-            <!--input class="form-control" type="text" v-model="item"-->
+        <!-- TODO : changer le type si c'est un nombre, date (voir si on peut parse la date), objet (bouton qui ouvre une popup qui propose de changer les champs de l'objet)-->
+        <td v-for="cleChamp in Object.keys(champs)">
+            <input class="form-control" type="text" v-model="champs[cleChamp]">
         </td>
         <td>
             <!-- TODO : aussi faire this.modeEdition=!this.modeEdition dans sauverScientifique -->
