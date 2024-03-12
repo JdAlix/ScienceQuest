@@ -6,7 +6,7 @@ import LigneScientifique from './ligne.vue';
 export default{
     data() {
         return {
-            endpoint:"thematiques", //endpoint de l'api a recuperer
+            endpoint:this.$route.query.endpoint ?? "thematiques", //endpoint de l'api a recuperer
             //données obtenues par l'api
             scientifiques: [],
             page:0,
