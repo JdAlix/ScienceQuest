@@ -20,7 +20,7 @@ export default {
         },
         sauverScientifique: function(){
             //TODO : comme dans ajout
-            //TODO
+            //TODO comment trouver l'endpoint depuis Liste.vue ?
             //fetch("localhost/api/v1/scientifiques", {method:"PUT", body:JSON.stringify(donnees)})
             console.log(this.champs)
             this.changerModeEdition()
@@ -43,10 +43,10 @@ export default {
         
         <!-- TODO : changer le type si c'est un nombre, date (voir si on peut parse la date), objet (bouton qui ouvre une popup qui propose de changer les champs de l'objet)-->
         <td v-for="cleChamp in Object.keys(champs)">
+            <!-- TODO : aria label, comment trouver les noms des colonnes depuis Liste.vue-->
             <input class="form-control" type="text" v-model="champs[cleChamp]">
         </td>
         <td>
-            <!-- TODO : aussi faire this.modeEdition=!this.modeEdition dans sauverScientifique -->
             <button class="btn btn-success" v-on:click="sauverScientifique()">Sauvegarder</button>
             <button class="btn btn-secondary" v-on:click="annuler()">Annuler</button>
         </td>
