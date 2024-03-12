@@ -16,7 +16,7 @@ import Login from "./components/Login.vue"
 import KahootVue from './components/jeux/kahoot/Kahoot.vue'
 import Pendu from './components/jeux/pendu/Pendu.vue'
 import AdminAjoutScientifique from "./components/admin/gestionScientifiques/AjoutScientifique.vue"
-import VoirScientifiques from "./components/admin/gestionScientifiques/VoirScientifiques.vue"
+import AdminGestionResources from "./components/admin/gestion/Liste.vue"
 
 const routes = [
     { path: '/', component: PagePrincipale },
@@ -25,7 +25,7 @@ const routes = [
     { path: '/pendu', component: Pendu },
     { path: '/exemple/:id', component: TestParametreURL },
     { path: '/admin/ajout_scientifique', component: AdminAjoutScientifique },
-    { path: '/admin/liste_scientifiques', component: VoirScientifiques },
+    { path: '/admin/gestion', component: AdminGestionResources },
     { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
 ]
 
