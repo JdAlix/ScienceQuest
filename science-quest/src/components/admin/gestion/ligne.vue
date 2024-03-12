@@ -5,7 +5,7 @@ export default {
         return{
             modeEdition:false, //vrai = remplacer les champs par des inputs
 
-            champsAffiche:{nom:"Test", prenom:"Test"} //this.champsInit
+            champs:this.champsInit
         }
     },
     methods:{
@@ -14,7 +14,7 @@ export default {
         },
         annuler: function(){
             //remettre les valeurs a 0
-            this.champsAffiche=this.champsInit,
+            this.champs=this.champsInit
 
             this.changerModeEdition()
         },
@@ -22,7 +22,7 @@ export default {
             //TODO : comme dans ajout
 
             //fetch("localhost/api/v1/scientifiques", {method:"PUT", body:JSON.stringify(donnees)})
-            console.log(this.champsAffiche)
+            console.log(this.champs)
             this.changerModeEdition()
         }
     }
@@ -32,14 +32,14 @@ export default {
 
 <template>
     <tr v-if="!this.modeEdition">
-        <td v-for="item in champsAffiche">
+        <td v-for="item in champs">
             <p>{{ item }}</p>
         </td>
         <button class="btn-outline-secondary btn" v-on:click="changerModeEdition()">Modifier</button>
     </tr>
     <tr v-if="this.modeEdition">
         
-        <td v-for="item in champsAffiche">
+        <td v-for="item in champs">
             <!--input class="form-control" type="text" v-model="item"-->
         </td>
         

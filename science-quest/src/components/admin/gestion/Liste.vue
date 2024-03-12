@@ -55,20 +55,18 @@ export default{
 
 <template>
     <!-- TODO : remplacer input par select ?-->
-    <input v-model="endpoint">
+    <label for="endpoint">Endpoint API (REST) {{ REST_API }}</label>
+    <input v-model="endpoint" id="endpoint">
     <button>Rafraichir</button>
     <table class="table">
         <thead>
     <tr>
-        <th scope="col" v-for="nomColonne in Object.keys(scientifiques[0])">{{nomColonne}}</th>
+        <th scope="col" v-for="nomColonne in Object.keys(scientifiques[0]??{})">{{nomColonne}}</th>
     </tr>
   </thead>
   <tbody>
-    <LigneScientifique v-for="scientifique in scientifiques"
-    :prenom="scientifique.prenom"
-    :nom="scientifique.nom"
-    :date="scientifique.dateNaissance"
-    :descriptif="scientifique.descriptif"
+    <LigneScientifique v-for="champ in scientifiques"
+    :champs-init="champ"
     ></LigneScientifique>
 </tbody>
     </table>
