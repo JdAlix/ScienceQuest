@@ -64,6 +64,7 @@ export default{
         <thead>
     <tr>
         <th scope="col" v-for="nomColonne in Object.keys(scientifiques[0]??{})">{{nomColonne}}</th>
+        <th scope="col">Actions</th>
     </tr>
   </thead>
   <tbody>

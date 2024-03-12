@@ -35,16 +35,19 @@ export default {
         <td v-for="item in champs">
             <p>{{ item }}</p>
         </td>
-        <button class="btn-outline-secondary btn" v-on:click="changerModeEdition()">Modifier</button>
+        <td>
+            <button class="btn-outline-secondary btn" v-on:click="changerModeEdition()">Modifier</button>
+        </td>
     </tr>
     <tr v-if="this.modeEdition">
         
         <td v-for="item in champs">
             <!--input class="form-control" type="text" v-model="item"-->
         </td>
-        
-        <!-- TODO : aussi faire this.modeEdition=!this.modeEdition dans sauverScientifique -->
-        <button class="btn btn-success" v-on:click="sauverScientifique()">Sauvegarder</button>
-        <button class="btn btn-secondary" v-on:click="annuler()">Annuler</button>
+        <td>
+            <!-- TODO : aussi faire this.modeEdition=!this.modeEdition dans sauverScientifique -->
+            <button class="btn btn-success" v-on:click="sauverScientifique()">Sauvegarder</button>
+            <button class="btn btn-secondary" v-on:click="annuler()">Annuler</button>
+        </td>
     </tr>
 </template>
