@@ -1,4 +1,4 @@
-package com.example.sciencequest.view
+package fr.iut.sciencequest.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement

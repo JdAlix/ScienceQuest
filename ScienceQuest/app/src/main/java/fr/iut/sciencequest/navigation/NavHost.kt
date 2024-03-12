@@ -1,4 +1,4 @@
-package com.example.sciencequest.navigation
+package fr.iut.sciencequest.navigation
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -6,8 +6,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.sciencequest.view.AccountScreen
-import com.example.sciencequest.view.HomeScreen
+import fr.iut.sciencequest.view.AccountScreen
+import fr.iut.sciencequest.view.HomeScreen
 
 
 @Composable

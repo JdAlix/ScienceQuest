@@ -1,4 +1,4 @@
-package com.example.sciencequest.ui.theme
+package fr.iut.sciencequest.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

@@ -1,4 +1,4 @@
-package com.example.sciencequest.view
+package fr.iut.sciencequest.view
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth

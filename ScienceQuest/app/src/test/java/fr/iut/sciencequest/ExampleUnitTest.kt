@@ -1,4 +1,4 @@
-package com.example.sciencequest
+package fr.iut.sciencequest
 
 import org.junit.Test
 

@@ -1,4 +1,4 @@
-package com.example.sciencequest.ui.theme
+package fr.iut.sciencequest.ui.theme
 
 import android.app.Activity
 import android.os.Build

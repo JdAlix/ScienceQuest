@@ -13,12 +13,7 @@
         android:theme="@style/Theme.ScienceQuest"
         tools:targetApi="31">
         <activity
-            android:name=".AccountActivity"
-            android:exported="false"
-            android:label="@string/title_activity_account"
-            android:theme="@style/Theme.ScienceQuest" />
-        <activity
-            android:name=".MainActivity"
+            android:name="fr.iut.sciencequest.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.ScienceQuest">
