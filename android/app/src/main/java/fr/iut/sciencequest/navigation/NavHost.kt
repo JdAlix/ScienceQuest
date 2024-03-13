@@ -9,6 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import fr.iut.sciencequest.view.AccountScreen
 import fr.iut.sciencequest.view.HomeScreen
 import fr.iut.sciencequest.view.LoginScreen
+import fr.iut.sciencequest.view.games.PenduScreen
 
 
 @Composable
@@ -27,6 +28,9 @@ fun NavHost() {
                 },
                 goToHome = {
                     navController.navigate("home")
+                },
+                goToPendu = {
+                    navController.navigate("pendu")
                 }
             )
         }
@@ -44,6 +48,17 @@ fun NavHost() {
 
         composable(route = "login") {
             LoginScreen(
+                goToAccount = {
+                    navController.navigate("account")
+                },
+                goToHome = {
+                    navController.navigate("home")
+                }
+            )
+        }
+
+        composable(route = "pendu") {
+            PenduScreen(
                 goToAccount = {
                     navController.navigate("account")
                 },
