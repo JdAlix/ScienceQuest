@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import fr.iut.sciencequest.R
 
 @Composable
-fun TopBar(goToAccount: () -> Unit, goToHome: () -> Unit, modifier: Modifier? = Modifier.fillMaxWidth()) {
+fun TopBar(goToAccount: () -> Unit, goToHome: () -> Unit, text: String = stringResource(id = R.string.app_name), modifier: Modifier? = Modifier.fillMaxWidth()) {
     Row(horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
         Column(horizontalAlignment = Alignment.Start) {
             FilledIconButton(onClick = { goToHome() }) {
@@ -24,7 +24,7 @@ fun TopBar(goToAccount: () -> Unit, goToHome: () -> Unit, modifier: Modifier? = 
             }
         }
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(text = stringResource(id = R.string.app_name))
+            Text(text = text)
         }
         Column(horizontalAlignment = Alignment.End) {
             FilledIconButton(onClick = { goToAccount() }) {
