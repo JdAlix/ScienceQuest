@@ -4,5 +4,6 @@
     <string name="connection">Connexion</string>
     <string name="Pseudo">Pseudo</string>
     <string name="mdp">Mot de passe</string>
-    <string name="Compte">Compte</string>
+    <string name="compte">Compte</string>
+    <string name="pendu">Pendu</string>
 </resources>
