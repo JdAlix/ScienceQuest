@@ -1,35 +1,27 @@
 package fr.iut.sciencequest.view
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.FlowRowScopeInstance.align
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.TextInputService
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
-import fr.iut.sciencequest.R
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import fr.iut.sciencequest.R
 
-@Preview
 @Composable
-fun LoginScreen() {
+fun LoginScreen(goToAccount: () -> Unit, goToHome: () -> Unit) {
     Scaffold(
         topBar = {
-            TopBar(goToAccount = { /*TODO*/ }, goToHome = { /*TODO*/ })
+            TopBar(goToAccount, goToHome)
         },
     ) { innerPadding ->
         LoginContainer(innerPadding)
@@ -57,11 +49,11 @@ fun LoginContainer(innerPadding : PaddingValues) {
         )
         TextField(value = mdp,
             onValueChange = { mdp = it },
-            modifier = Modifier.padding(Dp(20f))
+            modifier = Modifier.padding(20.dp)
         )
 
         Button(onClick = { /*TODO*/ },
-            modifier = Modifier.padding(Dp(20f)),
+            modifier = Modifier.padding(20.dp),
             ) {
             Text(text = stringResource(id = R.string.connection))
         }
