@@ -21,7 +21,7 @@ import fr.iut.sciencequest.R
 fun LoginScreen(goToAccount: () -> Unit, goToHome: () -> Unit) {
     Scaffold(
         topBar = {
-            TopBar(goToAccount, goToHome)
+            TopBar(goToAccount, goToHome, stringResource(id = R.string.connection))
         },
     ) { innerPadding ->
         LoginContainer(innerPadding)
@@ -42,7 +42,7 @@ fun LoginContainer(innerPadding : PaddingValues) {
             mutableStateOf(defaultMdp)
         }
 
-        Text(text = stringResource(id = R.string.connection))
+        //Text(text = stringResource(id = R.string.connection))
         TextField(value = pseudo ,
             onValueChange = { pseudo = it },
             modifier = Modifier.padding(20.dp)
