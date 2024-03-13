@@ -2,7 +2,7 @@ package fr.iut.sciencequest.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.FilledIconButton
@@ -17,13 +17,19 @@ import fr.iut.sciencequest.R
 
 @Composable
 fun TopBar(goToAccount: () -> Unit, goToHome: () -> Unit, modifier: Modifier? = Modifier.fillMaxWidth()) {
-    Row(horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-        FilledIconButton(onClick = { goToHome() }) {
-            Image(painter = painterResource(id = R.drawable.menu), contentDescription = "Menu")
+    Row(horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+        Column(horizontalAlignment = Alignment.Start) {
+            FilledIconButton(onClick = { goToHome() }) {
+                Image(painter = painterResource(id = R.drawable.menu), contentDescription = "Menu")
+            }
         }
-        Text(text = stringResource(id = R.string.app_name))
-        FilledIconButton(onClick = { goToAccount() }) {
-            Image(painter = painterResource(id = R.drawable.account_circle_outline), contentDescription = "Account")
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(text = stringResource(id = R.string.app_name))
+        }
+        Column(horizontalAlignment = Alignment.End) {
+            FilledIconButton(onClick = { goToAccount() }) {
+                Image(painter = painterResource(id = R.drawable.account_circle_outline), contentDescription = "Account")
+            }
         }
     }
 }
