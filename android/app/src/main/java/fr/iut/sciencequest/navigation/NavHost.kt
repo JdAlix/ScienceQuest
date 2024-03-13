@@ -21,19 +21,21 @@ fun NavHost() {
         startDestination = "login"
     ) {
         composable(route = "home") {
-            HomeScreen(goToAccount = {
-                navController.navigate("account")
-            },
-            goToHome = {
-                navController.navigate("home")
-            }
+            HomeScreen(
+                goToAccount = {
+                    navController.navigate("account")
+                },
+                goToHome = {
+                    navController.navigate("home")
+                }
             )
         }
 
         composable(route = "account") {
-            AccountScreen(goToAccount = {
-                navController.navigate("account")
-            },
+            AccountScreen(
+                goToAccount = {
+                    navController.navigate("account")
+                },
                 goToHome = {
                     navController.navigate("home")
                 }
@@ -41,7 +43,14 @@ fun NavHost() {
         }
 
         composable(route = "login") {
-            LoginScreen()
+            LoginScreen(
+                goToAccount = {
+                    navController.navigate("account")
+                },
+                goToHome = {
+                    navController.navigate("home")
+                }
+            )
         }
     }
 }
