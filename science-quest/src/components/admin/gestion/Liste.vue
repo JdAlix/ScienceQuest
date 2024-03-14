@@ -2,6 +2,7 @@
 import { REST_API } from '@/assets/const';
 
 import LigneDonnee from './ListeLigne.vue';
+import Ajout from './Ajout.vue';
 
 export default{
     data() {
@@ -51,15 +52,15 @@ export default{
             })
         }
     },
-    components: { LigneDonnee }
+    components: { LigneDonnee, Ajout }
 }
 </script>
 
 
 <template>
     <!-- TODO : remplacer input par select ?-->
-    <label for="endpoint">Endpoint API (REST) {{ REST_API }}/</label>
-    <input v-model="endpoint" id="endpoint">
+    <label for="endpointInput">Endpoint API (REST) {{ REST_API }}/</label>
+    <input v-model="endpoint" id="endpointInput">
     <button @click="rafraichirEndpoint()">Rafraichir</button>
     <!-- TODO : popup qui affiche Ajout.vue pour ajouter une nouvelle ligne-->
     <table class="table">
@@ -79,4 +80,7 @@ export default{
     <button :class="{ invisible: !prev }"  class="btn btn-secondary" @click="this.getdonnees(this.prev)">Prev</button>
     <button :class="{ invisible: !next }"  class="btn btn-secondary" @click="this.getdonnees(this.next)">Next</button>
     <button :class="{ invisible: !last }"  class="btn btn-secondary" @click="this.getdonnees(this.last)">Last</button>
+
+
+    <Ajout :endpoint="endpoint" :donnee="donnees[0]??{}"/>
 </template>
