@@ -8,7 +8,7 @@ export default{
         return {
             endpoint:this.$route.query.endpoint ?? "thematiques", //endpoint de l'api a recuperer
             //données obtenues par l'api
-            scientifiques: [],
+            donnees: [],
             page:0,
             REST_API:REST_API,
 
@@ -26,20 +26,20 @@ export default{
     methods:{
         rafraichirEndpoint(){
             this.self=`${REST_API}/${this.endpoint}?page=${this.page}`
-            this.getScientifiques(this.self)
+            this.getdonnees(this.self)
         },
-        getScientifiques(url){
+        getdonnees(url){
             //HACK : s'assurer que les liens sont en HTTPS
             url=url.replace("http://", "https://")
             //enlever les anciens du tableau
-            this.scientifiques=[]
+            this.donnees=[]
             //TODO : ajouter un delai si jamais la requete est trop rapide pour VueJS
             //appeler l'API
             fetch(url).then(response=>{
                 response.json().then(json=>{
-                    const oldLength=this.scientifiques.length
-                    //prendre les scientifiques de la requete
-                    this.scientifiques.push(...json._embedded)
+                    const oldLength=this.donnees.length
+                    //prendre les donnees de la requete
+                    this.donnees.push(...json._embedded)
 
                     //HATEOAS
                     this.self=json._links.self.href;
@@ -65,18 +65,18 @@ export default{
     <table class="table">
         <thead>
     <tr>
-        <th scope="col" v-for="nomColonne in Object.keys(scientifiques[0]??{})">{{nomColonne}}</th>
+        <th scope="col" v-for="nomColonne in Object.keys(donnees[0]??{})">{{nomColonne}}</th>
         <th scope="col">Actions</th>
     </tr>
   </thead>
   <tbody>
-    <LigneScientifique v-for="champ in scientifiques"
+    <LigneScientifique v-for="champ in donnees"
     :champs-init="champ"
     ></LigneScientifique>
 </tbody>
     </table>
-    <button :class="{ invisible: !first }" class="btn btn-secondary" @click="this.getScientifiques(this.first)">First</button>
-    <button :class="{ invisible: !prev }"  class="btn btn-secondary" @click="this.getScientifiques(this.prev)">Prev</button>
-    <button :class="{ invisible: !next }"  class="btn btn-secondary" @click="this.getScientifiques(this.next)">Next</button>
-    <button :class="{ invisible: !last }"  class="btn btn-secondary" @click="this.getScientifiques(this.last)">Last</button>
+    <button :class="{ invisible: !first }" class="btn btn-secondary" @click="this.getdonnees(this.first)">First</button>
+    <button :class="{ invisible: !prev }"  class="btn btn-secondary" @click="this.getdonnees(this.prev)">Prev</button>
+    <button :class="{ invisible: !next }"  class="btn btn-secondary" @click="this.getdonnees(this.next)">Next</button>
+    <button :class="{ invisible: !last }"  class="btn btn-secondary" @click="this.getdonnees(this.last)">Last</button>
 </template>./ligne.vue
