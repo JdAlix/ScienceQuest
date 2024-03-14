@@ -8,7 +8,7 @@ export default{
             const donnees=new FormData(formajouter)
 
             //envoyer le form en JSON
-            fetch("localhost"+"/"+this.endpoint, {method:"POST", body:JSON.stringify(Object.fromEntries(donnees)), headers: {"Content-Type": "application/json"}})
+            fetch(REST_API+"/"+this.endpoint, {method:"POST", body:JSON.stringify(Object.fromEntries(donnees)), headers: {"Content-Type": "application/json"}})
             //sans le JSON.stringify et Object.fromEntries ca fait une requete en Content-Disposition
         },
         typeDeChamp: function(champ){ //TODO mettre cette fonction dans un fichier commun
