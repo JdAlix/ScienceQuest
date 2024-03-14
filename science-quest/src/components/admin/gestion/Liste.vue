@@ -95,7 +95,7 @@ export default{
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <Ajout :endpoint="endpoint" :donnee="donnees[0]??{}"/>
+        <Ajout :endpoint="endpoint" :champs="donnees[0]??{}"/>
       </div>
     </div>
   </div>
