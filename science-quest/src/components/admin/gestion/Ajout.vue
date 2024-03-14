@@ -25,6 +25,7 @@ export default{
                 case 'object':
                 case 'function':
                     return "hidden" //TODO : implementer le reste
+                    //TODO faire un select au lieu d'un input si jamais on trouve un endpoint en mettant un "s" a la fin du nomColonne
             }
         },
         estUneDate: function(date) { //TODO mettre cette fonction dans un fichier commun

@@ -62,7 +62,6 @@ export default{
     <label for="endpointInput">Endpoint API (REST) {{ REST_API }}/</label>
     <input v-model="endpoint" id="endpointInput">
     <button @click="rafraichirEndpoint()">Rafraichir</button>
-    <!-- TODO : popup qui affiche Ajout.vue pour ajouter une nouvelle ligne-->
     <table class="table">
         <thead>
     <tr>
