@@ -1,4 +1,6 @@
 <script>
+import { REST_API } from '@/assets/const'
+
 export default {
     data() {
         return {
@@ -14,7 +16,10 @@ export default {
              //this.email et this.password synchronisés avec v-model
             console.log(this.email)
             console.log(this.password)
-            
+
+            const loginMDP={pseudo:this.email, motDePasse:this.password}
+
+            fetch(REST_API+"/utilisateur/connexion", {method:"POST", body:JSON.stringify(loginMDP)}).then(response=>console.log(response))
         }
     }
 }
