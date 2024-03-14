@@ -81,6 +81,24 @@ export default{
     <button :class="{ invisible: !next }"  class="btn btn-secondary" @click="this.getdonnees(this.next)">Next</button>
     <button :class="{ invisible: !last }"  class="btn btn-secondary" @click="this.getdonnees(this.last)">Last</button>
 
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#popupAjout">
+        Ajouter des données
+    </button>
 
-    <Ajout :endpoint="endpoint" :donnee="donnees[0]??{}"/>
+<!-- Modal -->
+<div class="modal fade" id="popupAjout" tabindex="-1" aria-labelledby="popupLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="popupLabel">Ajout de données</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <Ajout :endpoint="endpoint" :donnee="donnees[0]??{}"/>
+      </div>
+    </div>
+  </div>
+</div>
+
 </template>
