@@ -43,6 +43,13 @@ export default {
         },
         estUneDate: function(date) {
             return new Date(date) != "Invalid Date";
+        },
+        formatterString(champ){
+            //mieux formatter les dates
+            if(this.typeDeChamp(champ)=="date"){
+                return new Date(champ).toLocaleString() 
+            }
+            return champ
         }
     }
 }
@@ -52,7 +59,7 @@ export default {
 <template>
     <tr v-if="!this.modeEdition">
         <td v-for="champ in champs">
-            <p>{{ this.typeDeChamp(champ)=="date" ? new Date(champ).toLocaleString() : champ }}</p>
+            <p>{{ formatterString(champ) }}</p>
         </td>
         <td>
             <button class="btn-outline-secondary btn" v-on:click="changerModeEdition()">Modifier</button>
