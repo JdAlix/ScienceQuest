@@ -27,9 +27,9 @@ export default{
     methods:{
         rafraichirEndpoint(){
             this.self=`${REST_API}/${this.endpoint}?page=${this.page}`
-            this.getdonnees(this.self)
+            this.getDonnees(this.self)
         },
-        getdonnees(url){
+        getDonnees(url){
             //HACK : s'assurer que les liens sont en HTTPS
             url=url.replace("http://", "https://")
             //enlever les anciens du tableau
@@ -76,14 +76,14 @@ export default{
     ></LigneDonnee>
 </tbody>
     </table>
-    <button :class="{ invisible: !first }" class="btn btn-secondary" @click="this.getdonnees(this.first)">First</button>
-    <button :class="{ invisible: !prev }"  class="btn btn-secondary" @click="this.getdonnees(this.prev)">Prev</button>
-    <button :class="{ invisible: !next }"  class="btn btn-secondary" @click="this.getdonnees(this.next)">Next</button>
-    <button :class="{ invisible: !last }"  class="btn btn-secondary" @click="this.getdonnees(this.last)">Last</button>
+    <button :class="{ invisible: !first }" class="btn btn-secondary" @click="this.getDonnees(this.first)">First</button>
+    <button :class="{ invisible: !prev }"  class="btn btn-secondary" @click="this.getDonnees(this.prev)">Prev</button>
+    <button :class="{ invisible: !next }"  class="btn btn-secondary" @click="this.getDonnees(this.next)">Next</button>
+    <button :class="{ invisible: !last }"  class="btn btn-secondary" @click="this.getDonnees(this.last)">Last</button>
 
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#popupAjout">
-        Ajouter des données
+        Ajouter
     </button>
 
 <!-- Modal -->
