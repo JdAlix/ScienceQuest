@@ -2,7 +2,7 @@
 import { REST_API } from '@/assets/const';
 
 export default{
-    props:["donnee", "endpoint"], //format : {"nomColonne":"typeDonnee", ...} => {"nom":"text", "desc":"text", ...}
+    props:["champs", "endpoint"], //format : {"nomColonne":"typeChamp", ...} => {"nom":"text", "desc":"text", ...}
     methods:{
         envoyerDonnees: function(event){
             const donnees=new FormData(formajouter)
@@ -18,9 +18,9 @@ export default{
 <template>
 <form id="formajouter" @submit.prevent>
     <div>
-        <fieldset v-for="nomColonne in Object.keys(donnee??{})">
+        <fieldset v-for="nomColonne in Object.keys(champs??{})">
             <label :for="nomColonne+'_temp_add_form'">{{nomColonne}}</label>
-            <input class="form-control" :type="donnee[nomColonne]" :id="nomColonne+'_temp_add_form'" :aria-label="nomColonne" :name="nomColonne"/>
+            <input class="form-control" :type="champs[nomColonne]" :id="nomColonne+'_temp_add_form'" :aria-label="nomColonne" :name="nomColonne"/>
         </fieldset>
     </div>
     
