@@ -15,8 +15,7 @@ import TestParametreURL from "./components/TestParametreURL.vue"
 import Login from "./components/Login.vue"
 import KahootVue from './components/jeux/kahoot/Kahoot.vue'
 import Pendu from './components/jeux/pendu/Pendu.vue'
-import AdminAjoutScientifique from "./components/admin/gestionScientifiques/AjoutScientifique.vue"
-import AdminGestionResources from "./components/admin/gestion/Liste.vue"
+import AdminGestionDonnees from "./components/admin/gestion/Liste.vue"
 
 const routes = [
     { path: '/', component: PagePrincipale },
@@ -24,8 +23,7 @@ const routes = [
     { path: '/kahoot', component: KahootVue}, //TODO: changer la route pour qu'elle soit trouvée automatiquement par le serveur (ce que demande l'utilisateur)
     { path: '/pendu', component: Pendu },
     { path: '/exemple/:id', component: TestParametreURL },
-    { path: '/admin/ajout_scientifique', component: AdminAjoutScientifique },
-    { path: '/admin/gestion', component: AdminGestionResources },
+    { path: '/admin/gestion', component: AdminGestionDonnees },
     { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
 ]
 
