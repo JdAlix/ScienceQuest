@@ -60,10 +60,9 @@ export default {
     </tr>
     <tr v-if="this.modeEdition">
         
-        <!-- TODO : changer le type si c'est un nombre, date (voir si on peut parse la date), objet (bouton qui ouvre une popup qui propose de changer les champs de l'objet)-->
+        <!-- TODO : fix date, creer input objet (bouton qui ouvre une popup qui propose de changer les champs de l'objet)-->
         <td v-for="cleChamp in Object.keys(champs)">
-            <!-- TODO : aria label, comment trouver les noms des colonnes depuis Liste.vue-->
-            <input class="form-control" :type="typeDeChamp(champs[cleChamp])" v-model="champs[cleChamp]" >
+            <input class="form-control" :type="typeDeChamp(champs[cleChamp])" v-model="champs[cleChamp]" :aria-label="cleChamp">
         </td>
         <td>
             <button class="btn btn-success" v-on:click="sauverScientifique()">Sauvegarder</button>
