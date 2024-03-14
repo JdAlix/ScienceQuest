@@ -20,7 +20,7 @@ export default{
     <div>
         <fieldset v-for="nomColonne in Object.keys(champs??{})">
             <label :for="nomColonne+'_temp_add_form'">{{nomColonne}}</label>
-            <input class="form-control" :type="/*TODO*/" :id="nomColonne+'_temp_add_form'" :aria-label="nomColonne" :name="nomColonne"/>
+            <input class="form-control" :id="nomColonne+'_temp_add_form'" :aria-label="nomColonne" :name="nomColonne"/>
         </fieldset>
     </div>
     
