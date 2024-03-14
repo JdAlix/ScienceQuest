@@ -1,7 +1,7 @@
 <script>
 import { REST_API } from '@/assets/const';
 
-import LigneScientifique from './ligne.vue';
+import LigneDonnee from './ListeLigne.vue';
 
 export default{
     data() {
@@ -51,7 +51,7 @@ export default{
             })
         }
     },
-    components: { LigneScientifique }
+    components: { LigneDonnee }
 }
 </script>
 
@@ -70,13 +70,13 @@ export default{
     </tr>
   </thead>
   <tbody>
-    <LigneScientifique v-for="champ in donnees"
+    <LigneDonnee v-for="champ in donnees"
     :champs-init="champ"
-    ></LigneScientifique>
+    ></LigneDonnee>
 </tbody>
     </table>
     <button :class="{ invisible: !first }" class="btn btn-secondary" @click="this.getdonnees(this.first)">First</button>
     <button :class="{ invisible: !prev }"  class="btn btn-secondary" @click="this.getdonnees(this.prev)">Prev</button>
     <button :class="{ invisible: !next }"  class="btn btn-secondary" @click="this.getdonnees(this.next)">Next</button>
     <button :class="{ invisible: !last }"  class="btn btn-secondary" @click="this.getdonnees(this.last)">Last</button>
-</template>./ligne.vue
+</template>
