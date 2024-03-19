@@ -62,7 +62,7 @@ export default {
 			return JSON.parse(`
 				{
 					"question":"Qui a reçu le prix Nobel de chimie en 1911, pour avoir réussi à isoler un gramme de radium ?${Date.now()}",
-					"reponses":["Marie-Curie","Einstein","Sophie Germain","Ada Lovelace"],
+					"reponses":["Marie Curie","Einstein","Sophie Germain","Ada Lovelace"],
 					"tempsLimite":${Date.now()+10000 /* maintenant + 10 secondes pour repondre*/}
 				}
 			`)
