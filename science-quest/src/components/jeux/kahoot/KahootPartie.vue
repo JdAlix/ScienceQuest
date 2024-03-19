@@ -38,6 +38,11 @@ export default {
 			}
 			)
 		},
+		repondre(reponse){
+			console.log(reponse)
+			this.question=`Réponse "${reponse}" envoyée`
+			this.reponses=[]
+		},
 		//simuler l'api
 		async DEBUG_obtenirQuestionNormale(){
 			return JSON.parse(`
@@ -66,5 +71,6 @@ export default {
 <template>
 	<p>debug : code partie {{ codePartie }}</p>
 	<p>{{ question }}</p>
+	<button v-for="reponse in reponses" @click="repondre(reponse)">{{ reponse }}</button>
 	<p>{{  Date.now() }}</p>
 </template>
