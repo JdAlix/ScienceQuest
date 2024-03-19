@@ -43,7 +43,6 @@ export default {
 			)
 		},
 		repondre(reponse){
-			console.log(reponse)
 			this.question=`Réponse "${reponse}" envoyée`
 			this.reponses=[]
 		},
@@ -61,7 +60,7 @@ export default {
 		async DEBUG_obtenirQuestionNormale(){
 			return JSON.parse(`
 				{
-					"question":"Qui a reçu le prix Nobel de chimie en 1911, pour avoir réussi à isoler un gramme de radium ?${Date.now()}",
+					"question":"Qui a reçu le prix Nobel de chimie en 1911, pour avoir réussi à isoler un gramme de radium ?",
 					"reponses":["Marie Curie","Einstein","Sophie Germain","Ada Lovelace"],
 					"tempsLimite":${Date.now()+10000 /* maintenant + 10 secondes pour repondre*/}
 				}
