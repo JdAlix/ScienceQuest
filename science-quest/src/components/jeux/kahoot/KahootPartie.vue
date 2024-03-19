@@ -7,6 +7,7 @@ export default {
 			//unix timestamp pour indiquer la date limite pour repondre a la question, -1 indiquera la fin de la partie
 			dateFinDeLaQuestion:0,
 			compteARebours:0,
+			compteAReboursId:0, //id donné par le setInterval pour pouvoir l'arreter quand il est a 0
 
 			//note au back : l'API devra renvoyer les scores comme si c'etait une question avec une seule (ou 0) réponse
 			question:"",
@@ -19,8 +20,6 @@ export default {
 	},
 	mounted(){
 		this.obtenirQuestion()
-		//demarrer le compte a rebours
-		window.setInterval(this.calculerCompteARebours,22)
 	},
 	methods:{
 		obtenirQuestion(){
@@ -37,6 +36,8 @@ export default {
 				if(this.dateFinDeLaQuestion!=-1){
 					//executer la fonction en boucle jusqu'a ce que la partie se termine
 					window.setTimeout(this.obtenirQuestion,(this.dateFinDeLaQuestion+100)-Date.now())
+					//demarrer le compte a rebours
+					this.compteAReboursId=window.setInterval(this.calculerCompteARebours,22)
 				}
 			}
 			)
@@ -50,6 +51,8 @@ export default {
 			if(this.dateFinDeLaQuestion<Date.now()){
 				//si il reste plus de temps
 				this.compteARebours=0
+				//arreter le compte a rebours
+				window.clearInterval(this.compteAReboursId)
 				return
 			}
 			this.compteARebours=((this.dateFinDeLaQuestion-Date.now())/1000).toFixed(2)
