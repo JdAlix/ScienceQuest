@@ -31,8 +31,10 @@ export default {
 				this.question=response.question
 				this.reponses=response.reponses
 				this.dateFinDeLaQuestion=response.tempsLimite
-				//executer la fonction en boucle jusqu'a ce que la partie se termine
-				window.setTimeout(this.obtenirQuestion,(this.dateFinDeLaQuestion+100)-Date.now())
+				if(dateFinDeLaQuestion!=-1){
+					//executer la fonction en boucle jusqu'a ce que la partie se termine
+					window.setTimeout(this.obtenirQuestion,(this.dateFinDeLaQuestion+100)-Date.now())
+				}
 			}
 			)
 		},
