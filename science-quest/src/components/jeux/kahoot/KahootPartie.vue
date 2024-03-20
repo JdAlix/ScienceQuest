@@ -21,7 +21,7 @@ export default {
 			//variables pour la salle d'attente
 			nomJoueurs:[],
 			//variables pour les scores
-			leaderboard:[],
+			leaderboard:{},
 			score:0,
 			pointsGagne:0,
 
@@ -130,7 +130,12 @@ export default {
 	<div v-show="modes.score">
 	<p>Temps : {{ compteARebours }}s</p>
 	<h2>Votre score : {{ score }} (+{{ pointsGagne }})</h2>
-	<div></div>
+
+	<ol>
+		<li  v-for="joueur in Object.keys(leaderboard)">
+			{{ joueur }} : {{leaderboard[joueur]}}
+		</li>
+	</ol>
 	</div>
 	<div v-show="modes.salleAttente">
 	<p>Temps : {{ compteARebours }}s</p>
