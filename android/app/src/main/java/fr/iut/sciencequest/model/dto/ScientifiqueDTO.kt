@@ -13,5 +13,6 @@ data class ScientifiqueDTO (
     @SerialName("ratiotrouve")
     val ratioTrouve: Float,
     val sexe: Char,
-    val difficulte: DifficulteDTO
+    val difficulteId: Int,
+    val thematiqueId: Int
 )
