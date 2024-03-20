@@ -6,9 +6,11 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import fr.iut.sciencequest.stub.StubQuestionWithReponses
 import fr.iut.sciencequest.view.AccountScreen
 import fr.iut.sciencequest.view.HomeScreen
 import fr.iut.sciencequest.view.LoginScreen
+import fr.iut.sciencequest.view.games.KahootScreen
 import fr.iut.sciencequest.view.games.PenduScreen
 
 
@@ -31,6 +33,9 @@ fun NavHost() {
                 },
                 goToPendu = {
                     navController.navigate("pendu")
+                },
+                goToKahoot = {
+                    navController.navigate("kahoot")
                 }
             )
         }
@@ -66,6 +71,16 @@ fun NavHost() {
                     navController.navigate("home")
                 }
             )
+        }
+
+        composable(route= "kahoot"){
+            KahootScreen(  goToAccount = {
+                navController.navigate("account")
+                },
+                goToHome = {
+                    navController.navigate("home")
+                },
+                StubQuestionWithReponses)
         }
     }
 }

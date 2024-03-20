@@ -16,21 +16,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun HomeScreen(goToHome: () -> Unit, goToAccount: () -> Unit, goToPendu: () -> Unit) {
+fun HomeScreen(goToHome: () -> Unit, goToAccount: () -> Unit, goToPendu: () -> Unit, goToKahoot: () -> Unit) {
     Column (modifier = Modifier.fillMaxWidth()){
         TopBar(goToAccount, goToHome)
-        MainContent(goToPendu)
+        MainContent(goToPendu, goToKahoot)
     }
 }
 
 @Preview
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen({},{},{})
+    HomeScreen({},{},{}, {})
 }
 
 @Composable
-fun MainContent(goToPendu: () -> Unit) {
+fun MainContent(goToPendu: () -> Unit, goToKahoot: () -> Unit) {
     val context = LocalContext.current;
     val comingSoon = Toast.makeText(context, "Coming soon", Toast.LENGTH_SHORT);
 
@@ -39,7 +39,7 @@ fun MainContent(goToPendu: () -> Unit) {
         Button(onClick = goToPendu, Modifier.fillMaxWidth()) {
             Text(text = "Pendu", fontSize = 13.sp)
         }
-        Button(onClick = { comingSoon.show() }, Modifier.fillMaxWidth()) {
+        Button(onClick = goToKahoot, Modifier.fillMaxWidth()) {
             Text(text = "Kahoot", fontSize = 13.sp)
         }
         Button(onClick = { comingSoon.show() }, Modifier.fillMaxWidth()) {
