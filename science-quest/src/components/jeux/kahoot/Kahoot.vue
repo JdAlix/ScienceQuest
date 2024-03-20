@@ -73,7 +73,7 @@ export default {
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2 class="modal-title" id="creationKahoot">Créer un Kahoot</h2> <!-- TODO : Il faut changer le formulaire pour juste cliquer sur un bouton et que ça affiche une pop-up -->
+                    <h2 class="modal-title" id="creationKahoot">Créer un Kahoot</h2>
                 </div>
                 <form @submit.prevent>
                 <div class="modal-body">
