@@ -15,7 +15,7 @@ private const val API_BASE_URL = ""
 
 val httpClient = OkHttpClient()
 
-interface RequestService {
+interface ScientifiqueRequestService {
     @GET("scientifiques/{index}/{count}")
     fun getScientifiques(@Path("index") index: Int, @Path("count") count: Int): Call<List<ScientifiqueDTO>>
 
