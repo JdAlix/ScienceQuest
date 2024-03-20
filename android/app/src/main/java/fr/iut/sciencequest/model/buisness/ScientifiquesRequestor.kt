@@ -29,7 +29,37 @@ fun fetchScientifiqueById(id: Int) {
             }
 
             override fun onFailure(call: Call<ScientifiqueDTO>, t: Throwable) {
-                Log.e("Requete API","Erreur lors de requete api")
+                Log.e("Requete API","Erreur lors d'une requete api")
+                throw t
+            }
+        }
+    )
+}
+
+fun fetchScientifiquesById(index: Int, count: Int) {
+    val serviceClient = createRequestService().create<ScientifiqueRequestService>()
+    Log.d("Requete API","Fetch plusieurs scientifiques")
+    serviceClient.getScientifiques(index, count).enqueue(
+        object: Callback<List<ScientifiqueDTO>> {
+            override fun onResponse(
+                call: Call<List<ScientifiqueDTO>>,
+                response: Response<List<ScientifiqueDTO>>
+            ) {
+                // NOTE : il faudrait probablement utiliser une autre exception
+                // exception personnalisée ?
+                val data = response.body() ?:
+                    throw IllegalArgumentException("ERREUR : l'api a donné une réponse vide")
+                // Devrait appeler le ModelView, la méthode onResponse ne renvoit rien
+                // Pour le moment des print pour vérifier que la requêtre fonctionne
+                // sans avoir besoin des vues.
+                for (scientifique in data) {
+                    Log.d("Requete API",scientifique.id.toString())
+                    Log.d("Requete API", scientifique.nom)
+                }
+            }
+
+            override fun onFailure(call: Call<List<ScientifiqueDTO>>, t: Throwable) {
+                Log.e("Requete API","Erreur lors d'une requete api")
                 throw t
             }
         }
