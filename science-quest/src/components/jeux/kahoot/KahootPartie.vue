@@ -19,7 +19,8 @@ export default {
 			question:"",
 			reponses:[],
 			//variables pour la salle d'attente
-			nomJoueurs:[],
+			joueurs:[],
+			partieDemarree:false,
 			//variables pour les scores
 			leaderboard:{},
 			score:0,
@@ -29,7 +30,7 @@ export default {
 		}
 	},
 	mounted(){
-		this.obtenirQuestion()
+		this.obtenirSalleAttente()
 	},
 	methods:{
 		obtenirQuestion(){
@@ -73,6 +74,16 @@ export default {
 			this.resetModes() //cacher le mode precedent
 			//afficher ce mode
 			this.modes.salleAttente=true
+			this.DEBUG_obtenirSalleAttente().then(response=>{
+				this.partieDemarree=response.partieDemarree
+				this.joueurs=response.joueurs
+				if(this.partieDemarree){
+					window.setTimeout(this.obtenirQuestion,(this.tempsLimite+100)-Date.now())
+				} else {
+					window.setTimeout(this.obtenirSalleAttente,(this.tempsLimite+100)-Date.now())
+				}
+			}
+			)
 
 		},
 		repondre(reponse){
@@ -112,7 +123,16 @@ export default {
 					"tempsLimite":${Date.now()+this.DEBUG_temps /* maintenant + 10 secondes le temps de regarder les scores*/}
 				}
 			`)
-		}
+		},
+		async DEBUG_obtenirSalleAttente(){
+			return JSON.parse(`
+				{
+					"joueurs":["Moi","Titouan"],
+					"partieDemarree":false,
+					"tempsLimite":${Date.now()+this.DEBUG_temps /* maintenant + 10 secondes le temps de regarder les scores*/}
+				}
+			`)
+		},
 	}
 }
 
@@ -123,23 +143,26 @@ export default {
 	
 	<p>debug : code partie {{ codePartie }}</p>
 	<div v-show="modes.question">
-	<p>Temps : {{ compteARebours }}s</p>
-	<p>{{ question }}</p>
-	<button v-for="reponse in reponses" @click="repondre(reponse)">{{ reponse }}</button>
+		<p>Temps : {{ compteARebours }}s</p>
+		<p>{{ question }}</p>
+		<button v-for="reponse in reponses" @click="repondre(reponse)">{{ reponse }}</button>
 	</div>
 	<div v-show="modes.score">
-	<p>Temps : {{ compteARebours }}s</p>
-	<h2>Votre score : {{ score }} (+{{ pointsGagne }})</h2>
-
-	<ol>
-		<li  v-for="joueur in Object.keys(leaderboard)">
-			{{ joueur }} : {{leaderboard[joueur]}}
-		</li>
-	</ol>
+		<p>Temps : {{ compteARebours }}s</p>
+		<h2>Votre score : {{ score }} (+{{ pointsGagne }})</h2>
+		<ol>
+			<li  v-for="joueur in Object.keys(leaderboard)">
+				{{ joueur }} : {{leaderboard[joueur]}}
+			</li>
+		</ol>
 	</div>
 	<div v-show="modes.salleAttente">
-	<p>Temps : {{ compteARebours }}s</p>
-	<p>{{ question }}</p>
-	<button v-for="reponse in reponses" @click="repondre(reponse)">{{ reponse }}</button>
+		<!-- Afficher le compte a rebours seulement quand la partie va demarrer, pour eviter de prendre par surprise les joueurs-->
+		<p v-if="partieDemarree">Temps : {{ compteARebours }}s</p>
+		<ul>
+			<li v-for="joueur in joueurs">
+				{{ joueur }}
+			</li>
+		</ul>
 	</div>
 </template>
