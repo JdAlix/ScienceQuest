@@ -129,7 +129,7 @@ export default {
 			return JSON.parse(`
 				{
 					"joueurs":["Moi","Titouan"],
-					"partieDemarree":false,
+					"partieDemarree":true,
 					"tempsLimite":${Date.now()+this.DEBUG_temps /* maintenant + 10 secondes le temps de regarder les scores*/}
 				}
 			`)
@@ -152,7 +152,7 @@ export default {
 		<p>Temps : {{ compteARebours }}s</p>
 		<h2>Votre score : {{ score }} (+{{ pointsGagne }})</h2>
 		<ol>
-			<li  v-for="joueur in Object.keys(leaderboard)">
+			<li v-for="joueur in Object.keys(leaderboard)">
 				{{ joueur }} : {{leaderboard[joueur]}}
 			</li>
 		</ol>
