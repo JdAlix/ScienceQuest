@@ -11,13 +11,11 @@ export default {
             //rejoindre partie
             codeKahoot: "",
             //listes parties crees ( TODO : appeler l'api pour obtenir les parties)
-            partiesCrees: [
-            {titreKahoot:"Titre du Kahoot", nbQuestions:10, createur:"Professeur X"},
-            {titreKahoot:"Titre du Kahoot2", nbQuestions:69, createur:"Professeur Y"},
-            {titreKahoot:"Titre du Kahoot3", nbQuestions:234, createur:"Professeur XXX"},
-                
-            ]
+            partiesCrees: []
         };
+    },
+    mounted(){
+        this.STUB_partiesCrees().then(response=>this.partiesCrees=response)
     },
     methods: {
         // TODO : demander a l'api de creer un kahoot (et rediriger vers la partie si possible via HATEOAS)
@@ -33,6 +31,14 @@ export default {
             //this.titreKahoot et this.nbQuestions synchronisés avec v-model
             console.log(this.codeKahoot);
         },
+        async STUB_partiesCrees(){
+            return JSON.parse(`[
+                {"titreKahoot":"Titre du Kahoot", "nbQuestions":10, "createur":"Professeur X"},
+                {"titreKahoot":"Titre du Kahoot2", "nbQuestions":69, "createur":"Professeur Y"},
+                {"titreKahoot":"Titre du Kahoot3", "nbQuestions":234, "createur":"Professeur XXX"}
+            ]
+            `)
+        }
     },
     components: { KahootListeParties }
 }
