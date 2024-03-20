@@ -8,6 +8,7 @@ export default {
 			tempsLimite:0,
 			compteARebours:0,
 			compteAReboursId:0, //id donné par le setInterval pour pouvoir l'arreter quand il est a 0
+			obtenirTimeoutId:0, //id donné par le setTimeout
 
 			modes:{
 				question:true, //afficher la question
@@ -32,6 +33,11 @@ export default {
 	mounted(){
 		this.obtenirSalleAttente()
 	},
+	unmounted(){
+		//arreter le jeu quand la page n'est plus affichée
+		window.clearTimeout(this.obtenirTimeoutId)
+		window.clearInterval(this.compteAReboursId)
+	},
 	methods:{
 		obtenirQuestion(){
 			this.resetModes() //cacher le mode precedent
@@ -44,7 +50,7 @@ export default {
 				this.tempsLimite=response.tempsLimite
 				if(this.tempsLimite!=-1){
 					//executer la fonction en boucle jusqu'a ce que la partie se termine
-					window.setTimeout(this.obtenirScores,(this.tempsLimite+100)-Date.now())
+					this.obtenirTimeoutId=window.setTimeout(this.obtenirScores,(this.tempsLimite+100)-Date.now())
 					//demarrer le compte a rebours
 					this.compteAReboursId=window.setInterval(this.calculerCompteARebours,22)
 				}
@@ -63,7 +69,7 @@ export default {
 				this.tempsLimite=response.tempsLimite
 				if(this.tempsLimite!=-1){
 					//executer la fonction en boucle jusqu'a ce que la partie se termine
-					window.setTimeout(this.obtenirQuestion,(this.tempsLimite+100)-Date.now())
+					this.obtenirTimeoutId=window.setTimeout(this.obtenirQuestion,(this.tempsLimite+100)-Date.now())
 					//demarrer le compte a rebours
 					this.compteAReboursId=window.setInterval(this.calculerCompteARebours,22)
 				}
@@ -79,11 +85,11 @@ export default {
 				this.joueurs=response.joueurs
 				this.tempsLimite=response.tempsLimite
 				if(this.partieDemarree){
-					window.setTimeout(this.obtenirQuestion,(this.tempsLimite+100)-Date.now())
+					this.obtenirTimeoutId=window.setTimeout(this.obtenirQuestion,(this.tempsLimite+100)-Date.now())
 					//demarrer le compte a rebours
 					this.compteAReboursId=window.setInterval(this.calculerCompteARebours,22)
 				} else {
-					window.setTimeout(this.obtenirSalleAttente,(this.tempsLimite+100)-Date.now())
+					this.obtenirTimeoutId=window.setTimeout(this.obtenirSalleAttente,(this.tempsLimite+100)-Date.now())
 				}
 			}
 			)
