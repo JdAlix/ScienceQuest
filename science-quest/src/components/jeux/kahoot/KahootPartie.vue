@@ -80,6 +80,8 @@ export default {
 				this.tempsLimite=response.tempsLimite
 				if(this.partieDemarree){
 					window.setTimeout(this.obtenirQuestion,(this.tempsLimite+100)-Date.now())
+					//demarrer le compte a rebours
+					this.compteAReboursId=window.setInterval(this.calculerCompteARebours,22)
 				} else {
 					window.setTimeout(this.obtenirSalleAttente,(this.tempsLimite+100)-Date.now())
 				}
@@ -130,7 +132,7 @@ export default {
 				{
 					"joueurs":["Moi","Titouan"],
 					"partieDemarree":true,
-					"tempsLimite":${Date.now()+this.DEBUG_temps /* maintenant + 10 secondes le temps de regarder les scores*/}
+					"tempsLimite":${Date.now()+this.DEBUG_temps /* maintenant + 1 seconde*/}
 				}
 			`)
 		},
