@@ -77,6 +77,7 @@ export default {
 			this.DEBUG_obtenirSalleAttente().then(response=>{
 				this.partieDemarree=response.partieDemarree
 				this.joueurs=response.joueurs
+				this.tempsLimite=response.tempsLimite
 				if(this.partieDemarree){
 					window.setTimeout(this.obtenirQuestion,(this.tempsLimite+100)-Date.now())
 				} else {
