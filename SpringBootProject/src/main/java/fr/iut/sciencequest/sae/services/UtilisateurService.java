@@ -7,6 +7,7 @@ import fr.iut.sciencequest.sae.exceptions.IncorrectPasswordException;
 import fr.iut.sciencequest.sae.exceptions.notFound.UtilisateurNotFoundException;
 import fr.iut.sciencequest.sae.repositories.UtilisateurRepository;
 import lombok.AllArgsConstructor;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -23,17 +24,14 @@ public class UtilisateurService {
 
     public UtilisateurDTO save(UtilisateurWithPasswordDTO user) {
         Utilisateur utilisateur = this.modelMapper.map(user, Utilisateur.class);
-        //utilisateur.setMotDePasse(passwordEncoder.encode(user.getMotDePasse()));
+        utilisateur.setMotDePasse(DigestUtils.sha256Hex(user.getMotDePasse()));
         utilisateurRepository.save(utilisateur);
         return this.modelMapper.map(utilisateur, UtilisateurDTO.class);
     }
 
     public UtilisateurDTO login(UtilisateurWithPasswordDTO user) {
         Utilisateur utilisateur = this.findUserByEmail(user.getEmail());
-        if(!utilisateur.getMotDePasse().equals(user.getMotDePasse())) throw new IncorrectPasswordException();
-        /*if(!passwordEncoder.matches(user.getMotDePasse(), utilisateur.getMotDePasse())) {
-            throw new IncorrectPasswordException();
-        }*/
+        if(!utilisateur.getMotDePasse().equals(DigestUtils.sha256Hex(user.getMotDePasse()))) throw new IncorrectPasswordException();
 
         return this.modelMapper.map(utilisateur, UtilisateurDTO.class);
     }
