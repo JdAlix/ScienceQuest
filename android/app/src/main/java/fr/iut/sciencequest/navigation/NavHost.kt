@@ -1,17 +1,21 @@
 package fr.iut.sciencequest.navigation
 
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import fr.iut.sciencequest.model.dto.extensions.ToModel
 import fr.iut.sciencequest.stub.StubQuestionWithReponses
+import fr.iut.sciencequest.stub.getScientifiqueListeStub
 import fr.iut.sciencequest.view.AccountScreen
 import fr.iut.sciencequest.view.HomeScreen
 import fr.iut.sciencequest.view.LoginScreen
 import fr.iut.sciencequest.view.games.KahootScreen
 import fr.iut.sciencequest.view.games.PenduScreen
+import fr.iut.sciencequest.view.scientifiques.scientifiqueListeScreen
 
 
 @Composable
@@ -21,9 +25,10 @@ fun NavHost() {
     NavHost(
         modifier = Modifier.fillMaxSize(),
         navController = navController,
-        startDestination = "login"
+        startDestination = "listeScientifiques"
     ) {
         composable(route = "home") {
+            Log.d("tag", "dzadza")
             HomeScreen(
                 goToAccount = {
                     navController.navigate("account")
@@ -75,12 +80,23 @@ fun NavHost() {
 
         composable(route= "kahoot"){
             KahootScreen(  goToAccount = {
-                navController.navigate("account")
+                    navController.navigate("account")
                 },
                 goToHome = {
                     navController.navigate("home")
                 },
                 StubQuestionWithReponses)
+        }
+
+        composable(route = "listeScientifiques") {
+            scientifiqueListeScreen(goToAccount = {
+                    navController.navigate("account")
+                },
+                goToHome =  {
+                    navController.navigate("home")
+                },
+                scientifiques = getScientifiqueListeStub().ToModel()
+            )
         }
     }
 }
