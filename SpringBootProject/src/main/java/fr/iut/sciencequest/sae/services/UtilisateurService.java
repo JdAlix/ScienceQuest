@@ -41,9 +41,13 @@ public class UtilisateurService {
     public Utilisateur findUserByEmail(String email) {
         Utilisateur user = this.utilisateurRepository.findUtilisateurByEmail(email);
         if(Objects.equals(user.getPseudo(), "")) {
-            throw new UtilisateurNotFoundException();
+            throw new UtilisateurNotFoundException(email);
         }
 
         return user;
+    }
+
+    public Utilisateur findUserById(int id) {
+        return this.utilisateurRepository.findById(id).orElseThrow(() -> new UtilisateurNotFoundException(id));
     }
 }
