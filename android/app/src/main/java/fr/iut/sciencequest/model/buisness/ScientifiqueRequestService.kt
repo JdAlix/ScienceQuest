@@ -11,7 +11,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 // a remplir
-private const val API_BASE_URL = "https://sae-java.alix-jdlm.fr/api/v1"
+private const val API_BASE_URL = "https://sae-java.alix-jdlm.fr/api/v1/"
 
 val httpClient = OkHttpClient()
 
