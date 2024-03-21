@@ -8,7 +8,7 @@ fun ScientifiqueDTO.ToModel(): Scientifique {
         id = this.id,
         descriptif = this.descriptif,
         nom = this.nom,
-        prenom = this.photo,
+        prenom = this.prenom,
         photo = this.photo,
         difficulte = this.difficulte.ToModel(),
         sexe = this.sexe,
