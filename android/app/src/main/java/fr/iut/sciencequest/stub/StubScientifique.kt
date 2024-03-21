@@ -1,7 +1,8 @@
 package fr.iut.sciencequest.stub
 
+import fr.iut.sciencequest.model.dto.DifficulteDTO
 import fr.iut.sciencequest.model.dto.ScientifiqueDTO
-import fr.iut.sciencequest.model.metier.Scientifique
+import fr.iut.sciencequest.model.dto.ThematiqueDTO
 
 object StubScientifique1: ScientifiqueDTO (
     id = 1,
@@ -10,8 +11,8 @@ object StubScientifique1: ScientifiqueDTO (
     prenom = "Jean",
     photo = "photo",
     sexe = 'H',
-    difficulteId = 1,
-    thematiqueId = 1,
+    difficulte = DifficulteDTO(1, "Facile"),
+    thematique = ThematiqueDTO(1, "Nucléaire"),
     ratioTrouve = 0f
 )
 
@@ -22,8 +23,8 @@ object StubScientifique2: ScientifiqueDTO (
     prenom = "Jean2",
     photo = "photo2",
     sexe = 'F',
-    difficulteId = 1,
-    thematiqueId = 1,
+    difficulte = DifficulteDTO(1, "Facile"),
+    thematique = ThematiqueDTO(1, "Nucléaire"),
     ratioTrouve = 0f
 )
 
