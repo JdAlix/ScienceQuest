@@ -17,10 +17,12 @@ import KahootVue from './components/jeux/kahoot/Kahoot.vue'
 import KahootPartie from './components/jeux/kahoot/KahootPartie.vue'
 import Pendu from './components/jeux/pendu/Pendu.vue'
 import AdminGestionDonnees from "./components/admin/gestion/Liste.vue"
+import Inscription from './components/Inscription.vue'
 
 const routes = [
     { path: '/', component: PagePrincipale },
     { path: '/login', component: Login },
+    { path: '/inscription', component: Inscription },
     { path: '/kahoot', component: KahootVue}, //TODO: changer la route pour qu'elle soit trouvée automatiquement par le serveur (ce que demande l'utilisateur)
     { path: '/kahoot/partie/:code', component: KahootPartie},
     { path: '/pendu', component: Pendu },
