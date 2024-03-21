@@ -1,9 +1,12 @@
 package fr.iut.sciencequest.sae.controllers;
 
+import fr.iut.sciencequest.sae.assemblers.ScientifiqueModelAssembler;
 import fr.iut.sciencequest.sae.dto.utilisateur.UtilisateurDTO;
 import fr.iut.sciencequest.sae.dto.utilisateur.UtilisateurWithPasswordDTO;
+import fr.iut.sciencequest.sae.services.ScientifiqueService;
 import fr.iut.sciencequest.sae.services.UtilisateurService;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/utilisateur")
 public class UtilisateurController {
     private final UtilisateurService utilisateurService;
+    private final ModelMapper modelMapper;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
@@ -25,8 +29,8 @@ public class UtilisateurController {
         return utilisateurService.login(user);
     }
 
-    /*@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public UtilisateurDTO getUser(@PathVariable Integer id) {
-        return scientifiqueModelAssembler.toModel(this.scientifiqueService.findById(id));
-    }*/
+        return modelMapper.map(this.utilisateurService.findUserById(id), UtilisateurDTO.class);
+    }
 }
