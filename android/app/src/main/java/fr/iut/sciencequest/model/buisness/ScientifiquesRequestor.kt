@@ -1,6 +1,12 @@
 package fr.iut.sciencequest.model.buisness
 
 import android.util.Log
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelLazy
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.findViewTreeViewModelStoreOwner
+import androidx.lifecycle.viewmodel.compose.viewModel
+import fr.iut.sciencequest.ViewModels.ScientifiquesDecouvertsVM
 import fr.iut.sciencequest.model.dto.ScientifiqueDTO
 import retrofit2.Call
 import retrofit2.Callback
@@ -53,6 +59,7 @@ fun fetchScientifiquesById(index: Int, count: Int) {
                 // Pour le moment des print pour vérifier que la requêtre fonctionne
                 // sans avoir besoin des vues.
                 for (scientifique in data) {
+
                     Log.d("Requete API",scientifique.id.toString())
                     Log.d("Requete API", scientifique.nom)
                 }

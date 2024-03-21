@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import fr.iut.sciencequest.ViewModels.ScientifiquesDecouvertsVM
 import fr.iut.sciencequest.model.dto.extensions.ToModel
 import fr.iut.sciencequest.stub.StubQuestionWithReponses
 import fr.iut.sciencequest.stub.getScientifiqueListeStub
@@ -28,7 +29,6 @@ fun NavHost() {
         startDestination = "listeScientifiques"
     ) {
         composable(route = "home") {
-            Log.d("tag", "dzadza")
             HomeScreen(
                 goToAccount = {
                     navController.navigate("account")
@@ -94,8 +94,7 @@ fun NavHost() {
                 },
                 goToHome =  {
                     navController.navigate("home")
-                },
-                scientifiques = getScientifiqueListeStub().ToModel()
+                }
             )
         }
     }
