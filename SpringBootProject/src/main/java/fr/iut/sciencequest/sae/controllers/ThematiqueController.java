@@ -32,7 +32,6 @@ public class ThematiqueController {
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     private final PagedResourcesAssembler<Thematique> pagedResourcesAssembler;
     private final ModelMapper modelMapper;
-    private final ObjectMapper objectMapper;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
