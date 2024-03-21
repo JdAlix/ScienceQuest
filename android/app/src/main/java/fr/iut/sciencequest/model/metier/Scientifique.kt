@@ -1,5 +1,7 @@
 package fr.iut.sciencequest.model.metier
 
+import fr.iut.sciencequest.model.dto.DifficulteDTO
+
 class Scientifique {
     val id: Int
     val nom: String
@@ -9,8 +11,17 @@ class Scientifique {
     val ratioTrouve: Float
     val sexe: Char
     val difficulte: Difficulte
+    val thematique: Thematique
 
-    constructor(id: Int, nom: String, prenom: String, photo: String, descriptif: String, ratioTrouve: Float, sexe: Char, difficulte: Difficulte){
+    constructor(id: Int,
+                nom: String,
+                prenom: String,
+                photo: String,
+                descriptif: String,
+                ratioTrouve: Float,
+                sexe: Char,
+                difficulte: Difficulte,
+                thematique: Thematique){
         this.id = id
         this.nom = nom
         this.prenom = prenom
@@ -19,5 +30,6 @@ class Scientifique {
         this.ratioTrouve = ratioTrouve
         this.sexe = sexe
         this.difficulte = difficulte
+        this.thematique = thematique
     }
 }
