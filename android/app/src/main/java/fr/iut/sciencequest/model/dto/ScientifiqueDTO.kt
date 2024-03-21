@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ScientifiqueDTO (
+open class ScientifiqueDTO (
     val id: Int,
     val nom: String,
     val prenom: String,
