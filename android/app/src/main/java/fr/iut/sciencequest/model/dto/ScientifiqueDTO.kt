@@ -8,11 +8,11 @@ data class ScientifiqueDTO (
     val id: Int,
     val nom: String,
     val prenom: String,
+    @SerialName("pathToPhoto")
     val photo: String,
     val descriptif: String,
-    @SerialName("ratiotrouve")
     val ratioTrouve: Float,
     val sexe: Char,
-    val difficulteId: Int,
-    val thematiqueId: Int
+    val difficulte : DifficulteDTO,
+    val thematique : ThematiqueDTO
 )
