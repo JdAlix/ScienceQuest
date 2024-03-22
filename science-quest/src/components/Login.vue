@@ -1,5 +1,6 @@
 <script>
 import { REST_API } from '@/assets/const'
+import { RouterLink } from 'vue-router'
 
 export default {
     data() {
@@ -46,6 +47,7 @@ export default {
             <input type="checkbox" value="remember-me" id="remember-me">
         </label>
     </div>
+    <RouterLink to="/inscription">Pas de compte?</RouterLink>
     <button class="btn btn-lg btn-primary" v-on:click="login">Se connecter</button>
     </form>
 </template>
