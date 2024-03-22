@@ -11,6 +11,7 @@ export default {
 			compteAReboursId:0, //id donné par le setInterval pour pouvoir l'arreter quand il est a 0
 			obtenirTimeoutId:0, //id donné par le setTimeout
 
+			//affichage dans la vue
 			etats:{
 				question:true, //afficher la question
 				score:false, //afficher les scores
@@ -46,6 +47,18 @@ export default {
 		window.clearInterval(this.compteAReboursId)
 	},
 	methods:{
+		//retourne la fonction appropriée
+		choisirLeProchainEtat(){
+			//si la partie n'a pas démarrée, on reste dans la salle d'attente
+			if(!this.salleAttente.partieDemarree){
+				return this.obtenirSalleAttente
+			}
+			//si on vient de faire une question, on demander les resultats
+			if(this.etats.question){
+				return this.obtenirScores
+			}
+			return this.obtenirQuestion
+		},
 		obtenirQuestion(){
 			this.resetEtats() //cacher l'etat precedent
 			this.DEBUG_obtenirQuestion().then(response=>{
@@ -57,7 +70,7 @@ export default {
 
 				if(this.tempsLimite!=-1){
 					//executer la fonction en boucle jusqu'a ce que la partie se termine
-					this.obtenirTimeoutId=window.setTimeout(this.obtenirScores,(this.tempsLimite+100)-Date.now())
+					this.obtenirTimeoutId=window.setTimeout(this.choisirLeProchainEtat(),(this.tempsLimite+100)-Date.now())
 					//demarrer le compte a rebours
 					this.compteAReboursId=window.setInterval(this.calculerCompteARebours,22)
 				}
@@ -74,7 +87,7 @@ export default {
 				this.score=response
 				if(this.tempsLimite!=-1){
 					//executer la fonction en boucle jusqu'a ce que la partie se termine
-					this.obtenirTimeoutId=window.setTimeout(this.obtenirQuestion,(this.tempsLimite+100)-Date.now())
+					this.obtenirTimeoutId=window.setTimeout(this.choisirLeProchainEtat(),(this.tempsLimite+100)-Date.now())
 					//demarrer le compte a rebours
 					this.compteAReboursId=window.setInterval(this.calculerCompteARebours,22)
 				}
@@ -89,12 +102,10 @@ export default {
 				this.tempsLimite=response.tempsLimite
 				this.salleAttente=response
 
+				this.obtenirTimeoutId=window.setTimeout(this.choisirLeProchainEtat(),(this.tempsLimite+100)-Date.now())
 				if(this.salleAttente.partieDemarree){
-					this.obtenirTimeoutId=window.setTimeout(this.obtenirQuestion,(this.tempsLimite+100)-Date.now())
 					//demarrer le compte a rebours
 					this.compteAReboursId=window.setInterval(this.calculerCompteARebours,22)
-				} else {
-					this.obtenirTimeoutId=window.setTimeout(this.obtenirSalleAttente,(this.tempsLimite+100)-Date.now())
 				}
 			}
 			)
