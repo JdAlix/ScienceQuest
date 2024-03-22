@@ -18,15 +18,21 @@ export default {
 			},
 
 			//variables pour l'etat question
-			question:"",
-			reponses:[],
+			question:{
+				question:"",
+				reponses:[],
+			},
 			//variables pour la salle d'attente
-			joueurs:[],
-			partieDemarree:false,
+			salleAttente:{
+				joueurs:[],
+				partieDemarree:false,
+			},
 			//variables pour les scores
-			leaderboard:{},
-			score:0,
-			pointsGagne:0,
+			score:{
+				leaderboard:{},
+				score:0,
+				pointsGagne:0,
+			},
 
 			DEBUG_temps:1000,
 		}
@@ -43,12 +49,12 @@ export default {
 		obtenirQuestion(){
 			this.resetEtats() //cacher l'etat precedent
 			this.DEBUG_obtenirQuestion().then(response=>{
+				this.tempsLimite=response.tempsLimite
 				//afficher cet etat
 				this.etats.question=true
 
-				this.question=response.question
-				this.reponses=response.reponses
-				this.tempsLimite=response.tempsLimite
+				this.question=response
+
 				if(this.tempsLimite!=-1){
 					//executer la fonction en boucle jusqu'a ce que la partie se termine
 					this.obtenirTimeoutId=window.setTimeout(this.obtenirScores,(this.tempsLimite+100)-Date.now())
@@ -61,13 +67,11 @@ export default {
 		obtenirScores(){
 			this.resetEtats() //cacher l'etat precedent
 			this.DEBUG_obtenirScore().then(response=>{
+				this.tempsLimite=response.tempsLimite
 				//afficher cet etat
 				this.etats.score=true
 
-				this.leaderboard=response.leaderboard
-				this.score=response.score
-				this.pointsGagne=response.pointsGagne
-				this.tempsLimite=response.tempsLimite
+				this.score=response
 				if(this.tempsLimite!=-1){
 					//executer la fonction en boucle jusqu'a ce que la partie se termine
 					this.obtenirTimeoutId=window.setTimeout(this.obtenirQuestion,(this.tempsLimite+100)-Date.now())
@@ -82,10 +86,10 @@ export default {
 			//afficher cet etat
 			this.etats.salleAttente=true
 			this.DEBUG_obtenirSalleAttente().then(response=>{
-				this.partieDemarree=response.partieDemarree
-				this.joueurs=response.joueurs
 				this.tempsLimite=response.tempsLimite
-				if(this.partieDemarree){
+				this.salleAttente=response
+
+				if(this.salleAttente.partieDemarree){
 					this.obtenirTimeoutId=window.setTimeout(this.obtenirQuestion,(this.tempsLimite+100)-Date.now())
 					//demarrer le compte a rebours
 					this.compteAReboursId=window.setInterval(this.calculerCompteARebours,22)
@@ -97,8 +101,8 @@ export default {
 
 		},
 		repondre(reponse){
-			this.question=`Réponse "${reponse}" envoyée`
-			this.reponses=[]
+			this.question.question=`Réponse "${reponse}" envoyée`
+			this.question.reponses=[]
 		},
 		calculerCompteARebours(){
 			if(this.tempsLimite<Date.now()){
@@ -165,22 +169,22 @@ export default {
 <template>
 <div class="jeu">
 	<!-- Afficher le compte a rebours seulement quand la partie va demarrer, pour eviter de prendre par surprise les joueurs qui attendent dans la salle d'attente-->
-	<p v-if="partieDemarree">Temps : {{ compteARebours }}s</p>
+	<p v-if="salleAttente.partieDemarree">Temps : {{ compteARebours }}s</p>
 	<div v-show="etats.question">
-		<p>{{ question }}</p>
-		<button v-for="reponse in reponses" @click="repondre(reponse)">{{ reponse }}</button>
+		<p>{{ question.question }}</p>
+		<button v-for="reponse in question.reponses" @click="repondre(reponse)">{{ reponse }}</button>
 	</div>
 	<div v-show="etats.score">
-		<h2>Votre score : {{ score }} (+{{ pointsGagne }})</h2>
+		<h2>Votre score : {{ score.score }} (+{{ score.pointsGagne }})</h2>
 		<ol class="leaderboard">
-			<li v-for="joueur in Object.keys(leaderboard)">
-				{{ joueur }} : {{leaderboard[joueur]}}
+			<li v-for="joueur in Object.keys(score.leaderboard)">
+				{{ joueur }} : {{score.leaderboard[joueur]}}
 			</li>
 		</ol>
 	</div>
 	<div v-show="etats.salleAttente">
 		<ul>
-			<li v-for="joueur in joueurs">
+			<li v-for="joueur in salleAttente.joueurs">
 				{{ joueur }}
 			</li>
 		</ul>
