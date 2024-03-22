@@ -1,5 +1,7 @@
-package fr.iut.sciencequest.model.dto
+package fr.iut.sciencequest.model.dto.ScientifiqueDTOs
 
+import fr.iut.sciencequest.model.dto.DifficulteDTO
+import fr.iut.sciencequest.model.dto.ThematiqueDTO
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

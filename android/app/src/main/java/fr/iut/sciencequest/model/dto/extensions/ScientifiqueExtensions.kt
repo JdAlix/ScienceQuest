@@ -1,6 +1,6 @@
 package fr.iut.sciencequest.model.dto.extensions
 
-import fr.iut.sciencequest.model.dto.ScientifiqueDTO
+import fr.iut.sciencequest.model.dto.ScientifiqueDTOs.ScientifiqueDTO
 import fr.iut.sciencequest.model.metier.Scientifique
 
 fun ScientifiqueDTO.ToModel(): Scientifique {
