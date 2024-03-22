@@ -149,8 +149,6 @@ export default {
 
 
 <template>
-	
-	<p>debug : code partie {{ codePartie }}</p>
 	<div v-show="modes.question">
 		<p>Temps : {{ compteARebours }}s</p>
 		<p>{{ question }}</p>
