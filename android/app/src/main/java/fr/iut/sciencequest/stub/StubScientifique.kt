@@ -1,10 +1,10 @@
 package fr.iut.sciencequest.stub
 
 import fr.iut.sciencequest.model.dto.DifficulteDTO
-import fr.iut.sciencequest.model.dto.ScientifiqueDTO
+import fr.iut.sciencequest.model.dto.ScientifiqueDTOs.ScientifiqueDTO
 import fr.iut.sciencequest.model.dto.ThematiqueDTO
 
-object StubScientifique1: ScientifiqueDTO (
+object StubScientifique1: ScientifiqueDTO(
     id = 1,
     descriptif = "description",
     nom = "Jean",
@@ -16,7 +16,7 @@ object StubScientifique1: ScientifiqueDTO (
     ratioTrouve = 0f
 )
 
-object StubScientifique2: ScientifiqueDTO (
+object StubScientifique2: ScientifiqueDTO(
     id = 2,
     descriptif = "autre description",
     nom = "Jean2",
