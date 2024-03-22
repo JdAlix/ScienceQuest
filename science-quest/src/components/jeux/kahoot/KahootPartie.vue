@@ -10,13 +10,13 @@ export default {
 			compteAReboursId:0, //id donné par le setInterval pour pouvoir l'arreter quand il est a 0
 			obtenirTimeoutId:0, //id donné par le setTimeout
 
-			modes:{
+			etats:{
 				question:true, //afficher la question
 				score:false, //afficher les scores
 				salleAttente:false, //afficher la salle d'attente (ecran avec pseudos)
 			},
 
-			//variables pour mode question
+			//variables pour l'etat question
 			question:"",
 			reponses:[],
 			//variables pour la salle d'attente
@@ -40,10 +40,10 @@ export default {
 	},
 	methods:{
 		obtenirQuestion(){
-			this.resetModes() //cacher le mode precedent
+			this.resetEtats() //cacher l'etat precedent
 			this.DEBUG_obtenirQuestion().then(response=>{
-				//afficher ce mode
-				this.modes.question=true
+				//afficher cet etat
+				this.etats.question=true
 
 				this.question=response.question
 				this.reponses=response.reponses
@@ -58,10 +58,10 @@ export default {
 			)
 		},
 		obtenirScores(){
-			this.resetModes() //cacher le mode precedent
+			this.resetEtats() //cacher l'etat precedent
 			this.DEBUG_obtenirScore().then(response=>{
-				//afficher ce mode
-				this.modes.score=true
+				//afficher cet etat
+				this.etats.score=true
 
 				this.leaderboard=response.leaderboard
 				this.score=response.score
@@ -77,9 +77,9 @@ export default {
 			)
 		},
 		obtenirSalleAttente(){
-			this.resetModes() //cacher le mode precedent
-			//afficher ce mode
-			this.modes.salleAttente=true
+			this.resetEtats() //cacher l'etat precedent
+			//afficher cet etat
+			this.etats.salleAttente=true
 			this.DEBUG_obtenirSalleAttente().then(response=>{
 				this.partieDemarree=response.partieDemarree
 				this.joueurs=response.joueurs
@@ -110,8 +110,8 @@ export default {
 			this.compteARebours=((this.tempsLimite-Date.now())/1000).toFixed(2)
 		},
 		
-		resetModes(){
-			Object.keys(this.modes).forEach(nomMode=>this.modes[nomMode]=0)
+		resetEtats(){
+			Object.keys(this.etats).forEach(nomEtat=>this.etats[nomEtat]=0)
 		},
 		//simuler l'api avec des stubs
 		async DEBUG_obtenirQuestion(){
@@ -151,11 +151,11 @@ export default {
 <template>
 	<!-- Afficher le compte a rebours seulement quand la partie va demarrer, pour eviter de prendre par surprise les joueurs qui attendent dans la salle d'attente-->
 	<p v-if="partieDemarree">Temps : {{ compteARebours }}s</p>
-	<div v-show="modes.question">
+	<div v-show="etats.question">
 		<p>{{ question }}</p>
 		<button v-for="reponse in reponses" @click="repondre(reponse)">{{ reponse }}</button>
 	</div>
-	<div v-show="modes.score">
+	<div v-show="etats.score">
 		<h2>Votre score : {{ score }} (+{{ pointsGagne }})</h2>
 		<ol>
 			<li v-for="joueur in Object.keys(leaderboard)">
@@ -163,7 +163,7 @@ export default {
 			</li>
 		</ol>
 	</div>
-	<div v-show="modes.salleAttente">
+	<div v-show="etats.salleAttente">
 		<ul>
 			<li v-for="joueur in joueurs">
 				{{ joueur }}
