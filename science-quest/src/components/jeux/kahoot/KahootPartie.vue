@@ -151,7 +151,12 @@ export default {
 .jeu{
 	display:flex;
 	flex-direction: column;
+	align-items: center;
 	text-align: center;
+}
+
+.leaderboard{
+	text-align: left;
 }
 </style>
 
@@ -166,7 +171,7 @@ export default {
 	</div>
 	<div v-show="etats.score">
 		<h2>Votre score : {{ score }} (+{{ pointsGagne }})</h2>
-		<ol>
+		<ol class="leaderboard">
 			<li v-for="joueur in Object.keys(leaderboard)">
 				{{ joueur }} : {{leaderboard[joueur]}}
 			</li>
