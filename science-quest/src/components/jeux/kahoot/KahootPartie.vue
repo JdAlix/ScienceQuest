@@ -113,7 +113,7 @@ export default {
 		resetModes(){
 			Object.keys(this.modes).forEach(nomMode=>this.modes[nomMode]=0)
 		},
-		//simuler l'api
+		//simuler l'api avec des stubs
 		async DEBUG_obtenirQuestion(){
 			return JSON.parse(`
 				{
@@ -149,13 +149,13 @@ export default {
 
 
 <template>
+	<!-- Afficher le compte a rebours seulement quand la partie va demarrer, pour eviter de prendre par surprise les joueurs qui attendent dans la salle d'attente-->
+	<p v-if="partieDemarree">Temps : {{ compteARebours }}s</p>
 	<div v-show="modes.question">
-		<p>Temps : {{ compteARebours }}s</p>
 		<p>{{ question }}</p>
 		<button v-for="reponse in reponses" @click="repondre(reponse)">{{ reponse }}</button>
 	</div>
 	<div v-show="modes.score">
-		<p>Temps : {{ compteARebours }}s</p>
 		<h2>Votre score : {{ score }} (+{{ pointsGagne }})</h2>
 		<ol>
 			<li v-for="joueur in Object.keys(leaderboard)">
@@ -164,8 +164,6 @@ export default {
 		</ol>
 	</div>
 	<div v-show="modes.salleAttente">
-		<!-- Afficher le compte a rebours seulement quand la partie va demarrer, pour eviter de prendre par surprise les joueurs-->
-		<p v-if="partieDemarree">Temps : {{ compteARebours }}s</p>
 		<ul>
 			<li v-for="joueur in joueurs">
 				{{ joueur }}
