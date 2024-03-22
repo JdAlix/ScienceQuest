@@ -12,11 +12,6 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-// a remplir
-private const val API_BASE_URL = "https://sae-java.alix-jdlm.fr/api/v1/"
-
-val httpClient = OkHttpClient()
-
 interface ScientifiqueRequestService {
     @GET("scientifiques?page")
     fun getScientifiques(@Query("page") index: Int): Call<ScientifiqueListDTO>
@@ -24,10 +19,3 @@ interface ScientifiqueRequestService {
     @GET("scientifiques/{id}")
     fun getScientifique(@Path("id") id: Int): Call<ScientifiqueDTO>
 }
-
-fun createRequestService(): Retrofit =
-    Retrofit.Builder()
-        .baseUrl(API_BASE_URL)
-        .addConverterFactory(Json {  ignoreUnknownKeys = true }.asConverterFactory(MediaType.get("application/json")))
-        .client(httpClient)
-        .build()
