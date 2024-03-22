@@ -1,20 +1,29 @@
 <script>
-import { REST_API } from '@/assets/const'
-
-//TODO : merger login et inscription ?
+import { REST_API, ALGO_HASH_MDP } from '@/assets/const'
 
 export default {
     methods:{
         creerCompte(event){
             event.stopPropagation()
-            const donnees=new FormData(formajouter)
-            //TODO : hasher le mdp
-            const donneesJson=JSON.stringify(Object.fromEntries(donnees))
-
-            console.log(donnees)
-            //fetch(REST_API+"/utilisateur", {method:"POST", body:donneesJson}).then(response=>)
+            let donnees=Object.fromEntries(new FormData(formajouter))
+            this.hasherMDP(donnees.motDePasse).then(hashMDP=>{
+                donnees.motDePasse=hashMDP
+                const donneesJson=JSON.stringify(donnees)
+                console.log(donnees)
+                //fetch(REST_API+"/utilisateur", {method:"POST", body:donneesJson}).then(response=>)
+            })
+        },
+        async hasherMDP(mdp){
+            const msgUint8 = new TextEncoder().encode(mdp); //transformer le string en array de bytes
+            const hashBuffer = await crypto.subtle.digest(ALGO_HASH_MDP, msgUint8); //hasher le mot de passe
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray
+                .map((b) => b.toString(16).padStart(2, "0")) //convertir chaque byte en hex
+                .join("");
+            return hashHex;
         }
     }
+    
 }
 
 </script>
