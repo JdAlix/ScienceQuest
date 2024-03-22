@@ -102,7 +102,7 @@ export default {
 		calculerCompteARebours(){
 			if(this.tempsLimite<Date.now()){
 				//si il reste plus de temps
-				this.compteARebours=0
+				this.compteARebours=(0).toFixed(2)
 				//arreter le compte a rebours
 				window.clearInterval(this.compteAReboursId)
 				return
