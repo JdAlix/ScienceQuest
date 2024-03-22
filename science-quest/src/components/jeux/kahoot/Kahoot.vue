@@ -9,7 +9,7 @@ export default {
             titreKahoot: "",
             nbQuestions: 0,
             //rejoindre partie
-            codeKahoot: "",
+            codeKahootARejoindre: "",
             //listes parties crees ( TODO : appeler l'api pour obtenir les parties)
             partiesCrees: []
         };
@@ -26,10 +26,8 @@ export default {
             console.log(this.nbQuestions);
         },
         // TODO : demander a l'api de rejoindre un kahoot (et rediriger vers la partie si possible via HATEOAS)
-        rejoindrePartie: function () {
-            console.log("yay");
-            //this.titreKahoot et this.nbQuestions synchronisés avec v-model
-            console.log(this.codeKahoot);
+        rejoindrePartie(){
+            this.$router.push(`/kahoot/partie/${this.codeKahootARejoindre}`)
         },
         async STUB_partiesCrees(){
             return JSON.parse(`[
@@ -58,7 +56,7 @@ export default {
             </button>
             <form @submit.prevent>
                 <label for="Kahoot-Code">Code</label>
-                <input class="form-control bg-light" type="text" id="Kahoot-Code" name="Kahoot-Code" v-model="codeKahoot" minlength="6" maxlength="10">
+                <input class="form-control bg-light" type="text" id="Kahoot-Code" name="Kahoot-Code" v-model="codeKahootARejoindre" minlength="6" maxlength="10">
                 <button class="btn btn-light" v-on:click="rejoindrePartie">Rejoindre</button>
             </form>
         </div>
