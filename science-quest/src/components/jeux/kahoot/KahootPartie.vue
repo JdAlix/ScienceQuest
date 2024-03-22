@@ -1,4 +1,5 @@
 <script>
+import { KAHOOT_NB_APRES_LA_VIRGULE_COMPTE_A_REBOURS} from "@/assets/const"
 
 export default {
     data() {
@@ -102,12 +103,12 @@ export default {
 		calculerCompteARebours(){
 			if(this.tempsLimite<Date.now()){
 				//si il reste plus de temps
-				this.compteARebours=(0).toFixed(2)
+				this.compteARebours=(0).toFixed(KAHOOT_NB_APRES_LA_VIRGULE_COMPTE_A_REBOURS)
 				//arreter le compte a rebours
 				window.clearInterval(this.compteAReboursId)
 				return
 			}
-			this.compteARebours=((this.tempsLimite-Date.now())/1000).toFixed(2)
+			this.compteARebours=((this.tempsLimite-Date.now())/1000).toFixed(KAHOOT_NB_APRES_LA_VIRGULE_COMPTE_A_REBOURS)
 		},
 		
 		resetEtats(){
