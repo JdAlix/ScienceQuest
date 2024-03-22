@@ -147,8 +147,17 @@ export default {
 
 </script>
 
+<style>
+.jeu{
+	display:flex;
+	flex-direction: column;
+	text-align: center;
+}
+</style>
+
 
 <template>
+<div class="jeu">
 	<!-- Afficher le compte a rebours seulement quand la partie va demarrer, pour eviter de prendre par surprise les joueurs qui attendent dans la salle d'attente-->
 	<p v-if="partieDemarree">Temps : {{ compteARebours }}s</p>
 	<div v-show="etats.question">
@@ -170,4 +179,5 @@ export default {
 			</li>
 		</ul>
 	</div>
+</div>
 </template>
