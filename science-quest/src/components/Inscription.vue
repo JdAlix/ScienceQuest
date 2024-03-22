@@ -10,7 +10,7 @@ export default {
                 donnees.motDePasse=hashMDP
                 const donneesJson=JSON.stringify(donnees)
                 console.log(donnees)
-                //fetch(REST_API+"/utilisateur", {method:"POST", body:donneesJson}).then(response=>)
+                fetch(REST_API+"/utilisateur", {method:"POST", body:donneesJson, headers:{"Content-Type":"application/json"}}).then(response=>console.log(response))
             })
         },
         async hasherMDP(mdp){
