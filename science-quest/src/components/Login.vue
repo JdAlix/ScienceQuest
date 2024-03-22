@@ -18,7 +18,7 @@ export default {
 
 
 <template>
-    <form @submit.prevent>
+    <form @submit.prevent id="formajouter">
     <h1 class="h3 mb-3 fw-normal">Se connecter</h1>
 
     <div class="form-floating">
@@ -33,7 +33,7 @@ export default {
     <div class="checkbox mb-3">
         <label>
             <label for="rememberMe">Se souvenir de moi</label>
-            <input type="checkbox" value="rememberMe" id="rememberMe" name="rememberMe">
+            <input type="checkbox" value="1" id="rememberMe" name="rememberMe">
         </label>
     </div>
     <RouterLink to="/inscription">Pas de compte?</RouterLink>
