@@ -1,4 +1,4 @@
-package fr.iut.sciencequest.model.buisness
+package fr.iut.sciencequest.model.buisness.Scientifique
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import fr.iut.sciencequest.model.dto.ScientifiqueDTOs.ScientifiqueDTO

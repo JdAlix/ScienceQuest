@@ -1,4 +1,4 @@
-package fr.iut.sciencequest.model.buisness
+package fr.iut.sciencequest.model.buisness.Question
 
 import fr.iut.sciencequest.model.dto.question.QuestionListDTO
 import retrofit2.Call
@@ -7,5 +7,5 @@ import retrofit2.http.Query
 
 interface QuestionRequestService {
     @GET("questions?page")
-    fun getQuestion(@Query("page") index: Int): Call<QuestionListDTO>
+    fun getQuestions(@Query("page") index: Int): Call<QuestionListDTO>
 }

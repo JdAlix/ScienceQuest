@@ -1,6 +1,7 @@
-package fr.iut.sciencequest.model.buisness
+package fr.iut.sciencequest.model.buisness.Scientifique
 
 import android.util.Log
+import fr.iut.sciencequest.model.buisness.createRequestService
 import fr.iut.sciencequest.model.dto.ScientifiqueDTOs.ScientifiqueDTO
 import fr.iut.sciencequest.model.dto.ScientifiqueDTOs.ScientifiqueListDTO
 import retrofit2.Call
