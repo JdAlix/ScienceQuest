@@ -1,13 +1,8 @@
 package fr.iut.sciencequest.model.buisness
 
 import android.util.Log
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelLazy
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.findViewTreeViewModelStoreOwner
-import androidx.lifecycle.viewmodel.compose.viewModel
-import fr.iut.sciencequest.ViewModels.ScientifiquesDecouvertsVM
-import fr.iut.sciencequest.model.dto.ScientifiqueDTO
+import fr.iut.sciencequest.model.dto.ScientifiqueDTOs.ScientifiqueDTO
+import fr.iut.sciencequest.model.dto.ScientifiqueDTOs.ScientifiqueListDTO
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -42,14 +37,14 @@ fun fetchScientifiqueById(id: Int) {
     )
 }
 
-fun fetchScientifiquesById(index: Int, count: Int) {
+fun fetchScientifiques(index: Int) {
     val serviceClient = createRequestService().create<ScientifiqueRequestService>()
     Log.d("Requete API","Fetch plusieurs scientifiques")
-    serviceClient.getScientifiques(index, count).enqueue(
-        object: Callback<List<ScientifiqueDTO>> {
+    serviceClient.getScientifiques(index).enqueue(
+        object: Callback<ScientifiqueListDTO> {
             override fun onResponse(
-                call: Call<List<ScientifiqueDTO>>,
-                response: Response<List<ScientifiqueDTO>>
+                call: Call<ScientifiqueListDTO>,
+                response: Response<ScientifiqueListDTO>
             ) {
                 // NOTE : il faudrait probablement utiliser une autre exception
                 // exception personnalisée ?
@@ -58,14 +53,14 @@ fun fetchScientifiquesById(index: Int, count: Int) {
                 // Devrait appeler le ModelView, la méthode onResponse ne renvoit rien
                 // Pour le moment des print pour vérifier que la requêtre fonctionne
                 // sans avoir besoin des vues.
-                for (scientifique in data) {
+                for (scientifique in data.scientifiques) {
 
                     Log.d("Requete API",scientifique.id.toString())
                     Log.d("Requete API", scientifique.nom)
                 }
             }
 
-            override fun onFailure(call: Call<List<ScientifiqueDTO>>, t: Throwable) {
+            override fun onFailure(call: Call<ScientifiqueListDTO>, t: Throwable) {
                 Log.e("Requete API","Erreur lors d'une requete api")
                 throw t
             }
