@@ -1,9 +1,9 @@
 package fr.iut.sciencequest.sae.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
@@ -20,7 +20,8 @@ public class Joueur {
     @Column(unique = true)
     private String pseudo;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idpartie")
+    @JsonIgnore
     private Partie partie;
 }
