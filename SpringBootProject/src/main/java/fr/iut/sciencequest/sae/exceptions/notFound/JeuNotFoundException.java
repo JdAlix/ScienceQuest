@@ -1,7 +1,7 @@
 package fr.iut.sciencequest.sae.exceptions.notFound;
 
-public class DifficulteNotFoundException extends EntityNotFoundException{
-    public DifficulteNotFoundException(int id) {
-        super("Difficulté", id);
+public class JeuNotFoundException extends EntityNotFoundException{
+    public JeuNotFoundException(int id) {
+        super("Jeu", id);
     }
 }
