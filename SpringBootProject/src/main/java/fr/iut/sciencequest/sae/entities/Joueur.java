@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Inheritance ( strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.JOINED)
 @Entity
 @Table(name="joueur")
 public class Joueur {
@@ -20,7 +20,7 @@ public class Joueur {
     @Column(unique = true)
     private String pseudo;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "idpartie")
     @JsonIgnore
     private Partie partie;
