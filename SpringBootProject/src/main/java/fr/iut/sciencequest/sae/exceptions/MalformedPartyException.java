@@ -8,4 +8,7 @@ public class MalformedPartyException extends RuntimeException {
     public MalformedPartyException(String message) {
         super(message);
     }
+    public MalformedPartyException() {
+        super("Error while creating party");
+    }
 }
