@@ -1,39 +1,70 @@
 package fr.iut.sciencequest.sae.services;
 
+import fr.iut.sciencequest.sae.entities.Joueur;
 import fr.iut.sciencequest.sae.entities.Partie;
+import fr.iut.sciencequest.sae.exceptions.MalformedPartyException;
+import fr.iut.sciencequest.sae.exceptions.notFound.JeuNotFoundException;
 import fr.iut.sciencequest.sae.exceptions.notFound.PartieNotFoundException;
-import fr.iut.sciencequest.sae.repositories.PartieRepository;
+import fr.iut.sciencequest.sae.repositories.*;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
 @Service
 public class PartieService {
     private final PartieRepository partieRepository;
-    /*private final JeuRepository jeuRepository;
+    private final JeuRepository jeuRepository;
+    private final JoueurRepository joueurRepository;
     private final UtilisateurRepository utilisateurRepository;
     private final ThematiqueRepository thematiqueRepository;
-    private final DifficulteRepository difficulteRepository;*/
+    private final DifficulteRepository difficulteRepository;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     public Partie findById(int id) {
         return this.partieRepository.findById(id).orElseThrow(() ->
                 new PartieNotFoundException("Partie", id)
         );
     }
-    public Partie create(Integer idJeu, Integer idUtilisateur, List<Integer> thematiques, Integer idDifficulte) {
-        /*try {
-            Jeu jeu = jeuService.findById(idJeu);
 
-            if(partie.getJeu().getNom() == null) {
-                throw new MalformedPartyException("Party's game id is not given or is a false value");
-            }
+    @Transactional
+    public Partie create(Integer idJeu, String pseudo, List<Integer> thematiques, Integer idDifficulte) {
+        // Création du joueur
+        Joueur joueur = new Joueur();
+        joueur.setPseudo(pseudo);
 
-            return this.partieRepository.save(partie);
-        } catch (DataIntegrityViolationException e) {
-            throw new DuplicatedFieldException("ERREUR : il existe déjà une partie : " + partie.getId() + " en base");
-        }*/
-        return new Partie();
+        // Sauvegarder le joueur
+        joueur = joueurRepository.save(joueur);
+
+        // Création de la partie
+        Partie partie = new Partie(
+                0,
+                entityManager.createNativeQuery("SELECT make_uid()").getSingleResult().toString(),
+                List.of(joueur),
+                jeuRepository.findById(idJeu).orElseThrow(() -> new JeuNotFoundException(idJeu)),
+                "pending",
+                new Date()
+        );
+
+        // Sauvegarder la partie pour générer le codeInvitation
+        partie = partieRepository.save(partie);
+
+        // Modification du joueur pour ajouter la partie
+        entityManager.createNativeQuery("UPDATE joueur SET idpartie = ? WHERE id = ?")
+                .setParameter(1, partie.getId())
+                .setParameter(2, joueur.getId())
+                .executeUpdate();
+
+        // Récupérer la partie mise à jour avec le joueur
+        return partieRepository.findById(partie.getId())
+                .orElseThrow(MalformedPartyException::new);
     }
+
 }
