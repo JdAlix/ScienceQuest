@@ -92,10 +92,29 @@ CREATE TABLE Jeu(
 
 -- Partie
 
+CREATE OR REPLACE FUNCTION make_uid() RETURNS text AS
+'
+    DECLARE
+        new_uid text;
+        done bool;
+    BEGIN
+        done := false;
+        WHILE NOT done LOOP
+            new_uid := UPPER(SUBSTRING(md5(''''||now()::text||random()::text) FOR 5));
+            done := NOT exists(SELECT 1 FROM partie WHERE codeinvitation=new_uid);
+        END LOOP;
+
+        RETURN new_uid;
+    END;
+' LANGUAGE PLPGSQL VOLATILE;
+
+
 CREATE TABLE Partie(
                        id SERIAL PRIMARY KEY,
                        codeInvitation varchar(5) NOT NULL UNIQUE,
-                       idJeu integer REFERENCES Jeu(id)
+                       idJeu integer REFERENCES Jeu(id),
+                       status varchar(128) NOT NULL DEFAULT 'pending',
+                       dateCreation timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 -- JOUEUR
