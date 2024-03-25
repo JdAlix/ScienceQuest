@@ -3,11 +3,11 @@ package fr.iut.sciencequest.sae.entities;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
@@ -30,4 +30,10 @@ public class Partie {
     @ManyToOne
     @JoinColumn(name="idjeu", nullable = false)
     private Jeu jeu;
+
+    @Column(name = "status")
+    private String status;
+
+    @Column(name = "datecreation")
+    private Date dateCreation;
 }
