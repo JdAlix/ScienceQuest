@@ -1,6 +1,5 @@
 package fr.iut.sciencequest.sae.dto.partie;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import fr.iut.sciencequest.sae.dto.jeu.JeuDTO;
 import fr.iut.sciencequest.sae.dto.joueur.JoueurDTO;
 import jakarta.validation.constraints.NotEmpty;
