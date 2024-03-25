@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import java.util.Date;
 import java.util.List;
@@ -23,8 +21,7 @@ public class Partie {
     @Column(name = "codeinvitation", unique = true, nullable = false)
     private String codeInvitation;
 
-    @OneToMany(mappedBy = "partie")
-    @Fetch(FetchMode.JOIN) // Sinon crash (Could not write JSON: failed to lazily initialize a collection of T)
+    @OneToMany(mappedBy = "partie", fetch = FetchType.EAGER)
     private List<Joueur> joueurs;
 
     @ManyToOne
