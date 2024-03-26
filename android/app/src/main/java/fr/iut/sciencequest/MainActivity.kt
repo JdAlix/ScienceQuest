@@ -19,8 +19,6 @@ import fr.iut.sciencequest.ui.theme.ScienceQuestTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val vm = viewModels<ScientifiquesDecouvertsVM>().value
-        vm.addScientifiques(StubScientifique1.ToModel())
         setContent {
             ScienceQuestTheme {
                 // A surface container using the 'background' color from the theme
