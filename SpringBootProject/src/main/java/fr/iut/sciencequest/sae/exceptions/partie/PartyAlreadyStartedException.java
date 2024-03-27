@@ -1,4 +1,4 @@
-package fr.iut.sciencequest.sae.exceptions;
+package fr.iut.sciencequest.sae.exceptions.partie;
 
 
 import org.springframework.http.HttpStatus;

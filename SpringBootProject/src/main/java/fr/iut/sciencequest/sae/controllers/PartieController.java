@@ -1,11 +1,13 @@
 package fr.iut.sciencequest.sae.controllers;
 
 import fr.iut.sciencequest.sae.assemblers.PartieModelAssembler;
+import fr.iut.sciencequest.sae.controllers.request.PartieAddJoueurRequest;
 import fr.iut.sciencequest.sae.controllers.request.PartieRequest;
 import fr.iut.sciencequest.sae.dto.partie.PartieDTO;
 import fr.iut.sciencequest.sae.entities.Joueur;
 import fr.iut.sciencequest.sae.entities.Partie;
 import fr.iut.sciencequest.sae.exceptions.notFound.PartieNotFoundException;
+import fr.iut.sciencequest.sae.exceptions.partie.PartyAlreadyStartedException;
 import fr.iut.sciencequest.sae.services.JeuService;
 import fr.iut.sciencequest.sae.services.JoueurService;
 import fr.iut.sciencequest.sae.services.PartieService;
@@ -34,18 +36,7 @@ public class PartieController {
 
     @RequestMapping(value = "/{codeInvitation}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public PartieDTO getPartie(@PathVariable String codeInvitation) {
-        //try to get invitation from codeInvitation, if not : try with id
-        Partie partie;
-        try{
-            partie = this.partieService.getPartieByCodeInvitation(codeInvitation);
-        }catch (PartieNotFoundException exceptionNotFoundByCodeInvitation){
-            try{
-                partie = this.partieService.findById(Integer.parseInt(codeInvitation));
-            }catch (PartieNotFoundException | NumberFormatException e2){
-                throw exceptionNotFoundByCodeInvitation;
-            }
-        }
-        return partieModelAssembler.toModel(partie);
+        return partieModelAssembler.toModel(this.partieService.getPartieByIdOrCodeInvitation(codeInvitation));
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -56,6 +47,18 @@ public class PartieController {
         partie.setJoueurs(List.of(this.joueurService.findById(request.getIdJoueur())));
         partie =  this.partieService.create(partie);
         return this.modelMapper.map(partie, PartieDTO.class);
+    }
+
+    @PutMapping(value= "/{codeInvitation}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public PartieDTO addPlayerToPartie(@PathVariable String codeInvitation, @RequestBody @Valid PartieAddJoueurRequest request){
+        Joueur joueur = this.joueurService.findById(request.getIdJoueur());
+        Partie partie = this.partieService.getPartieByIdOrCodeInvitation(codeInvitation);
+        if(!partie.getStatus().equals("pending")) throw new PartyAlreadyStartedException();
+        if(!partie.getJoueurs().contains(joueur)){
+            partie.getJoueurs().add(joueur);
+        }
+        return this.modelMapper.map(this.partieService.update(partie), PartieDTO.class);
     }
 
 }

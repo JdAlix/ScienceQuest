@@ -2,19 +2,12 @@ package fr.iut.sciencequest.sae.services;
 
 import fr.iut.sciencequest.sae.entities.*;
 import fr.iut.sciencequest.sae.exceptions.DuplicatedIdException;
-import fr.iut.sciencequest.sae.exceptions.MalformedPartyException;
-import fr.iut.sciencequest.sae.exceptions.notFound.JeuNotFoundException;
 import fr.iut.sciencequest.sae.exceptions.notFound.PartieNotFoundException;
-import fr.iut.sciencequest.sae.exceptions.notFound.ThematiqueNotFoundException;
 import fr.iut.sciencequest.sae.repositories.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Date;
-import java.util.List;
 
 @AllArgsConstructor
 @Service
@@ -38,6 +31,21 @@ public class PartieService {
 
     public Partie getPartieByCodeInvitation(String codeInvitation){
         return this.partieRepository.getPartieByCodeInvitation(codeInvitation).orElseThrow(() -> new PartieNotFoundException("codeInvitation", codeInvitation));
+    }
+
+    public Partie getPartieByIdOrCodeInvitation(String codeInvitation){
+        //try to get invitation from codeInvitation, if not : try with id
+        Partie partie;
+        try{
+            partie = this.getPartieByCodeInvitation(codeInvitation);
+        }catch (PartieNotFoundException exceptionNotFoundByCodeInvitation){
+            try{
+                partie = this.findById(Integer.parseInt(codeInvitation));
+            }catch (PartieNotFoundException | NumberFormatException e2){
+                throw exceptionNotFoundByCodeInvitation;
+            }
+        }
+        return partie;
     }
 
     public Partie update(Partie partie){

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -27,5 +28,6 @@ public class Joueur {
     @ManyToOne
     @JoinColumn(name = "idpartie")
     @Fetch(FetchMode.JOIN)
+    @EqualsAndHashCode.Exclude
     private Partie partie;
 }
