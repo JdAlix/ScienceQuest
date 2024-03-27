@@ -1,0 +1,33 @@
+import { REST_API } from "@/assets/const"
+import { DataObject, PagedDataObject } from "./dataObject"
+
+export class Scientifique extends DataObject{
+    constructor(parsedJSON){
+        super(parsedJSON)
+        //exemple d'alias pour le pendu
+        this.nomComplet = this.nomComplet ?? this.nom + " " + this.prenom
+    }
+    static async get(id){
+        const response = await fetch(`${REST_API}/scientifiques/${id}`)
+        return new this(await response.json())
+    }
+}
+
+export class Scientifiques extends PagedDataObject{
+    constructor(parsedJSON){
+        super(parsedJSON, Scientifique)
+    }
+    static async getPage(pageNb, size=10){
+        const response = await fetch(`${REST_API}/scientifiques?page=${pageNb}&size=${size}`)
+        return new this(await response.json())
+    }
+}
+
+export class ScientifiqueIndices extends DataObject{
+    constructor(parsedJSON){
+        super(parsedJSON)
+    }
+    static get(id){
+        fetch(`${REST_API}/scientifiques/${id}/indices`)
+    }
+}
