@@ -16,7 +16,7 @@ export class Difficultes extends PagedDataObject{
         if(size>0){
           params+=`&size=${size}`
         }
-        const response = await fetch(`${REST_API}/Difficultes?page=${pageNb}${params}`)
+        const response = await fetch(`${REST_API}/difficultes?page=${pageNb}${params}`)
         return new this(await response.json())
     }
 }
