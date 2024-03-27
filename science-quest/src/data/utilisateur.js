@@ -22,3 +22,12 @@ export class Utilisateur extends DataObject{
         return new this(await response.json())
     }
 }
+
+//TODO : JSON de reference pour le get
+
+/* JSON de reference (register)
+{"email":"amogus@amog.us", "pseudo":"amogus", "motDePasse":"hunter2"}
+*/
+/* JSON de reference (login)
+{"email":"amogus@amog.us", "motDePasse":"hunter2"}
+*/
