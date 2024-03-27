@@ -111,10 +111,10 @@ CREATE OR REPLACE FUNCTION make_uid() RETURNS text AS
 
 CREATE TABLE Partie(
                        id SERIAL PRIMARY KEY,
-                       codeInvitation varchar(5) NOT NULL UNIQUE,
+                       codeInvitation varchar(5) UNIQUE DEFAULT make_uid(),
                        idJeu integer REFERENCES Jeu(id),
-                       status varchar(128) NOT NULL DEFAULT 'pending',
-                       dateCreation timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+                       status varchar(128) DEFAULT 'pending',
+                       dateCreation timestamp DEFAULT CURRENT_TIMESTAMP
 );
 
 -- JOUEUR
@@ -150,6 +150,35 @@ CREATE TABLE Decouvrir(
                           PRIMARY KEY (idUtilisateur, idScientifique)
 );
 
+-- TRIGGERS
+
+
+
+CREATE OR REPLACE FUNCTION force_default_partie()
+    RETURNS TRIGGER
+AS '
+    DECLARE
+    BEGIN
+        IF OLD.codeInvitation IS NULL THEN
+            NEW.codeInvitation = make_uid();
+        END IF;
+        IF OLD.status IS NULL THEN
+            NEW.status = ''pending'';
+        END IF;
+        IF OLD.dateCreation IS NULL THEN
+            NEW.dateCreation = CURRENT_TIMESTAMP;
+        END IF;
+        RETURN NEW;
+    END;
+    '
+LANGUAGE plpgsql;
+
+CREATE TRIGGER check_force_default_partie
+    BEFORE INSERT
+    ON Partie
+    FOR EACH ROW
+EXECUTE PROCEDURE force_default_partie();
+
 
 -- INSERTS
 
@@ -174,8 +203,8 @@ VALUES
 
 -- Indices
 INSERT INTO Indice (libelle, idscientifique) VALUES
-                                                     ('Indice pour aider', 1),
-                                                     ('S''appelle Marie', 1);
+                                                 ('Indice pour aider', 1),
+                                                 ('S''appelle Marie', 1);
 
 -- Réponses
 INSERT INTO Reponse(reponse, idQuestion, idScientifique)
@@ -184,8 +213,12 @@ VALUES
     ('Albert Einstein', 2, 2),
     ('Sophie Germain', 3, 3);
 
+
+-- Partie
+INSERT INTO Partie(codeInvitation, idJeu) VALUES ('abcde', 1);
+
 -- Utilisateurs
-INSERT INTO Joueur(pseudo) VALUES ('moi, le meilleur joueur du monde'); --id = 1
+INSERT INTO Joueur(pseudo, idPartie) VALUES ('moi, le meilleur joueur du monde', 1); --id = 1
 INSERT INTO Utilisateur(idJoueur,email,password) VALUES (1, 'joueur','$2y$10$juGnlWC9cS19popEKLZsYeir0Jl39k6hDl0dpaCix00FDcdiEbtmS');
 -- mdp = test
 
@@ -195,6 +228,3 @@ INSERT INTO decouvrir(idUtilisateur,idScientifique) VALUES (1,1);
 -- Admin
 INSERT INTO Admin(id,email,password) VALUES (1, 'admin','$2y$10$juGnlWC9cS19popEKLZsYeir0Jl39k6hDl0dpaCix00FDcdiEbtmS');
 -- mdp = test
-
--- Partie
-INSERT INTO Partie(codeInvitation, idJeu) VALUES ('abcde', 1);

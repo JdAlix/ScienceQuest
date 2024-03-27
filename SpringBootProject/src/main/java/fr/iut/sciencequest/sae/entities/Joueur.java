@@ -1,10 +1,13 @@
 package fr.iut.sciencequest.sae.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,8 +23,9 @@ public class Joueur {
     @Column(unique = true)
     private String pseudo;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "idpartie")
-    @JsonIgnore
+    @Fetch(FetchMode.JOIN)
     private Partie partie;
 }

@@ -1,12 +1,11 @@
 package fr.iut.sciencequest.sae.exceptions.notFound;
 
-
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class PartieNotFoundException extends EntityNotFoundException{
-    public PartieNotFoundException(int id) {
-        super("partie", id);
+public class JoueurNotFoundException extends EntityNotFoundException{
+    public JoueurNotFoundException(int id) {
+        super("Joueur", id);
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 @Data
 public class PartieRequest {
     private Integer idJeu;
-    private String pseudo;
+    private int idJoueur;
     private List<Integer> thematiques;
     private Integer idDifficulte;
 }

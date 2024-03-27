@@ -1,5 +1,7 @@
 package fr.iut.sciencequest.sae.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,19 +20,21 @@ public class Partie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "codeinvitation", unique = true, nullable = false)
+    @Column(name = "codeinvitation", unique = true, nullable = false) //default value : see Schema.sql
     private String codeInvitation;
 
-    @OneToMany(mappedBy = "partie", fetch = FetchType.EAGER)
+    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinColumn(name = "idpartie")
     private List<Joueur> joueurs;
 
     @ManyToOne
     @JoinColumn(name="idjeu", nullable = false)
     private Jeu jeu;
 
-    @Column(name = "status")
+    @Column(name = "status") //default value : see Schema.sql
     private String status;
 
-    @Column(name = "datecreation")
+    @Column(name = "datecreation") //default value : see Schema.sql
     private Date dateCreation;
 }

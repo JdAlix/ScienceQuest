@@ -1,13 +1,14 @@
 package fr.iut.sciencequest.sae.dto.partie;
 
 import fr.iut.sciencequest.sae.dto.jeu.JeuDTO;
-import fr.iut.sciencequest.sae.dto.joueur.JoueurDTO;
+import fr.iut.sciencequest.sae.dto.joueur.JoueurSimpleDTO;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.util.List;
+import java.util.Set;
 
 
 @Data
@@ -21,7 +22,7 @@ public class PartieDTO extends RepresentationModel<PartieDTO> {
     @NotEmpty
     private String codeInvitation;
     @NotEmpty
-    private List<JoueurDTO> joueurs;
+    private List<JoueurSimpleDTO> joueurs;
     @NotNull
     private JeuDTO jeu;
 }
