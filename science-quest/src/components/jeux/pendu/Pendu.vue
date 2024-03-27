@@ -31,6 +31,7 @@ export default{
         creerPartie: function () {
             this.lettresDejaDevine = "";
             this.lettresANePasFaireDevinerAuJoueur="";
+            this.progression="";
 
             //appeler l'API
             Scientifiques.getPage(this.intAleatoire(this.api_pagesMaximum)).then(json=>{
