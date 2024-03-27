@@ -5,6 +5,7 @@ import fr.iut.sciencequest.sae.controllers.request.PartieRequest;
 import fr.iut.sciencequest.sae.dto.partie.PartieDTO;
 import fr.iut.sciencequest.sae.entities.Joueur;
 import fr.iut.sciencequest.sae.entities.Partie;
+import fr.iut.sciencequest.sae.exceptions.notFound.PartieNotFoundException;
 import fr.iut.sciencequest.sae.services.JeuService;
 import fr.iut.sciencequest.sae.services.JoueurService;
 import fr.iut.sciencequest.sae.services.PartieService;
@@ -19,6 +20,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1/partie")
@@ -29,9 +32,19 @@ public class PartieController {
     private final JeuService jeuService;
     private final ModelMapper modelMapper;
 
-    @RequestMapping(value = "/{id}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public PartieDTO getPartie(@PathVariable int id) {
-        Partie partie = this.partieService.findById(id);
+    @RequestMapping(value = "/{codeInvitation}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public PartieDTO getPartie(@PathVariable String codeInvitation) {
+        //try to get invitation from codeInvitation, if not : try with id
+        Partie partie;
+        try{
+            partie = this.partieService.getPartieByCodeInvitation(codeInvitation);
+        }catch (PartieNotFoundException exceptionNotFoundByCodeInvitation){
+            try{
+                partie = this.partieService.findById(Integer.parseInt(codeInvitation));
+            }catch (PartieNotFoundException | NumberFormatException e2){
+                throw exceptionNotFoundByCodeInvitation;
+            }
+        }
         return partieModelAssembler.toModel(partie);
     }
 

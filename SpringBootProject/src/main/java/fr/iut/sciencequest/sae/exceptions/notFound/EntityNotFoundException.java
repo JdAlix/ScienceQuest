@@ -12,4 +12,8 @@ public abstract class EntityNotFoundException extends RuntimeException {
     public EntityNotFoundException(String entityName, Object id){
         super(entityName + " not found with id : " + id);
     }
+
+    public EntityNotFoundException(String entityName, String fieldName, Object value){
+        super(entityName + " not found with " + fieldName + " : " + value);
+    }
 }

@@ -36,6 +36,10 @@ public class PartieService {
         );
     }
 
+    public Partie getPartieByCodeInvitation(String codeInvitation){
+        return this.partieRepository.getPartieByCodeInvitation(codeInvitation).orElseThrow(() -> new PartieNotFoundException("codeInvitation", codeInvitation));
+    }
+
     public Partie update(Partie partie){
         if(!this.partieRepository.existsById(partie.getId())){
             throw new PartieNotFoundException(partie.getId());
