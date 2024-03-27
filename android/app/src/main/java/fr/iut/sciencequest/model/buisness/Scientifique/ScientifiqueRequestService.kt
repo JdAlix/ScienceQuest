@@ -14,8 +14,8 @@ import retrofit2.http.Query
 
 interface ScientifiqueRequestService {
     @GET("scientifiques?page")
-    fun getScientifiques(@Query("page") index: Int): Call<ScientifiqueListDTO>
+    suspend fun getScientifiques(@Query("page") index: Int): ScientifiqueListDTO
 
     @GET("scientifiques/{id}")
-    fun getScientifique(@Path("id") id: Int): Call<ScientifiqueDTO>
+    suspend fun getScientifique(@Path("id") id: Int): ScientifiqueDTO
 }

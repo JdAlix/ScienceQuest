@@ -3,22 +3,35 @@ package fr.iut.sciencequest.ViewModels
 import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.toMutableStateList
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import fr.iut.sciencequest.model.buisness.Scientifique.fetchScientifiqueById
+import fr.iut.sciencequest.model.buisness.Scientifique.fetchScientifiques
+import fr.iut.sciencequest.model.dto.extensions.ToModel
 import fr.iut.sciencequest.model.metier.Scientifique
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class ScientifiquesDecouvertsVM : ViewModel() {
-    private var listeScientifique: MutableList<Scientifique> = mutableStateListOf<Scientifique>()
+    var listeScientifique: MutableStateFlow<MutableList<Scientifique>> = MutableStateFlow(ArrayList<Scientifique>().toMutableStateList())
 
-    fun getScientifiques(): MutableList<Scientifique> {
-        Log.d("ViewModel","""je get un scientifique, taille act : ${listeScientifique.size}""")
-        return listeScientifique
-    }
-
-    fun addScientifiques(scientifique: Scientifique) {
-        if (listeScientifique.add(scientifique))  {
-            Log.d("ViewModel","""j'ajoute un scientifique, taille act : ${listeScientifique.size}""")
-        } else {
-            Log.d("ViewModel","Erreur lors d'un ajout")
+    // fun getScientifiqueById(id: Int) {
+    //     Log.d("ViewModelScientifique", "Recup un scientifique d'id: $id")
+    //     var scientifique: Scientifique
+    //     viewModelScope.launch {
+//
+    //     }
+    // }
+    fun getScientifiques(page: Int) {
+        Log.d("ViewModelScientifique","Recup la liste de scientifiques")
+        viewModelScope.launch {
+            fetchScientifiques(page).collect {
+                listeScientifique.value = it.scientifiques.ToModel().toMutableList()
+            }
         }
     }
  }

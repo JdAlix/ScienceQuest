@@ -20,9 +20,8 @@ import fr.iut.sciencequest.view.scientifiques.scientifiqueListeScreen
 
 
 @Composable
-fun NavHost() {
+fun NavHost(scientifiquesDecouvertsVM: ScientifiquesDecouvertsVM) {
     val navController = rememberNavController()
-
     NavHost(
         modifier = Modifier.fillMaxSize(),
         navController = navController,
