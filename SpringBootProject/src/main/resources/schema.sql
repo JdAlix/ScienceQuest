@@ -12,6 +12,7 @@ DROP TABLE IF EXISTS Joueur CASCADE;
 DROP TABLE IF EXISTS Indice CASCADE;
 DROP TABLE IF EXISTS Scientifique CASCADE;
 DROP TABLE IF EXISTS Thematique CASCADE;
+DROP TABLE IF EXISTS ThematiqueSelectionnee CASCADE;
 DROP TABLE IF EXISTS Difficulte;
 
 
@@ -148,6 +149,14 @@ CREATE TABLE Decouvrir(
                           idUtilisateur integer REFERENCES Utilisateur(idJoueur),
                           idScientifique integer REFERENCES Scientifique(id),
                           PRIMARY KEY (idUtilisateur, idScientifique)
+);
+
+-- ThematiqueSelectionnee
+
+CREATE TABLE ThematiqueSelectionnee(
+                          idPartie integer REFERENCES Partie(id),
+                          idThematique integer REFERENCES Thematique(id),
+                          PRIMARY KEY (idPartie, idThematique)
 );
 
 -- TRIGGERS

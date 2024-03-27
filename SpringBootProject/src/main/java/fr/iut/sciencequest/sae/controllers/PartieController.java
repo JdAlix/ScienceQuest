@@ -6,11 +6,13 @@ import fr.iut.sciencequest.sae.controllers.request.PartieRequest;
 import fr.iut.sciencequest.sae.dto.partie.PartieDTO;
 import fr.iut.sciencequest.sae.entities.Joueur;
 import fr.iut.sciencequest.sae.entities.Partie;
+import fr.iut.sciencequest.sae.entities.Thematique;
 import fr.iut.sciencequest.sae.exceptions.notFound.PartieNotFoundException;
 import fr.iut.sciencequest.sae.exceptions.partie.PartyAlreadyStartedException;
 import fr.iut.sciencequest.sae.services.JeuService;
 import fr.iut.sciencequest.sae.services.JoueurService;
 import fr.iut.sciencequest.sae.services.PartieService;
+import fr.iut.sciencequest.sae.services.ThematiqueService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -18,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -32,6 +35,7 @@ public class PartieController {
     private final PartieService partieService;
     private final JoueurService joueurService;
     private final JeuService jeuService;
+    private final ThematiqueService thematiqueService;
     private final ModelMapper modelMapper;
 
     @RequestMapping(value = "/{codeInvitation}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -45,6 +49,11 @@ public class PartieController {
         Partie partie = new Partie();
         partie.setJeu(this.jeuService.findById(request.getIdJeu()));
         partie.setJoueurs(List.of(this.joueurService.findById(request.getIdJoueur())));
+
+        partie.setThematiques(new ArrayList<>());
+        for(int idThematique: request.getThematiques()){
+            partie.getThematiques().add(this.thematiqueService.findById(idThematique));
+        }
         partie =  this.partieService.create(partie);
         return this.modelMapper.map(partie, PartieDTO.class);
     }

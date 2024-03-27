@@ -35,4 +35,7 @@ public class Thematique {
     @OneToMany(mappedBy = "thematique")
     @Fetch(FetchMode.JOIN)
     private List<Scientifique> scientifiques;
+
+    @ManyToMany(mappedBy = "thematiques")
+    List<Partie> parties;
 }

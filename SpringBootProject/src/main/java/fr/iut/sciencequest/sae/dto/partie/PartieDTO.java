@@ -2,6 +2,8 @@ package fr.iut.sciencequest.sae.dto.partie;
 
 import fr.iut.sciencequest.sae.dto.jeu.JeuDTO;
 import fr.iut.sciencequest.sae.dto.joueur.JoueurSimpleDTO;
+import fr.iut.sciencequest.sae.dto.thematique.ThematiqueSimpleDTO;
+import fr.iut.sciencequest.sae.entities.Thematique;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -25,4 +27,6 @@ public class PartieDTO extends RepresentationModel<PartieDTO> {
     private List<JoueurSimpleDTO> joueurs;
     @NotNull
     private JeuDTO jeu;
+    @NotEmpty
+    private List<ThematiqueSimpleDTO> thematiques;
 }

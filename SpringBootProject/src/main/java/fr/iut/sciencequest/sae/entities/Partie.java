@@ -37,4 +37,12 @@ public class Partie {
 
     @Column(name = "datecreation") //default value : see Schema.sql
     private Date dateCreation;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "thematiqueselectionnee",
+            joinColumns = @JoinColumn(name = "idpartie"),
+            inverseJoinColumns = @JoinColumn(name="idthematique")
+    )
+    List<Thematique> thematiques;
 }
