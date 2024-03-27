@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class InviteNotFoundException extends EntityNotFoundException{
-    public InviteNotFoundException(String id) {
+    public InviteNotFoundException(int id) {
         super("Invite", id);
     }
 }

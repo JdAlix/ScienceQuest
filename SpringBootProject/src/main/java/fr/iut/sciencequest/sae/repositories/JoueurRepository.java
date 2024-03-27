@@ -5,4 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface JoueurRepository extends CrudRepository<Joueur, Integer> {}
+public interface JoueurRepository extends CrudRepository<Joueur, Integer> {
+    boolean existsByPseudo(String pseudo);
+}
