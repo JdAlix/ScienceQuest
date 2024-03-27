@@ -9,6 +9,7 @@ export default{
             nbLettresADeviner: 0,
             progression: "",
             viesRestantes: 0, //-1 == pendu; partie terminée, 
+            viesMaximum:10,
             partieTerminee: true, //plus de lettres a deviner
             premierePartie: true, //ne pas afficher "Perdu" pour ceux qui viennent de rejoindre
             lettresDejaDevine: "",
@@ -54,7 +55,7 @@ export default{
                     //compter le nombre de trous (enlever tout ce qui est pas underscore et compter)
                     this.nbLettresADeviner = this.progression.replace(/[^_]/g, "").length
 
-                    this.viesRestantes=10;
+                    this.viesRestantes=this.viesMaximum;
                     //demarrer le jeu
                     this.afficherLeJeu()
             })
@@ -151,6 +152,8 @@ export default{
             <input class="form-control" type="text" minlength="1" maxlength="1" @input="deviner"
                 placeholder="Devinez la lettre ici">
             <p>Vies restantes : {{ viesRestantes }}</p>
+            <label for="barreViePendu">Barre de vie</label>
+            <meter min="0" :max="viesMaximum" :value="viesRestantes"></meter>
             <p>Lettres devinées : <span style="font-family: monospace">{{ lettresDejaDevine }}</span></p>
         </div>
     </div>
