@@ -17,12 +17,18 @@ export class Scientifiques extends PagedDataObject{
     constructor(parsedJSON){
         super(parsedJSON, Scientifique)
     }
-    static async getPage(pageNb, size=0){
-        let sizeParam=""
-        if(size>=0){
-            sizeParam=`&size=${size}`
+    static async getPage(pageNb, size=0, thematiqueId=-1, difficulteId=-1){
+        let params=""
+        if(size>0){
+          params+=`&size=${size}`
         }
-        const response = await fetch(`${REST_API}/scientifiques?page=${pageNb}${sizeParam}`)
+        if(thematiqueId>-1){
+          params+=`&thematiqueId=${thematiqueId}`
+        }
+        if(difficulteId>-1){
+          params+=`&difficulteId=${difficulteId}`
+        }
+        const response = await fetch(`${REST_API}/scientifiques?page=${pageNb}${params}`)
         return new this(await response.json())
     }
 }
