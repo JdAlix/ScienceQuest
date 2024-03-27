@@ -1,14 +1,12 @@
 <script>
 import { REST_API, ALGO_HASH_MDP } from '@/assets/const'
+import { Utilisateur } from "@/data/utilisateur"
 
 export default {
     methods:{
         creerCompte(event){
-            event.stopPropagation()
-            let donnees=Object.fromEntries(new FormData(formajouter))
-            const donneesJson=JSON.stringify(donnees)
-            console.log(donnees)
-            fetch(REST_API+"/utilisateur", {method:"POST", body:donneesJson, headers:{"Content-Type":"application/json"}}).then(response=>console.log(response))
+            const utilisateur=new Utilisateur(Object.fromEntries(new FormData(formajouter)))
+            utilisateur.register().then(response=>console.log(response))
         }
     }
     
