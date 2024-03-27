@@ -2,6 +2,7 @@
 import PenduDessin from './PenduDessin.vue'
 import { REST_API } from "@/assets/const";
 import { Scientifiques } from "@/data/scientifique"
+import { Thematiques } from '@/data/thematique';
 
 export default{
     data() {
@@ -13,6 +14,10 @@ export default{
             partieTerminee: true, //plus de lettres a deviner
             premierePartie: true, //ne pas afficher "Perdu" pour ceux qui viennent de rejoindre
             lettresDejaDevine: "",
+
+            afficherChoixThematiques:false,
+            thematiquesDispo:[],
+            choixThematique:-1,
             
             //a recuperer a partir de l'api (prendre nom et prenom d'un scientifique nous meme) 
             motADeviner: "einstein",
@@ -27,6 +32,13 @@ export default{
             lettresANePasFaireDevinerAuJoueur:"", //meme utilité que lettresDejaDevine mais n'est pas visible au joueur
         };
     },
+    watch:{
+        afficherChoixThematiques(to){
+            if(to && this.thematiquesDispo.length==0){
+                Thematiques.getPage(0,999).then(thematiques=>this.thematiquesDispo=thematiques._embedded)
+            }
+        }
+    },
     methods: {
         creerPartie: function () {
             this.lettresDejaDevine = "";
@@ -34,7 +46,11 @@ export default{
             this.progression="";
 
             //appeler l'API
-            Scientifiques.getPage(this.intAleatoire(this.api_pagesMaximum)).then(json=>{
+            Scientifiques.getPage(
+                this.intAleatoire(this.api_pagesMaximum),
+                0,
+                this.afficherChoixThematiques ? this.choixThematique : -1
+                ).then(json=>{
                     //prendre le scientifique de la requete
                     const arrayScientifique=json._embedded
                     const scientifiqueADeviner=arrayScientifique[this.intAleatoire(arrayScientifique.length)]
@@ -139,6 +155,16 @@ export default{
                 <img :src="imageScientifique">
             </div>
             <button class="btn btn-primary" v-on:click="creerPartie">Créer une partie</button>
+            <div>
+                <label for="afficherChoixThematiquesCheckbox">Choisir une thématique </label>
+                <input type="checkbox" id="afficherChoixThematiquesCheckbox" v-model="afficherChoixThematiques"/>
+                <br/>
+                <select v-if="afficherChoixThematiques" v-model="choixThematique">
+                    <option v-for="thematique in thematiquesDispo" :value="thematique.id">
+                        {{ thematique.libelle }}
+                    </option>
+                </select>
+            </div>
         </div>
 
         <div v-if="!partieTerminee" class="divjeu">
