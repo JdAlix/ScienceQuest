@@ -1,6 +1,7 @@
 <script>
 import PenduDessin from './PenduDessin.vue'
 import { REST_API } from "@/assets/const";
+import { Scientifiques } from "@/data/scientifique"
 
 export default{
     data() {
@@ -31,13 +32,12 @@ export default{
             this.lettresANePasFaireDevinerAuJoueur="";
 
             //appeler l'API
-            fetch(`${REST_API}/scientifiques?page=`+this.intAleatoire(this.api_pagesMaximum)).then(response=>{
-                response.json().then(json=>{
+            Scientifiques.getPage(this.intAleatoire(this.api_pagesMaximum)).then(json=>{
                     //prendre le scientifique de la requete
                     const arrayScientifique=json._embedded
                     const scientifiqueADeviner=arrayScientifique[this.intAleatoire(arrayScientifique.length)]
                     //prendre le mot a deviner a partir du nom du scientifique
-                    this.motADeviner = scientifiqueADeviner.nom.toLowerCase() + " " + scientifiqueADeviner.prenom.toLowerCase()
+                    this.motADeviner = scientifiqueADeviner.nomComplet.toLowerCase()
                     this.description = scientifiqueADeviner.descriptif
                     this.imageScientifique = scientifiqueADeviner.pathToPhoto
 
@@ -57,7 +57,6 @@ export default{
                     this.viesRestantes=10;
                     //demarrer le jeu
                     this.afficherLeJeu()
-                })
             })
         },
         afficherLeJeu(){
