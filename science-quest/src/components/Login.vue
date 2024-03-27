@@ -1,15 +1,13 @@
 <script>
 import { REST_API } from '@/assets/const'
 import { RouterLink } from 'vue-router'
+import { Utilisateur } from "@/data/utilisateur"
 
 export default {
     methods:{
-        login: function (event){event.stopPropagation()
-            let donnees=Object.fromEntries(new FormData(formajouter))
-
-            const donneesJson=JSON.stringify(donnees)
-            console.log(donnees)
-            fetch(REST_API+"/utilisateur/connexion", {method:"POST", body:donneesJson, headers:{"Content-Type":"application/json"}}).then(response=>console.log(response))
+        login(){
+        const utilisateur=new Utilisateur(Object.fromEntries(new FormData(formajouter)))
+        utilisateur.login().then(response=>console.log(response))
         }
     }
 }

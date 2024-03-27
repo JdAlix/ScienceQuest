@@ -18,7 +18,11 @@ export class Utilisateur extends DataObject{
         return new this(await response.json())
     }
     async login(){
-        const response = await fetch(`${REST_API}/utilisateur/connexion`, {method:"POST" ,headers:{"Content-Type":"application/json"}, body:this})
+        const response = await fetch(`${REST_API}/utilisateur/connexion`,{
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(this)
+        })
         return new this(await response.json())
     }
 }
