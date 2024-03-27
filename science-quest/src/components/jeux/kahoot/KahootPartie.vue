@@ -1,5 +1,6 @@
 <script>
 import { KAHOOT_NB_APRES_LA_VIRGULE_COMPTE_A_REBOURS} from "@/assets/const"
+import { Kahoot } from "@/data/kahoot"
 
 export default {
     data() {
@@ -61,7 +62,7 @@ export default {
 		},
 		obtenirQuestion(){
 			this.resetEtats() //cacher l'etat precedent
-			this.DEBUG_obtenirQuestion().then(response=>{
+			Kahoot.obtenirQuestion().then(response=>{
 				this.tempsLimite=response.tempsLimite
 				//afficher cet etat
 				this.etats.question=true
@@ -79,7 +80,7 @@ export default {
 		},
 		obtenirScores(){
 			this.resetEtats() //cacher l'etat precedent
-			this.DEBUG_obtenirScore().then(response=>{
+			Kahoot.obtenirScore().then(response=>{
 				this.tempsLimite=response.tempsLimite
 				//afficher cet etat
 				this.etats.score=true
@@ -98,7 +99,7 @@ export default {
 			this.resetEtats() //cacher l'etat precedent
 			//afficher cet etat
 			this.etats.salleAttente=true
-			this.DEBUG_obtenirSalleAttente().then(response=>{
+			Kahoot.obtenirSalleAttente().then(response=>{
 				this.tempsLimite=response.tempsLimite
 				this.salleAttente=response
 
@@ -128,36 +129,7 @@ export default {
 		
 		resetEtats(){
 			Object.keys(this.etats).forEach(nomEtat=>this.etats[nomEtat]=0)
-		},
-		//simuler l'api avec des stubs
-		async DEBUG_obtenirQuestion(){
-			return JSON.parse(`
-				{
-					"question":"Qui a reçu le prix Nobel de chimie en 1911, pour avoir réussi à isoler un gramme de radium ?",
-					"reponses":["Marie Curie","Einstein","Sophie Germain","Ada Lovelace"],
-					"tempsLimite":${Date.now()+this.DEBUG_temps /* maintenant + 10 secondes pour repondre*/}
-				}
-			`)
-		},
-		async DEBUG_obtenirScore(){
-			return JSON.parse(`
-				{
-					"score":1337,
-					"pointsGagne":100,
-					"leaderboard":{"Moi":1337, "Titouan":320},
-					"tempsLimite":${Date.now()+this.DEBUG_temps /* maintenant + 10 secondes le temps de regarder les scores*/}
-				}
-			`)
-		},
-		async DEBUG_obtenirSalleAttente(){
-			return JSON.parse(`
-				{
-					"joueurs":["Moi","Titouan"],
-					"partieDemarree":true,
-					"tempsLimite":${Date.now()+this.DEBUG_temps /* maintenant + 1 seconde*/}
-				}
-			`)
-		},
+		}
 	}
 }
 
