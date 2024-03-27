@@ -1,5 +1,4 @@
 <script>
-import { REST_API } from '@/assets/const'
 import { RouterLink } from 'vue-router'
 import { Utilisateur } from "@/data/utilisateur"
 

@@ -1,5 +1,4 @@
 <script>
-import { REST_API, ALGO_HASH_MDP } from '@/assets/const'
 import { Utilisateur } from "@/data/utilisateur"
 
 export default {
