@@ -26,6 +26,6 @@ fun scientifiqueListeScreen(viewModel: ScientifiquesDecouvertsVM = viewModel(),
         },
     ) { innerPadding ->
         viewModel.getScientifiques(1)
-        scientifiqueListeContainer(liste, innerPadding)
+        scientifiqueListeContainer(liste.scientifiques, innerPadding)
     }
 }

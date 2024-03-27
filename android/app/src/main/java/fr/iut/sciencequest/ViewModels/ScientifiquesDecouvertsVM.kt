@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import fr.iut.sciencequest.ViewModels.UiStates.ScientifiqueDecouvertsUIState
 import fr.iut.sciencequest.model.buisness.Scientifique.fetchScientifiqueById
 import fr.iut.sciencequest.model.buisness.Scientifique.fetchScientifiques
 import fr.iut.sciencequest.model.dto.extensions.ToModel
@@ -17,7 +18,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class ScientifiquesDecouvertsVM : ViewModel() {
-    var listeScientifique: MutableStateFlow<MutableList<Scientifique>> = MutableStateFlow(ArrayList<Scientifique>().toMutableStateList())
+    var listeScientifique: MutableStateFlow<ScientifiqueDecouvertsUIState> = MutableStateFlow(ScientifiqueDecouvertsUIState())
 
     // fun getScientifiqueById(id: Int) {
     //     Log.d("ViewModelScientifique", "Recup un scientifique d'id: $id")
@@ -30,7 +31,7 @@ class ScientifiquesDecouvertsVM : ViewModel() {
         Log.d("ViewModelScientifique","Recup la liste de scientifiques")
         viewModelScope.launch {
             fetchScientifiques(page).collect {
-                listeScientifique.value = it.scientifiques.ToModel().toMutableList()
+                listeScientifique.value = ScientifiqueDecouvertsUIState(it.scientifiques.ToModel().toMutableList())
             }
         }
     }
