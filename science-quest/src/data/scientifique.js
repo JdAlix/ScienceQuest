@@ -27,11 +27,18 @@ export class Scientifiques extends PagedDataObject{
     }
 }
 
-export class ScientifiqueIndices extends DataObject{
+export class ScientifiqueIndice extends DataObject{
     constructor(parsedJSON){
         super(parsedJSON)
     }
-    static get(id){
-        fetch(`${REST_API}/scientifiques/${id}/indices`)
+}
+
+export class ScientifiqueIndices extends PagedDataObject{
+    constructor(parsedJSON){
+        super(parsedJSON, ScientifiqueIndice)
+    }
+    static async getPage(idScientifique, size){
+        const response = await fetch(`${REST_API}/scientifiques/${idScientifique}/indices`)
+        return new this(await response.json())
     }
 }
