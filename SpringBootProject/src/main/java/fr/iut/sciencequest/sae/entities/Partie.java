@@ -44,5 +44,9 @@ public class Partie {
             joinColumns = @JoinColumn(name = "idpartie"),
             inverseJoinColumns = @JoinColumn(name="idthematique")
     )
-    List<Thematique> thematiques;
+    private List<Thematique> thematiques;
+
+    @ManyToOne
+    @JoinColumn(name="iddifficulte", nullable = false)
+    private Difficulte difficulte;
 }

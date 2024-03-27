@@ -9,10 +9,7 @@ import fr.iut.sciencequest.sae.entities.Partie;
 import fr.iut.sciencequest.sae.entities.Thematique;
 import fr.iut.sciencequest.sae.exceptions.notFound.PartieNotFoundException;
 import fr.iut.sciencequest.sae.exceptions.partie.PartyAlreadyStartedException;
-import fr.iut.sciencequest.sae.services.JeuService;
-import fr.iut.sciencequest.sae.services.JoueurService;
-import fr.iut.sciencequest.sae.services.PartieService;
-import fr.iut.sciencequest.sae.services.ThematiqueService;
+import fr.iut.sciencequest.sae.services.*;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -36,6 +33,7 @@ public class PartieController {
     private final JoueurService joueurService;
     private final JeuService jeuService;
     private final ThematiqueService thematiqueService;
+    private final DifficulteService difficulteService;
     private final ModelMapper modelMapper;
 
     @RequestMapping(value = "/{codeInvitation}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -47,13 +45,18 @@ public class PartieController {
     @ResponseStatus(HttpStatus.CREATED)
     public PartieDTO createPartie(@RequestBody @Valid PartieRequest request) {
         Partie partie = new Partie();
+
         partie.setJeu(this.jeuService.findById(request.getIdJeu()));
+
         partie.setJoueurs(List.of(this.joueurService.findById(request.getIdJoueur())));
 
         partie.setThematiques(new ArrayList<>());
         for(int idThematique: request.getThematiques()){
             partie.getThematiques().add(this.thematiqueService.findById(idThematique));
         }
+
+        partie.setDifficulte(this.difficulteService.findById(request.getIdDifficulte()));
+
         partie =  this.partieService.create(partie);
         return this.modelMapper.map(partie, PartieDTO.class);
     }

@@ -1,5 +1,6 @@
 package fr.iut.sciencequest.sae.dto.partie;
 
+import fr.iut.sciencequest.sae.dto.difficulte.DifficulteSimpleDTO;
 import fr.iut.sciencequest.sae.dto.jeu.JeuDTO;
 import fr.iut.sciencequest.sae.dto.joueur.JoueurSimpleDTO;
 import fr.iut.sciencequest.sae.dto.thematique.ThematiqueSimpleDTO;
@@ -29,4 +30,6 @@ public class PartieDTO extends RepresentationModel<PartieDTO> {
     private JeuDTO jeu;
     @NotEmpty
     private List<ThematiqueSimpleDTO> thematiques;
+    @NotNull
+    private DifficulteSimpleDTO difficulte;
 }

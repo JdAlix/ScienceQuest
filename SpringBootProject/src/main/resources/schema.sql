@@ -114,6 +114,7 @@ CREATE TABLE Partie(
                        id SERIAL PRIMARY KEY,
                        codeInvitation varchar(5) UNIQUE DEFAULT make_uid(),
                        idJeu integer REFERENCES Jeu(id),
+                       idDifficulte integer REFERENCES Difficulte(id),
                        status varchar(128) DEFAULT 'pending',
                        dateCreation timestamp DEFAULT CURRENT_TIMESTAMP
 );
