@@ -10,7 +10,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import fr.iut.sciencequest.ViewModels.ScientifiquesDecouvertsVM
-import fr.iut.sciencequest.model.buisness.fetchScientifiqueById
 import fr.iut.sciencequest.model.dto.extensions.ToModel
 import fr.iut.sciencequest.navigation.NavHost
 import fr.iut.sciencequest.stub.StubScientifique1
@@ -19,6 +18,7 @@ import fr.iut.sciencequest.ui.theme.ScienceQuestTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val vm by viewModels<ScientifiquesDecouvertsVM>()
         setContent {
             ScienceQuestTheme {
                 // A surface container using the 'background' color from the theme
@@ -26,7 +26,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    NavHost()
+                    NavHost(vm)
                 }
             }
         }

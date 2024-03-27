@@ -3,6 +3,8 @@ package fr.iut.sciencequest.view.scientifiques
 import android.util.Log
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -17,12 +19,13 @@ import fr.iut.sciencequest.view.TopBar
 fun scientifiqueListeScreen(viewModel: ScientifiquesDecouvertsVM = viewModel(),
                             goToAccount: () -> Unit,
                             goToHome: () -> Unit) {
-    Log.d("Vue","je suis la")
+    val liste by viewModel.listeScientifique.collectAsState()
     Scaffold(
         topBar = {
             TopBar(goToAccount, goToHome, stringResource(id = R.string.sc_decouverts))
         },
     ) { innerPadding ->
-        scientifiqueListeContainer(viewModel.getScientifiques(), innerPadding)
+        viewModel.getScientifiques(1)
+        scientifiqueListeContainer(liste, innerPadding)
     }
 }
