@@ -3,6 +3,7 @@ import PenduDessin from './PenduDessin.vue'
 import { REST_API } from "@/assets/const";
 import { Scientifiques } from "@/data/scientifique"
 import { Thematiques } from '@/data/thematique';
+import { Difficultes } from '@/data/difficulte';
 
 export default{
     data() {
@@ -18,6 +19,10 @@ export default{
             afficherChoixThematiques:false,
             thematiquesDispo:[],
             choixThematique:-1,
+
+            afficherChoixDifficultes:false,
+            difficultesDispo:[],
+            choixDifficulte:-1,
             
             //a recuperer a partir de l'api (prendre nom et prenom d'un scientifique nous meme) 
             motADeviner: "einstein",
@@ -37,6 +42,11 @@ export default{
             if(to && this.thematiquesDispo.length==0){
                 Thematiques.getPage(0,999).then(thematiques=>this.thematiquesDispo=thematiques._embedded)
             }
+        },
+        afficherChoixDifficultes(to){
+            if(to && this.difficultesDispo.length==0){
+                Difficultes.getPage(0,999).then(difficultes=>this.difficultesDispo=difficultes._embedded)
+            }
         }
     },
     methods: {
@@ -49,7 +59,8 @@ export default{
             Scientifiques.getPage(
                 this.intAleatoire(this.api_pagesMaximum),
                 0,
-                this.afficherChoixThematiques ? this.choixThematique : -1
+                this.afficherChoixThematiques ? this.choixThematique : -1,
+                this.afficherChoixDifficultes ? this.choixDifficulte : -1
                 ).then(json=>{
                     //prendre le scientifique de la requete
                     const arrayScientifique=json._embedded
@@ -162,6 +173,16 @@ export default{
                 <select v-if="afficherChoixThematiques" v-model="choixThematique">
                     <option v-for="thematique in thematiquesDispo" :value="thematique.id">
                         {{ thematique.libelle }}
+                    </option>
+                </select>
+            </div>
+            <div>
+                <label for="afficherChoixDifficultesCheckbox">Choisir une difficulté </label>
+                <input type="checkbox" id="afficherChoixDifficultesCheckbox" v-model="afficherChoixDifficultes"/>
+                <br/>
+                <select v-if="afficherChoixDifficultes" v-model="choixDifficulte">
+                    <option v-for="difficulte in difficultesDispo" :value="difficulte.id">
+                        {{ difficulte.libelle }}
                     </option>
                 </select>
             </div>
