@@ -18,6 +18,8 @@ public class Reponse{
 
     private String reponse;
 
+    private Boolean estValide;
+
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "idquestion", nullable = false)

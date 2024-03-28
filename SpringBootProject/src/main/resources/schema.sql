@@ -69,6 +69,7 @@ CREATE TABLE Question(
 CREATE TABLE Reponse(
                         id SERIAL PRIMARY KEY,
                         reponse varchar(255) NOT NULL,
+                        estValide boolean NOT NULL,
                         idQuestion integer REFERENCES Question(id),
                         idScientifique integer REFERENCES Scientifique(id)
 );
@@ -214,11 +215,15 @@ INSERT INTO Indice (libelle, idscientifique) VALUES
                                                  ('S''appelle Marie', 1);
 
 -- Réponses
-INSERT INTO Reponse(reponse, idQuestion, idScientifique)
+INSERT INTO Reponse(reponse, estValide, idQuestion, idScientifique)
 VALUES
-    ('Marie Curie', 1, 1),
-    ('Albert Einstein', 2, 2),
-    ('Sophie Germain', 3, 3);
+    ('Marie Curie', true, 1, 1),
+    ('Albert Einstein', false, 1, 2),
+
+    ('Marie Curie',true, 2, 1),
+    ('Albert Einstein',false, 2, 2),
+
+    ('Sophie Germain', true, 3, 3);
 
 
 -- Partie
