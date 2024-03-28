@@ -8,4 +8,9 @@
     <string name="pendu">Pendu</string>
     <string name="kahoot">Kahoot</string>
     <string name="sc_decouverts">Scientifiques Decouverts</string>
+    <string name="no_account">Je n\'ai pas de compte</string>
+    <string name="inscription">S\'inscrire</string>
+    <string name="continue_no_acc">Continuer sans compte</string>
+    <string name="no_account_details">Si vous n\'avez pas encore de compte, vous avez deux possibilitées, soit vous continuez sans compte, soit vous vous inscrivez</string>
+    <string name="coming_soon">Coming soon...</string>
 </resources>
