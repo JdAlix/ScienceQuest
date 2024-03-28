@@ -15,6 +15,7 @@ import TestParametreURL from "./components/TestParametreURL.vue"
 import Login from "./components/Login.vue"
 import KahootVue from './components/jeux/kahoot/Kahoot.vue'
 import KahootPartie from './components/jeux/kahoot/KahootPartie.vue'
+import CreerPartie from './components/jeux/creerPartie.vue'
 import Pendu from './components/jeux/pendu/Pendu.vue'
 import AdminGestionDonnees from "./components/admin/gestion/Liste.vue"
 import Inscription from './components/Inscription.vue'
@@ -25,6 +26,7 @@ const routes = [
     { path: '/inscription', component: Inscription },
     { path: '/kahoot', component: KahootVue}, //TODO: changer la route pour qu'elle soit trouvée automatiquement par le serveur (ce que demande l'utilisateur)
     { path: '/kahoot/partie/:code', component: KahootPartie},
+    { path: '/partie', component: CreerPartie},
     { path: '/pendu', component: Pendu },
     { path: '/exemple/:id', component: TestParametreURL },
     { path: '/admin/gestion', component: AdminGestionDonnees },
