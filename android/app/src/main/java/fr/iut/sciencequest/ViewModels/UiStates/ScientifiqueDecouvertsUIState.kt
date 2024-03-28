@@ -3,7 +3,7 @@ package fr.iut.sciencequest.ViewModels.UiStates
 import fr.iut.sciencequest.model.metier.Scientifique
 
 class ScientifiqueDecouvertsUIState {
-    lateinit var scientifiques: MutableList<Scientifique>
+    var scientifiques: MutableList<Scientifique>
 
     constructor() {
         scientifiques = ArrayList<Scientifique>().toMutableList()
