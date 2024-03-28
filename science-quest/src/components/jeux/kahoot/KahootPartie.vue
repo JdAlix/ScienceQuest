@@ -35,8 +35,7 @@ export default {
 				score:0,
 				pointsGagne:0,
 			},
-
-			DEBUG_temps:1000,
+			pointsAnimation:0
 		}
 	},
 	mounted(){
@@ -82,10 +81,14 @@ export default {
 			this.resetEtats() //cacher l'etat precedent
 			Kahoot.obtenirScore().then(response=>{
 				this.tempsLimite=response.tempsLimite
+				this.score=response
 				//afficher cet etat
 				this.etats.score=true
 
-				this.score=response
+				//reduire les points pour pouvoir l'incrementer progressivement
+				this.pointsAnimation=this.score.score-this.score.pointsGagne
+				this.animerIncrementationPoints()
+
 				if(this.tempsLimite!=-1){
 					//executer la fonction en boucle jusqu'a ce que la partie se termine
 					this.obtenirTimeoutId=window.setTimeout(this.choisirLeProchainEtat(),(this.tempsLimite+100)-Date.now())
@@ -126,10 +129,16 @@ export default {
 			}
 			this.compteARebours=((this.tempsLimite-Date.now())/1000).toFixed(KAHOOT_NB_APRES_LA_VIRGULE_COMPTE_A_REBOURS)
 		},
-		
 		resetEtats(){
 			Object.keys(this.etats).forEach(nomEtat=>this.etats[nomEtat]=0)
-		}
+		},
+		animerIncrementationPoints(){
+			if(this.pointsAnimation<this.score.score){
+				this.pointsAnimation++
+				//continuer jusqu'a que les points sont tous additionnés
+				window.setTimeout(this.animerIncrementationPoints,5)
+			}
+		},
 	}
 }
 
@@ -158,7 +167,7 @@ export default {
 		<button v-for="reponse in question.reponses" @click="repondre(reponse)">{{ reponse }}</button>
 	</div>
 	<div v-show="etats.score">
-		<h2>Votre score : {{ score.score }} (+{{ score.pointsGagne }})</h2>
+		<h2>Votre score : {{ pointsAnimation }} (+{{ score.pointsGagne }})</h2>
 		<ol class="leaderboard">
 			<li v-for="joueur in Object.keys(score.leaderboard)">
 				{{ joueur }} : {{score.leaderboard[joueur]}}
