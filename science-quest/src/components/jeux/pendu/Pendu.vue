@@ -163,7 +163,7 @@ export default{
                 <!-- l'api devrait retourner le mot entier quand la vie est a 0 -->
                 <h2 style="font-family: monospace">{{ progression }}</h2>
                 <p>{{ description }}</p>
-                <img :src="imageScientifique">
+                <img :src="imageScientifique" :alt="'Photo de '+motADeviner">
             </div>
             <button class="btn btn-primary" v-on:click="creerPartie">Créer une partie</button>
             <div>
