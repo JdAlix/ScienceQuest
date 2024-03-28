@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -17,24 +18,29 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import fr.iut.sciencequest.R
+import fr.iut.sciencequest.ViewModels.KahootViewModel
 import fr.iut.sciencequest.model.dto.question.QuestionWithSimpleResponseDTO
 import fr.iut.sciencequest.model.dto.reponse.ReponseSimpleDTO
 import fr.iut.sciencequest.stub.StubQuestionWithReponses
 import fr.iut.sciencequest.view.TopBar
 
 @Composable
-fun KahootScreen(goToAccount: () -> Unit, goToHome: () -> Unit, question: QuestionWithSimpleResponseDTO) {
+fun KahootScreen(viewModel: KahootViewModel = viewModel(),
+                 goToAccount: () -> Unit,
+                 goToHome: () -> Unit) {
+    val state = viewModel.uiState.collectAsState()
     Column(modifier = Modifier.fillMaxWidth()) {
         TopBar(goToAccount, goToHome, stringResource(id = R.string.kahoot))
-        KahootPlayer(question)
+        KahootPlayer(state.value.question)
     }
 }
 
 @Preview
 @Composable
 fun KahootScreenPreview(){
-    KahootScreen(goToAccount = {}, goToHome = {}, StubQuestionWithReponses)
+    KahootScreen(goToAccount = {}, goToHome = {})
 }
 
 

@@ -24,7 +24,7 @@ fun NavHost(context: Context) {
     NavHost(
         modifier = Modifier.fillMaxSize(),
         navController = navController,
-        startDestination = "login"
+        startDestination = "kahoot"
     ) {
         composable(route = "home") {
             HomeScreen(
@@ -83,8 +83,7 @@ fun NavHost(context: Context) {
                 },
                 goToHome = {
                     navController.navigate("home")
-                },
-                StubQuestionWithReponses)
+                })
         }
 
         composable(route = "listeScientifiques") {
