@@ -25,7 +25,7 @@ class PenduViewModel : ViewModel() {
             var nvMotATrou = uiState.value.motATrou
             for (index in uiState.value.motATrouver.indices) {
                 if (uiState.value.motATrouver[index] == lettre) {
-                    nvMotATrou = nvMotATrou.replaceRange(index,index, lettre.toString())
+                    nvMotATrou = nvMotATrou.replaceRange(index,index + 1, lettre.toString())
                 }
             }
             uiState.value = PenduUIState(true,
