@@ -17,13 +17,19 @@ class PenduViewModel : ViewModel() {
         Log.d("PenduViewModel","Un utilisateur initialise une partie")
         viewModelScope.launch {
             fetchScientifiqueById(1).collect {
+                val nomComplet = it.prenom + " " + it.nom
+                Log.d("ViewModelPendu",nomComplet)
                 var motATrou = ""
-                for (chr in it.nom) {
-                    motATrou += "_"
+                for (chr in nomComplet) {
+                    motATrou += if (chr == ' ') {
+                        ' '
+                    } else {
+                        '_'
+                    }
                 }
                 uiState.value = PenduUIState(
                     isActionGood = true,
-                    motATrouver = it.nom,
+                    motATrouver = nomComplet,
                     motATrou = motATrou
                 )
             }
@@ -34,7 +40,7 @@ class PenduViewModel : ViewModel() {
     // motAct : état actuel du mot trouvé par l'utilisateur
     fun PlayAction(lettre: Char) {
         Log.d("PenduViewModel","Un utilisateur joue une action")
-        if (uiState.value.motATrou.contains(lettre)) {
+        if (lettre == ' ' || uiState.value.motATrou.contains(lettre)) {
             Log.d("PenduViewModel","L'utilisateur a fait une action invalide")
             uiState.value = PenduUIState(false,
                 false,
@@ -42,8 +48,7 @@ class PenduViewModel : ViewModel() {
                 uiState.value.motATrouver,
                 uiState.value.motATrou
             )
-        }
-        if (uiState.value.motATrouver.contains(lettre)) {
+        } else if (uiState.value.motATrouver.contains(lettre)) {
             Log.d("PenduViewModel","L'utilisateur a trouvé une lettre")
             var nvMotATrou = uiState.value.motATrou
             for (index in uiState.value.motATrouver.indices) {
