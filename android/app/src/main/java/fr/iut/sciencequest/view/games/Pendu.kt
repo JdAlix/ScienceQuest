@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -49,9 +50,9 @@ fun PenduScreen(viewModel: PenduViewModel = viewModel(),
                             goToHome()
                         }
                     }},
-                modifier = Modifier.padding(20.dp).fillMaxWidth())
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-                Text(text = state.value.nbViesRestantes.toString())
+                modifier = Modifier.padding(20.dp))
+            Button(onClick = { viewModel.InitPartie() }) {
+                Text(text = stringResource(id = R.string.reset_game))
             }
         }
     }

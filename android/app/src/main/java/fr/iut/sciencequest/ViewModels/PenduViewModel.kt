@@ -2,17 +2,45 @@ package fr.iut.sciencequest.ViewModels
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import fr.iut.sciencequest.ViewModels.UiStates.PenduUIState
+import fr.iut.sciencequest.model.buisness.Scientifique.fetchScientifiqueById
+import fr.iut.sciencequest.model.buisness.Scientifique.fetchScientifiques
+import fr.iut.sciencequest.model.dto.extensions.ToModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 
 class PenduViewModel : ViewModel() {
-    var uiState = MutableStateFlow<PenduUIState>(PenduUIState())
+    var uiState = MutableStateFlow(PenduUIState())
+
+    fun InitPartie() {
+        Log.d("PenduViewModel","Un utilisateur initialise une partie")
+        viewModelScope.launch {
+            fetchScientifiqueById(1).collect {
+                val nomComplet = it.prenom + " " + it.nom
+                Log.d("ViewModelPendu",nomComplet)
+                var motATrou = ""
+                for (chr in nomComplet) {
+                    motATrou += if (chr == ' ') {
+                        ' '
+                    } else {
+                        '_'
+                    }
+                }
+                uiState.value = PenduUIState(
+                    isActionGood = true,
+                    motATrouver = nomComplet,
+                    motATrou = motATrou
+                )
+            }
+        }
+    }
 
     // mot : mot à trouver
     // motAct : état actuel du mot trouvé par l'utilisateur
-    public fun PlayAction(lettre: Char) {
+    fun PlayAction(lettre: Char) {
         Log.d("PenduViewModel","Un utilisateur joue une action")
-        if (uiState.value.motATrou.contains(lettre)) {
+        if (lettre == ' ' || uiState.value.motATrou.contains(lettre)) {
             Log.d("PenduViewModel","L'utilisateur a fait une action invalide")
             uiState.value = PenduUIState(false,
                 false,
@@ -35,7 +63,6 @@ class PenduViewModel : ViewModel() {
             if (nvMotATrou.equals(uiState.value.motATrouver)) {
                 isWon = true
             }
-
             uiState.value = PenduUIState(isWon,
                 true,
                 uiState.value.nbViesRestantes,
