@@ -21,18 +21,21 @@ class PenduViewModel : ViewModel() {
                 uiState.value.motATrou
             )
         }
-        if (uiState.value.motATrouver.contains(lettre)) {
+        if (uiState.value.motATrouver.lowercase().contains(lettre.lowercase())) {
             Log.d("PenduViewModel","L'utilisateur a trouvé une lettre")
             var nvMotATrou = uiState.value.motATrou
             for (index in uiState.value.motATrouver.indices) {
-                if (uiState.value.motATrouver[index] == lettre) {
-                    nvMotATrou = nvMotATrou.replaceRange(index,index + 1, lettre.toString())
+                if (uiState.value.motATrouver[index].lowercase() == lettre.lowercase()) {
+                    nvMotATrou = nvMotATrou.replaceRange(index,index + 1,
+                        uiState.value.motATrouver[index].toString()
+                    )
                 }
             }
             var isWon = false
             if (nvMotATrou.equals(uiState.value.motATrouver)) {
                 isWon = true
             }
+
             uiState.value = PenduUIState(isWon,
                 true,
                 uiState.value.nbViesRestantes,
