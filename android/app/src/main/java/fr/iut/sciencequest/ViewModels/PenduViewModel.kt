@@ -31,7 +31,7 @@ class PenduViewModel : ViewModel() {
             uiState.value = PenduUIState(true,
                 uiState.value.nbViesRestantes,
                 uiState.value.motATrouver,
-                uiState.value.motATrou
+                nvMotATrou
             )
         } else {
             Log.d("PenduViewModel","L'utilisateur s'est trompé de lettre")
