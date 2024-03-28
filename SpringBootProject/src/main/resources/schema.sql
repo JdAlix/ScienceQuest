@@ -13,6 +13,8 @@ DROP TABLE IF EXISTS Indice CASCADE;
 DROP TABLE IF EXISTS Scientifique CASCADE;
 DROP TABLE IF EXISTS Thematique CASCADE;
 DROP TABLE IF EXISTS ThematiqueSelectionnee CASCADE;
+DROP TABLE IF EXISTS PartieKahoot CASCADE;
+DROP TABLE IF EXISTS QuestionPartieKahoot CASCADE;
 DROP TABLE IF EXISTS Difficulte;
 
 
@@ -120,6 +122,12 @@ CREATE TABLE Partie(
                        dateCreation timestamp DEFAULT CURRENT_TIMESTAMP
 );
 
+
+-- Partie Kahoot
+CREATE TABLE PartieKahoot(
+                    idPartie integer PRIMARY KEY REFERENCES Partie(id)
+);
+
 -- JOUEUR
 
 CREATE TABLE Joueur(
@@ -160,6 +168,15 @@ CREATE TABLE ThematiqueSelectionnee(
                           idThematique integer REFERENCES Thematique(id),
                           PRIMARY KEY (idPartie, idThematique)
 );
+
+
+-- QuestionPartieKahoot
+CREATE TABLE QuestionPartieKahoot(
+                          idPartieKahoot integer REFERENCES PartieKahoot(idPartie),
+                          idQuestion integer REFERENCES Question(id),
+                          PRIMARY KEY (idPartieKahoot, idQuestion)
+);
+
 
 -- TRIGGERS
 
