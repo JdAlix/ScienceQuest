@@ -3,6 +3,7 @@ package fr.iut.sciencequest.view.games
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -43,10 +44,21 @@ fun PenduScreen(viewModel: PenduViewModel = viewModel(),
                         }
                     }},
                 modifier = Modifier.padding(20.dp))
+            afficherVies(state.value.nbViesRestantes)
             Button(onClick = { viewModel.InitPartie() }) {
                 Text(text = stringResource(id = R.string.reset_game))
             }
         }
+    }
+}
+
+@Preview
+@Composable
+fun afficherVies(nbVies : Int = 10) {
+    Row {
+       for (i in 1..nbVies) {
+           Text("\u2665 ")
+       }
     }
 }
 
