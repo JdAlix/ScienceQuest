@@ -1,10 +1,8 @@
 package fr.iut.sciencequest.sae.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -50,5 +48,5 @@ public class Partie {
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
-    private Etat status = Etat.Pending;
+    private Status status = Status.Pending;
 }

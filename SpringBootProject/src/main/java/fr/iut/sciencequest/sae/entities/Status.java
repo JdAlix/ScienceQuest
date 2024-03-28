@@ -1,5 +1,5 @@
 package fr.iut.sciencequest.sae.entities;
 
-public enum Etat {
+public enum Status {
     Pending,
 }

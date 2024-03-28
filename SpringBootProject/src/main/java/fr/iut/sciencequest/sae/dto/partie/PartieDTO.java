@@ -4,6 +4,7 @@ import fr.iut.sciencequest.sae.dto.difficulte.DifficulteSimpleDTO;
 import fr.iut.sciencequest.sae.dto.jeu.JeuDTO;
 import fr.iut.sciencequest.sae.dto.joueur.JoueurSimpleDTO;
 import fr.iut.sciencequest.sae.dto.thematique.ThematiqueSimpleDTO;
+import fr.iut.sciencequest.sae.entities.Status;
 import fr.iut.sciencequest.sae.entities.Thematique;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -32,4 +33,6 @@ public class PartieDTO extends RepresentationModel<PartieDTO> {
     private List<ThematiqueSimpleDTO> thematiques;
     @NotNull
     private DifficulteSimpleDTO difficulte;
+    @NotNull
+    private Status status;
 }
