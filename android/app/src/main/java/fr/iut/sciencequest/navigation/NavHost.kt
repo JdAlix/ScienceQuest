@@ -24,7 +24,7 @@ fun NavHost(context: Context) {
     NavHost(
         modifier = Modifier.fillMaxSize(),
         navController = navController,
-        startDestination = "pendu"
+        startDestination = "login"
     ) {
         composable(route = "home") {
             HomeScreen(
