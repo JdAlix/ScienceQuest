@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -37,11 +38,14 @@ fun PenduScreen(viewModel: PenduViewModel = viewModel(),
                         viewModel.PlayAction(it[0])
                         if ((!state.value.isWon) && (state.value.nbViesRestantes == 0)) {
                             goToHome()
-                        } else {
+                        } else if (state.value.isWon) {
                             Toast.makeText(context,"Vous avez gagné !",Toast.LENGTH_LONG).show()
                         }
                     }},
                 modifier = Modifier.padding(20.dp))
+            Button(onClick = { viewModel.InitPartie() }) {
+                Text(text = stringResource(id = R.string.reset_game))
+            }
         }
     }
 }
