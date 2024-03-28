@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -32,9 +33,6 @@ public class Partie {
     @JoinColumn(name="idjeu", nullable = false)
     private Jeu jeu;
 
-    @Column(name = "status") //default value : see Schema.sql
-    private String status;
-
     @Column(name = "datecreation") //default value : see Schema.sql
     private Date dateCreation;
 
@@ -49,4 +47,8 @@ public class Partie {
     @ManyToOne
     @JoinColumn(name="iddifficulte", nullable = false)
     private Difficulte difficulte;
+
+    @Column(name = "status", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Etat status = Etat.Pending;
 }

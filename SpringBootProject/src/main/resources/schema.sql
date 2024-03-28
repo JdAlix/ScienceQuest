@@ -115,7 +115,7 @@ CREATE TABLE Partie(
                        codeInvitation varchar(5) UNIQUE DEFAULT make_uid(),
                        idJeu integer REFERENCES Jeu(id),
                        idDifficulte integer REFERENCES Difficulte(id),
-                       status varchar(128) DEFAULT 'pending',
+                       status varchar(128),
                        dateCreation timestamp DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -171,9 +171,6 @@ AS '
     BEGIN
         IF OLD.codeInvitation IS NULL THEN
             NEW.codeInvitation = make_uid();
-        END IF;
-        IF OLD.status IS NULL THEN
-            NEW.status = ''pending'';
         END IF;
         IF OLD.dateCreation IS NULL THEN
             NEW.dateCreation = CURRENT_TIMESTAMP;
