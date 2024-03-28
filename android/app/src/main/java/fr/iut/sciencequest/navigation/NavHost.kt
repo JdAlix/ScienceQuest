@@ -1,16 +1,14 @@
 package fr.iut.sciencequest.navigation
 
-import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import fr.iut.sciencequest.ViewModels.PenduViewModel
 import fr.iut.sciencequest.ViewModels.ScientifiquesDecouvertsVM
-import fr.iut.sciencequest.model.dto.extensions.ToModel
 import fr.iut.sciencequest.stub.StubQuestionWithReponses
-import fr.iut.sciencequest.stub.getScientifiqueListeStub
 import fr.iut.sciencequest.view.AccountScreen
 import fr.iut.sciencequest.view.HomeScreen
 import fr.iut.sciencequest.view.LoginScreen
@@ -20,12 +18,12 @@ import fr.iut.sciencequest.view.scientifiques.scientifiqueListeScreen
 
 
 @Composable
-fun NavHost(scientifiquesDecouvertsVM: ScientifiquesDecouvertsVM) {
+fun NavHost() {
     val navController = rememberNavController()
     NavHost(
         modifier = Modifier.fillMaxSize(),
         navController = navController,
-        startDestination = "listeScientifiques"
+        startDestination = "pendu"
     ) {
         composable(route = "home") {
             HomeScreen(
