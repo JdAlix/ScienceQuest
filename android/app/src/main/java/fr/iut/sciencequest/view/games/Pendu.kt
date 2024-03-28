@@ -1,5 +1,7 @@
 package fr.iut.sciencequest.view.games
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -19,6 +21,7 @@ import fr.iut.sciencequest.view.TopBar
 
 @Composable
 fun PenduScreen(viewModel: PenduViewModel = viewModel(),
+                context: Context,
                 goToAccount: () -> Unit,
                 goToHome: () -> Unit) {
     val state = viewModel.uiState.collectAsState()
@@ -32,6 +35,11 @@ fun PenduScreen(viewModel: PenduViewModel = viewModel(),
                 onValueChange = {
                     if (it.isNotEmpty()) {
                         viewModel.PlayAction(it[0])
+                        if ((!state.value.isWon) && (state.value.nbViesRestantes == 0)) {
+                            goToHome()
+                        } else {
+                            Toast.makeText(context,"Vous avez gagné !",Toast.LENGTH_LONG).show()
+                        }
                     }},
                 modifier = Modifier.padding(20.dp))
         }
@@ -41,7 +49,7 @@ fun PenduScreen(viewModel: PenduViewModel = viewModel(),
 @Preview
 @Composable
 fun PenduPreview(){
-    PenduScreen(goToAccount = {}) {
-
-    }
+    //PenduScreen(goToAccount = {}) {
+//
+    //}
 }

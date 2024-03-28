@@ -15,6 +15,7 @@ class PenduViewModel : ViewModel() {
         if (uiState.value.motATrou.contains(lettre)) {
             Log.d("PenduViewModel","L'utilisateur a fait une action invalide")
             uiState.value = PenduUIState(false,
+                false,
                 uiState.value.nbViesRestantes,
                 uiState.value.motATrouver,
                 uiState.value.motATrou
@@ -28,14 +29,20 @@ class PenduViewModel : ViewModel() {
                     nvMotATrou = nvMotATrou.replaceRange(index,index + 1, lettre.toString())
                 }
             }
-            uiState.value = PenduUIState(true,
+            var isWon = false
+            if (nvMotATrou.equals(uiState.value.motATrouver)) {
+                isWon = true
+            }
+            uiState.value = PenduUIState(isWon,
+                true,
                 uiState.value.nbViesRestantes,
                 uiState.value.motATrouver,
                 nvMotATrou
             )
         } else {
             Log.d("PenduViewModel","L'utilisateur s'est trompé de lettre")
-            uiState.value = PenduUIState(true,
+            uiState.value = PenduUIState(false,
+                true,
                 uiState.value.nbViesRestantes - 1,
                 uiState.value.motATrouver,
                 uiState.value.motATrou

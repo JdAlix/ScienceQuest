@@ -1,5 +1,6 @@
 package fr.iut.sciencequest.navigation
 
+import android.content.Context
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -18,7 +19,7 @@ import fr.iut.sciencequest.view.scientifiques.scientifiqueListeScreen
 
 
 @Composable
-fun NavHost() {
+fun NavHost(context: Context) {
     val navController = rememberNavController()
     NavHost(
         modifier = Modifier.fillMaxSize(),
@@ -71,7 +72,8 @@ fun NavHost() {
                 },
                 goToHome = {
                     navController.navigate("home")
-                }
+                },
+                context = context
             )
         }
 
