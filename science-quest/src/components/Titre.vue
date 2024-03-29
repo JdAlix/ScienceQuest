@@ -35,6 +35,9 @@ export default{
         <li class="nav-item">
           <router-link class="nav-link" to="/">Accueil</router-link>
         </li>
+        <li class="nav-item">
+          <router-link class="nav-link" to="/partie">Créer une partie</router-link>
+        </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Jeux
