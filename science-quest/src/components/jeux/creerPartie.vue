@@ -28,7 +28,11 @@ export default {
     },
 	mounted(){
 		ListeJeux.get().then(jeux=>this.jeuxDispo=Object.values(jeux))
-        Difficultes.getPage(0,999).then(difficultes=>this.difficultesDispo=difficultes._embedded)
+        Difficultes.getPage(0,999).then(difficultes=>{
+            this.difficultesDispo=difficultes._embedded
+            //choisir une difficulté par défaut
+            this.choixDifficulte=this.difficultesDispo[0].id
+        })
         Thematiques.getPage(0,999).then(thematiques=>this.thematiquesDispo=thematiques._embedded)
 	}
 }
@@ -44,7 +48,7 @@ export default {
         </div>
         <div class="form-floating">
             <select name="idJeu">
-                <option v-for="jeu in jeuxDispo" :value="jeu.id">
+                <option v-for="jeu in jeuxDispo" :value="jeu.id" required>
                     {{ jeu.nom }}
                 </option>
             </select>
@@ -52,7 +56,7 @@ export default {
         <div class="checkbox mb-3">
             <label for="thematiquesInput">Thématiques</label>
             <br/>
-            <select v-model="choixThematiques" id="thematiquesInput" multiple>
+            <select v-model="choixThematiques" id="thematiquesInput" multiple required>
                 <option v-for="thematique in thematiquesDispo" :value="thematique.id">
                     {{ thematique.libelle }}
                 </option>
@@ -61,7 +65,7 @@ export default {
         <div class="checkbox mb-3">
             <label for="idDifficulteInput">Difficulté</label>
             <br/>
-            <select v-model="choixDifficulte" id="idDifficulteInput" name="idDifficulte">
+            <select v-model="choixDifficulte" id="idDifficulteInput" name="idDifficulte" required>
                 <option v-for="difficulte in difficultesDispo" :value="difficulte.id">
                     {{ difficulte.libelle }}
                 </option>
