@@ -117,7 +117,7 @@ CREATE TABLE Partie(
                        id SERIAL PRIMARY KEY,
                        codeInvitation varchar(5) UNIQUE DEFAULT make_uid(),
                        idJeu integer REFERENCES Jeu(id),
-                       idDifficulte integer REFERENCES Difficulte(id),
+                       idDifficulte integer REFERENCES Difficulte(id) NOT NULL,
                        status varchar(128),
                        dateCreation timestamp DEFAULT CURRENT_TIMESTAMP
 );
@@ -244,7 +244,8 @@ VALUES
 
 
 -- Partie
-INSERT INTO Partie(codeInvitation, idJeu) VALUES ('abcde', 1);
+INSERT INTO Partie(codeInvitation, idJeu, idDifficulte) VALUES ('abcde', 1, 2);
+INSERT INTO PartieKahoot(idPartie) VALUES (1);
 
 -- Utilisateurs
 INSERT INTO Joueur(pseudo, idPartie) VALUES ('moi, le meilleur joueur du monde', 1); --id = 1
