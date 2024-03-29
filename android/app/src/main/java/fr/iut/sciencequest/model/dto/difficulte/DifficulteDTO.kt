@@ -1,4 +1,4 @@
-package fr.iut.sciencequest.model.dto
+package fr.iut.sciencequest.model.dto.difficulte
 
 import kotlinx.serialization.Serializable
 

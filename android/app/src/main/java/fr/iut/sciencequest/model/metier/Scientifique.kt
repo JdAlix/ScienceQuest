@@ -1,7 +1,5 @@
 package fr.iut.sciencequest.model.metier
 
-import fr.iut.sciencequest.model.dto.DifficulteDTO
-
 class Scientifique {
     val id: Int
     val nom: String
