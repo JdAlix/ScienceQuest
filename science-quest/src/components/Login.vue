@@ -27,12 +27,12 @@ export default {
         <label for="motDePasseInput">Mot de passe</label>
     </div>
 
-    <div class="checkbox mb-3">
+    <!--div class="checkbox mb-3">
         <label>
             <label for="rememberMe">Se souvenir de moi</label>
             <input type="checkbox" value="1" id="rememberMe" name="rememberMe">
         </label>
-    </div>
+    </div-->
     <RouterLink to="/inscription">Pas de compte?</RouterLink>
     <button class="btn btn-lg btn-primary" @click="login">Se connecter</button>
     </form>
