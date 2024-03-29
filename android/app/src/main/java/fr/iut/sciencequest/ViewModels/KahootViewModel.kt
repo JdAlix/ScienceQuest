@@ -4,9 +4,12 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import fr.iut.sciencequest.ViewModels.UiStates.KahootUIState
+import fr.iut.sciencequest.model.buisness.Question.fetchQuestions
 import fr.iut.sciencequest.stub.StubQuestionWithReponses2
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 
 class KahootViewModel: ViewModel() {
     var uiState = MutableStateFlow(KahootUIState())
@@ -14,16 +17,22 @@ class KahootViewModel: ViewModel() {
     private val handler = Handler(Looper.getMainLooper())
 
     fun lancerPartie() {
-        handler.postDelayed(
-            {
-                Log.d("KahootViewModel","J'actualise les questions")
-                uiState.value = KahootUIState(StubQuestionWithReponses2,
-                    duréePartie = uiState.value.duréePartie,
-                    nbPoints = uiState.value.nbPoints,
-                    reponseChoisie = false)
-            },
-            uiState.value.duréePartie
-        )
+        viewModelScope.launch {
+            fetchQuestions(2).collect() {
+                for (question in it.questions) {
+                    handler.postDelayed(
+                        {
+                            Log.d("KahootViewModel","J'actualise les questions")
+                            uiState.value = KahootUIState(question,
+                                duréePartie = uiState.value.duréePartie,
+                                nbPoints = uiState.value.nbPoints,
+                                reponseChoisie = false)
+                        },
+                        uiState.value.duréePartie
+                    )
+                }
+            }
+        }
     }
 
     // NOTE : tpsReponse en ms
