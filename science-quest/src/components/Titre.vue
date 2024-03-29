@@ -6,7 +6,8 @@ export default{
     data(){
         return{
             nomApp:NOM_APP,
-            nomUtilisateur:"Se connecter"
+            utilisateur:{},
+            estConnecte:false,
         }
     },
     methods:{
@@ -15,7 +16,10 @@ export default{
       }
     },
     mounted(){
-      Utilisateur.utilisateurConnecte().then(user=>this.nomUtilisateur=user?.pseudo ?? "Se connecter")
+      Utilisateur.utilisateurConnecte().then(user=>{
+        this.estConnecte=user!=null
+        this.utilisateur=user
+      })
     }
 }
 </script>
@@ -56,8 +60,12 @@ export default{
       </ul>
     </div>
     <button id="boutondarkmode" class="btn" v-on:click="changerDarkMode">💡</button>
-    <!-- TODO : l'afficher que si on n'est pas connecté, sinon afficher l'username (qui sera surement dans le localstorage)-->
-    <router-link class="nav-link" to="/login">{{nomUtilisateur}}</router-link>
+    <div v-if="!estConnecte">
+      <router-link class="nav-link" to="/login">Se connecter</router-link>
+    </div>
+    <div v-if="estConnecte">
+      <router-link class="nav-link" to="/profil">{{ utilisateur.pseudo }}</router-link>
+    </div>
   </div>
 </nav>
 </template>
