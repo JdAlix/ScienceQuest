@@ -1,17 +1,21 @@
 <script>
 import { NOM_APP } from "@/assets/const";
+import { Utilisateur } from "@/data/utilisateur";
 
 export default{
     data(){
         return{
-            nomApp:NOM_APP
-
+            nomApp:NOM_APP,
+            nomUtilisateur:"Se connecter"
         }
     },
     methods:{
       changerDarkMode: function(){
         document.body.dataset.bsTheme!="dark" ? document.body.dataset.bsTheme="dark" : document.body.dataset.bsTheme="light"
       }
+    },
+    mounted(){
+      Utilisateur.utilisateurConnecte().then(user=>this.nomUtilisateur=user?.pseudo ?? "Se connecter")
     }
 }
 </script>
@@ -53,7 +57,7 @@ export default{
     </div>
     <button id="boutondarkmode" class="btn" v-on:click="changerDarkMode">💡</button>
     <!-- TODO : l'afficher que si on n'est pas connecté, sinon afficher l'username (qui sera surement dans le localstorage)-->
-    <router-link class="nav-link" to="/login">Se connecter</router-link>
+    <router-link class="nav-link" to="/login">{{nomUtilisateur}}</router-link>
   </div>
 </nav>
 </template>
