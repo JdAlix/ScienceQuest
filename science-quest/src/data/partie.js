@@ -1,19 +1,6 @@
 import { REST_API } from "@/assets/const"
 import { DataObject, PagedDataObject } from "./dataObject"
 
-export class PartieInvite extends DataObject{
-    constructor(parsedJSON){
-        super(parsedJSON)
-    }
-	async creerInvite(){
-        const response = await fetch(`${REST_API}/invite`,{
-            method:"POST",
-            headers:{"Content-Type":"application/json"},
-            body:JSON.stringify(this)
-        })
-        return new this(await response.json())
-    }
-}
 export class Partie extends DataObject{
     constructor(parsedJSON){
         super(parsedJSON)

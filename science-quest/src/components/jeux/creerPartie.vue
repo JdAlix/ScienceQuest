@@ -24,7 +24,6 @@ export default {
 		partieACreer.creerPartie().then(response=>console.log(response))
 		//console.log(partieACreer)
 		return
-        utilisateur.login().then(response=>console.log(response))
         }
     },
 	mounted(){

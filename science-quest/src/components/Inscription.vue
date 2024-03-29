@@ -8,7 +8,7 @@ export default {
                 return
             }
             const utilisateur=new Utilisateur(Object.fromEntries(new FormData(formajouter)))
-            utilisateur.register().then(response=>console.log(response))
+            utilisateur.creerCompte().then(response=>console.log(response))
         }
     }
     

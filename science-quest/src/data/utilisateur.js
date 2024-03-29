@@ -9,30 +9,54 @@ export class Utilisateur extends DataObject{
         const response = await fetch(`${REST_API}/utilisateur/${id}`)
         return new this(await response.json())
     }
-    async register(){
+    async creerCompte(){
         const response = await fetch(`${REST_API}/utilisateur`,{
             method:"POST",
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify(this)
         })
-        return new this(await response.json())
+        return new this.constructor(await response.json())
     }
-    async login(){
+    async connecter(){
         const response = await fetch(`${REST_API}/utilisateur/connexion`,{
             method:"POST",
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify(this)
         })
-        return new this(await response.json())
+        const utilisateurConnecte=new this.constructor(await response.json())
+        localStorage.setItem("utilisateurConnecte",utilisateurConnecte)
+        return utilisateurConnecte;
+    }
+    async creerInvite(){
+        const response = await fetch(`${REST_API}/invite`,{
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(this)
+        })
+        return new this.constructor(await response.json())
+    }
+    static async utilisateurConnecte(){
+        const utilisateur=localStorage.getItem("utilisateurConnecte")
+        return new this(utilisateur)
+    }
+    static async utilisateurConnecteOuCreerInvite(){
+        const utilisateur=localStorage.getItem("utilisateurConnecte")
+        if(utilisateur==null){
+            const invite=new this({"pseudo":"invitetest123123"})
+            return await invite.creerInvite()
+        }
+        return new this(utilisateur)
     }
 }
 
-//TODO : JSON de reference pour le get
+/* JSON de reference pour le get
+{"email":"amogus@amog.us", "pseudo":"amogus", "id":"2"}
+*/
 
-/* JSON de reference (register)
+/* JSON de reference (creerCompte)
 {"email":"amogus@amog.us", "pseudo":"amogus", "motDePasse":"hunter2"}
 */
-/* JSON de reference (login)
+/* JSON de reference (connecter)
 in : {"email":"amogus@amog.us", "motDePasse":"hunter2"}
 out : {"email":"amogus@amog.us", "pseudo":"amogus", "id":"2"}
 */

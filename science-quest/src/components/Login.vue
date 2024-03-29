@@ -9,7 +9,7 @@ export default {
                 return
             }
             const utilisateur=new Utilisateur(Object.fromEntries(new FormData(formajouter)))
-            utilisateur.login().then(response=>console.log(response))
+            utilisateur.connecter().then(response=>console.log(response))
         }
     }
 }
