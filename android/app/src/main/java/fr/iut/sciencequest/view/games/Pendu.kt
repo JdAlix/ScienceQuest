@@ -41,6 +41,7 @@ fun PenduScreen(viewModel: PenduViewModel = viewModel(),
             Button(onClick = { viewModel.InitPartie() }) {
                 Text(text = stringResource(id = R.string.reset_game))
             }
+            Text("Lettres utilisées: " + state.value.lettresUtilises)
         }
     }
 }
