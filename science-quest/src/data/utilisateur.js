@@ -33,5 +33,6 @@ export class Utilisateur extends DataObject{
 {"email":"amogus@amog.us", "pseudo":"amogus", "motDePasse":"hunter2"}
 */
 /* JSON de reference (login)
-{"email":"amogus@amog.us", "motDePasse":"hunter2"}
+in : {"email":"amogus@amog.us", "motDePasse":"hunter2"}
+out : {"email":"amogus@amog.us", "pseudo":"amogus", "id":"2"}
 */
