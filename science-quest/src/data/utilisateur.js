@@ -17,6 +17,14 @@ export class Utilisateur extends DataObject{
         })
         return new this.constructor(await response.json())
     }
+    async creerInvite(){
+        const response = await fetch(`${REST_API}/invite`,{
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(this)
+        })
+        return new this.constructor(await response.json())
+    }
     async connecter(){
         const response = await fetch(`${REST_API}/utilisateur/connexion`,{
             method:"POST",
@@ -26,14 +34,6 @@ export class Utilisateur extends DataObject{
         const utilisateurConnecte=new this.constructor(await response.json())
         localStorage.setItem("utilisateurConnecte",utilisateurConnecte)
         return utilisateurConnecte;
-    }
-    async creerInvite(){
-        const response = await fetch(`${REST_API}/invite`,{
-            method:"POST",
-            headers:{"Content-Type":"application/json"},
-            body:JSON.stringify(this)
-        })
-        return new this.constructor(await response.json())
     }
     static async utilisateurConnecte(){
         const utilisateur=localStorage.getItem("utilisateurConnecte")
@@ -49,12 +49,15 @@ export class Utilisateur extends DataObject{
     }
 }
 
-/* JSON de reference pour le get
+/* JSON de reference pour le get, et retour des autres fonctions
 {"email":"amogus@amog.us", "pseudo":"amogus", "id":"2"}
 */
 
 /* JSON de reference (creerCompte)
 {"email":"amogus@amog.us", "pseudo":"amogus", "motDePasse":"hunter2"}
+*/
+/* JSON de reference (creerInvite)
+{"pseudo":"amogus"}
 */
 /* JSON de reference (connecter)
 in : {"email":"amogus@amog.us", "motDePasse":"hunter2"}
