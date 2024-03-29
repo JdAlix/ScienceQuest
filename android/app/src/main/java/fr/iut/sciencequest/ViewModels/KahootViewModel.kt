@@ -27,10 +27,10 @@ class KahootViewModel: ViewModel() {
     }
 
     // NOTE : tpsReponse en ms
-    fun ajouterPoints(tpsReponse: Int) {
+    fun ajouterPoints(tpsReponse: Long) {
 
-        val nbPoints = if(uiState.value.reponseChoisie) {
-            10_000 - tpsReponse
+        val nbPoints: Int = if(uiState.value.reponseChoisie) {
+            (10_000 - tpsReponse).toInt()
         } else {
             0
         }
@@ -38,6 +38,6 @@ class KahootViewModel: ViewModel() {
             duréePartie = uiState.value.duréePartie,
             nbPoints = uiState.value.nbPoints + nbPoints,
             reponseChoisie = false)
-        Log.d("KahootViewModel","Le joueur à ${uiState.value.reponseChoisie}")
+        Log.d("KahootViewModel","Le joueur à ${uiState.value.nbPoints}")
     }
 }

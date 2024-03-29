@@ -25,6 +25,7 @@ import fr.iut.sciencequest.model.dto.question.QuestionWithSimpleResponseDTO
 import fr.iut.sciencequest.model.dto.reponse.ReponseSimpleDTO
 import fr.iut.sciencequest.stub.StubQuestionWithReponses
 import fr.iut.sciencequest.view.TopBar
+import java.util.Timer
 
 @Composable
 fun KahootScreen(viewModel: KahootViewModel = viewModel(),
@@ -34,7 +35,9 @@ fun KahootScreen(viewModel: KahootViewModel = viewModel(),
     viewModel.lancerPartie()
     Column(modifier = Modifier.fillMaxWidth()) {
         TopBar(goToAccount, goToHome, stringResource(id = R.string.kahoot))
-        KahootPlayer(state.value.question)
+        KahootPlayer(state.value.question) {
+            viewModel.ajouterPoints(it)
+        }
     }
 }
 
@@ -48,16 +51,22 @@ fun KahootScreenPreview(){
 @Preview
 @Composable
 fun KahootPlayerPreview(){
-    KahootPlayer(question = StubQuestionWithReponses)
+    val i = 0
+    KahootPlayer(question = StubQuestionWithReponses) {}
 }
 
 
 @Composable
-fun KahootPlayer(question: QuestionWithSimpleResponseDTO){
+fun KahootPlayer(question: QuestionWithSimpleResponseDTO,
+                 sendReponse: (Long) -> Unit){
     val context = LocalContext.current;
+    val currTime = System.currentTimeMillis()
     Column (horizontalAlignment = Alignment.CenterHorizontally){
         KahootQuestion(question = question.question)
-        KahootReponses(reponses = question.reponses) {Toast.makeText(context, it.reponse, Toast.LENGTH_SHORT).show()}
+        KahootReponses(reponses = question.reponses) {
+            sendReponse(currTime - System.currentTimeMillis())
+            Toast.makeText(context, it.reponse, Toast.LENGTH_SHORT).show()
+        }
     }
 }
 
