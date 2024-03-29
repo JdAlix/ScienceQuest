@@ -6,6 +6,7 @@ import fr.iut.sciencequest.sae.controllers.request.PartieRequest;
 import fr.iut.sciencequest.sae.dto.partie.PartieDTO;
 import fr.iut.sciencequest.sae.entities.Joueur;
 import fr.iut.sciencequest.sae.entities.Partie;
+import fr.iut.sciencequest.sae.entities.Status;
 import fr.iut.sciencequest.sae.entities.Thematique;
 import fr.iut.sciencequest.sae.exceptions.notFound.PartieNotFoundException;
 import fr.iut.sciencequest.sae.exceptions.partie.PartyAlreadyStartedException;
@@ -66,7 +67,7 @@ public class PartieController {
     public PartieDTO addPlayerToPartie(@PathVariable String codeInvitation, @RequestBody @Valid PartieAddJoueurRequest request){
         Joueur joueur = this.joueurService.findById(request.getIdJoueur());
         Partie partie = this.partieService.getPartieByIdOrCodeInvitation(codeInvitation);
-        if(!partie.getStatus().equals("pending")) throw new PartyAlreadyStartedException();
+        if(!partie.getStatus().equals(Status.Pending)) throw new PartyAlreadyStartedException();
         if(!partie.getJoueurs().contains(joueur)){
             partie.getJoueurs().add(joueur);
         }
