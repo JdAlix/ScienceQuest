@@ -3,13 +3,21 @@ import { RouterLink } from 'vue-router'
 import { Utilisateur } from "@/data/utilisateur"
 
 export default {
+    data(){
+        return {
+            messageErreur:""
+        }
+    },
     methods:{
         login(){
             if(!formajouter.checkValidity()){
                 return
             }
             const utilisateur=new Utilisateur(Object.fromEntries(new FormData(formajouter)))
-            utilisateur.connecter().then(response=>console.log(response))
+            utilisateur.connecter().then(response=>
+                    //rediriger vers la page de son profil
+                    this.$router.push("/profil")
+            ).catch(ex=>this.messageErreur=ex)
         }
     }
 }
@@ -37,6 +45,9 @@ export default {
         </label>
     </div-->
     <RouterLink to="/inscription">Pas de compte?</RouterLink>
+    <br/>
+    <p class="text-danger">{{ messageErreur }}</p>
+    <br/>
     <button class="btn btn-lg btn-primary" @click="login">Se connecter</button>
     </form>
 </template>
