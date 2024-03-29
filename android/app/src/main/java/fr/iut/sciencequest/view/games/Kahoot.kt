@@ -32,7 +32,6 @@ fun KahootScreen(viewModel: KahootViewModel = viewModel(),
                  goToAccount: () -> Unit,
                  goToHome: () -> Unit) {
     val state = viewModel.uiState.collectAsState()
-    viewModel.lancerPartie()
     Column(modifier = Modifier.fillMaxWidth()) {
         TopBar(goToAccount, goToHome, stringResource(id = R.string.kahoot))
         KahootPlayer(state.value.question) {
