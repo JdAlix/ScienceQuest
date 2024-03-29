@@ -7,5 +7,5 @@ class PartieDTO (
     val codeInvitation: String,
     val joueurs: List<JoueurSimpleDTO>,
     val jeu: JeuDTO,
-    val thematiques: List<ThematiqueDTO>    
+    val thematiques: List<ThematiqueDTO>
 )
