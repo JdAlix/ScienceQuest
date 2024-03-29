@@ -22,6 +22,7 @@ export default {
     }
   },
   mounted() {
+    this.obtenirUtilisateur()
     //HACK : ecouter Utilisateur en boucle pour mettre a jour la barre en "temps pas trop mais suffisament reel"
     window.setInterval(this.obtenirUtilisateur,5000)
   }
