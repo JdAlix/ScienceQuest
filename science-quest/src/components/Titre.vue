@@ -75,12 +75,8 @@ export default {
                 <li><router-link class="dropdown-item" to="/login">Se connecter en tant qu'invité</router-link></li>
               </div>
               <div v-if="estConnecte">
-                <router-link class="nav-link" to="/profil">{{ utilisateur.pseudo }}</router-link>
+                <router-link class="nav-link" to="/profil">Profil</router-link>
               </div>
-              <li>
-                <hr class="dropdown-divider">
-              </li>
-              <li><router-link class="dropdown-item disabled" to="/qui_est_ce">Qui-est-ce</router-link></li>
             </ul>
           </li>
         </ul>
