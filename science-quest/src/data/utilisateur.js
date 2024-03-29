@@ -35,6 +35,9 @@ export class Utilisateur extends DataObject{
         localStorage.setItem("utilisateurConnecte",JSON.stringify(utilisateurConnecte))
         return utilisateurConnecte;
     }
+    static async deconnecter(){
+        localStorage.removeItem("utilisateurConnecte")
+    }
     static async utilisateurConnecte(){
         const utilisateur=JSON.parse(localStorage.getItem("utilisateurConnecte"))
         return new this(utilisateur)
