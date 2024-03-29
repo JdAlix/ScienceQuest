@@ -5,6 +5,11 @@ export class DataObject{
         //mettre les alias ici
         //ex : l'API change _embedded en _objectList mais que l'ancien code utilisait _embedded
         //this._objectList = this._embedded
+
+        //ne pas autoriser les messages d'erreur, on va plutot lancer une exception
+        if(this.error){
+            throw this.error + " : " + this.message 
+        }
     }
 }
 
