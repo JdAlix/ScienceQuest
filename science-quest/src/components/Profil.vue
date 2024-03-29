@@ -9,8 +9,14 @@ export default {
         }
     },
     mounted(){
-        //rediriger si on n'a pas d'utilisateur connecté
-        Utilisateur.utilisateurConnecte().then(user=>this.utilisateur=user)
+        Utilisateur.utilisateurConnecte().then(user=>{
+            this.utilisateur=user
+            if(!this.utilisateur){
+                //rediriger si on n'a pas d'utilisateur connecté
+                //TODO : mettre noms aux routes au lieu de mettre le lien
+                this.$router.push("/login")
+            }
+        })
     }
 }
 

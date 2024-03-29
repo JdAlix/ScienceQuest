@@ -40,7 +40,10 @@ export class Utilisateur extends DataObject{
     }
     static async utilisateurConnecte(){
         const utilisateur=JSON.parse(localStorage.getItem("utilisateurConnecte"))
-        return new this(utilisateur)
+        if(utilisateur){
+            return new this(utilisateur)
+        }
+        return null
     }
     static async utilisateurConnecteOuCreerInvite(){
         const utilisateur=JSON.parse(localStorage.getItem("utilisateurConnecte"))
