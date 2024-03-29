@@ -13,13 +13,17 @@ export default {
   methods: {
     changerDarkMode: function () {
       document.body.dataset.bsTheme != "dark" ? document.body.dataset.bsTheme = "dark" : document.body.dataset.bsTheme = "light"
-    }
-  },
-  mounted() {
-    Utilisateur.utilisateurConnecte().then(user => {
+    },
+    obtenirUtilisateur(){
+      Utilisateur.utilisateurConnecte().then(user => {
       this.estConnecte = user != null
       this.utilisateur = user
     })
+    }
+  },
+  mounted() {
+    //HACK : ecouter Utilisateur en boucle pour mettre a jour la barre en "temps pas trop mais suffisament reel"
+    window.setInterval(this.obtenirUtilisateur,5000)
   }
 }
 </script>
