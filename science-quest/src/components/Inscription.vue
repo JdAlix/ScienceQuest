@@ -4,6 +4,9 @@ import { Utilisateur } from "@/data/utilisateur"
 export default {
     methods:{
         creerCompte(event){
+            if(!formajouter.checkValidity()){
+                return
+            }
             const utilisateur=new Utilisateur(Object.fromEntries(new FormData(formajouter)))
             utilisateur.register().then(response=>console.log(response))
         }
@@ -19,15 +22,15 @@ export default {
     <h1 class="h3 mb-3 fw-normal">S'inscrire</h1>
 
     <div class="form-floating">
-        <input type="email" class="form-control" id="emailInput" name="email">
+        <input type="email" class="form-control" id="emailInput" name="email" required>
         <label for="emailInput">Email</label>
     </div>
     <div class="form-floating">
-        <input type="text" class="form-control" id="pseudoInput" name="pseudo">
+        <input type="text" class="form-control" id="pseudoInput" name="pseudo" required min="6">
         <label for="pseudoInput">Pseudo</label>
     </div>
     <div class="form-floating">
-        <input type="password" class="form-control" id="motDePasseInput" name="motDePasse">
+        <input type="password" class="form-control" id="motDePasseInput" name="motDePasse" required min="6">
         <label for="motDePasseInput">Mot de passe</label>
     </div>
     <button class="btn btn-lg btn-primary" @click="creerCompte">S'inscrire</button>

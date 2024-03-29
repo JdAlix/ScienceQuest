@@ -5,8 +5,11 @@ import { Utilisateur } from "@/data/utilisateur"
 export default {
     methods:{
         login(){
-        const utilisateur=new Utilisateur(Object.fromEntries(new FormData(formajouter)))
-        utilisateur.login().then(response=>console.log(response))
+            if(!formajouter.checkValidity()){
+                return
+            }
+            const utilisateur=new Utilisateur(Object.fromEntries(new FormData(formajouter)))
+            utilisateur.login().then(response=>console.log(response))
         }
     }
 }
@@ -19,11 +22,11 @@ export default {
     <h1 class="h3 mb-3 fw-normal">Se connecter</h1>
 
     <div class="form-floating">
-        <input type="email" class="form-control" id="emailInput" name="email">
+        <input type="email" class="form-control" id="emailInput" name="email" required>
         <label for="emailInput">Email</label>
     </div>
     <div class="form-floating">
-        <input type="password" class="form-control" id="motDePasseInput" name="motDePasse">
+        <input type="password" class="form-control" id="motDePasseInput" name="motDePasse" required min="6">
         <label for="motDePasseInput">Mot de passe</label>
     </div>
 
