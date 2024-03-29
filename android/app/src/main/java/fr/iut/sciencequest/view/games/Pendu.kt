@@ -35,20 +35,27 @@ fun PenduScreen(viewModel: PenduViewModel = viewModel(),
         {
             Text(text = state.value.motATrou)
             TextField(value = "",
-                onValueChange = {
-                    if (it.isNotEmpty()) {
-                        viewModel.PlayAction(it[0])
-                        if ((!state.value.isWon) && (state.value.nbViesRestantes == 0)) {
-                            goToHome()
-                        } else if (state.value.isWon) {
-                            Toast.makeText(context,"Vous avez gagné !",Toast.LENGTH_LONG).show()
-                        }
-                    }},
+                onValueChange = { onLetterEntered(it, viewModel, context, goToHome) },
                 modifier = Modifier.padding(20.dp))
             afficherVies(state.value.nbViesRestantes)
             Button(onClick = { viewModel.InitPartie() }) {
                 Text(text = stringResource(id = R.string.reset_game))
             }
+        }
+    }
+}
+
+fun onLetterEntered(entered: String,
+                    vm: PenduViewModel,
+                    context: Context,
+                    goToHome: () -> Unit) {
+    val state = vm.uiState
+    if (entered.isNotEmpty()) {
+        vm.PlayAction(entered[0])
+        if ((!state.value.isWon) && (state.value.nbViesRestantes == 0)) {
+            goToHome()
+        } else if (state.value.isWon) {
+            Toast.makeText(context,"Vous avez gagné !",Toast.LENGTH_LONG).show()
         }
     }
 }
