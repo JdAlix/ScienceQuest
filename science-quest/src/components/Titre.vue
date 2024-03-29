@@ -65,15 +65,17 @@ export default {
         <!-- cote droit -->
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <button id="boutondarkmode" class="btn" v-on:click="changerDarkMode">💡</button>
-          <li class="nav-item dropstart">
+          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               {{ utilisateur ? utilisateur?.pseudo : "Mon compte" }}
             </a>
-            <ul class="dropdown-menu">
-              aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+            <ul class="dropdown-menu dropdown-menu-end">
               <div v-if="!estConnecte">
                 <li><router-link class="dropdown-item" to="/login">Se connecter</router-link></li>
                 <li><router-link class="dropdown-item" to="/login">Se connecter en tant qu'invité</router-link></li>
+              </div>
+              <div v-if="estConnecte">
+                <router-link class="nav-link" to="/profil">{{ utilisateur.pseudo }}</router-link>
               </div>
               <li>
                 <hr class="dropdown-divider">
@@ -81,9 +83,6 @@ export default {
               <li><router-link class="dropdown-item disabled" to="/qui_est_ce">Qui-est-ce</router-link></li>
             </ul>
           </li>
-          <div v-if="estConnecte">
-            <router-link class="nav-link" to="/profil">{{ utilisateur.pseudo }}</router-link>
-          </div>
         </ul>
       </div>
     </div>
