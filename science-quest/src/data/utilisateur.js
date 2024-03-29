@@ -32,15 +32,15 @@ export class Utilisateur extends DataObject{
             body:JSON.stringify(this)
         })
         const utilisateurConnecte=new this.constructor(await response.json())
-        localStorage.setItem("utilisateurConnecte",utilisateurConnecte)
+        localStorage.setItem("utilisateurConnecte",JSON.stringify(utilisateurConnecte))
         return utilisateurConnecte;
     }
     static async utilisateurConnecte(){
-        const utilisateur=localStorage.getItem("utilisateurConnecte")
+        const utilisateur=JSON.parse(localStorage.getItem("utilisateurConnecte"))
         return new this(utilisateur)
     }
     static async utilisateurConnecteOuCreerInvite(){
-        const utilisateur=localStorage.getItem("utilisateurConnecte")
+        const utilisateur=JSON.parse(localStorage.getItem("utilisateurConnecte"))
         if(utilisateur==null){
             const invite=new this({"pseudo":"invitetest123123"})
             return await invite.creerInvite()
