@@ -14,22 +14,30 @@ class KahootViewModel: ViewModel() {
     private val handler = Handler(Looper.getMainLooper())
 
     fun lancerPartie() {
-        var nbPoints: Int
-        var tpsReponse = 10_000
         handler.postDelayed(
             {
                 Log.d("KahootViewModel","J'actualise les questions")
-                nbPoints = if(uiState.value.reponseChoisie) {
-                    10_000 - tpsReponse
-                } else {
-                    0
-                }
                 uiState.value = KahootUIState(StubQuestionWithReponses2,
                     duréePartie = uiState.value.duréePartie,
-                    nbPoints = uiState.value.nbPoints + nbPoints,
+                    nbPoints = uiState.value.nbPoints,
                     reponseChoisie = false)
             },
             uiState.value.duréePartie * 1000
         )
+    }
+
+    // NOTE : tpsReponse en ms
+    fun ajouterPoints(tpsReponse: Int) {
+
+        val nbPoints = if(uiState.value.reponseChoisie) {
+            10_000 - tpsReponse
+        } else {
+            0
+        }
+        uiState.value = KahootUIState(uiState.value.question,
+            duréePartie = uiState.value.duréePartie,
+            nbPoints = uiState.value.nbPoints + nbPoints,
+            reponseChoisie = false)
+        Log.d("KahootViewModel","Le joueur à ${uiState.value.reponseChoisie}")
     }
 }

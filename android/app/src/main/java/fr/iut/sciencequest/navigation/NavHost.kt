@@ -19,7 +19,7 @@ import fr.iut.sciencequest.view.scientifiques.scientifiqueListeScreen
 
 
 @Composable
-fun NavHost(context: Context) {
+fun NavHost() {
     val navController = rememberNavController()
     NavHost(
         modifier = Modifier.fillMaxSize(),
@@ -72,8 +72,7 @@ fun NavHost(context: Context) {
                 },
                 goToHome = {
                     navController.navigate("home")
-                },
-                context = context
+                }
             )
         }
 
