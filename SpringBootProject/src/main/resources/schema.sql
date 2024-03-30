@@ -245,7 +245,7 @@ VALUES
 
 
 -- Partie
-INSERT INTO Partie(codeInvitation, idJeu, idDifficulte) VALUES ('abcde', 1, 2);
+INSERT INTO Partie(codeInvitation, idJeu, idDifficulte, status) VALUES ('abcde', 1, 2, "Pending");
 INSERT INTO PartieKahoot(idPartie) VALUES (1);
 
 -- Utilisateurs
