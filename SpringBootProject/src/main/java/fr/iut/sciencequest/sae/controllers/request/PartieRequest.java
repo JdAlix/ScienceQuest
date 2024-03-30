@@ -9,8 +9,6 @@ import java.util.List;
 @Data
 public class PartieRequest {
     @NotNull
-    private Integer idJeu;
-    @NotNull
     private int idJoueur;
 
     @NotEmpty

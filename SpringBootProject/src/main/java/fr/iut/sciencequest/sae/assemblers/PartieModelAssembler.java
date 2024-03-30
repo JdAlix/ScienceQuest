@@ -1,6 +1,6 @@
 package fr.iut.sciencequest.sae.assemblers;
 
-import fr.iut.sciencequest.sae.controllers.PartieController;
+import fr.iut.sciencequest.sae.controllers.PartieKahootController;
 import fr.iut.sciencequest.sae.entities.Partie;
 import fr.iut.sciencequest.sae.dto.partie.PartieDTO;
 import jakarta.annotation.Nullable;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class PartieModelAssembler extends RepresentationModelAssemblerSupport<Partie, PartieDTO> {
     public PartieModelAssembler() {
-        super(PartieController.class, PartieDTO.class);
+        super(PartieKahootController.class, PartieDTO.class);
     }
 
     @Override

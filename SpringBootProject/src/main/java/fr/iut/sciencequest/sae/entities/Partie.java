@@ -12,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Inheritance(strategy = InheritanceType.JOINED)
 @Entity
 @Table(name="partie")
 public class Partie {
@@ -26,10 +27,6 @@ public class Partie {
     @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "idpartie")
     private List<Joueur> joueurs;
-
-    @ManyToOne
-    @JoinColumn(name="idjeu", nullable = false)
-    private Jeu jeu;
 
     @Column(name = "datecreation") //default value : see Schema.sql
     private Date dateCreation;

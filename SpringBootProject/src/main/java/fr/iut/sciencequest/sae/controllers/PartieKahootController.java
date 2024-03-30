@@ -4,11 +4,11 @@ import fr.iut.sciencequest.sae.assemblers.PartieModelAssembler;
 import fr.iut.sciencequest.sae.controllers.request.PartieAddJoueurRequest;
 import fr.iut.sciencequest.sae.controllers.request.PartieRequest;
 import fr.iut.sciencequest.sae.dto.partie.PartieDTO;
+import fr.iut.sciencequest.sae.dto.partieKahoot.partie.PartieKahootDTO;
 import fr.iut.sciencequest.sae.entities.Joueur;
 import fr.iut.sciencequest.sae.entities.Partie;
+import fr.iut.sciencequest.sae.entities.PartieKahoot;
 import fr.iut.sciencequest.sae.entities.Status;
-import fr.iut.sciencequest.sae.entities.Thematique;
-import fr.iut.sciencequest.sae.exceptions.notFound.PartieNotFoundException;
 import fr.iut.sciencequest.sae.exceptions.partie.PartyAlreadyStartedException;
 import fr.iut.sciencequest.sae.services.*;
 import jakarta.validation.Valid;
@@ -19,18 +19,14 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/v1/partie")
-public class PartieController {
+@RequestMapping("/api/v1/partie/kahoot")
+public class PartieKahootController {
     private final PartieModelAssembler partieModelAssembler;
-    private final PartieService partieService;
+    private final PartieKahootService partieKahootService;
     private final JoueurService joueurService;
     private final JeuService jeuService;
     private final ThematiqueService thematiqueService;
@@ -38,16 +34,14 @@ public class PartieController {
     private final ModelMapper modelMapper;
 
     @RequestMapping(value = "/{codeInvitation}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public PartieDTO getPartie(@PathVariable String codeInvitation) {
-        return partieModelAssembler.toModel(this.partieService.getPartieByIdOrCodeInvitation(codeInvitation));
+    public PartieKahootDTO getPartie(@PathVariable String codeInvitation) {
+        return this.modelMapper.map(this.partieKahootService.getPartieKahootByIdOrCodeInvitation(codeInvitation), PartieKahootDTO.class);
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public PartieDTO createPartie(@RequestBody @Valid PartieRequest request) {
-        Partie partie = new Partie();
-
-        partie.setJeu(this.jeuService.findById(request.getIdJeu()));
+    public PartieKahootDTO createPartie(@RequestBody @Valid PartieRequest request) {
+        PartieKahoot partie = new PartieKahoot();
 
         partie.setJoueurs(List.of(this.joueurService.findById(request.getIdJoueur())));
 
@@ -58,20 +52,20 @@ public class PartieController {
 
         partie.setDifficulte(this.difficulteService.findById(request.getIdDifficulte()));
 
-        partie =  this.partieService.create(partie);
-        return this.modelMapper.map(partie, PartieDTO.class);
+        partie =  this.partieKahootService.create(partie);
+        return this.modelMapper.map(partie, PartieKahootDTO.class);
     }
 
     @PutMapping(value= "/{codeInvitation}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public PartieDTO addPlayerToPartie(@PathVariable String codeInvitation, @RequestBody @Valid PartieAddJoueurRequest request){
+    public PartieKahootDTO addPlayerToPartie(@PathVariable String codeInvitation, @RequestBody @Valid PartieAddJoueurRequest request){
         Joueur joueur = this.joueurService.findById(request.getIdJoueur());
-        Partie partie = this.partieService.getPartieByIdOrCodeInvitation(codeInvitation);
+        PartieKahoot partie = this.partieKahootService.getPartieKahootByIdOrCodeInvitation(codeInvitation);
         if(!partie.getStatus().equals(Status.Pending)) throw new PartyAlreadyStartedException();
         if(!partie.getJoueurs().contains(joueur)){
             partie.getJoueurs().add(joueur);
         }
-        return this.modelMapper.map(this.partieService.update(partie), PartieDTO.class);
+        return this.modelMapper.map(this.partieKahootService.update(partie), PartieKahootDTO.class);
     }
 
 }
