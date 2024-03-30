@@ -18,6 +18,7 @@ public class Reponse{
 
     private String reponse;
 
+    @Column(name = "estvalide")
     private Boolean estValide;
 
     @JsonBackReference

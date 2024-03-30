@@ -5,10 +5,7 @@ import fr.iut.sciencequest.sae.controllers.request.PartieAddJoueurRequest;
 import fr.iut.sciencequest.sae.controllers.request.PartieRequest;
 import fr.iut.sciencequest.sae.dto.partie.PartieDTO;
 import fr.iut.sciencequest.sae.dto.partieKahoot.partie.PartieKahootDTO;
-import fr.iut.sciencequest.sae.entities.Joueur;
-import fr.iut.sciencequest.sae.entities.Partie;
-import fr.iut.sciencequest.sae.entities.PartieKahoot;
-import fr.iut.sciencequest.sae.entities.Status;
+import fr.iut.sciencequest.sae.entities.*;
 import fr.iut.sciencequest.sae.exceptions.partie.PartyAlreadyStartedException;
 import fr.iut.sciencequest.sae.services.*;
 import jakarta.validation.Valid;
@@ -28,7 +25,7 @@ public class PartieKahootController {
     private final PartieModelAssembler partieModelAssembler;
     private final PartieKahootService partieKahootService;
     private final JoueurService joueurService;
-    private final JeuService jeuService;
+    private final QuestionService questionService;
     private final ThematiqueService thematiqueService;
     private final DifficulteService difficulteService;
     private final ModelMapper modelMapper;
@@ -51,6 +48,8 @@ public class PartieKahootController {
         }
 
         partie.setDifficulte(this.difficulteService.findById(request.getIdDifficulte()));
+
+        partie.setQuestions(this.questionService.getRandomQuestions(1, partie.getThematiques(), partie.getDifficulte()));
 
         partie =  this.partieKahootService.create(partie);
         return this.modelMapper.map(partie, PartieKahootDTO.class);
