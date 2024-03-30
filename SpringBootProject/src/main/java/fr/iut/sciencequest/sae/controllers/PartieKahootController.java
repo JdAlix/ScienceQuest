@@ -5,6 +5,7 @@ import fr.iut.sciencequest.sae.controllers.request.PartieAddJoueurRequest;
 import fr.iut.sciencequest.sae.controllers.request.PartieRequest;
 import fr.iut.sciencequest.sae.dto.partie.PartieDTO;
 import fr.iut.sciencequest.sae.dto.partieKahoot.partie.PartieKahootDTO;
+import fr.iut.sciencequest.sae.dto.partieKahoot.partie.PartieKahootStatusDTO;
 import fr.iut.sciencequest.sae.entities.*;
 import fr.iut.sciencequest.sae.exceptions.partie.PartyAlreadyStartedException;
 import fr.iut.sciencequest.sae.services.*;
@@ -65,6 +66,18 @@ public class PartieKahootController {
             partie.getJoueurs().add(joueur);
         }
         return this.modelMapper.map(this.partieKahootService.update(partie), PartieKahootDTO.class);
+    }
+
+    @PostMapping(value = "/{codeInvitation}/demarrer", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public PartieKahootStatusDTO demarrerPartie(@PathVariable String codeInvitation){
+        PartieKahoot partieKahoot = this.partieKahootService.getPartieKahootByIdOrCodeInvitation(codeInvitation);
+        if(partieKahoot.getStatus() == Status.Started){
+            throw new PartyAlreadyStartedException();
+        }
+        partieKahoot.setStatus(Status.Started);
+        this.partieKahootService.update(partieKahoot);
+        return this.modelMapper.map(partieKahoot, PartieKahootStatusDTO.class);
     }
 
 }
