@@ -1,13 +1,9 @@
 package fr.iut.sciencequest.sae.services;
 
-import fr.iut.sciencequest.sae.entities.Partie;
 import fr.iut.sciencequest.sae.entities.PartieKahoot;
 import fr.iut.sciencequest.sae.exceptions.DuplicatedIdException;
 import fr.iut.sciencequest.sae.exceptions.notFound.PartieKahootNotFoundException;
-import fr.iut.sciencequest.sae.exceptions.notFound.PartieNotFoundException;
 import fr.iut.sciencequest.sae.repositories.*;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
