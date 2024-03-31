@@ -15,6 +15,7 @@ DROP TABLE IF EXISTS Thematique CASCADE;
 DROP TABLE IF EXISTS ThematiqueSelectionnee CASCADE;
 DROP TABLE IF EXISTS PartieKahoot CASCADE;
 DROP TABLE IF EXISTS QuestionPartieKahoot CASCADE;
+DROP TABLE IF EXISTS ScorePartieKahootjoueur CASCADE;
 DROP TABLE IF EXISTS Difficulte;
 
 
@@ -133,7 +134,7 @@ CREATE TABLE PartieKahoot(
 
 CREATE TABLE Joueur(
                        id SERIAL PRIMARY KEY,
-                       idPartie integer REFERENCES Partie(id),
+                       idPartieEnCours integer REFERENCES Partie(id),
                        pseudo varchar(255) NOT NULL UNIQUE
 );
 
@@ -176,6 +177,15 @@ CREATE TABLE QuestionPartieKahoot(
                           idPartieKahoot integer REFERENCES PartieKahoot(idPartie),
                           idQuestion integer REFERENCES Question(id),
                           PRIMARY KEY (idPartieKahoot, idQuestion)
+);
+
+-- ScorePartieKahootjoueur
+
+CREATE TABLE ScorePartieKahootjoueur(
+    idJoueur integer REFERENCES Joueur(id),
+    idPartie integer REFERENCES PartieKahoot(idPartie),
+    score integer,
+    PRIMARY KEY (idJoueur, idPartie)
 );
 
 
@@ -249,7 +259,7 @@ INSERT INTO Partie(codeInvitation, idJeu, idDifficulte, status) VALUES ('abcde',
 INSERT INTO PartieKahoot(idPartie) VALUES (1);
 
 -- Utilisateurs
-INSERT INTO Joueur(pseudo, idPartie) VALUES ('moi, le meilleur joueur du monde', 1); --id = 1
+INSERT INTO Joueur(pseudo, idPartieEnCours) VALUES ('moi, le meilleur joueur du monde', 1); --id = 1
 INSERT INTO Utilisateur(idJoueur,email,password) VALUES (1, 'joueur','$2y$10$juGnlWC9cS19popEKLZsYeir0Jl39k6hDl0dpaCix00FDcdiEbtmS');
 -- mdp = test
 

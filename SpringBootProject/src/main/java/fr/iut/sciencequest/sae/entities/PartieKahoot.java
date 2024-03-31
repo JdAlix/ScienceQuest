@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
@@ -31,4 +30,7 @@ public class PartieKahoot extends Partie {
             inverseJoinColumns = @JoinColumn(name="idquestion")
     )
     private List<Question> questions;
+
+    @OneToMany(mappedBy = "partie", fetch = FetchType.EAGER)
+    private List<ScorePartieKahootJoueur> scores;
 }

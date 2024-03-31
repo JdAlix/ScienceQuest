@@ -25,7 +25,7 @@ public class Partie {
 
     @JsonManagedReference
     @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    @JoinColumn(name = "idpartie")
+    @JoinColumn(name = "idpartieencours")
     private List<Joueur> joueurs;
 
     @Column(name = "datecreation") //default value : see Schema.sql

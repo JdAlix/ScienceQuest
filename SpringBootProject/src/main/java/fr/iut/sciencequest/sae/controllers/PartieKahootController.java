@@ -1,12 +1,12 @@
 package fr.iut.sciencequest.sae.controllers;
 
-import fr.iut.sciencequest.sae.assemblers.PartieModelAssembler;
 import fr.iut.sciencequest.sae.controllers.request.PartieAddJoueurRequest;
 import fr.iut.sciencequest.sae.controllers.request.PartieRequest;
 import fr.iut.sciencequest.sae.dto.partieKahoot.PartieKahootDTO;
 import fr.iut.sciencequest.sae.dto.partieKahoot.PartieKahootStatusDTO;
 import fr.iut.sciencequest.sae.entities.*;
 import fr.iut.sciencequest.sae.exceptions.partie.PartyAlreadyStartedException;
+import fr.iut.sciencequest.sae.repositories.ScorePartieKahootJoueurRepository;
 import fr.iut.sciencequest.sae.services.*;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -22,7 +22,7 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("/api/v1/partie/kahoot")
 public class PartieKahootController {
-    private final PartieModelAssembler partieModelAssembler;
+    private final ScorePartieKahootJoueurRepository scorePartieKahootJoueurRepository;
     private final PartieKahootService partieKahootService;
     private final JoueurService joueurService;
     private final QuestionService questionService;
@@ -39,9 +39,8 @@ public class PartieKahootController {
     @ResponseStatus(HttpStatus.CREATED)
     public PartieKahootDTO createPartie(@RequestBody @Valid PartieRequest request) {
         PartieKahoot partie = new PartieKahoot();
-
-        partie.setJoueurs(List.of(this.joueurService.findById(request.getIdJoueur())));
-
+        Joueur joueur = this.joueurService.findById(request.getIdJoueur());
+        partie.setJoueurs(List.of(joueur));
         partie.setThematiques(new ArrayList<>());
         for(int idThematique: request.getThematiques()){
             partie.getThematiques().add(this.thematiqueService.findById(idThematique));
@@ -52,6 +51,11 @@ public class PartieKahootController {
         partie.setQuestions(this.questionService.getRandomQuestions(1, partie.getThematiques(), partie.getDifficulte()));
 
         partie =  this.partieKahootService.create(partie);
+        ScorePartieKahootJoueur score = new ScorePartieKahootJoueur();
+        score.setId(new ScorePartieKahootJoueurKey(joueur.getId(), partie.getId()));
+        score.setJoueur(joueur);
+        score.setPartie(partie);
+        this.scorePartieKahootJoueurRepository.save(score);
         return this.modelMapper.map(partie, PartieKahootDTO.class);
     }
 
@@ -62,6 +66,10 @@ public class PartieKahootController {
         PartieKahoot partie = this.partieKahootService.getPartieKahootByIdOrCodeInvitation(codeInvitation);
         if(!partie.getStatus().equals(Status.Pending)) throw new PartyAlreadyStartedException();
         if(!partie.getJoueurs().contains(joueur)){
+            ScorePartieKahootJoueur score = new ScorePartieKahootJoueur();
+            score.setPartie(partie);
+            score.setJoueur(joueur);
+            partie.getScores().add(score);
             partie.getJoueurs().add(joueur);
         }
         return this.modelMapper.map(this.partieKahootService.update(partie), PartieKahootDTO.class);
@@ -75,7 +83,7 @@ public class PartieKahootController {
             throw new PartyAlreadyStartedException();
         }
         partieKahoot.setStatus(Status.Started);
-        this.partieKahootService.update(partieKahoot);
+        partieKahoot = this.partieKahootService.update(partieKahoot);
         return this.modelMapper.map(partieKahoot, PartieKahootStatusDTO.class);
     }
 

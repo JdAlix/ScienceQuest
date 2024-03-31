@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -26,8 +28,11 @@ public class Joueur {
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "idpartie")
+    @JoinColumn(name = "idpartieencours")
     @Fetch(FetchMode.JOIN)
     @EqualsAndHashCode.Exclude
-    private Partie partie;
+    private Partie partieEnCours;
+
+    @OneToMany(mappedBy = "joueur")
+    private List<ScorePartieKahootJoueur> scores;
 }

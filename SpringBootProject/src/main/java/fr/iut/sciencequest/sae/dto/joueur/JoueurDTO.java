@@ -22,5 +22,5 @@ public class JoueurDTO extends RepresentationModel<JoueurDTO> {
     @NotBlank
     private String pseudo;
 
-    private PartieDTO partie;
+    private PartieDTO partieEnCours;
 }
