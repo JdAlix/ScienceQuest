@@ -90,6 +90,7 @@ public class PartieKahootController {
             throw new PartyAlreadyStartedException();
         }
         partieKahoot.setStatus(Status.Started);
+        partieKahoot.setQuestionActuel(partieKahoot.getQuestions().getFirst());
         partieKahoot = this.partieKahootService.update(partieKahoot);
         return this.modelMapper.map(partieKahoot, PartieKahootStatusDTO.class);
     }
