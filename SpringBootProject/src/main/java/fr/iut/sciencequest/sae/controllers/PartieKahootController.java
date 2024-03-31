@@ -115,6 +115,14 @@ public class PartieKahootController {
         return this.modelMapper.map(partieKahoot, PartieKahootStatusDTO.class);
     }
 
+    @GetMapping(value = "/{codeInvitation}/status", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public PartieKahootStatusDTO getStatusPartie(@PathVariable String codeInvitation){
+        PartieKahoot partieKahoot = this.partieKahootService.getPartieKahootByIdOrCodeInvitation(codeInvitation);
+        partieKahoot = this.partieKahootService.maintenirAJourQuestionActuel(partieKahoot);
+        return this.modelMapper.map(partieKahoot, PartieKahootStatusDTO.class);
+    }
+
     @GetMapping(value = "/{codeInvitation}/question", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public PartieKahootQuestionDTO getQuestionActuel(@PathVariable String codeInvitation){
