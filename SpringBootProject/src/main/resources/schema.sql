@@ -178,6 +178,7 @@ CREATE TABLE ThematiqueSelectionnee(
 CREATE TABLE QuestionPartieKahoot(
                           idPartieKahoot integer REFERENCES PartieKahoot(idPartie),
                           idQuestion integer REFERENCES Question(id),
+                          aetepose boolean DEFAULT false,
                           PRIMARY KEY (idPartieKahoot, idQuestion)
 );
 

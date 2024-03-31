@@ -28,4 +28,7 @@ public class QuestionPartieKahoot {
     @MapsId("idPartieKahoot")
     @JoinColumn(name="idpartiekahoot")
     private PartieKahoot partie;
+
+    @Column(name = "aetepose")
+    private boolean aEtePose = false;
 }
