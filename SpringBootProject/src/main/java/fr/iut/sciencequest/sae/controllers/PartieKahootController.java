@@ -144,8 +144,11 @@ public class PartieKahootController {
         partieKahoot = this.partieKahootService.maintenirAJourQuestionActuel(partieKahoot);
         Joueur joueur = this.joueurService.findById(request.getIdJoueur());
 
-        if(partieKahoot.getStatus() != Status.Started){
+        if(partieKahoot.getStatus() == Status.Pending){
             throw new PartyNotStartedException();
+        }
+        if(partieKahoot.getStatus() == Status.Ended){
+            throw new PartyIsEndedException();
         }
 
         if(partieKahoot.getJoueurs().stream().noneMatch(joueur1 -> Objects.equals(joueur1.getId(), joueur.getId()))){
