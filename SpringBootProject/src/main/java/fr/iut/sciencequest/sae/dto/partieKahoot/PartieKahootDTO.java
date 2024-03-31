@@ -3,6 +3,7 @@ package fr.iut.sciencequest.sae.dto.partieKahoot;
 import fr.iut.sciencequest.sae.dto.difficulte.DifficulteSimpleDTO;
 import fr.iut.sciencequest.sae.dto.jeu.JeuDTO;
 import fr.iut.sciencequest.sae.dto.joueur.JoueurSimpleDTO;
+import fr.iut.sciencequest.sae.dto.question.QuestionDTO;
 import fr.iut.sciencequest.sae.dto.thematique.ThematiqueSimpleDTO;
 import fr.iut.sciencequest.sae.entities.Question;
 import fr.iut.sciencequest.sae.entities.Status;
@@ -35,7 +36,7 @@ public class PartieKahootDTO extends RepresentationModel<PartieKahootDTO> {
     @NotNull
     private Status status;
 
-    private Question questionActuel;
+    private QuestionDTO questionActuel;
 
-    private List<Question> questions;
+    private List<QuestionDTO> questions;
 }
