@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
@@ -23,7 +23,9 @@ public class PartieKahoot extends Partie {
     @JoinColumn(name="idquestionactuel")
     private Question questionActuel;
 
-    //private Date tempsLimiteReponse;
+    @Column(name = "tempslimitereponse")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Calendar tempsLimiteReponse;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "partie", fetch = FetchType.EAGER)

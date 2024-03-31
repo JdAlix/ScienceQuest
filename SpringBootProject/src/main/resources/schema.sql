@@ -127,7 +127,8 @@ CREATE TABLE Partie(
 -- Partie Kahoot
 CREATE TABLE PartieKahoot(
                     idPartie integer PRIMARY KEY REFERENCES Partie(id),
-                    idQuestionActuel integer REFERENCES Question(id)
+                    idQuestionActuel integer REFERENCES Question(id),
+                    tempsLimiteReponse TIMESTAMP
 );
 
 -- JOUEUR

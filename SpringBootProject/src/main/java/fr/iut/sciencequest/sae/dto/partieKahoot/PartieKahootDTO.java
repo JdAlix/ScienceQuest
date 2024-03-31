@@ -5,13 +5,14 @@ import fr.iut.sciencequest.sae.dto.jeu.JeuDTO;
 import fr.iut.sciencequest.sae.dto.joueur.JoueurSimpleDTO;
 import fr.iut.sciencequest.sae.dto.question.QuestionDTO;
 import fr.iut.sciencequest.sae.dto.thematique.ThematiqueSimpleDTO;
-import fr.iut.sciencequest.sae.entities.Question;
 import fr.iut.sciencequest.sae.entities.Status;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -39,4 +40,6 @@ public class PartieKahootDTO extends RepresentationModel<PartieKahootDTO> {
     private QuestionDTO questionActuel;
 
     private List<QuestionDTO> questions;
+
+    private Calendar tempsLimiteReponse;
 }

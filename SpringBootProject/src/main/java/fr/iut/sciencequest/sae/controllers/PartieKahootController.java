@@ -17,6 +17,8 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -97,11 +99,16 @@ public class PartieKahootController {
     @ResponseStatus(HttpStatus.OK)
     public PartieKahootStatusDTO demarrerPartie(@PathVariable String codeInvitation){
         PartieKahoot partieKahoot = this.partieKahootService.getPartieKahootByIdOrCodeInvitation(codeInvitation);
+        Calendar tempsLimiteReponse = Calendar.getInstance();
+        tempsLimiteReponse.setTime(new Date());
+        tempsLimiteReponse.add(Calendar.MINUTE, 1);
+
         if(partieKahoot.getStatus() == Status.Started){
             throw new PartyAlreadyStartedException();
         }
         partieKahoot.setStatus(Status.Started);
         partieKahoot.setQuestionActuel(partieKahoot.getQuestions().getFirst().getQuestion());
+        partieKahoot.setTempsLimiteReponse(tempsLimiteReponse);
         partieKahoot = this.partieKahootService.update(partieKahoot);
         return this.modelMapper.map(partieKahoot, PartieKahootStatusDTO.class);
     }
