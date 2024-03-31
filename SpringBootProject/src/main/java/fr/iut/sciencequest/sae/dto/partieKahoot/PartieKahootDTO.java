@@ -32,12 +32,4 @@ public class PartieKahootDTO extends RepresentationModel<PartieKahootDTO> {
     private List<ThematiqueSimpleDTO> thematiques;
     @NotNull
     private DifficulteSimpleDTO difficulte;
-    @NotNull
-    private Status status;
-
-    private QuestionDTO questionActuel;
-
-    private List<QuestionDTO> questions;
-
-    private Calendar tempsLimiteReponse;
 }
