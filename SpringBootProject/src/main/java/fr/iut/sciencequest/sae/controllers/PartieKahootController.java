@@ -22,6 +22,8 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("/api/v1/partie/kahoot")
 public class PartieKahootController {
+    private static final int NOMBRE_QUESTION = 2;
+
     private final ScorePartieKahootJoueurRepository scorePartieKahootJoueurRepository;
     private final PartieKahootService partieKahootService;
     private final JoueurService joueurService;
@@ -48,14 +50,17 @@ public class PartieKahootController {
 
         partie.setDifficulte(this.difficulteService.findById(request.getIdDifficulte()));
 
-        partie.setQuestions(this.questionService.getRandomQuestions(1, partie.getThematiques(), partie.getDifficulte()));
+        partie.setQuestions(this.questionService.getRandomQuestions(NOMBRE_QUESTION, partie.getThematiques(), partie.getDifficulte()));
 
         partie =  this.partieKahootService.create(partie);
+
+        //setup score
         ScorePartieKahootJoueur score = new ScorePartieKahootJoueur();
         score.setId(new ScorePartieKahootJoueurKey(joueur.getId(), partie.getId()));
         score.setJoueur(joueur);
         score.setPartie(partie);
         this.scorePartieKahootJoueurRepository.save(score);
+
         return this.modelMapper.map(partie, PartieKahootDTO.class);
     }
 
