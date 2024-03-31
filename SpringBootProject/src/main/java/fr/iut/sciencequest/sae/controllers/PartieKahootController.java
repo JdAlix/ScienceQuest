@@ -162,6 +162,7 @@ public class PartieKahootController {
         reponsePartie.setId(new ReponsePartieKahootKey(reponse.getQuestion().getId(), partieKahoot.getId(), joueur.getId()));
         reponsePartie.setQuestion(reponse.getQuestion());
         reponsePartie.setPartie(partieKahoot);
+        reponsePartie.setReponse(reponse);
         reponsePartie.setJoueur(joueur);
         this.reponsePartieKahootRepository.save(reponsePartie);
 
