@@ -16,6 +16,7 @@ DROP TABLE IF EXISTS ThematiqueSelectionnee CASCADE;
 DROP TABLE IF EXISTS PartieKahoot CASCADE;
 DROP TABLE IF EXISTS QuestionPartieKahoot CASCADE;
 DROP TABLE IF EXISTS ScorePartieKahootjoueur CASCADE;
+DROP TABLE IF EXISTS ReponsePartieKahootJoueur CASCADE;
 DROP TABLE IF EXISTS Difficulte;
 
 
@@ -187,6 +188,14 @@ CREATE TABLE ScorePartieKahootjoueur(
     idPartie integer REFERENCES PartieKahoot(idPartie),
     score integer,
     PRIMARY KEY (idJoueur, idPartie)
+);
+
+--ReponsePartieKahootJoueur
+CREATE TABLE ReponsePartieKahootJoueur(
+    idJoueur integer REFERENCES Joueur(id),
+    idPartie integer REFERENCES PartieKahoot(idPartie),
+    idQuestion integer REFERENCES Question(id),
+    idReponse integer REFERENCES Reponse(id)
 );
 
 

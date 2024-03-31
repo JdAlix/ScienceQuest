@@ -33,5 +33,9 @@ public class PartieKahoot extends Partie {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "partie", fetch = FetchType.EAGER)
+    private List<ReponsePartieKahoot> reponses;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "partie", fetch = FetchType.EAGER)
     private List<ScorePartieKahootJoueur> scores;
 }

@@ -1,14 +1,16 @@
 package fr.iut.sciencequest.sae.controllers;
 
 import fr.iut.sciencequest.sae.controllers.request.PartieAddJoueurRequest;
+import fr.iut.sciencequest.sae.controllers.request.PartieReponse;
 import fr.iut.sciencequest.sae.controllers.request.PartieRequest;
 import fr.iut.sciencequest.sae.dto.partieKahoot.PartieKahootDTO;
 import fr.iut.sciencequest.sae.dto.partieKahoot.PartieKahootQuestionDTO;
 import fr.iut.sciencequest.sae.dto.partieKahoot.PartieKahootStatusDTO;
+import fr.iut.sciencequest.sae.dto.reponse.ReponseValideDTO;
 import fr.iut.sciencequest.sae.entities.*;
-import fr.iut.sciencequest.sae.exceptions.partie.PartyAlreadyStartedException;
-import fr.iut.sciencequest.sae.exceptions.partie.PartyNotStartedException;
+import fr.iut.sciencequest.sae.exceptions.partie.*;
 import fr.iut.sciencequest.sae.repositories.QuestionPartieKahootRepository;
+import fr.iut.sciencequest.sae.repositories.ReponsePartieKahootRepository;
 import fr.iut.sciencequest.sae.repositories.ScorePartieKahootJoueurRepository;
 import fr.iut.sciencequest.sae.services.*;
 import jakarta.validation.Valid;
@@ -18,10 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @AllArgsConstructor
@@ -34,9 +33,11 @@ public class PartieKahootController {
     private final PartieKahootService partieKahootService;
     private final JoueurService joueurService;
     private final QuestionService questionService;
+    private final ReponseService reponseService;
     private final ThematiqueService thematiqueService;
     private final DifficulteService difficulteService;
     private final ModelMapper modelMapper;
+    private final ReponsePartieKahootRepository reponsePartieKahootRepository;
 
     @RequestMapping(value = "/{codeInvitation}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public PartieKahootDTO getPartie(@PathVariable String codeInvitation) {
@@ -123,6 +124,48 @@ public class PartieKahootController {
             throw new PartyNotStartedException();
         }
         return this.modelMapper.map(partieKahoot, PartieKahootQuestionDTO.class);
+    }
+
+    @PostMapping(value = "/{codeInvitation}/reponse", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public ReponseValideDTO repondre(@PathVariable String codeInvitation, @RequestBody @Valid PartieReponse request){
+        PartieKahoot partieKahoot = this.partieKahootService.getPartieKahootByIdOrCodeInvitation(codeInvitation);
+        Joueur joueur = this.joueurService.findById(request.getIdJoueur());
+
+        if(partieKahoot.getStatus() != Status.Started){
+            throw new PartyNotStartedException();
+        }
+
+        if(partieKahoot.getJoueurs().stream().noneMatch(joueur1 -> Objects.equals(joueur1.getId(), joueur.getId()))){
+            throw new JoueurPasDansPartieException();
+        }
+
+        if(partieKahoot.getReponses().stream()
+                .filter(partieReponse -> Objects.equals(partieReponse.getJoueur().getId(), joueur.getId()))
+                .anyMatch(partieReponse -> Objects.equals(partieReponse.getQuestion().getId(), partieKahoot.getQuestionActuel().getId()))){
+            throw new QuestionDejaReponduException();
+        }
+
+
+        Reponse reponse = reponseService.findById(request.getIdReponse());
+        if(!Objects.equals(reponse.getQuestion().getId(), partieKahoot.getQuestionActuel().getId())){
+            throw new ReponseIncoherenteException();
+        }
+
+        Calendar actualDate = Calendar.getInstance();
+        actualDate.setTime(new Date());
+        if(actualDate.after(partieKahoot.getTempsLimiteReponse())){
+            throw new ReponseTempsLimiteDepasseException();
+        }
+
+        ReponsePartieKahoot reponsePartie = new ReponsePartieKahoot();
+        reponsePartie.setId(new ReponsePartieKahootKey(reponse.getQuestion().getId(), partieKahoot.getId(), joueur.getId()));
+        reponsePartie.setQuestion(reponse.getQuestion());
+        reponsePartie.setPartie(partieKahoot);
+        reponsePartie.setJoueur(joueur);
+        this.reponsePartieKahootRepository.save(reponsePartie);
+
+        return this.modelMapper.map(reponse, ReponseValideDTO.class);
     }
 
 }
