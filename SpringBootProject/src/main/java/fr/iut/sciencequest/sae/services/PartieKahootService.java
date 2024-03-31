@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Optional;
 
 @AllArgsConstructor
@@ -85,6 +86,20 @@ public class PartieKahootService {
             this.questionPartieKahootRepository.save(questionPartieKahoot.get());
         }
         return this.update(partieKahoot);
+    }
+
+    public PartieKahoot maintenirAJourQuestionActuel(PartieKahoot partieKahoot){
+        if(partieKahoot.getStatus() == Status.Started){
+            Calendar actualDate = Calendar.getInstance();
+            actualDate.setTime(new Date());
+
+            Question questionActuel = partieKahoot.getQuestionActuel();
+            boolean toutLeMondeARepondu = partieKahoot.getJoueurs().size() == partieKahoot.getReponses().stream().filter(partieReponse -> Objects.equals(questionActuel.getId(), partieReponse.getQuestion().getId())).count();
+            if(actualDate.after(partieKahoot.getTempsLimiteReponse()) || toutLeMondeARepondu){
+                partieKahoot = this.questionSuivante(partieKahoot);
+            }
+        }
+        return partieKahoot;
     }
 
 }

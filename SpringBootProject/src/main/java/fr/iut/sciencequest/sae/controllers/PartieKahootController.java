@@ -41,7 +41,9 @@ public class PartieKahootController {
 
     @RequestMapping(value = "/{codeInvitation}",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public PartieKahootDTO getPartie(@PathVariable String codeInvitation) {
-        return this.modelMapper.map(this.partieKahootService.getPartieKahootByIdOrCodeInvitation(codeInvitation), PartieKahootDTO.class);
+        PartieKahoot partieKahoot = this.partieKahootService.getPartieKahootByIdOrCodeInvitation(codeInvitation);
+        partieKahoot = this.partieKahootService.maintenirAJourQuestionActuel(partieKahoot);
+        return this.modelMapper.map(partieKahoot, PartieKahootDTO.class);
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -103,7 +105,6 @@ public class PartieKahootController {
     public PartieKahootStatusDTO demarrerPartie(@PathVariable String codeInvitation){
         PartieKahoot partieKahoot = this.partieKahootService.getPartieKahootByIdOrCodeInvitation(codeInvitation);
 
-
         if(partieKahoot.getStatus() == Status.Started){
             throw new PartyAlreadyStartedException();
         }
@@ -117,8 +118,12 @@ public class PartieKahootController {
     @ResponseStatus(HttpStatus.OK)
     public PartieKahootQuestionDTO getQuestionActuel(@PathVariable String codeInvitation){
         PartieKahoot partieKahoot = this.partieKahootService.getPartieKahootByIdOrCodeInvitation(codeInvitation);
-        if(partieKahoot.getStatus() != Status.Started){
+        partieKahoot = this.partieKahootService.maintenirAJourQuestionActuel(partieKahoot);
+        if(partieKahoot.getStatus() == Status.Pending){
             throw new PartyNotStartedException();
+        }
+        if(partieKahoot.getStatus() == Status.Ended){
+            throw new PartyIsEndedException();
         }
         return this.modelMapper.map(partieKahoot, PartieKahootQuestionDTO.class);
     }
@@ -127,6 +132,7 @@ public class PartieKahootController {
     @ResponseStatus(HttpStatus.OK)
     public ReponseValideDTO repondre(@PathVariable String codeInvitation, @RequestBody @Valid PartieReponse request){
         PartieKahoot partieKahoot = this.partieKahootService.getPartieKahootByIdOrCodeInvitation(codeInvitation);
+        partieKahoot = this.partieKahootService.maintenirAJourQuestionActuel(partieKahoot);
         Joueur joueur = this.joueurService.findById(request.getIdJoueur());
 
         if(partieKahoot.getStatus() != Status.Started){
@@ -137,9 +143,10 @@ public class PartieKahootController {
             throw new JoueurPasDansPartieException();
         }
 
+        Question questionActuel = partieKahoot.getQuestionActuel();
         if(partieKahoot.getReponses().stream()
                 .filter(partieReponse -> Objects.equals(partieReponse.getJoueur().getId(), joueur.getId()))
-                .anyMatch(partieReponse -> Objects.equals(partieReponse.getQuestion().getId(), partieKahoot.getQuestionActuel().getId()))){
+                .anyMatch(partieReponse -> Objects.equals(partieReponse.getQuestion().getId(), questionActuel.getId()))){
             throw new QuestionDejaReponduException();
         }
 
