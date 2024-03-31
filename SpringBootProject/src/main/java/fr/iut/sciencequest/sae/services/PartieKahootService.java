@@ -1,9 +1,6 @@
 package fr.iut.sciencequest.sae.services;
 
-import fr.iut.sciencequest.sae.entities.PartieKahoot;
-import fr.iut.sciencequest.sae.entities.Question;
-import fr.iut.sciencequest.sae.entities.QuestionPartieKahoot;
-import fr.iut.sciencequest.sae.entities.Status;
+import fr.iut.sciencequest.sae.entities.*;
 import fr.iut.sciencequest.sae.exceptions.DuplicatedIdException;
 import fr.iut.sciencequest.sae.exceptions.notFound.PartieKahootNotFoundException;
 import fr.iut.sciencequest.sae.exceptions.partie.PartyNotStartedException;
@@ -11,6 +8,8 @@ import fr.iut.sciencequest.sae.repositories.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
@@ -100,6 +99,14 @@ public class PartieKahootService {
             }
         }
         return partieKahoot;
+    }
+
+    public int getScore(Calendar tempsLimiteReponse,Reponse reponse){
+        if(!reponse.getEstValide()) return 0;
+        Calendar actualDate = Calendar.getInstance();
+        actualDate.setTime(new Date());
+        long secondsPourRepondre = ChronoUnit.SECONDS.between(actualDate.toInstant(), tempsLimiteReponse.toInstant());
+        return Math.round(1f/secondsPourRepondre*PartieKahootService.TEMPS_REPONSE_QUESTION);
     }
 
 }

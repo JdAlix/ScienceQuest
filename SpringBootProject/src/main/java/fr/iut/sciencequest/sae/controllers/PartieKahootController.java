@@ -8,6 +8,7 @@ import fr.iut.sciencequest.sae.dto.partieKahoot.PartieKahootQuestionDTO;
 import fr.iut.sciencequest.sae.dto.partieKahoot.PartieKahootStatusDTO;
 import fr.iut.sciencequest.sae.dto.reponse.ReponseValideDTO;
 import fr.iut.sciencequest.sae.entities.*;
+import fr.iut.sciencequest.sae.exceptions.notFound.ScorePartieKahootJoueurNotFound;
 import fr.iut.sciencequest.sae.exceptions.partie.*;
 import fr.iut.sciencequest.sae.repositories.QuestionPartieKahootRepository;
 import fr.iut.sciencequest.sae.repositories.ReponsePartieKahootRepository;
@@ -169,6 +170,13 @@ public class PartieKahootController {
         reponsePartie.setReponse(reponse);
         reponsePartie.setJoueur(joueur);
         this.reponsePartieKahootRepository.save(reponsePartie);
+
+        ScorePartieKahootJoueur scorePartieKahootJoueur = partieKahoot.getScores().stream().filter(socre -> socre.getJoueur().getId() == joueur.getId())
+                                                            .findFirst()
+                                                            .orElseThrow(() -> new ScorePartieKahootJoueurNotFound(joueur.getId()));
+
+        scorePartieKahootJoueur.setScore(scorePartieKahootJoueur.getScore() + this.partieKahootService.getScore(partieKahoot.getTempsLimiteReponse(), reponse));
+        this.scorePartieKahootJoueurRepository.save(scorePartieKahootJoueur);
 
         return this.modelMapper.map(reponse, ReponseValideDTO.class);
     }
