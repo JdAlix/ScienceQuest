@@ -6,6 +6,7 @@ import fr.iut.sciencequest.sae.dto.partieKahoot.PartieKahootDTO;
 import fr.iut.sciencequest.sae.dto.partieKahoot.PartieKahootStatusDTO;
 import fr.iut.sciencequest.sae.entities.*;
 import fr.iut.sciencequest.sae.exceptions.partie.PartyAlreadyStartedException;
+import fr.iut.sciencequest.sae.repositories.QuestionPartieKahootRepository;
 import fr.iut.sciencequest.sae.repositories.ScorePartieKahootJoueurRepository;
 import fr.iut.sciencequest.sae.services.*;
 import jakarta.validation.Valid;
@@ -24,6 +25,7 @@ import java.util.List;
 public class PartieKahootController {
     private static final int NOMBRE_QUESTION = 2;
 
+    private final QuestionPartieKahootRepository questionPartieKahootRepository;
     private final ScorePartieKahootJoueurRepository scorePartieKahootJoueurRepository;
     private final PartieKahootService partieKahootService;
     private final JoueurService joueurService;
@@ -49,9 +51,6 @@ public class PartieKahootController {
         }
 
         partie.setDifficulte(this.difficulteService.findById(request.getIdDifficulte()));
-
-        partie.setQuestions(this.questionService.getRandomQuestions(NOMBRE_QUESTION, partie.getThematiques(), partie.getDifficulte()));
-
         partie =  this.partieKahootService.create(partie);
 
         //setup score
@@ -60,6 +59,18 @@ public class PartieKahootController {
         score.setJoueur(joueur);
         score.setPartie(partie);
         this.scorePartieKahootJoueurRepository.save(score);
+
+        //setup question
+        List<Question> questions = this.questionService.getRandomQuestions(NOMBRE_QUESTION, partie.getThematiques(), partie.getDifficulte());
+        for(Question question: questions){
+            QuestionPartieKahoot questionPartie = new QuestionPartieKahoot();
+            questionPartie.setId(new QuestionPartieKahootKey(question.getId(), partie.getId()));
+            questionPartie.setQuestion(question);
+            questionPartie.setPartie(partie);
+            this.questionPartieKahootRepository.save(questionPartie);
+        }
+
+        partie = this.partieKahootService.findById(partie.getId());
 
         return this.modelMapper.map(partie, PartieKahootDTO.class);
     }
@@ -90,7 +101,7 @@ public class PartieKahootController {
             throw new PartyAlreadyStartedException();
         }
         partieKahoot.setStatus(Status.Started);
-        partieKahoot.setQuestionActuel(partieKahoot.getQuestions().getFirst());
+        partieKahoot.setQuestionActuel(partieKahoot.getQuestions().getFirst().getQuestion());
         partieKahoot = this.partieKahootService.update(partieKahoot);
         return this.modelMapper.map(partieKahoot, PartieKahootStatusDTO.class);
     }

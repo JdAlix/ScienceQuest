@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
@@ -22,15 +23,13 @@ public class PartieKahoot extends Partie {
     @JoinColumn(name="idquestionactuel")
     private Question questionActuel;
 
-    @JsonManagedReference
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "Questionpartiekahoot",
-            joinColumns = @JoinColumn(name = "idpartiekahoot"),
-            inverseJoinColumns = @JoinColumn(name="idquestion")
-    )
-    private List<Question> questions;
+    //private Date tempsLimiteReponse;
 
+    @JsonManagedReference
+    @OneToMany(mappedBy = "partie", fetch = FetchType.EAGER)
+    private List<QuestionPartieKahoot> questions;
+
+    @JsonManagedReference
     @OneToMany(mappedBy = "partie", fetch = FetchType.EAGER)
     private List<ScorePartieKahootJoueur> scores;
 }
