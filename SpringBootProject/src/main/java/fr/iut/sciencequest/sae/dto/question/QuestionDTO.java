@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 
+import java.util.List;
 
 
 @Data
@@ -23,5 +24,5 @@ public class QuestionDTO extends RepresentationModel<QuestionDTO> {
     private String question;
 
     @NotEmpty
-    private Iterable<ReponseSimpleDTO> reponses;
+    private List<ReponseSimpleDTO> reponses;
 }

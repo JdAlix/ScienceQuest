@@ -3,9 +3,11 @@ package fr.iut.sciencequest.sae.controllers;
 import fr.iut.sciencequest.sae.controllers.request.PartieAddJoueurRequest;
 import fr.iut.sciencequest.sae.controllers.request.PartieRequest;
 import fr.iut.sciencequest.sae.dto.partieKahoot.PartieKahootDTO;
+import fr.iut.sciencequest.sae.dto.partieKahoot.PartieKahootQuestionDTO;
 import fr.iut.sciencequest.sae.dto.partieKahoot.PartieKahootStatusDTO;
 import fr.iut.sciencequest.sae.entities.*;
 import fr.iut.sciencequest.sae.exceptions.partie.PartyAlreadyStartedException;
+import fr.iut.sciencequest.sae.exceptions.partie.PartyNotStartedException;
 import fr.iut.sciencequest.sae.repositories.QuestionPartieKahootRepository;
 import fr.iut.sciencequest.sae.repositories.ScorePartieKahootJoueurRepository;
 import fr.iut.sciencequest.sae.services.*;
@@ -111,6 +113,16 @@ public class PartieKahootController {
         partieKahoot.setTempsLimiteReponse(tempsLimiteReponse);
         partieKahoot = this.partieKahootService.update(partieKahoot);
         return this.modelMapper.map(partieKahoot, PartieKahootStatusDTO.class);
+    }
+
+    @GetMapping(value = "/{codeInvitation}/question", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public PartieKahootQuestionDTO getQuestionActuel(@PathVariable String codeInvitation){
+        PartieKahoot partieKahoot = this.partieKahootService.getPartieKahootByIdOrCodeInvitation(codeInvitation);
+        if(partieKahoot.getStatus() != Status.Started){
+            throw new PartyNotStartedException();
+        }
+        return this.modelMapper.map(partieKahoot, PartieKahootQuestionDTO.class);
     }
 
 }
