@@ -28,8 +28,6 @@ public class PartieKahootDTO extends RepresentationModel<PartieKahootDTO> {
     private String codeInvitation;
     @NotEmpty
     private List<JoueurSimpleDTO> joueurs;
-    @NotNull
-    private JeuDTO jeu;
     @NotEmpty
     private List<ThematiqueSimpleDTO> thematiques;
     @NotNull

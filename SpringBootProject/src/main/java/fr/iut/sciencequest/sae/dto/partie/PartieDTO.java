@@ -27,8 +27,6 @@ public class PartieDTO extends RepresentationModel<PartieDTO> {
     private String codeInvitation;
     @NotEmpty
     private List<JoueurSimpleDTO> joueurs;
-    @NotNull
-    private JeuDTO jeu;
     @NotEmpty
     private List<ThematiqueSimpleDTO> thematiques;
     @NotNull

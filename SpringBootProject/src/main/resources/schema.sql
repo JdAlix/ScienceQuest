@@ -118,7 +118,6 @@ CREATE OR REPLACE FUNCTION make_uid() RETURNS text AS
 CREATE TABLE Partie(
                        id SERIAL PRIMARY KEY,
                        codeInvitation varchar(5) UNIQUE DEFAULT make_uid(),
-                       idJeu integer REFERENCES Jeu(id),
                        idDifficulte integer REFERENCES Difficulte(id) NOT NULL,
                        status varchar(128),
                        dateCreation timestamp DEFAULT CURRENT_TIMESTAMP
@@ -266,7 +265,7 @@ VALUES
 
 
 -- Partie
-INSERT INTO Partie(codeInvitation, idJeu, idDifficulte, status) VALUES ('abcde', 1, 2, 'Pending');
+INSERT INTO Partie(codeInvitation, idDifficulte, status) VALUES ('abcde', 2, 'Pending');
 INSERT INTO PartieKahoot(idPartie) VALUES (1);
 
 -- Utilisateurs
