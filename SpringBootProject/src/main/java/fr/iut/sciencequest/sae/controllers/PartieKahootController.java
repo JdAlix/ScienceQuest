@@ -67,10 +67,12 @@ public class PartieKahootController {
         if(!partie.getStatus().equals(Status.Pending)) throw new PartyAlreadyStartedException();
         if(!partie.getJoueurs().contains(joueur)){
             ScorePartieKahootJoueur score = new ScorePartieKahootJoueur();
-            score.setPartie(partie);
+            score.setId(new ScorePartieKahootJoueurKey(joueur.getId(), partie.getId()));
             score.setJoueur(joueur);
+            score.setPartie(partie);
             partie.getScores().add(score);
             partie.getJoueurs().add(joueur);
+            this.scorePartieKahootJoueurRepository.save(score);
         }
         return this.modelMapper.map(this.partieKahootService.update(partie), PartieKahootDTO.class);
     }
