@@ -53,13 +53,22 @@ steps:
         from_secret: SECRET_REGISTRY_USERNAME
       password:
         from_secret: SECRET_REGISTRY_PASSWORD
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://tombiard-postgres_server:5432/ScienceQuest
+      SPRING_DATASOURCE_USERNAME: ScienceQuest
+      SPRING_DATASOURCE_PASSWORD: 
+        from_secret: postgres_password_secret
 
   - name: deploy-container-app
     image: hub.codefirst.iut.uca.fr/thomas.bellembois/codefirst-dockerproxy-clientdrone:latest
     depends_on: [build-container-app-image,deploy-container-postgresql]
     environment:
-        IMAGENAME: hub.codefirst.iut.uca.fr/alix.jeudi--lemoine/api:latest
-        CONTAINERNAME: api
-        COMMAND: create
-        OVERWRITE: true
-        ADMINS: alixjeudi--lemoine,victorsoulier,gwenaelplanchon
+      IMAGENAME: hub.codefirst.iut.uca.fr/alix.jeudi--lemoine/api:latest
+      CONTAINERNAME: api
+      COMMAND: create
+      OVERWRITE: true
+      CODEFIRST_CLIENTDRONE_ENV_SPRING_DATASOURCE_URL: jdbc:postgresql://tombiard-postgres_server:5432/ScienceQuest
+      CODEFIRST_CLIENTDRONE_ENV_SPRING_DATASOURCE_USERNAME: ScienceQuest
+      CODEFIRST_CLIENTDRONE_ENV_SPRING_DATASOURCE_PASSWORD: 
+        from_secret: postgres_password_secret
+      ADMINS: alixjeudi--lemoine,victorsoulier,gwenaelplanchon
