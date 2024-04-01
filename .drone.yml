@@ -1,0 +1,32 @@
+kind: pipeline
+type: docker
+name: ScienceQuestFront
+
+trigger:
+  branch:
+    - front
+  event:
+    - push
+
+steps:
+  - name: build-container-image
+    image: plugins/docker
+    settings:
+      dockerfile: Dockerfile
+      registry: hub.codefirst.iut.uca.fr
+      repo: hub.codefirst.iut.uca.fr/alix.jeudi--lemoine/front
+      username:
+        from_secret: SECRET_REGISTRY_USERNAME
+      password:
+        from_secret: SECRET_REGISTRY_PASSWORD
+
+  - name: deploy-container
+    image: hub.codefirst.iut.uca.fr/thomas.bellembois/codefirst-dockerproxy-clientdrone:latest
+    depends_on: [build-container-image]
+    environment:
+        IMAGENAME: hub.codefirst.iut.uca.fr/alix.jeudi--lemoine/front:latest
+        CONTAINERNAME: front
+        COMMAND: create
+        OVERWRITE: true
+        CODEFIRST_CLIENTDRONE_ENV_BASE_URL: /containers/tombiard-front/
+        ADMINS: alixjeudi--lemoine,victorsoulier,gwenaelplanchon
