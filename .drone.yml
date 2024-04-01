@@ -44,7 +44,5 @@ steps:
   - name: run-app
     image: openjdk:21-slim
     depends_on: [build-app,deploy-container-postgresql]
-    settings:
-      context: SpringBootProject/
     commands:
-      - java -jar target/sae-0.0.1-SNAPSHOT.jar
+      - java -jar SpringBootProject/target/sae-0.0.1-SNAPSHOT.jar
