@@ -1,0 +1,43 @@
+kind: pipeline
+name: default
+
+trigger:
+  branch:
+    - Springboot
+
+services:
+  postgres_server:
+    image: postgres:16-alpine
+    container_name: postgres_server
+    restart: always
+    environment:
+      POSTGRES_PASSWORD:
+        from_secret: postgres_password_secret
+      POSTGRES_USER: ScienceQuest
+      POSTGRES_DB: ScienceQuest
+
+  adminer:
+    image: adminer
+    depends_on:
+      - postgres_server
+    restart: always
+    environment:
+      ADMINER_DEFAULT_SERVER: postgres_server
+    ports:
+      - "8080:8080"
+
+steps:
+  - name: build_app
+    image: maven:3-eclipse-temurin-21-alpine
+    commands:
+      - sed -i -e "s/localhost/postgres_server/g" src/main/resources/application.properties
+      - mvn clean package
+
+  - name: run_app
+    image: openjdk:21-slim
+    ports:
+      - "80:8080"
+    depends_on:
+      - build_app
+    commands:
+      - java -jar target/sae-0.0.1-SNAPSHOT.jar
