@@ -32,18 +32,6 @@ steps:
       - echo -e "\nserver.port=443\nserver.forward-headers-strategy=framework" >> src/main/resources/application.properties
       - mvn clean package
 
-  - name: code-analysis
-    image: aosapps/drone-sonar-plugin
-    depends_on: [build-app]
-    settings: 
-      sonar_host:
-        from_secret: sonar_host
-      sonar_token:
-        from_secret: sonar_sae_token
-      exclusions: Documentation/**,SpringBootProject/target/**,SpringBootProject/src/main/java/fr/iut/sciencequest/sae/resources/**,SpringBootProject/src/test/**,SpringBootProject/src/main/java/fr/iut/sciencequest/sae/SecurityConfig.java
-    commands:
-      - sonar-scanner -Dsonar.projectKey=ScienceQuest -Dsonar.projectName=ScienceQuest -Dsonar.projectVersion=0.0.1 -Dsonar.sources=SpringBootProject/src/main/java -Dsonar.java.binaries=SpringBootProject/target/classes -Dsonar.java.source=21 -Dsonar.java.target=21
-
   - name: deploy-container-adminer
     image: hub.codefirst.iut.uca.fr/thomas.bellembois/codefirst-dockerproxy-clientdrone:latest
     environment:
