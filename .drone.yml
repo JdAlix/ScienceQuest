@@ -28,5 +28,4 @@ steps:
         CONTAINERNAME: front
         COMMAND: create
         OVERWRITE: true
-        CODEFIRST_CLIENTDRONE_ENV_BASE_URL: /containers/tombiard-front/
         ADMINS: alixjeudi--lemoine,victorsoulier,gwenaelplanchon

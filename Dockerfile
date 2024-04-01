@@ -11,7 +11,7 @@ WORKDIR /front
 COPY --chown=node:node science-quest/ .
 
 # Met en variable d'environnement le port 443 pour http-server
-ENV PORT=443
+ENV PORT=443 BASE_URL=/containers/tombiard-front/
 
 # Installe les dépendances nécéssaires 
 RUN npm install
