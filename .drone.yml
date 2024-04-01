@@ -63,5 +63,4 @@ steps:
         CONTAINERNAME: api
         COMMAND: create
         OVERWRITE: true
-        CODEFIRST_CLIENTDRONE_ENV_SERVER_SERVLET_CONTEXT_PATH: /containers/tombiard-api
         ADMINS: alixjeudi--lemoine,victorsoulier
