@@ -12,8 +12,9 @@ steps:
   - name: build-app
     image: maven:3-eclipse-temurin-21-alpine
     commands:
-      - sed -i -e "s/localhost/postgres_server/g" SpringBootProject/src/main/resources/application.properties
-      - echo 'server.port=80' >> SpringBootProject/src/main/resources/application.properties
+      - cd SpringBootProject/
+      - sed -i -e "s/localhost/postgres_server/g" src/main/resources/application.properties
+      - echo 'server.port=80' >> src/main/resources/application.properties
       - mvn clean package
 
   - name: deploy-container-postgresql
