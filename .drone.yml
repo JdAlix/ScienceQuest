@@ -11,11 +11,9 @@ trigger:
 steps:
   - name: build-app
     image: maven:3-eclipse-temurin-21-alpine
-    settings:
-      context: SpringBootProject/
     commands:
-      - sed -i -e "s/localhost/postgres_server/g" src/main/resources/application.properties
-      - echo 'server.port=80' >> src/main/resources/application.properties
+      - sed -i -e "s/localhost/postgres_server/g" SpringBootProject/src/main/resources/application.properties
+      - echo 'server.port=80' >> SpringBootProject/src/main/resources/application.properties
       - mvn clean package
 
   - name: deploy-container-postgresql
@@ -28,10 +26,8 @@ steps:
         PRIVATE: true
         CODEFIRST_CLIENTDRONE_ENV_POSTGRES_PASSWORD:
           from_secret: postgres_password_secret
-        CODEFIRST_CLIENTDRONE_ENV_POSTGRES_DB:
-          from_secret: ScienceQuest
-        CODEFIRST_CLIENTDRONE_ENV_POSTGRES_USER:
-          from_secret: ScienceQuest
+        CODEFIRST_CLIENTDRONE_ENV_POSTGRES_DB: ScienceQuest
+        CODEFIRST_CLIENTDRONE_ENV_POSTGRES_USER: ScienceQuest
 
   - name: deploy-container-adminer
     image: hub.codefirst.iut.uca.fr/thomas.bellembois/codefirst-dockerproxy-clientdrone:latest
@@ -42,10 +38,6 @@ steps:
         OVERWRITE: true
         PRIVATE: false
         CODEFIRST_CLIENTDRONE_ENV_ADMINER_DEFAULT_SERVER: postgres_server
-        CODEFIRST_CLIENTDRONE_ENV_POSTGRES_DB:
-          from_secret: ScienceQuest
-        CODEFIRST_CLIENTDRONE_ENV_POSTGRES_USER:
-          from_secret: ScienceQuest
 
   - name: run-app
     image: openjdk:21-slim
