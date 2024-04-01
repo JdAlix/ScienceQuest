@@ -9,14 +9,6 @@ trigger:
     - push
 
 steps:
-  - name: build-app
-    image: maven:3-eclipse-temurin-21-alpine
-    commands:
-      - cd SpringBootProject/
-      - sed -i -e "s/localhost/postgres_server/g" src/main/resources/application.properties
-      - echo 'server.port=80' >> src/main/resources/application.properties
-      - mvn clean package
-
   - name: deploy-container-postgresql
     image: hub.codefirst.iut.uca.fr/thomas.bellembois/codefirst-dockerproxy-clientdrone:latest
     environment:
@@ -29,6 +21,15 @@ steps:
           from_secret: postgres_password_secret
         CODEFIRST_CLIENTDRONE_ENV_POSTGRES_DB: ScienceQuest
         CODEFIRST_CLIENTDRONE_ENV_POSTGRES_USER: ScienceQuest
+
+  - name: build-app
+    image: maven:3-eclipse-temurin-21-alpine
+    depends_on: [deploy-container-postgresql]
+    commands:
+      - cd SpringBootProject/
+      - sed -i -e "s/localhost/tombiard-postgres_server/g" src/main/resources/application.properties
+      - echo 'server.port=80' >> src/main/resources/application.properties
+      - mvn clean package
 
   - name: deploy-container-adminer
     image: hub.codefirst.iut.uca.fr/thomas.bellembois/codefirst-dockerproxy-clientdrone:latest
