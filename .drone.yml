@@ -64,4 +64,5 @@ steps:
         COMMAND: create
         OVERWRITE: true
         PRIVATE: false
+        CODEFIRST_CLIENTDRONE_ENV_SERVER_SERVLET_CONTEXT_PATH: /containers/tombiard-api
         ADMINS: alixjeudi--lemoine,victorsoulier
