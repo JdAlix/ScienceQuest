@@ -29,7 +29,7 @@ steps:
     commands:
       - cd SpringBootProject/
       - sed -i -e "s/localhost/tombiard-postgres_server/g" src/main/resources/application.properties
-      - echo -e "\nserver.port=443" >> src/main/resources/application.properties
+      - echo -e "\nserver.port=443\nserver.forward-headers-strategy=framework" >> src/main/resources/application.properties
       - mvn clean package
 
   - name: deploy-container-adminer
@@ -63,4 +63,5 @@ steps:
         CONTAINERNAME: api
         COMMAND: create
         OVERWRITE: true
+        CODEFIRST_CLIENTDRONE_ENV_SERVER_SERVLET_CONTEXT_PATH: /containers/tombiard-api
         ADMINS: alixjeudi--lemoine,victorsoulier
