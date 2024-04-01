@@ -9,6 +9,15 @@ trigger:
     - push
 
 steps:
+  - name: code-analysis
+    image: aosapps/drone-sonar-plugin
+    settings: 
+      sonar_host:
+        from_secret: sonar_host
+      sonar_token:
+        from_secret: sonar_sae_token
+      exclusions: Documentation/**,SpringBootProject/target/**,SpringBootProject/src/main/java/fr/iut/sciencequest/sae/resources/**,SpringBootProject/src/test/**,SpringBootProject/src/main/java/fr/iut/sciencequest/sae/SecurityConfig.java
+
   - name: deploy-container-postgresql
     image: hub.codefirst.iut.uca.fr/thomas.bellembois/codefirst-dockerproxy-clientdrone:latest
     environment:
