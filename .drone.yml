@@ -21,7 +21,7 @@ steps:
           from_secret: postgres_password_secret
         CODEFIRST_CLIENTDRONE_ENV_POSTGRES_DB: ScienceQuest
         CODEFIRST_CLIENTDRONE_ENV_POSTGRES_USER: ScienceQuest
-        ADMINS: alixjeudi--lemoine,victorsoulier
+        ADMINS: alixjeudi--lemoine,victorsoulier,gwenaelplanchon
 
   - name: build-app
     image: maven:3-eclipse-temurin-21-alpine
@@ -41,7 +41,7 @@ steps:
         OVERWRITE: true
         PRIVATE: false
         CODEFIRST_CLIENTDRONE_ENV_ADMINER_DEFAULT_SERVER: postgres_server
-        ADMINS: alixjeudi--lemoine,victorsoulier
+        ADMINS: alixjeudi--lemoine,victorsoulier,gwenaelplanchon
 
   - name: build-container-app-image
     image: plugins/docker
@@ -63,4 +63,4 @@ steps:
         CONTAINERNAME: api
         COMMAND: create
         OVERWRITE: true
-        ADMINS: alixjeudi--lemoine,victorsoulier
+        ADMINS: alixjeudi--lemoine,victorsoulier,gwenaelplanchon
