@@ -1,9 +1,12 @@
 kind: pipeline
-name: default
+type: docker
+name: ScienceQuestAPI
 
 trigger:
   branch:
     - Springboot
+  event:
+    - push
 
 services:
   postgres_server:
@@ -29,15 +32,18 @@ services:
 steps:
   - name: build_app
     image: maven:3-eclipse-temurin-21-alpine
+    settings:
+      context: SpringBootProject/
     commands:
       - sed -i -e "s/localhost/postgres_server/g" src/main/resources/application.properties
+      - echo 'server.port=80' >> src/main/resources/application.properties
       - mvn clean package
 
   - name: run_app
     image: openjdk:21-slim
-    ports:
-      - "80:8080"
     depends_on:
       - build_app
+    settings:
+      context: SpringBootProject/
     commands:
       - java -jar target/sae-0.0.1-SNAPSHOT.jar
