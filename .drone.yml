@@ -31,6 +31,11 @@ steps:
       - sed -i -e "s/localhost/tombiard-postgres_server/g" src/main/resources/application.properties
       - echo -e "\nserver.port=443\nserver.forward-headers-strategy=framework" >> src/main/resources/application.properties
       - mvn clean package
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://tombiard-postgres_server:5432/ScienceQuest
+      SPRING_DATASOURCE_USERNAME: ScienceQuest
+      SPRING_DATASOURCE_PASSWORD: 
+        from_secret: postgres_password_secret
 
 #  - name: deploy-container-adminer
 #    image: hub.codefirst.iut.uca.fr/thomas.bellembois/codefirst-dockerproxy-clientdrone:latest
@@ -53,11 +58,6 @@ steps:
         from_secret: SECRET_REGISTRY_USERNAME
       password:
         from_secret: SECRET_REGISTRY_PASSWORD
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://tombiard-postgres_server:5432/ScienceQuest
-      SPRING_DATASOURCE_USERNAME: ScienceQuest
-      SPRING_DATASOURCE_PASSWORD: 
-        from_secret: postgres_password_secret
 
   - name: deploy-container-app
     image: hub.codefirst.iut.uca.fr/thomas.bellembois/codefirst-dockerproxy-clientdrone:latest
