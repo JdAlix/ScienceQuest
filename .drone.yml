@@ -5,30 +5,11 @@ name: ScienceQuestAPI
 trigger:
   branch:
     - Springboot
-
-services:
-  postgres_server:
-    image: postgres:16-alpine
-    container_name: postgres_server
-    restart: always
-    environment:
-      POSTGRES_PASSWORD:
-        from_secret: postgres_password_secret
-      POSTGRES_USER: ScienceQuest
-      POSTGRES_DB: ScienceQuest
-
-  adminer:
-    image: adminer
-    depends_on:
-      - postgres_server
-    restart: always
-    environment:
-      ADMINER_DEFAULT_SERVER: postgres_server
-    ports:
-      - "8080:8080"
+  event:
+    - push
 
 steps:
-  - name: build_app
+  - name: build-app
     image: maven:3-eclipse-temurin-21-alpine
     settings:
       context: SpringBootProject/
@@ -37,10 +18,38 @@ steps:
       - echo 'server.port=80' >> src/main/resources/application.properties
       - mvn clean package
 
-  - name: run_app
+  - name: deploy-container-postgresql
+    image: hub.codefirst.iut.uca.fr/thomas.bellembois/codefirst-dockerproxy-clientdrone:latest
+    environment:
+        IMAGENAME: postgres:16-alpine
+        CONTAINERNAME: postgres_server
+        COMMAND: create
+        OVERWRITE: true
+        PRIVATE: true
+        CODEFIRST_CLIENTDRONE_ENV_POSTGRES_PASSWORD:
+          from_secret: postgres_password_secret
+        CODEFIRST_CLIENTDRONE_ENV_POSTGRES_DB:
+          from_secret: ScienceQuest
+        CODEFIRST_CLIENTDRONE_ENV_POSTGRES_USER:
+          from_secret: ScienceQuest
+
+  - name: deploy-container-adminer
+    image: hub.codefirst.iut.uca.fr/thomas.bellembois/codefirst-dockerproxy-clientdrone:latest
+    environment:
+        IMAGENAME: adminer:latest
+        CONTAINERNAME: adminer
+        COMMAND: create
+        OVERWRITE: true
+        PRIVATE: false
+        CODEFIRST_CLIENTDRONE_ENV_ADMINER_DEFAULT_SERVER: postgres_server
+        CODEFIRST_CLIENTDRONE_ENV_POSTGRES_DB:
+          from_secret: ScienceQuest
+        CODEFIRST_CLIENTDRONE_ENV_POSTGRES_USER:
+          from_secret: ScienceQuest
+
+  - name: run-app
     image: openjdk:21-slim
-    depends_on:
-      - build_app
+    depends_on: [build_app,deploy-container-postgresql]
     settings:
       context: SpringBootProject/
     commands:
