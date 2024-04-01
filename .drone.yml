@@ -28,7 +28,7 @@ steps:
     commands:
       - cd SpringBootProject/
       - sed -i -e "s/localhost/tombiard-postgres_server/g" src/main/resources/application.properties
-      - echo 'server.port=80' >> src/main/resources/application.properties
+      - echo -e "\nserver.port=80" >> src/main/resources/application.properties
       - mvn clean package
 
   - name: deploy-container-adminer
