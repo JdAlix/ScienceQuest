@@ -49,7 +49,7 @@ steps:
 
   - name: run-app
     image: openjdk:21-slim
-    depends_on: [build_app,deploy-container-postgresql]
+    depends_on: [build-app,deploy-container-postgresql]
     settings:
       context: SpringBootProject/
     commands:
