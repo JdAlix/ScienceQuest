@@ -6,6 +6,7 @@ export default {
     data() {
         return {
 			codePartie: this.$route.params.code ?? -1,
+			kahootAPI:null,
 			//unix timestamp pour indiquer la date limite pour repondre a la question, -1 indiquera la fin de la partie
 			tempsLimite:0,
 			compteARebours:0,
@@ -39,6 +40,8 @@ export default {
 		}
 	},
 	mounted(){
+		//TODO : s'ajouter a la partie
+		this.kahootAPI=new Kahoot(this.codePartie)
 		this.obtenirSalleAttente()
 	},
 	unmounted(){
@@ -102,7 +105,7 @@ export default {
 			this.resetEtats() //cacher l'etat precedent
 			//afficher cet etat
 			this.etats.salleAttente=true
-			Kahoot.obtenirSalleAttente().then(response=>{
+			this.kahootAPI.obtenirSalleAttente().then(response=>{
 				this.tempsLimite=response.tempsLimite
 				this.salleAttente=response
 
