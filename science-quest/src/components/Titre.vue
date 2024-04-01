@@ -18,7 +18,10 @@ export default {
       Utilisateur.utilisateurConnecte().then(user => {
       this.estConnecte = user != null
       this.utilisateur = user
-    })
+      })
+    },
+    seDeconnecter(){
+      Utilisateur.deconnecter().then()
     }
   },
   mounted() {
@@ -80,7 +83,10 @@ export default {
                 <li><router-link class="dropdown-item" to="/login">Se connecter en tant qu'invité</router-link></li>
               </div>
               <div v-if="estConnecte">
-                <router-link class="nav-link" to="/profil">Profil</router-link>
+                <li><router-link class="dropdown-item" to="/profil">Profil</router-link></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a @click="seDeconnecter">Se déconnecter</a></li>
+                
               </div>
             </ul>
           </li>
