@@ -3,6 +3,7 @@ import { Difficultes } from '@/data/difficulte';
 import KahootListeParties from './KahootListeParties.vue'
 import {Partie} from "@/data/partie"
 import { Thematiques } from '@/data/thematique';
+import {KahootPartie} from '@/data/kahoot';
 
  //TODO définir les méthodes -> à définir grâce à l'API
 export default {
@@ -41,11 +42,9 @@ export default {
             //this.titreKahoot et this.nbQuestions synchronisés avec v-model
             console.log(this.titreKahoot);
             console.log(this.nbQuestions);
-            const partie=new Partie({
-                "idJeu": 1,
-                "idJoueur": 1,
-                "thematiques": [1],
-                "idDifficulte": 1
+            const partie=new KahootPartie({
+                "thematiques": this.choixThematiques,
+                "idDifficulte": this.choixDifficulte
             })
             partie.creerPartie().then(a=>console.log(a))
         },
