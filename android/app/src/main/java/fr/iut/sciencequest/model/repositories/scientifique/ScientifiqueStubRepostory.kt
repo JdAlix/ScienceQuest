@@ -11,10 +11,6 @@ import kotlinx.coroutines.flow.asStateFlow
 
 class ScientifiqueStubRepostory : IScientifiqueRepository {
 
-    private var listeStub : MutableList<Scientifique> = mutableListOf(
-        StubScientifique1.ToModel(),
-        StubScientifique2.ToModel()
-    )
     private val _scientifique = MutableStateFlow(StubScientifique1.ToModel())
     override val scientifique: StateFlow<Scientifique>
         get() = _scientifique.asStateFlow()
@@ -22,18 +18,29 @@ class ScientifiqueStubRepostory : IScientifiqueRepository {
     override val scientifiques: StateFlow<List<Scientifique>>
         get() = _scientifiques.asStateFlow()
 
+    // NOTE : la méthode fait volontairement rien,
+    // Il faut override mais le scientifique est déjà set
+    // avec la méthode setScientifiqueStubList
+    // Et hors contexte de test, cette implémentation ne
+    // sert à rien
     override suspend fun fetchScientifiques(index: Int) {
-        _scientifiques.value = listeStub
+
     }
 
+    // NOTE : la méthode fait volontairement rien,
+    // Il faut override mais le scientifique est déjà set
+    // avec la méthode setScientifiqueStub
+    // Et hors contexte de test, cette implémentation ne
+    // sert à rien
     override suspend fun fetchScientifiqueById(id: Int) {
-        val retrieved = listeStub.find {
-            it.id == id
-        } ?: throw NotFoundException("Scientifique introuvable dans le stub")
-        _scientifique.value = retrieved
+
     }
 
     fun setScientifiqueStubList(scientifiques: MutableList<Scientifique>) {
-        listeStub = scientifiques
+        _scientifiques.value = scientifiques
+    }
+
+    fun setScientifiqueStub(scientifique: Scientifique) {
+        _scientifique.value = scientifique
     }
 }

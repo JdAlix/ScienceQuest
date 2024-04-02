@@ -18,7 +18,6 @@ class ScientifiquesDecouvertsVM(
     val listeScientifique = _listeScientifique.asStateFlow()
 
     fun getScientifiques(page: Int) {
-        Log.d("ViewModelScientifique","Recup la liste de scientifiques")
         viewModelScope.launch {
             repository.fetchScientifiques(page)
             _listeScientifique.value = ScientifiqueDecouvertsUIState(repository.scientifiques.value.toMutableList())
