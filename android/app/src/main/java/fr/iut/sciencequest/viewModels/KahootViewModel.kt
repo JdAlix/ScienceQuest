@@ -70,13 +70,8 @@ class KahootViewModel(
             override fun <T : ViewModel> create(
                 modelClass: Class<T>
             ): T {
-                val repo = QuestionStubRepository()
-                repo.setQuestionsStub(arrayListOf(
-                        StubQuestionWithReponses.ToModel(),
-                        StubQuestionWithReponses2.ToModel()
-                ))
                 return KahootViewModel(
-                        repo
+                        QuestionAPIRepository()
                 ) as T
             }
         }
