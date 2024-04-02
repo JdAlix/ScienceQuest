@@ -1,5 +1,6 @@
 import { REST_API } from "@/assets/const"
 import { DataObject, PagedDataObject } from "./dataObject"
+import { Utilisateur } from "./utilisateur"
 
 export class Kahoot{
     constructor(codeInvitation){
@@ -9,6 +10,16 @@ export class Kahoot{
 		const response=await fetch(`${REST_API}/partie/kahoot/${this.codeInvitation}/status`)
 		return new KahootSalleAttente(await response.json())
 	}
+  async creerPartie(){
+    const user = await Utilisateur.utilisateurConnecteOuCreerInvite()
+    const response = await fetch(`${REST_API}/partie/kahoot/${this.codeInvitation}`,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      //{"idJoueur": 0, "thematiques": [0,1,2,3], "idDifficulte": 0}
+      body:{"idJoueur":user.id, "thematiques":this.thematiques, "idDifficulte":this.idDifficulte}
+    })
+		return new KahootDetailsPartie(await response.json())
+  }
 }
 
 
@@ -25,6 +36,27 @@ export class KahootSalleAttente extends DataObject{
 		this.partieDemarree=this.status!="Pending"
 		this.joueurs=this.scores.map(score=>score.joueur.pseudo)
 		this.tempsLimite=Date.now()+1000
+    }
+}
+
+/* JSON de reference (PartieDetails)
+in: {"idJoueur": 0, "thematiques": [0,1,2,3], "idDifficulte": 0}
+
+out:
+{"id": 0, 
+"codeInvitation": 0,
+"joueurs": [
+  {"id": 0, "pseudo": 0},
+],
+"thematiques": [
+  {"id": 0, "libelle": 0},
+],
+"difficulte": {"id":0, "libelle": 0}
+}
+*/
+export class KahootDetailsPartie extends DataObject{
+	constructor(parsedJSON){
+        super(parsedJSON)
     }
 }
 
