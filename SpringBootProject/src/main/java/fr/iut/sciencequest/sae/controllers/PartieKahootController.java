@@ -89,7 +89,7 @@ public class PartieKahootController {
         Joueur joueur = this.joueurService.findById(request.getIdJoueur());
         PartieKahoot partie = this.partieKahootService.getPartieKahootByIdOrCodeInvitation(codeInvitation);
         if(!partie.getStatus().equals(Status.Pending)) throw new PartyAlreadyStartedException();
-        if(!partie.getJoueurs().contains(joueur)){
+        if(!partie.getJoueurs().stream().anyMatch(j -> j.getId() == joueur.getId())){
             ScorePartieKahootJoueur score = new ScorePartieKahootJoueur();
             score.setId(new ScorePartieKahootJoueurKey(joueur.getId(), partie.getId()));
             score.setJoueur(joueur);
