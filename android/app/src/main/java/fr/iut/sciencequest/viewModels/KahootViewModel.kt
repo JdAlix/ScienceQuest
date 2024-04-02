@@ -10,12 +10,15 @@ import fr.iut.sciencequest.model.repositories.question.IQuestionRepository
 import fr.iut.sciencequest.model.repositories.question.QuestionAPIRepository
 import fr.iut.sciencequest.viewModels.uixStates.KahootUIState
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class KahootViewModel(
     val questionRepo: IQuestionRepository
 ): ViewModel() {
-    var uiState = MutableStateFlow(KahootUIState())
+    private val _uiState = MutableStateFlow(KahootUIState())
+    val uiState = _uiState.asStateFlow()
 
     private val handler = Handler(Looper.getMainLooper())
 
@@ -28,7 +31,7 @@ class KahootViewModel(
                 handler.postDelayed(
                     {
                         Log.d("KahootViewModel", "J'actualise les questions")
-                        uiState.value = KahootUIState(
+                        _uiState.value = KahootUIState(
                             question,
                             duréePartie = uiState.value.duréePartie,
                             nbPoints = uiState.value.nbPoints,
@@ -50,7 +53,7 @@ class KahootViewModel(
             return
         }
         val nbPoints: Int = (10_000 - tpsReponse).toInt()
-        uiState.value = KahootUIState(uiState.value.question,
+        _uiState.value = KahootUIState(uiState.value.question,
             duréePartie = uiState.value.duréePartie,
             nbPoints = uiState.value.nbPoints + nbPoints,
             reponseChoisie = true)

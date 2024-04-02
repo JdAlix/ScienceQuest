@@ -3,15 +3,17 @@ package fr.iut.sciencequest.viewModels
 import androidx.lifecycle.ViewModel
 import fr.iut.sciencequest.viewModels.uiStates.LoginUIState
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class LoginViewModel: ViewModel() {
-    var uiState = MutableStateFlow(LoginUIState())
+    private val _uiState = MutableStateFlow(LoginUIState())
+    val uiState = _uiState.asStateFlow()
 
     fun setPseudo(pseudo: String) {
-        uiState.value = LoginUIState(pseudo, uiState.value.mdp)
+        _uiState.value = LoginUIState(pseudo, uiState.value.mdp)
     }
 
     fun setMdp(mdp: String) {
-        uiState.value = LoginUIState(uiState.value.pseudo, mdp)
+        _uiState.value = LoginUIState(uiState.value.pseudo, mdp)
     }
 }

@@ -1,6 +1,5 @@
 package fr.iut.sciencequest.viewModels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -8,12 +7,14 @@ import fr.iut.sciencequest.viewModels.uiStates.PenduUIState
 import fr.iut.sciencequest.model.repositories.scientifique.IScientifiqueRepository
 import fr.iut.sciencequest.model.repositories.scientifique.ScientifiqueAPIRepository
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class PenduViewModel(
     val scientifiqueRepo: IScientifiqueRepository
 ) : ViewModel() {
-    var uiState = MutableStateFlow(PenduUIState())
+    private val _uiState = MutableStateFlow(PenduUIState())
+    val uiState = _uiState.asStateFlow()
 
     fun InitPartie() {
         viewModelScope.launch {
@@ -27,7 +28,7 @@ class PenduViewModel(
                 } else {
                     '_'
                 }
-                uiState.value = PenduUIState(
+                _uiState.value = PenduUIState(
                     isActionGood = true,
                     motATrouver = nomComplet,
                     motATrou = motATrou
@@ -40,40 +41,40 @@ class PenduViewModel(
     // motAct : état actuel du mot trouvé par l'utilisateur
     fun PlayAction(lettre: Char) {
         val lowerCaseLetter = lettre.lowercaseChar()
-        if (lettre == ' ' || uiState.value.lettresUtilises.contains(lowerCaseLetter)) {
-            uiState.value = PenduUIState(false,
+        if (lettre == ' ' || _uiState.value.lettresUtilises.contains(lowerCaseLetter)) {
+            _uiState.value = PenduUIState(false,
                 false,
-                uiState.value.nbViesRestantes,
-                uiState.value.motATrouver,
-                uiState.value.motATrou,
-                uiState.value.lettresUtilises
+                _uiState.value.nbViesRestantes,
+                _uiState.value.motATrouver,
+                _uiState.value.motATrou,
+                _uiState.value.lettresUtilises
             )
             return
-        } else if (uiState.value.motATrouver.lowercase().contains(lowerCaseLetter)) {
-            var nvMotATrou = uiState.value.motATrou
-            for (index in uiState.value.motATrouver.indices) {
-                val letterToCheck = uiState.value.motATrouver[index]
+        } else if (_uiState.value.motATrouver.lowercase().contains(lowerCaseLetter)) {
+            var nvMotATrou = _uiState.value.motATrou
+            for (index in _uiState.value.motATrouver.indices) {
+                val letterToCheck = _uiState.value.motATrouver[index]
                 if (letterToCheck.lowercaseChar() == lowerCaseLetter) {
                     nvMotATrou = nvMotATrou.replaceRange(index,index + 1, letterToCheck.toString())
                 }
             }
 
-            val isWon = nvMotATrou == uiState.value.motATrouver
+            val isWon = nvMotATrou == _uiState.value.motATrouver
 
-            uiState.value = PenduUIState(isWon,
+            _uiState.value = PenduUIState(isWon,
                 true,
-                uiState.value.nbViesRestantes,
-                uiState.value.motATrouver,
+                _uiState.value.nbViesRestantes,
+                _uiState.value.motATrouver,
                 nvMotATrou,
-                uiState.value.lettresUtilises.plus(lowerCaseLetter)
+                _uiState.value.lettresUtilises.plus(lowerCaseLetter)
             )
         } else {
-            uiState.value = PenduUIState(false,
+            _uiState.value = PenduUIState(false,
                 true,
-                uiState.value.nbViesRestantes - 1,
-                uiState.value.motATrouver,
-                uiState.value.motATrou,
-                uiState.value.lettresUtilises.plus(lowerCaseLetter)
+                _uiState.value.nbViesRestantes - 1,
+                _uiState.value.motATrouver,
+                _uiState.value.motATrou,
+                _uiState.value.lettresUtilises.plus(lowerCaseLetter)
             )
         }
     }
