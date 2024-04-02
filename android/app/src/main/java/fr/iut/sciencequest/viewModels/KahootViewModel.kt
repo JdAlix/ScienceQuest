@@ -6,8 +6,12 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import fr.iut.sciencequest.model.dto.extensions.ToModel
 import fr.iut.sciencequest.model.repositories.question.IQuestionRepository
 import fr.iut.sciencequest.model.repositories.question.QuestionAPIRepository
+import fr.iut.sciencequest.model.repositories.question.QuestionStubRepository
+import fr.iut.sciencequest.stub.StubQuestionWithReponses
+import fr.iut.sciencequest.stub.StubQuestionWithReponses2
 import fr.iut.sciencequest.viewModels.uixStates.KahootUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,7 +29,6 @@ class KahootViewModel(
     fun lancerPartie() {
         viewModelScope.launch {
             questionRepo.fetchQuestions(2)
-            Log.d("KahootViewModel","J'ai trouvé ${questionRepo.questions.value.size} questions")
 
             _uiState.value = KahootUIState(
                     questionRepo.questions.value.get(0),
@@ -36,7 +39,6 @@ class KahootViewModel(
             for (index: Int in 1..questionRepo.questions.value.size) {
                 handler.postDelayed(
                     {
-                        Log.d("KahootViewModel", "J'actualise les questions")
                         _uiState.value = KahootUIState(
                             questionRepo.questions.value.get(index),
                             duréePartie = uiState.value.duréePartie,
@@ -52,9 +54,7 @@ class KahootViewModel(
 
     // NOTE : tpsReponse en ms
     fun ajouterPoints(tpsReponse: Long) {
-        Log.d("KahootViewModel","Je reçois une réponse")
         if (uiState.value.reponseChoisie) {
-            Log.d("KahootViewModel","Le joueur a déjà répondu")
             return
         }
         val nbPoints: Int = (10_000 - tpsReponse).toInt()
@@ -62,7 +62,6 @@ class KahootViewModel(
             duréePartie = uiState.value.duréePartie,
             nbPoints = uiState.value.nbPoints + nbPoints,
             reponseChoisie = true)
-        Log.d("KahootViewModel","Le joueur à ${uiState.value.nbPoints}")
     }
     companion object {
 
@@ -71,8 +70,13 @@ class KahootViewModel(
             override fun <T : ViewModel> create(
                 modelClass: Class<T>
             ): T {
+                val repo = QuestionStubRepository()
+                repo.setQuestionsStub(arrayListOf(
+                        StubQuestionWithReponses.ToModel(),
+                        StubQuestionWithReponses2.ToModel()
+                ))
                 return KahootViewModel(
-                    QuestionAPIRepository()
+                        repo
                 ) as T
             }
         }
