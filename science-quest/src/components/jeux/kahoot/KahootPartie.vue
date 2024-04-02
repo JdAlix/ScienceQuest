@@ -179,6 +179,8 @@ export default {
 	</div>
 	<div v-show="etats.salleAttente">
 		<ul>
+			<h2>Code : {{ codePartie }}</h2>
+			<p>Invitez tout le monde !</p>
 			<li v-for="joueur in salleAttente.joueurs">
 				{{ joueur }}
 			</li>
