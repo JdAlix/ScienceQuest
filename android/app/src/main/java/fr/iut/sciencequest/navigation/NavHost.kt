@@ -17,6 +17,7 @@ import fr.iut.sciencequest.view.HomeScreen
 import fr.iut.sciencequest.view.LoginScreen
 import fr.iut.sciencequest.view.games.KahootScreen
 import fr.iut.sciencequest.view.games.PenduScreen
+import fr.iut.sciencequest.view.games.QuiScreen
 import fr.iut.sciencequest.view.scientifiques.scientifiqueListeScreen
 
 
@@ -43,6 +44,9 @@ fun NavHost(kahootVM: KahootViewModel = viewModel(), penduVM: PenduViewModel = v
                 goToKahoot = {
                     kahootVM.lancerPartie()
                     navController.navigate("kahoot")
+                },
+                goToQui = {
+                    navController.navigate("qui")
                 }
             )
         }
@@ -91,6 +95,15 @@ fun NavHost(kahootVM: KahootViewModel = viewModel(), penduVM: PenduViewModel = v
                 },
                 viewModel = kahootVM
             )
+        }
+
+        composable(route= "qui"){
+            QuiScreen(goToAccount = {
+                navController.navigate("account")
+            },
+                goToHome = {
+                    navController.navigate("home")
+                })
         }
 
         composable(route = "listeScientifiques") {
