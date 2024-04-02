@@ -2,10 +2,16 @@ package fr.iut.sciencequest.view.games
 
 import android.content.Context
 import android.widget.Toast
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -15,8 +21,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import fr.iut.sciencequest.R
 import fr.iut.sciencequest.ViewModels.PenduViewModel
@@ -25,23 +34,33 @@ import fr.iut.sciencequest.view.TopBar
 @Composable
 fun PenduScreen(viewModel: PenduViewModel = viewModel(),
                 goToAccount: () -> Unit,
-                goToHome: () -> Unit) {
+                goToHome: () -> Unit
+) {
     val state = viewModel.uiState.collectAsState()
     val context = LocalContext.current;
     Column(modifier = Modifier.fillMaxWidth()) {
         TopBar(goToAccount, goToHome, stringResource(id = R.string.pendu))
         //Text(text = stringResource(id = R.string.pendu), modifier = Modifier.padding(top=10.dp))
-        Column(modifier = Modifier.align(Alignment.CenterHorizontally))
-        {
-            Text(text = state.value.motATrou)
-            TextField(value = "",
-                onValueChange = { onLetterEntered(it, viewModel, context, goToHome) },
-                modifier = Modifier.padding(20.dp))
-            afficherVies(state.value.nbViesRestantes)
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceAround,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            Text(text = state.value.motATrou, fontSize = 20.sp)
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.SpaceBetween,
+            ) {
+                TextField(value = "",
+                    onValueChange = { onLetterEntered(it, viewModel, context, goToHome) },
+                    modifier = Modifier.padding(20.dp),
+                )
+                afficherVies(state.value.nbViesRestantes)
+                Text("Lettres utilisées: " + state.value.lettresUtilises)
+            }
             Button(onClick = { viewModel.InitPartie() }) {
                 Text(text = stringResource(id = R.string.reset_game))
             }
-            Text("Lettres utilisées: " + state.value.lettresUtilises)
         }
     }
 }
