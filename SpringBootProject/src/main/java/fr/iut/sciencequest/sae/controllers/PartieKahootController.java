@@ -83,7 +83,7 @@ public class PartieKahootController {
         return this.modelMapper.map(partie, PartieKahootDTO.class);
     }
 
-    @PatchMapping(value= "/{codeInvitation}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value= "/{codeInvitation}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public PartieKahootDTO addPlayerToPartie(@PathVariable String codeInvitation, @RequestBody @Valid PartieAddJoueurRequest request){
         Joueur joueur = this.joueurService.findById(request.getIdJoueur());
