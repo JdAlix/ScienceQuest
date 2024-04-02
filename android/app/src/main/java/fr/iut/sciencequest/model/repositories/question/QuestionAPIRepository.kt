@@ -33,15 +33,4 @@ class QuestionAPIRepository : IQuestionRepository {
             Log.e("Requete API Question", e.message.toString())
         }
     }
-
-    suspend fun fetchQuestions2(index: Int): Flow<List<QuestionWithSimpleReponse>> = flow {
-        val serviceClient = createRequestService().create<QuestionRequestService>()
-        try {
-            val response = serviceClient.getQuestions(index)
-            emit(response.questions.ToModel())
-        } catch (e: Exception) {
-            Log.e("Requete API Question", e.message.toString())
-        }
-    }
-
 }
