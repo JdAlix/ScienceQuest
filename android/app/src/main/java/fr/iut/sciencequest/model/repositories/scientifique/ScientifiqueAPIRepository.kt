@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.create
 
-class ScientifqueAPIRepository: IScientifiqueRepository {
+class ScientifiqueAPIRepository: IScientifiqueRepository {
     suspend override fun fetchScientifiqueById(id: Int): Flow<Scientifique> = flow {
         val serviceClient = createRequestService().create<ScientifiqueRequestService>()
         try {
