@@ -9,16 +9,6 @@ export class Kahoot{
 	async obtenirSalleAttente(){
 		const response=await fetch(`${REST_API}/partie/kahoot/${this.codeInvitation}/status`)
 		return new KahootSalleAttente(await response.json())
-	}
-  async creerPartie(){
-    const user = await Utilisateur.utilisateurConnecteOuCreerInvite()
-    const response = await fetch(`${REST_API}/partie/kahoot/${this.codeInvitation}`,{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      //{"idJoueur": 0, "thematiques": [0,1,2,3], "idDifficulte": 0}
-      body:{"idJoueur":user.id, "thematiques":this.thematiques, "idDifficulte":this.idDifficulte}
-    })
-		return new KahootDetailsPartie(await response.json())
   }
 }
 
@@ -54,9 +44,19 @@ out:
 "difficulte": {"id":0, "libelle": 0}
 }
 */
-export class KahootDetailsPartie extends DataObject{
+export class KahootPartie extends DataObject{
 	constructor(parsedJSON){
         super(parsedJSON)
+    }
+    async creerPartie(){
+      const user = await Utilisateur.utilisateurConnecteOuCreerInvite()
+      const response = await fetch(`${REST_API}/partie/kahoot`,{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        //{"idJoueur": 0, "thematiques": [0,1,2,3], "idDifficulte": 0}
+        body:JSON.stringify({"idJoueur":user.id, "thematiques":this.thematiques, "idDifficulte":this.idDifficulte})
+      })
+      return new this.constructor(await response.json())
     }
 }
 
