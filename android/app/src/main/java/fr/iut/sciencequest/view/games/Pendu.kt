@@ -23,7 +23,7 @@ import fr.iut.sciencequest.viewModels.PenduViewModel
 import fr.iut.sciencequest.view.TopBar
 
 @Composable
-fun PenduScreen(viewModel: PenduViewModel = viewModel(factory = PenduViewModel.Factory),
+fun PenduScreen(viewModel: PenduViewModel = viewModel(factory = PenduViewModel.ApiFactory),
                 goToAccount: () -> Unit,
                 goToHome: () -> Unit) {
     val state = viewModel.uiState.collectAsState()

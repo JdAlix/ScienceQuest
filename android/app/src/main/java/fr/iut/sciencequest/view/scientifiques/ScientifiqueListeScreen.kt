@@ -12,7 +12,7 @@ import fr.iut.sciencequest.viewModels.ScientifiquesDecouvertsVM
 import fr.iut.sciencequest.view.TopBar
 
 @Composable
-fun scientifiqueListeScreen(viewModel: ScientifiquesDecouvertsVM = viewModel(factory = ScientifiquesDecouvertsVM.Factory),
+fun scientifiqueListeScreen(viewModel: ScientifiquesDecouvertsVM = viewModel(factory = ScientifiquesDecouvertsVM.ApiFactory),
                             goToAccount: () -> Unit,
                             goToHome: () -> Unit) {
     val liste by viewModel.listeScientifique.collectAsState()

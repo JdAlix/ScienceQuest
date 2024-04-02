@@ -29,7 +29,7 @@ import fr.iut.sciencequest.stub.StubQuestionWithReponses
 import fr.iut.sciencequest.view.TopBar
 
 @Composable
-fun KahootScreen(viewModel: KahootViewModel = viewModel(factory = KahootViewModel.Factory),
+fun KahootScreen(viewModel: KahootViewModel = viewModel(factory = KahootViewModel.ApiFactory),
                  goToAccount: () -> Unit,
                  goToHome: () -> Unit) {
     val state = viewModel.uiState.collectAsState()
