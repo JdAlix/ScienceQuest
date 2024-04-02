@@ -4,12 +4,22 @@ import { Utilisateur } from "./utilisateur"
 
 export class Kahoot{
     constructor(codeInvitation){
-		this.codeInvitation=codeInvitation
+		  this.codeInvitation=codeInvitation
+      this.rejoindrePartie().then()
     }
 	async obtenirSalleAttente(){
 		const response=await fetch(`${REST_API}/partie/kahoot/${this.codeInvitation}/status`)
 		return new KahootSalleAttente(await response.json())
   }
+  async rejoindrePartie(){
+    const user = await Utilisateur.utilisateurConnecteOuCreerInvite()
+		const response = await fetch(`${REST_API}/partie/kahoot/${this.codeInvitation}`,{
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({"idJoueur":user.id})
+        })
+        return new this(await response.json())
+	}
 }
 
 
