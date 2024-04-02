@@ -10,9 +10,10 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
+import kotlin.math.exp
 
 @RunWith(Parameterized::class)
-class PenduJouerActionTest (
+class PenduJouerAction2FoisTest(
         private val playedLetter: Char,
         private val expectedLetter: Char,
         private val expectedVieRestante: Int,
@@ -23,7 +24,7 @@ class PenduJouerActionTest (
     val mainDispatcherRule = MainDispatcherRule()
 
     @Test
-    fun TestGoodActionPutsLetter() {
+    fun Test() {
         val scientifique = StubScientifique1.ToModel()
         val repo = ScientifiqueStubRepostory()
         repo.setScientifiqueStub(scientifique)
@@ -32,13 +33,16 @@ class PenduJouerActionTest (
         vm.PlayAction(playedLetter)
         Assert.assertEquals(expectedResult, vm.uiState.value.motATrou.contains(expectedLetter))
         Assert.assertEquals(true, vm.uiState.value.isActionGood)
-        Assert.assertEquals(expectedVieRestante, vm.uiState.value.nbViesRestantes)
+        vm.PlayAction(playedLetter)
+        Assert.assertEquals(expectedResult, vm.uiState.value.motATrou.contains(expectedLetter))
+        Assert.assertEquals(false, vm.uiState.value.isActionGood)
+        Assert.assertEquals(expectedVieRestante,vm.uiState.value.nbViesRestantes)
     }
 
     companion object {
         @JvmStatic
         @Parameterized.Parameters(
-                name = "Quand joueur joue {0}, le jeu est censé trouvé que {1} est {3} et il lui reste {2} "
+                name = "Quand joueur joue 2 fois {0}, le jeu est censé trouvé que {1} est {3} et il lui reste {2} "
         )
         fun getTestActionData(): Iterable<Array<Any>> {
             return arrayListOf(
