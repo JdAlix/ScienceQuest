@@ -26,7 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import fr.iut.sciencequest.R
-import fr.iut.sciencequest.ViewModels.LoginViewModel
+import fr.iut.sciencequest.viewModels.LoginViewModel
 
 @Composable
 fun LoginScreen(viewModel: LoginViewModel = viewModel(),

@@ -1,17 +1,11 @@
 package fr.iut.sciencequest.navigation
 
-import android.content.Context
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import fr.iut.sciencequest.ViewModels.KahootViewModel
-import fr.iut.sciencequest.ViewModels.PenduViewModel
-import fr.iut.sciencequest.ViewModels.ScientifiquesDecouvertsVM
-import fr.iut.sciencequest.stub.StubQuestionWithReponses
 import fr.iut.sciencequest.view.AccountScreen
 import fr.iut.sciencequest.view.HomeScreen
 import fr.iut.sciencequest.view.LoginScreen
@@ -22,7 +16,7 @@ import fr.iut.sciencequest.view.scientifiques.scientifiqueListeScreen
 
 
 @Composable
-fun NavHost(kahootVM: KahootViewModel = viewModel(), penduVM: PenduViewModel = viewModel()) {
+fun NavHost() {
     val navController = rememberNavController()
     NavHost(
         modifier = Modifier.fillMaxSize(),
@@ -38,11 +32,9 @@ fun NavHost(kahootVM: KahootViewModel = viewModel(), penduVM: PenduViewModel = v
                     navController.navigate("home")
                 },
                 goToPendu = {
-                    penduVM.InitPartie()
                     navController.navigate("pendu")
                 },
                 goToKahoot = {
-                    kahootVM.lancerPartie()
                     navController.navigate("kahoot")
                 },
                 goToQui = {
@@ -75,7 +67,6 @@ fun NavHost(kahootVM: KahootViewModel = viewModel(), penduVM: PenduViewModel = v
 
         composable(route = "pendu") {
             PenduScreen(
-                viewModel = penduVM,
                 goToAccount = {
                     navController.navigate("account")
                 },
@@ -92,8 +83,7 @@ fun NavHost(kahootVM: KahootViewModel = viewModel(), penduVM: PenduViewModel = v
                 },
                 goToHome = {
                     navController.navigate("home")
-                },
-                viewModel = kahootVM
+                }
             )
         }
 

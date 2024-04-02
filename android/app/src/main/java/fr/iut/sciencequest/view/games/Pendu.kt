@@ -22,11 +22,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import fr.iut.sciencequest.R
-import fr.iut.sciencequest.ViewModels.PenduViewModel
+import fr.iut.sciencequest.viewModels.PenduViewModel
 import fr.iut.sciencequest.view.TopBar
 
 @Composable
-fun PenduScreen(viewModel: PenduViewModel = viewModel(),
+fun PenduScreen(viewModel: PenduViewModel = viewModel(factory = PenduViewModel.ApiFactory),
                 goToAccount: () -> Unit,
                 goToHome: () -> Unit
 ) {

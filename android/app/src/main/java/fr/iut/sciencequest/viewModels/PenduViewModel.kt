@@ -1,32 +1,33 @@
-package fr.iut.sciencequest.ViewModels
+package fr.iut.sciencequest.viewModels
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import fr.iut.sciencequest.ViewModels.UiStates.PenduUIState
-import fr.iut.sciencequest.model.buisness.Scientifique.fetchScientifiqueById
-import fr.iut.sciencequest.model.buisness.Scientifique.fetchScientifiquesInfos
+import fr.iut.sciencequest.viewModels.uiStates.PenduUIState
+import fr.iut.sciencequest.model.repositories.scientifique.IScientifiqueRepository
+import fr.iut.sciencequest.model.repositories.scientifique.ScientifiqueAPIRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-class PenduViewModel : ViewModel() {
+class PenduViewModel(
+    val scientifiqueRepo: IScientifiqueRepository
+) : ViewModel() {
     var uiState = MutableStateFlow(PenduUIState())
 
     fun InitPartie() {
         Log.d("PenduViewModel","Un utilisateur initialise une partie")
         viewModelScope.launch {
-            fetchScientifiquesInfos().collect { scientifiquesInfos ->
-                Log.e("PenduViewModel",scientifiquesInfos.nbScientfiques.toString())
-                fetchScientifiqueById((1..scientifiquesInfos.nbScientfiques).random()).collect {
-                    val nomComplet = it.prenom + " " + it.nom
-                    Log.d("ViewModelPendu",nomComplet)
-                    var motATrou = ""
-                    for (chr in nomComplet) {
-                        motATrou += if (chr == ' ') {
-                            ' '
-                        } else {
-                            '_'
-                        }
+            scientifiqueRepo.fetchScientifiqueById(1)
+            val scientifique = scientifiqueRepo.scientifique.value
+            val nomComplet = scientifique.prenom + " " + scientifique.nom
+                Log.d("ViewModelPendu",nomComplet)
+                var motATrou = ""
+                for (chr in nomComplet) {
+                    motATrou += if (chr == ' ') {
+                        ' '
+                    } else {
+                        '_'
                     }
                     uiState.value = PenduUIState(
                         isActionGood = true,
@@ -37,7 +38,6 @@ class PenduViewModel : ViewModel() {
             }
 
         }
-    }
 
     // mot : mot à trouver
     // motAct : état actuel du mot trouvé par l'utilisateur
@@ -82,6 +82,19 @@ class PenduViewModel : ViewModel() {
                 uiState.value.motATrou,
                 uiState.value.lettresUtilises.plus(lowerCaseLetter)
             )
+        }
+    }
+    companion object {
+
+        val ApiFactory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+            @Suppress("UNCHECKED_CAST")
+            override fun <T : ViewModel> create(
+                modelClass: Class<T>
+            ): T {
+                return PenduViewModel(
+                    ScientifiqueAPIRepository()
+                ) as T
+            }
         }
     }
 }

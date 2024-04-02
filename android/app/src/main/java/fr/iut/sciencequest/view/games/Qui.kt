@@ -20,11 +20,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import fr.iut.sciencequest.R
-import fr.iut.sciencequest.ViewModels.KahootViewModel
+import fr.iut.sciencequest.model.dto.extensions.ToModel
 import fr.iut.sciencequest.model.dto.question.QuestionWithSimpleResponseDTO
 import fr.iut.sciencequest.model.dto.reponse.ReponseSimpleDTO
+import fr.iut.sciencequest.model.metier.question.QuestionWithSimpleReponse
+import fr.iut.sciencequest.model.metier.reponse.ReponseSimple
 import fr.iut.sciencequest.stub.StubQuestionWithReponses
 import fr.iut.sciencequest.view.TopBar
+import fr.iut.sciencequest.viewModels.KahootViewModel
 import java.util.Timer
 
 @Composable
@@ -51,12 +54,12 @@ fun QuiScreenPreview(){
 @Composable
 fun QuiPlayerPreview(){
     val i = 0
-    QuiPlayer(question = StubQuestionWithReponses) {}
+    QuiPlayer(question = StubQuestionWithReponses.ToModel()) {}
 }
 
 
 @Composable
-fun QuiPlayer(question: QuestionWithSimpleResponseDTO,
+fun QuiPlayer(question: QuestionWithSimpleReponse,
                  sendReponse: (Long) -> Unit){
     val context = LocalContext.current;
     val currTime = System.currentTimeMillis()
@@ -71,7 +74,7 @@ fun QuiPlayer(question: QuestionWithSimpleResponseDTO,
 
 
 @Composable
-fun QuiReponses(reponses : List<ReponseSimpleDTO>, action: (ReponseSimpleDTO)->Unit) {
+fun QuiReponses(reponses : List<ReponseSimple>, action: (ReponseSimple)->Unit) {
     LazyVerticalGrid(columns = GridCells.Fixed(2),
         contentPadding = PaddingValues(12.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp),

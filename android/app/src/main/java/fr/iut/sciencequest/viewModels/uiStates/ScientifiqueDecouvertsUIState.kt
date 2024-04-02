@@ -1,4 +1,4 @@
-package fr.iut.sciencequest.ViewModels.UiStates
+package fr.iut.sciencequest.viewModels.uiStates
 
 import fr.iut.sciencequest.model.metier.Scientifique
 

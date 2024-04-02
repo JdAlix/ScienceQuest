@@ -1,4 +1,4 @@
-package fr.iut.sciencequest.ViewModels.UiStates
+package fr.iut.sciencequest.viewModels.uiStates
 
 data class LoginUIState (
     val pseudo: String = "Pseudo",
