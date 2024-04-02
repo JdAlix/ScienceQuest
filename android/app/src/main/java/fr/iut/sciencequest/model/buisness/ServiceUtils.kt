@@ -6,7 +6,7 @@ import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 
-const val API_BASE_URL = "https://sae-java.alix-jdlm.fr/api/v1/"
+const val API_BASE_URL = "https://codefirst.iut.uca.fr/containers/tombiard-api/api/v1/"
 
 val httpClient = OkHttpClient()
 
