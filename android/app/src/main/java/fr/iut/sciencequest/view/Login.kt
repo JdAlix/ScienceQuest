@@ -13,10 +13,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -27,44 +24,41 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import fr.iut.sciencequest.R
+import fr.iut.sciencequest.ViewModels.LoginViewModel
 
 @Composable
-fun LoginScreen(goToAccount: () -> Unit, goToHome: () -> Unit) {
+fun LoginScreen(viewModel: LoginViewModel = viewModel(),
+                goToAccount: () -> Unit,
+                goToHome: () -> Unit) {
     Scaffold(
         topBar = {
             TopBar(goToAccount, goToHome, stringResource(id = R.string.connection))
         },
     ) { innerPadding ->
-        LoginContainer(Modifier.padding(innerPadding))
+        LoginContainer(viewModel, Modifier.padding(innerPadding))
     }
 }
 
 @Composable
-fun LoginContainer(modifier: Modifier) {
+fun LoginContainer(viewModel: LoginViewModel,
+                   modifier: Modifier) {
+    val state = viewModel.uiState.collectAsState()
     Column(
         modifier = modifier.fillMaxHeight(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        val defaultPseudo = stringResource(id = R.string.Pseudo)
-        var pseudo by remember {
-             mutableStateOf(defaultPseudo)
-        }
-        val defaultMdp = stringResource(id = R.string.mdp)
-        var mdp by remember {
-            mutableStateOf(defaultMdp)
-        }
-
         //Text(text = stringResource(id = R.string.connection))
-        TextField(value = pseudo ,
-            onValueChange = { pseudo = it },
+        TextField(value = state.value.pseudo,
+            onValueChange = { viewModel.setPseudo(it) },
             modifier = Modifier
                 .padding(20.dp)
-                .fillMaxWidth()
+                .fillMaxWidth(),
         )
-        TextField(value = mdp,
-            onValueChange = { mdp = it },
+        TextField(value = state.value.mdp,
+            onValueChange = { viewModel.setMdp(it) },
             modifier = Modifier
                 .padding(20.dp)
                 .fillMaxWidth()
@@ -82,7 +76,7 @@ fun LoginContainer(modifier: Modifier) {
                 textDecoration = TextDecoration.Underline,
                 color = colorResource(id = R.color.purple_200)
             ),
-            onClick = registerPopup()
+            onClick = { }/*TODO*/ //registerPopup()
         )
 
     }

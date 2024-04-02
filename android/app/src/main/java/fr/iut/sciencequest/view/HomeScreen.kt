@@ -14,9 +14,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import fr.iut.sciencequest.ViewModels.KahootViewModel
 
 @Composable
-fun HomeScreen(goToHome: () -> Unit, goToAccount: () -> Unit, goToPendu: () -> Unit, goToKahoot: () -> Unit) {
+fun HomeScreen(goToHome: () -> Unit,
+               goToAccount: () -> Unit,
+               goToPendu: () -> Unit,
+               goToKahoot: () -> Unit) {
     Column (modifier = Modifier.fillMaxWidth()){
         TopBar(goToAccount, goToHome)
         MainContent(goToPendu, goToKahoot)

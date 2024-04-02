@@ -7,5 +7,5 @@ import retrofit2.http.Query
 
 interface QuestionRequestService {
     @GET("questions?page")
-    fun getQuestions(@Query("page") index: Int): Call<QuestionListDTO>
+    suspend fun getQuestions(@Query("page") index: Int): QuestionListDTO
 }

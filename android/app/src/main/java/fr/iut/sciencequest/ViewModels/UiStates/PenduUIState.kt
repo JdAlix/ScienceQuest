@@ -5,5 +5,6 @@ data class PenduUIState(
     val isActionGood: Boolean = false,
     val nbViesRestantes: Int = 10,
     val motATrouver: String = "Mot",
-    val motATrou: String = "___"
+    val motATrou: String = "___",
+    val lettresUtilises: String = ""
 )

@@ -1,6 +1,6 @@
 package fr.iut.sciencequest.model.dto.extensions
 
-import fr.iut.sciencequest.model.dto.DifficulteDTO
+import fr.iut.sciencequest.model.dto.difficulte.DifficulteDTO
 import fr.iut.sciencequest.model.metier.Difficulte
 
 fun DifficulteDTO.ToModel(): Difficulte {

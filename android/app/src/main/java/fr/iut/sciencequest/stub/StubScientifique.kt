@@ -1,6 +1,6 @@
 package fr.iut.sciencequest.stub
 
-import fr.iut.sciencequest.model.dto.DifficulteDTO
+import fr.iut.sciencequest.model.dto.difficulte.DifficulteDTO
 import fr.iut.sciencequest.model.dto.ScientifiqueDTOs.ScientifiqueDTO
 import fr.iut.sciencequest.model.dto.ThematiqueDTO
 
