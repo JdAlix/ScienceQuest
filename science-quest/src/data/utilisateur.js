@@ -48,7 +48,7 @@ export class Utilisateur extends DataObject{
     static async utilisateurConnecteOuCreerInvite(){
         const utilisateur=JSON.parse(localStorage.getItem("utilisateurConnecte"))
         if(utilisateur==null){
-            const invite=new this({"pseudo":"invitetest123123"})
+            const invite=new this({"pseudo":"invitetest123123"+Date.now()})
             return await invite.creerInvite()
         }
         return new this(utilisateur)
