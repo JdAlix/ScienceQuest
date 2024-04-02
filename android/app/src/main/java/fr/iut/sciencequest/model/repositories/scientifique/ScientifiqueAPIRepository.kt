@@ -16,7 +16,7 @@ import retrofit2.create
 
 class ScientifiqueAPIRepository: IScientifiqueRepository {
 
-    private val _scientifique = MutableStateFlow<Scientifique>(StubScientifique1.ToModel())
+    private val _scientifique = MutableStateFlow(StubScientifique1.ToModel())
     override val scientifique: StateFlow<Scientifique>
         get() = _scientifique.asStateFlow()
 
