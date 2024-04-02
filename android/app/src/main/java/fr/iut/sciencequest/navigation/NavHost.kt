@@ -21,7 +21,7 @@ import fr.iut.sciencequest.view.scientifiques.scientifiqueListeScreen
 
 
 @Composable
-fun NavHost(kahootVM: KahootViewModel = viewModel()) {
+fun NavHost(kahootVM: KahootViewModel = viewModel(), penduVM: PenduViewModel = viewModel()) {
     val navController = rememberNavController()
     NavHost(
         modifier = Modifier.fillMaxSize(),
@@ -37,6 +37,7 @@ fun NavHost(kahootVM: KahootViewModel = viewModel()) {
                     navController.navigate("home")
                 },
                 goToPendu = {
+                    penduVM.InitPartie()
                     navController.navigate("pendu")
                 },
                 goToKahoot = {
@@ -70,6 +71,7 @@ fun NavHost(kahootVM: KahootViewModel = viewModel()) {
 
         composable(route = "pendu") {
             PenduScreen(
+                viewModel = penduVM,
                 goToAccount = {
                     navController.navigate("account")
                 },
