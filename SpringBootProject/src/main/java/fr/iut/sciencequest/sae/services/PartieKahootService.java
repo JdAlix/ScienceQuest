@@ -18,7 +18,8 @@ import java.util.Optional;
 @AllArgsConstructor
 @Service
 public class PartieKahootService {
-    private static final int TEMPS_REPONSE_QUESTION = 60; //secondes
+    private static final int TEMPS_REPONSE_QUESTION = 20; //secondes
+    private static final int TEMPS_AFFICHAGE_SCORE = 5; //secondes
     private final PartieKahootRepository partieKahootRepository;
     private final QuestionPartieKahootRepository questionPartieKahootRepository;
     private final PartieRepository partieRepository;
@@ -65,11 +66,16 @@ public class PartieKahootService {
     }
 
     public PartieKahoot questionSuivante(PartieKahoot partieKahoot){
-        if(partieKahoot.getStatus() != Status.Started){
+        if(partieKahoot.getStatus() != Status.Started && partieKahoot.getStatus() != Status.DisplayingScore ){
             throw new PartyNotStartedException();
         }
-        Optional<QuestionPartieKahoot> questionPartieKahoot = partieKahoot.getQuestions().stream().filter(q -> !q.isAEtePose()).findFirst();
-        if (questionPartieKahoot.isEmpty()){
+        Optional<QuestionPartieKahoot> questionSuivante = partieKahoot.getQuestions().stream().filter(q -> !q.isAEtePose()).findFirst();
+
+        //reset
+        partieKahoot.setStatus(Status.Started);
+        partieKahoot.setTempsAffichageScore(null);
+
+        if (questionSuivante.isEmpty()){
             partieKahoot.setStatus(Status.Ended);
             partieKahoot.setQuestionActuel(null);
             partieKahoot.setTempsLimiteReponse(null);
@@ -78,23 +84,40 @@ public class PartieKahootService {
             tempsLimiteReponse.setTime(new Date());
             tempsLimiteReponse.add(Calendar.SECOND, PartieKahootService.TEMPS_REPONSE_QUESTION);
 
-            questionPartieKahoot.get().setAEtePose(true);
-            partieKahoot.setQuestionActuel(questionPartieKahoot.get().getQuestion());
+            questionSuivante.get().setAEtePose(true);
+            partieKahoot.setQuestionActuel(questionSuivante.get().getQuestion());
             partieKahoot.setTempsLimiteReponse(tempsLimiteReponse);
 
-            this.questionPartieKahootRepository.save(questionPartieKahoot.get());
+            this.questionPartieKahootRepository.save(questionSuivante.get());
         }
         return this.update(partieKahoot);
     }
 
-    public PartieKahoot maintenirAJourQuestionActuel(PartieKahoot partieKahoot){
-        if(partieKahoot.getStatus() == Status.Started){
-            Calendar actualDate = Calendar.getInstance();
-            actualDate.setTime(new Date());
+    public PartieKahoot afficherScore(PartieKahoot partieKahoot){
+        Calendar tempsAffichacheScore = Calendar.getInstance();
+        tempsAffichacheScore.setTime(new Date());
+        tempsAffichacheScore.add(Calendar.SECOND, TEMPS_AFFICHAGE_SCORE);
+        partieKahoot.setStatus(Status.DisplayingScore);
+        partieKahoot.setTempsAffichageScore(tempsAffichacheScore);
 
+        //remove question
+        partieKahoot.setQuestionActuel(null);
+        partieKahoot.setTempsLimiteReponse(null);
+
+        return this.partieKahootRepository.save(partieKahoot);
+    }
+
+    public PartieKahoot maintenirAJourQuestionActuel(PartieKahoot partieKahoot){
+        Calendar actualDate = Calendar.getInstance();
+        actualDate.setTime(new Date());
+        if(partieKahoot.getStatus() == Status.Started){
             Question questionActuel = partieKahoot.getQuestionActuel();
             boolean toutLeMondeARepondu = partieKahoot.getJoueurs().size() == partieKahoot.getReponses().stream().filter(partieReponse -> Objects.equals(questionActuel.getId(), partieReponse.getQuestion().getId())).count();
             if(actualDate.after(partieKahoot.getTempsLimiteReponse()) || toutLeMondeARepondu){
+                partieKahoot = this.afficherScore(partieKahoot);
+            }
+        } else if (partieKahoot.getStatus() == Status.DisplayingScore) {
+            if(actualDate.after(partieKahoot.getTempsAffichageScore())){
                 partieKahoot = this.questionSuivante(partieKahoot);
             }
         }

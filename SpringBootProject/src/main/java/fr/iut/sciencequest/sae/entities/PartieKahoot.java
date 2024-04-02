@@ -27,6 +27,10 @@ public class PartieKahoot extends Partie {
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar tempsLimiteReponse;
 
+    @Column(name = "tempsaffichagescore")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Calendar tempsAffichageScore;
+
     @JsonManagedReference
     @OneToMany(mappedBy = "partie", fetch = FetchType.EAGER)
     private List<QuestionPartieKahoot> questions;

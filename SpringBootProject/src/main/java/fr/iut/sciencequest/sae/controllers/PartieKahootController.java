@@ -83,7 +83,7 @@ public class PartieKahootController {
         return this.modelMapper.map(partie, PartieKahootDTO.class);
     }
 
-    @PutMapping(value= "/{codeInvitation}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PatchMapping(value= "/{codeInvitation}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public PartieKahootDTO addPlayerToPartie(@PathVariable String codeInvitation, @RequestBody @Valid PartieAddJoueurRequest request){
         Joueur joueur = this.joueurService.findById(request.getIdJoueur());
@@ -106,7 +106,7 @@ public class PartieKahootController {
     public PartieKahootStatusDTO demarrerPartie(@PathVariable String codeInvitation){
         PartieKahoot partieKahoot = this.partieKahootService.getPartieKahootByIdOrCodeInvitation(codeInvitation);
 
-        if(partieKahoot.getStatus() == Status.Started){
+        if(partieKahoot.getStatus() == Status.Started || partieKahoot.getStatus() == Status.DisplayingScore){
             throw new PartyAlreadyStartedException();
         }
         partieKahoot.setStatus(Status.Started);
