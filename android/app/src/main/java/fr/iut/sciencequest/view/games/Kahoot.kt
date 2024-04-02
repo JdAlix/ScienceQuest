@@ -4,6 +4,7 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -18,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import fr.iut.sciencequest.R
 import fr.iut.sciencequest.ViewModels.KahootViewModel
@@ -25,7 +27,6 @@ import fr.iut.sciencequest.model.dto.question.QuestionWithSimpleResponseDTO
 import fr.iut.sciencequest.model.dto.reponse.ReponseSimpleDTO
 import fr.iut.sciencequest.stub.StubQuestionWithReponses
 import fr.iut.sciencequest.view.TopBar
-import java.util.Timer
 
 @Composable
 fun KahootScreen(viewModel: KahootViewModel = viewModel(),
@@ -34,6 +35,7 @@ fun KahootScreen(viewModel: KahootViewModel = viewModel(),
     val state = viewModel.uiState.collectAsState()
     Column(modifier = Modifier.fillMaxWidth()) {
         TopBar(goToAccount, goToHome, stringResource(id = R.string.kahoot))
+
         KahootPlayer(state.value.question) {
             viewModel.ajouterPoints(it)
         }
@@ -57,13 +59,17 @@ fun KahootPlayerPreview(){
 
 @Composable
 fun KahootPlayer(question: QuestionWithSimpleResponseDTO,
-                 sendReponse: (Long) -> Unit){
+                 sendResponse: (Long) -> Unit){
     val context = LocalContext.current;
     val currTime = System.currentTimeMillis()
-    Column (horizontalAlignment = Alignment.CenterHorizontally){
+    Column (
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceEvenly,
+        modifier = Modifier.fillMaxHeight()
+    ) {
         KahootQuestion(question = question.question)
         KahootReponses(reponses = question.reponses) {
-            sendReponse(currTime - System.currentTimeMillis())
+            sendResponse(currTime - System.currentTimeMillis())
             Toast.makeText(context, it.reponse, Toast.LENGTH_SHORT).show()
         }
     }
@@ -88,5 +94,5 @@ fun KahootReponses(reponses : List<ReponseSimpleDTO>, action: (ReponseSimpleDTO)
 
 @Composable
 fun KahootQuestion(question: String){
-    Text(question, textAlign = TextAlign.Center)
+    Text(question, textAlign = TextAlign.Center, fontSize = 20.sp)
 }
