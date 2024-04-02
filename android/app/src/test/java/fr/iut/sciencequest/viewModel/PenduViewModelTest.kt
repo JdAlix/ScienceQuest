@@ -41,13 +41,36 @@ class PenduViewModelTest {
     }
 
     @Test
-    fun TestWrongActionDoesNotPutLetter() {
+    fun TestWrongActionDoesNotPutLetterAndDamage() {
         val scientifique = StubScientifique1.ToModel()
         val repo = ScientifiqueStubRepostory()
         repo.setScientifiqueStub(scientifique)
         val vm = PenduViewModel(repo)
         vm.InitPartie()
         vm.PlayAction('q')
-        Assert.assertEquals(false, vm.uiState.value.motATrou.contains('e'))
+        Assert.assertEquals(false, vm.uiState.value.motATrou.contains('q'))
+        Assert.assertEquals(9,vm.uiState.value.nbViesRestantes)
+    }
+
+    @Test
+    fun TestGoodActionWithUppercaseLetter() {
+        val scientifique = StubScientifique1.ToModel()
+        val repo = ScientifiqueStubRepostory()
+        repo.setScientifiqueStub(scientifique)
+        val vm = PenduViewModel(repo)
+        vm.InitPartie()
+        vm.PlayAction('E')
+        Assert.assertEquals(true, vm.uiState.value.motATrou.contains('e'))
+    }
+
+    @Test
+    fun TestGoodActionWithLowercaseOnOriginalyUppercase() {
+        val scientifique = StubScientifique1.ToModel()
+        val repo = ScientifiqueStubRepostory()
+        repo.setScientifiqueStub(scientifique)
+        val vm = PenduViewModel(repo)
+        vm.InitPartie()
+        vm.PlayAction('j')
+        Assert.assertEquals(true, vm.uiState.value.motATrou.contains('j'))
     }
 }
