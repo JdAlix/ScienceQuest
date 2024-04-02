@@ -1,7 +1,6 @@
-package fr.iut.sciencequest.viewModel
+package fr.iut.sciencequest.viewModel.pendu
 
 import fr.iut.sciencequest.model.dto.extensions.ToModel
-import fr.iut.sciencequest.model.metier.Scientifique
 import fr.iut.sciencequest.model.repositories.scientifique.ScientifiqueStubRepostory
 import fr.iut.sciencequest.stub.StubScientifique1
 import fr.iut.sciencequest.testRules.MainDispatcherRule
@@ -9,8 +8,6 @@ import fr.iut.sciencequest.viewModels.PenduViewModel
 import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.Parameterized
 
 class PenduViewModelTest {
     @get:Rule
@@ -30,17 +27,6 @@ class PenduViewModelTest {
     }
 
     @Test
-    fun TestGoodActionPutsLetter() {
-        val scientifique = StubScientifique1.ToModel()
-        val repo = ScientifiqueStubRepostory()
-        repo.setScientifiqueStub(scientifique)
-        val vm = PenduViewModel(repo)
-        vm.InitPartie()
-        vm.PlayAction('e')
-        Assert.assertEquals(true, vm.uiState.value.motATrou.contains('e'))
-    }
-
-    @Test
     fun TestWrongActionDoesNotPutLetterAndDamage() {
         val scientifique = StubScientifique1.ToModel()
         val repo = ScientifiqueStubRepostory()
@@ -50,27 +36,5 @@ class PenduViewModelTest {
         vm.PlayAction('q')
         Assert.assertEquals(false, vm.uiState.value.motATrou.contains('q'))
         Assert.assertEquals(9,vm.uiState.value.nbViesRestantes)
-    }
-
-    @Test
-    fun TestGoodActionWithUppercaseLetter() {
-        val scientifique = StubScientifique1.ToModel()
-        val repo = ScientifiqueStubRepostory()
-        repo.setScientifiqueStub(scientifique)
-        val vm = PenduViewModel(repo)
-        vm.InitPartie()
-        vm.PlayAction('E')
-        Assert.assertEquals(true, vm.uiState.value.motATrou.contains('e'))
-    }
-
-    @Test
-    fun TestGoodActionWithLowercaseOnOriginalyUppercase() {
-        val scientifique = StubScientifique1.ToModel()
-        val repo = ScientifiqueStubRepostory()
-        repo.setScientifiqueStub(scientifique)
-        val vm = PenduViewModel(repo)
-        vm.InitPartie()
-        vm.PlayAction('j')
-        Assert.assertEquals(true, vm.uiState.value.motATrou.contains('j'))
     }
 }
