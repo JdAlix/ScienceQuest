@@ -1,4 +1,4 @@
-package fr.iut.sciencequest.viewModels.uiStates
+package fr.iut.sciencequest.viewModels.uixStates
 
 import fr.iut.sciencequest.model.dto.extensions.ToModel
 import fr.iut.sciencequest.model.metier.question.QuestionWithSimpleReponse

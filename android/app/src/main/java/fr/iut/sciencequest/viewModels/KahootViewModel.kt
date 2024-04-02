@@ -6,9 +6,9 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import fr.iut.sciencequest.viewModels.uiStates.KahootUIState
 import fr.iut.sciencequest.model.repositories.question.IQuestionRepository
 import fr.iut.sciencequest.model.repositories.question.QuestionAPIRepository
+import fr.iut.sciencequest.viewModels.uixStates.KahootUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
