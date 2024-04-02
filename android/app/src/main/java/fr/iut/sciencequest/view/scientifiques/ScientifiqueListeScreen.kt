@@ -17,7 +17,7 @@ import fr.iut.sciencequest.stub.getScientifiqueListeStub
 import fr.iut.sciencequest.view.TopBar
 
 @Composable
-fun scientifiqueListeScreen(viewModel: ScientifiquesDecouvertsVM = viewModel(),
+fun scientifiqueListeScreen(viewModel: ScientifiquesDecouvertsVM = viewModel(factory = ScientifiquesDecouvertsVM.Factory),
                             goToAccount: () -> Unit,
                             goToHome: () -> Unit) {
     val liste by viewModel.listeScientifique.collectAsState()

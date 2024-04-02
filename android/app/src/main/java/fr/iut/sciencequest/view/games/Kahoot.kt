@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,17 +22,23 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import fr.iut.sciencequest.R
 import fr.iut.sciencequest.ViewModels.KahootViewModel
+import fr.iut.sciencequest.model.dto.extensions.ToModel
 import fr.iut.sciencequest.model.dto.question.QuestionWithSimpleResponseDTO
 import fr.iut.sciencequest.model.dto.reponse.ReponseSimpleDTO
+import fr.iut.sciencequest.model.metier.question.QuestionWithSimpleReponse
+import fr.iut.sciencequest.model.metier.reponse.ReponseSimple
 import fr.iut.sciencequest.stub.StubQuestionWithReponses
 import fr.iut.sciencequest.view.TopBar
 import java.util.Timer
 
 @Composable
-fun KahootScreen(viewModel: KahootViewModel = viewModel(),
+fun KahootScreen(viewModel: KahootViewModel = viewModel(factory = KahootViewModel.Factory),
                  goToAccount: () -> Unit,
                  goToHome: () -> Unit) {
     val state = viewModel.uiState.collectAsState()
+    LaunchedEffect(key1 = Unit) {
+        viewModel.lancerPartie()
+    }
     Column(modifier = Modifier.fillMaxWidth()) {
         TopBar(goToAccount, goToHome, stringResource(id = R.string.kahoot))
         KahootPlayer(state.value.question) {
@@ -51,12 +58,12 @@ fun KahootScreenPreview(){
 @Composable
 fun KahootPlayerPreview(){
     val i = 0
-    KahootPlayer(question = StubQuestionWithReponses) {}
+    KahootPlayer(question = StubQuestionWithReponses.ToModel()) {}
 }
 
 
 @Composable
-fun KahootPlayer(question: QuestionWithSimpleResponseDTO,
+fun KahootPlayer(question: QuestionWithSimpleReponse,
                  sendReponse: (Long) -> Unit){
     val context = LocalContext.current;
     val currTime = System.currentTimeMillis()
@@ -71,7 +78,7 @@ fun KahootPlayer(question: QuestionWithSimpleResponseDTO,
 
 
 @Composable
-fun KahootReponses(reponses : List<ReponseSimpleDTO>, action: (ReponseSimpleDTO)->Unit) {
+fun KahootReponses(reponses : List<ReponseSimple>, action: (ReponseSimple)->Unit) {
     LazyVerticalGrid(columns = GridCells.Fixed(2),
                      contentPadding = PaddingValues(12.dp),
                      verticalArrangement = Arrangement.spacedBy(10.dp),
