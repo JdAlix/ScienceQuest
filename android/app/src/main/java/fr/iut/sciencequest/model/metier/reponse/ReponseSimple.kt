@@ -1,6 +1,6 @@
 package fr.iut.sciencequest.model.metier.reponse
 
-class SimpleResponse {
+class ReponseSimple {
     val id: Int
     val reponse: String
 
