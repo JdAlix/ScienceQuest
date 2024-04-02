@@ -1,5 +1,8 @@
 <script>
+import { Difficultes } from '@/data/difficulte';
 import KahootListeParties from './KahootListeParties.vue'
+import {Partie} from "@/data/partie"
+import { Thematiques } from '@/data/thematique';
 
  //TODO définir les méthodes -> à définir grâce à l'API
 export default {
@@ -11,11 +14,25 @@ export default {
             //rejoindre partie
             codeKahootARejoindre: "",
             //listes parties crees ( TODO : appeler l'api pour obtenir les parties)
-            partiesCrees: []
+            partiesCrees: [],
+
+            //input popup creation partie
+            thematiquesDispo:[],
+            choixThematiques:[],
+
+            difficultesDispo:[],
+            choixDifficulte:-1,
         };
     },
     mounted(){
         this.STUB_partiesCrees().then(response=>this.partiesCrees=response)
+
+        Difficultes.getPage(0,999).then(difficultes=>{
+            this.difficultesDispo=difficultes._embedded
+            //choisir une difficulté par défaut
+            this.choixDifficulte=this.difficultesDispo[0].id
+        })
+        Thematiques.getPage(0,999).then(thematiques=>this.thematiquesDispo=thematiques._embedded)
     },
     methods: {
         // TODO : demander a l'api de creer un kahoot (et rediriger vers la partie si possible via HATEOAS)
@@ -24,6 +41,13 @@ export default {
             //this.titreKahoot et this.nbQuestions synchronisés avec v-model
             console.log(this.titreKahoot);
             console.log(this.nbQuestions);
+            const partie=new Partie({
+                "idJeu": 1,
+                "idJoueur": 1,
+                "thematiques": [1],
+                "idDifficulte": 1
+            })
+            partie.creerPartie().then(a=>console.log(a))
         },
         // TODO : demander a l'api de rejoindre un kahoot (et rediriger vers la partie si possible via HATEOAS)
         rejoindrePartie(){
@@ -83,6 +107,24 @@ export default {
                     <label for="Kahoot-Create-Questions">Nombre de questions</label>
                     <input class="form-control" type="number" id="Kahoot-Create-Questions" name="Kahoot-Create-Questions" v-model="nbQuestions" required min="1" max="99">
                     </div>
+                    <div class="checkbox mb-3">
+            <label for="thematiquesInput">Thématiques</label>
+            <br/>
+            <select v-model="choixThematiques" id="thematiquesInput" multiple required>
+                <option v-for="thematique in thematiquesDispo" :value="thematique.id">
+                    {{ thematique.libelle }}
+                </option>
+            </select>
+        </div>
+        <div class="checkbox mb-3">
+            <label for="idDifficulteInput">Difficulté</label>
+            <br/>
+            <select v-model="choixDifficulte" id="idDifficulteInput" name="idDifficulte" required>
+                <option v-for="difficulte in difficultesDispo" :value="difficulte.id">
+                    {{ difficulte.libelle }}
+                </option>
+            </select>
+        </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
