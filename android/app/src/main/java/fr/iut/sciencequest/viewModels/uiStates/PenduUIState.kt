@@ -1,4 +1,4 @@
-package fr.iut.sciencequest.ViewModels.UiStates
+package fr.iut.sciencequest.viewModels.uiStates
 
 data class PenduUIState(
     val isWon: Boolean = false,

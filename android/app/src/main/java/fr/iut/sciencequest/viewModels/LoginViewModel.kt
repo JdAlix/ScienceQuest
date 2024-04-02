@@ -1,7 +1,7 @@
-package fr.iut.sciencequest.ViewModels
+package fr.iut.sciencequest.viewModels
 
 import androidx.lifecycle.ViewModel
-import fr.iut.sciencequest.ViewModels.UiStates.LoginUIState
+import fr.iut.sciencequest.viewModels.uiStates.LoginUIState
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class LoginViewModel: ViewModel() {

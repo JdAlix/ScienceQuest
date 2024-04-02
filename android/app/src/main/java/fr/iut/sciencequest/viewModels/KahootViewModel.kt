@@ -1,4 +1,4 @@
-package fr.iut.sciencequest.ViewModels
+package fr.iut.sciencequest.viewModels
 
 import android.os.Handler
 import android.os.Looper
@@ -6,7 +6,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import fr.iut.sciencequest.ViewModels.UiStates.KahootUIState
+import fr.iut.sciencequest.viewModels.uiStates.KahootUIState
 import fr.iut.sciencequest.model.repositories.question.IQuestionRepository
 import fr.iut.sciencequest.model.repositories.question.QuestionAPIRepository
 import kotlinx.coroutines.flow.MutableStateFlow

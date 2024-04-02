@@ -1,11 +1,10 @@
-package fr.iut.sciencequest.ViewModels
+package fr.iut.sciencequest.viewModels
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import fr.iut.sciencequest.ViewModels.UiStates.PenduUIState
-import fr.iut.sciencequest.model.dto.extensions.ToModel
+import fr.iut.sciencequest.viewModels.uiStates.PenduUIState
 import fr.iut.sciencequest.model.repositories.scientifique.IScientifiqueRepository
 import fr.iut.sciencequest.model.repositories.scientifique.ScientifiqueAPIRepository
 import kotlinx.coroutines.flow.MutableStateFlow

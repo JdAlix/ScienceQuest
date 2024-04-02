@@ -21,15 +21,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import fr.iut.sciencequest.R
-import fr.iut.sciencequest.ViewModels.KahootViewModel
+import fr.iut.sciencequest.viewModels.KahootViewModel
 import fr.iut.sciencequest.model.dto.extensions.ToModel
-import fr.iut.sciencequest.model.dto.question.QuestionWithSimpleResponseDTO
-import fr.iut.sciencequest.model.dto.reponse.ReponseSimpleDTO
 import fr.iut.sciencequest.model.metier.question.QuestionWithSimpleReponse
 import fr.iut.sciencequest.model.metier.reponse.ReponseSimple
 import fr.iut.sciencequest.stub.StubQuestionWithReponses
 import fr.iut.sciencequest.view.TopBar
-import java.util.Timer
 
 @Composable
 fun KahootScreen(viewModel: KahootViewModel = viewModel(factory = KahootViewModel.Factory),

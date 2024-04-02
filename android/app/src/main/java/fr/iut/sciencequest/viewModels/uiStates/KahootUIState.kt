@@ -1,8 +1,6 @@
-package fr.iut.sciencequest.ViewModels.UiStates
+package fr.iut.sciencequest.viewModels.uiStates
 
 import fr.iut.sciencequest.model.dto.extensions.ToModel
-import fr.iut.sciencequest.model.dto.question.QuestionWithSimpleResponseDTO
-import fr.iut.sciencequest.model.dto.reponse.ReponseSimpleDTO
 import fr.iut.sciencequest.model.metier.question.QuestionWithSimpleReponse
 import fr.iut.sciencequest.stub.StubQuestionWithReponses
 

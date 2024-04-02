@@ -19,7 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import fr.iut.sciencequest.R
-import fr.iut.sciencequest.ViewModels.PenduViewModel
+import fr.iut.sciencequest.viewModels.PenduViewModel
 import fr.iut.sciencequest.view.TopBar
 
 @Composable
