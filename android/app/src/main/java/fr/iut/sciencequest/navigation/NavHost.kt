@@ -11,6 +11,7 @@ import fr.iut.sciencequest.view.HomeScreen
 import fr.iut.sciencequest.view.LoginScreen
 import fr.iut.sciencequest.view.games.KahootScreen
 import fr.iut.sciencequest.view.games.PenduScreen
+import fr.iut.sciencequest.view.games.QuiScreen
 import fr.iut.sciencequest.view.scientifiques.scientifiqueListeScreen
 
 
@@ -35,6 +36,9 @@ fun NavHost() {
                 },
                 goToKahoot = {
                     navController.navigate("kahoot")
+                },
+                goToQui = {
+                    navController.navigate("qui")
                 }
             )
         }
@@ -73,16 +77,28 @@ fun NavHost() {
         }
 
         composable(route= "kahoot"){
-            KahootScreen(  goToAccount = {
+            KahootScreen(
+                goToAccount = {
                     navController.navigate("account")
                 },
+                goToHome = {
+                    navController.navigate("home")
+                }
+            )
+        }
+
+        composable(route= "qui"){
+            QuiScreen(goToAccount = {
+                navController.navigate("account")
+            },
                 goToHome = {
                     navController.navigate("home")
                 })
         }
 
         composable(route = "listeScientifiques") {
-            scientifiqueListeScreen(goToAccount = {
+            scientifiqueListeScreen(
+                goToAccount = {
                     navController.navigate("account")
                 },
                 goToHome =  {

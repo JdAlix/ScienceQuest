@@ -1,0 +1,8 @@
+Description dérive Qui-est-ce:
+
+- Image flou du scientifique à trouver
+- 1 seul indice au début en dessous de la photo exemple: femme - 1967
+- 4 réponse possible comme kahoot, 1 seul essai
+- maximum de point si la personne trouve du premier coup
+- possibilité d'avoir + d'indice / diminution du flou mais gagne moins de points au fur et à mesure
+- Plus simple à implémenter qu'un réel qui-est-ce. 

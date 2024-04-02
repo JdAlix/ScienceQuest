@@ -4,14 +4,12 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,28 +18,26 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import fr.iut.sciencequest.R
-import fr.iut.sciencequest.viewModels.KahootViewModel
 import fr.iut.sciencequest.model.dto.extensions.ToModel
+import fr.iut.sciencequest.model.dto.question.QuestionWithSimpleResponseDTO
+import fr.iut.sciencequest.model.dto.reponse.ReponseSimpleDTO
 import fr.iut.sciencequest.model.metier.question.QuestionWithSimpleReponse
 import fr.iut.sciencequest.model.metier.reponse.ReponseSimple
 import fr.iut.sciencequest.stub.StubQuestionWithReponses
 import fr.iut.sciencequest.view.TopBar
+import fr.iut.sciencequest.viewModels.KahootViewModel
+import java.util.Timer
 
 @Composable
-fun KahootScreen(viewModel: KahootViewModel = viewModel(factory = KahootViewModel.ApiFactory),
+fun QuiScreen(viewModel: KahootViewModel = viewModel(),
                  goToAccount: () -> Unit,
                  goToHome: () -> Unit) {
     val state = viewModel.uiState.collectAsState()
-    LaunchedEffect(key1 = Unit) {
-        viewModel.lancerPartie()
-    }
     Column(modifier = Modifier.fillMaxWidth()) {
         TopBar(goToAccount, goToHome, stringResource(id = R.string.kahoot))
-
-        KahootPlayer(state.value.question) {
+        QuiPlayer(state.value.question) {
             viewModel.ajouterPoints(it)
         }
     }
@@ -49,32 +45,27 @@ fun KahootScreen(viewModel: KahootViewModel = viewModel(factory = KahootViewMode
 
 @Preview
 @Composable
-fun KahootScreenPreview(){
-    KahootScreen(goToAccount = {}, goToHome = {})
+fun QuiScreenPreview(){
+    QuiScreen(goToAccount = {}, goToHome = {})
 }
 
 
 @Preview
 @Composable
-fun KahootPlayerPreview(){
+fun QuiPlayerPreview(){
     val i = 0
-    KahootPlayer(question = StubQuestionWithReponses.ToModel()) {}
+    QuiPlayer(question = StubQuestionWithReponses.ToModel()) {}
 }
 
 
 @Composable
-fun KahootPlayer(question: QuestionWithSimpleReponse,
+fun QuiPlayer(question: QuestionWithSimpleReponse,
                  sendReponse: (Long) -> Unit){
-
     val context = LocalContext.current;
     val currTime = System.currentTimeMillis()
-    Column (
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceEvenly,
-        modifier = Modifier.fillMaxHeight()
-    ) {
-        KahootQuestion(question = question.question)
-        KahootReponses(reponses = question.reponses) {
+    Column (horizontalAlignment = Alignment.CenterHorizontally){
+        QuiQuestion(question = question.question)
+        QuiReponses(reponses = question.reponses) {
             sendReponse(currTime - System.currentTimeMillis())
             Toast.makeText(context, it.reponse, Toast.LENGTH_SHORT).show()
         }
@@ -83,11 +74,11 @@ fun KahootPlayer(question: QuestionWithSimpleReponse,
 
 
 @Composable
-fun KahootReponses(reponses : List<ReponseSimple>, action: (ReponseSimple)->Unit) {
+fun QuiReponses(reponses : List<ReponseSimple>, action: (ReponseSimple)->Unit) {
     LazyVerticalGrid(columns = GridCells.Fixed(2),
-                     contentPadding = PaddingValues(12.dp),
-                     verticalArrangement = Arrangement.spacedBy(10.dp),
-                     horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+        contentPadding = PaddingValues(12.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+        horizontalArrangement = Arrangement.spacedBy(10.dp)) {
         reponses.forEach {
             item() {
                 Button(onClick = {action(it)}){
@@ -99,6 +90,6 @@ fun KahootReponses(reponses : List<ReponseSimple>, action: (ReponseSimple)->Unit
 }
 
 @Composable
-fun KahootQuestion(question: String){
-    Text(question, textAlign = TextAlign.Center, fontSize = 20.sp)
+fun QuiQuestion(question: String){
+    Text(question, textAlign = TextAlign.Center)
 }

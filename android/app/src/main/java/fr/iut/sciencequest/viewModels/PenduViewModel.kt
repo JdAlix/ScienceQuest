@@ -29,13 +29,14 @@ class PenduViewModel(
                     } else {
                         '_'
                     }
+                    uiState.value = PenduUIState(
+                        isActionGood = true,
+                        motATrouver = nomComplet,
+                        motATrou = motATrou
+                    )
                 }
-                uiState.value = PenduUIState(
-                    isActionGood = true,
-                    motATrouver = nomComplet,
-                    motATrou = motATrou
-                )
             }
+
         }
 
     // mot : mot à trouver
@@ -62,10 +63,9 @@ class PenduViewModel(
                     nvMotATrou = nvMotATrou.replaceRange(index,index + 1, letterToCheck.toString())
                 }
             }
-            var isWon = false
-            if (nvMotATrou.equals(uiState.value.motATrouver)) {
-                isWon = true
-            }
+
+            val isWon = nvMotATrou == uiState.value.motATrouver
+
             uiState.value = PenduUIState(isWon,
                 true,
                 uiState.value.nbViesRestantes,
