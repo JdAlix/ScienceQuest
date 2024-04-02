@@ -23,7 +23,9 @@ export class Utilisateur extends DataObject{
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify(this)
         })
-        return new this.constructor(await response.json())
+        const utilisateurConnecte=new this.constructor(await response.json())
+        localStorage.setItem("utilisateurConnecte",JSON.stringify(utilisateurConnecte))
+        return utilisateurConnecte;
     }
     async connecter(){
         const response = await fetch(`${REST_API}/utilisateur/connexion`,{
