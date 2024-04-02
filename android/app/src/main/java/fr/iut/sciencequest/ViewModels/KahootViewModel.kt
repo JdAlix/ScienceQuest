@@ -4,33 +4,40 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import fr.iut.sciencequest.ViewModels.UiStates.KahootUIState
-import fr.iut.sciencequest.model.buisness.Question.fetchQuestions
-import fr.iut.sciencequest.stub.StubQuestionWithReponses2
+import fr.iut.sciencequest.model.repositories.question.IQuestionRepository
+import fr.iut.sciencequest.model.repositories.question.QuestionAPIRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-class KahootViewModel: ViewModel() {
+class KahootViewModel(
+    val questionRepo: IQuestionRepository
+): ViewModel() {
     var uiState = MutableStateFlow(KahootUIState())
 
     private val handler = Handler(Looper.getMainLooper())
 
     fun lancerPartie() {
         viewModelScope.launch {
-            fetchQuestions(2).collect() {
-                for (question in it.questions) {
-                    handler.postDelayed(
-                        {
-                            Log.d("KahootViewModel","J'actualise les questions")
-                            uiState.value = KahootUIState(question,
-                                duréePartie = uiState.value.duréePartie,
-                                nbPoints = uiState.value.nbPoints,
-                                reponseChoisie = false)
-                        },
-                        uiState.value.duréePartie
-                    )
-                }
+            questionRepo.fetchQuestions(2)
+            Log.d("KahootViewModel","J'ai trouvé ${questionRepo.questions.value.size} questions")
+            var count = 1
+            for (question in questionRepo.questions.value) {
+                handler.postDelayed(
+                    {
+                        Log.d("KahootViewModel", "J'actualise les questions")
+                        uiState.value = KahootUIState(
+                            question,
+                            duréePartie = uiState.value.duréePartie,
+                            nbPoints = uiState.value.nbPoints,
+                            reponseChoisie = false
+                        )
+                    },
+                    uiState.value.duréePartie * count
+                )
+                count++
             }
         }
     }
@@ -48,5 +55,18 @@ class KahootViewModel: ViewModel() {
             nbPoints = uiState.value.nbPoints + nbPoints,
             reponseChoisie = true)
         Log.d("KahootViewModel","Le joueur à ${uiState.value.nbPoints}")
+    }
+    companion object {
+
+        val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+            @Suppress("UNCHECKED_CAST")
+            override fun <T : ViewModel> create(
+                modelClass: Class<T>
+            ): T {
+                return KahootViewModel(
+                    QuestionAPIRepository()
+                ) as T
+            }
+        }
     }
 }

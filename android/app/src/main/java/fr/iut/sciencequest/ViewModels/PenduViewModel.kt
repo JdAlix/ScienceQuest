@@ -2,21 +2,24 @@ package fr.iut.sciencequest.ViewModels
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import fr.iut.sciencequest.ViewModels.UiStates.PenduUIState
-import fr.iut.sciencequest.model.buisness.Scientifique.fetchScientifiqueById
-import fr.iut.sciencequest.model.buisness.Scientifique.fetchScientifiques
 import fr.iut.sciencequest.model.dto.extensions.ToModel
+import fr.iut.sciencequest.model.repositories.scientifique.IScientifiqueRepository
+import fr.iut.sciencequest.model.repositories.scientifique.ScientifiqueAPIRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
-class PenduViewModel : ViewModel() {
+class PenduViewModel(
+    val scientifiqueRepo: IScientifiqueRepository
+) : ViewModel() {
     var uiState = MutableStateFlow(PenduUIState())
 
     fun InitPartie() {
         Log.d("PenduViewModel","Un utilisateur initialise une partie")
         viewModelScope.launch {
-            fetchScientifiqueById(1).collect {
+            scientifiqueRepo.fetchScientifiqueById(1).collect {
                 val nomComplet = it.prenom + " " + it.nom
                 Log.d("ViewModelPendu",nomComplet)
                 var motATrou = ""
@@ -80,6 +83,19 @@ class PenduViewModel : ViewModel() {
                 uiState.value.motATrou,
                 uiState.value.lettresUtilises.plus(lowerCaseLetter)
             )
+        }
+    }
+    companion object {
+
+        val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+            @Suppress("UNCHECKED_CAST")
+            override fun <T : ViewModel> create(
+                modelClass: Class<T>
+            ): T {
+                return PenduViewModel(
+                    ScientifiqueAPIRepository()
+                ) as T
+            }
         }
     }
 }

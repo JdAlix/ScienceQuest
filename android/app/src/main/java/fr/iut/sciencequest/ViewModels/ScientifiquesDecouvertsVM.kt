@@ -16,13 +16,7 @@ class ScientifiquesDecouvertsVM(
 ) : ViewModel() {
     private val _listeScientifique: MutableStateFlow<ScientifiqueDecouvertsUIState> = MutableStateFlow(ScientifiqueDecouvertsUIState())
     val listeScientifique = _listeScientifique.asStateFlow()
-    // fun getScientifiqueById(id: Int) {
-    //     Log.d("ViewModelScientifique", "Recup un scientifique d'id: $id")
-    //     var scientifique: Scientifique
-    //     viewModelScope.launch {
-//
-    //     }
-    // }
+
     fun getScientifiques(page: Int) {
         Log.d("ViewModelScientifique","Recup la liste de scientifiques")
         viewModelScope.launch {
