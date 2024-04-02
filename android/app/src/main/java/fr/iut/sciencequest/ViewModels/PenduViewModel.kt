@@ -5,8 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import fr.iut.sciencequest.ViewModels.UiStates.PenduUIState
 import fr.iut.sciencequest.model.buisness.Scientifique.fetchScientifiqueById
-import fr.iut.sciencequest.model.buisness.Scientifique.fetchScientifiques
-import fr.iut.sciencequest.model.dto.extensions.ToModel
+import fr.iut.sciencequest.model.buisness.Scientifique.fetchScientifiquesInfos
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
@@ -16,23 +15,27 @@ class PenduViewModel : ViewModel() {
     fun InitPartie() {
         Log.d("PenduViewModel","Un utilisateur initialise une partie")
         viewModelScope.launch {
-            fetchScientifiqueById(1).collect {
-                val nomComplet = it.prenom + " " + it.nom
-                Log.d("ViewModelPendu",nomComplet)
-                var motATrou = ""
-                for (chr in nomComplet) {
-                    motATrou += if (chr == ' ') {
-                        ' '
-                    } else {
-                        '_'
+            fetchScientifiquesInfos().collect { scientifiquesInfos ->
+                Log.e("PenduViewModel",scientifiquesInfos.nbScientfiques.toString())
+                fetchScientifiqueById((1..scientifiquesInfos.nbScientfiques).random()).collect {
+                    val nomComplet = it.prenom + " " + it.nom
+                    Log.d("ViewModelPendu",nomComplet)
+                    var motATrou = ""
+                    for (chr in nomComplet) {
+                        motATrou += if (chr == ' ') {
+                            ' '
+                        } else {
+                            '_'
+                        }
                     }
+                    uiState.value = PenduUIState(
+                        isActionGood = true,
+                        motATrouver = nomComplet,
+                        motATrou = motATrou
+                    )
                 }
-                uiState.value = PenduUIState(
-                    isActionGood = true,
-                    motATrouver = nomComplet,
-                    motATrou = motATrou
-                )
             }
+
         }
     }
 
@@ -60,10 +63,9 @@ class PenduViewModel : ViewModel() {
                     nvMotATrou = nvMotATrou.replaceRange(index,index + 1, letterToCheck.toString())
                 }
             }
-            var isWon = false
-            if (nvMotATrou.equals(uiState.value.motATrouver)) {
-                isWon = true
-            }
+
+            val isWon = nvMotATrou == uiState.value.motATrouver
+
             uiState.value = PenduUIState(isWon,
                 true,
                 uiState.value.nbViesRestantes,
