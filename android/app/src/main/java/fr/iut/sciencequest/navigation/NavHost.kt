@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -21,7 +22,7 @@ import fr.iut.sciencequest.view.scientifiques.scientifiqueListeScreen
 
 
 @Composable
-fun NavHost(kahotVM: KahootViewModel = viewModel()) {
+fun NavHost() {
     val navController = rememberNavController()
     NavHost(
         modifier = Modifier.fillMaxSize(),
@@ -40,7 +41,6 @@ fun NavHost(kahotVM: KahootViewModel = viewModel()) {
                     navController.navigate("pendu")
                 },
                 goToKahoot = {
-                    kahotVM.lancerPartie()
                     navController.navigate("kahoot")
                 }
             )
@@ -85,8 +85,7 @@ fun NavHost(kahotVM: KahootViewModel = viewModel()) {
                 },
                 goToHome = {
                     navController.navigate("home")
-                },
-                viewModel = kahotVM)
+                })
         }
 
         composable(route = "listeScientifiques") {
