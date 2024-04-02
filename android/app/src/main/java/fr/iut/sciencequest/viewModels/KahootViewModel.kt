@@ -26,21 +26,26 @@ class KahootViewModel(
         viewModelScope.launch {
             questionRepo.fetchQuestions(2)
             Log.d("KahootViewModel","J'ai trouvé ${questionRepo.questions.value.size} questions")
-            var count = 1
-            for (question in questionRepo.questions.value) {
+
+            _uiState.value = KahootUIState(
+                    questionRepo.questions.value.get(0),
+                    duréePartie = uiState.value.duréePartie,
+                    nbPoints = uiState.value.nbPoints,
+                    reponseChoisie = false
+            )
+            for (index: Int in 1..questionRepo.questions.value.size) {
                 handler.postDelayed(
                     {
                         Log.d("KahootViewModel", "J'actualise les questions")
                         _uiState.value = KahootUIState(
-                            question,
+                            questionRepo.questions.value.get(index),
                             duréePartie = uiState.value.duréePartie,
                             nbPoints = uiState.value.nbPoints,
                             reponseChoisie = false
                         )
                     },
-                    uiState.value.duréePartie * count
+                    uiState.value.duréePartie * index
                 )
-                count++
             }
         }
     }
