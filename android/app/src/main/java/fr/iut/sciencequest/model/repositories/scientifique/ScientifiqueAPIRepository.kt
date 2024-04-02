@@ -1,32 +1,44 @@
 package fr.iut.sciencequest.model.repositories.scientifique
 
 import android.util.Log
+import fr.iut.sciencequest.model.buisness.Question.QuestionRequestService
 import fr.iut.sciencequest.model.buisness.Scientifique.ScientifiqueRequestService
 import fr.iut.sciencequest.model.buisness.createRequestService
 import fr.iut.sciencequest.model.dto.extensions.ToModel
 import fr.iut.sciencequest.model.metier.Scientifique
+import fr.iut.sciencequest.stub.StubScientifique1
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flow
 import retrofit2.create
 
 class ScientifiqueAPIRepository: IScientifiqueRepository {
-    suspend override fun fetchScientifiqueById(id: Int): Flow<Scientifique> = flow {
+
+    private val _scientifique = MutableStateFlow<Scientifique>(StubScientifique1.ToModel())
+    override val scientifique: StateFlow<Scientifique>
+        get() = _scientifique.asStateFlow()
+
+    private val _scientifiques = MutableStateFlow<List<Scientifique>>(emptyList())
+    override val scientifiques: StateFlow<List<Scientifique>>
+        get() = _scientifiques.asStateFlow()
+
+    override suspend fun fetchScientifiqueById(id: Int) {
         val serviceClient = createRequestService().create<ScientifiqueRequestService>()
         try {
-            val response =  serviceClient.getScientifique(id)
-            emit(response.ToModel())
+            _scientifique.value = serviceClient.getScientifique(id).ToModel()
         } catch (e: Exception) {
-            Log.e("Requete API",e.message.toString())
+            Log.e("Requete API Scientifiqu", e.message.toString())
         }
     }
 
-    suspend override fun fetchScientifiques(index: Int): Flow<List<Scientifique>> = flow {
+    override suspend fun fetchScientifiques(index: Int) {
         val serviceClient = createRequestService().create<ScientifiqueRequestService>()
         try {
-            val response = serviceClient.getScientifiques(index)
-            emit(response.scientifiques.ToModel())
+            _scientifiques.value = serviceClient.getScientifiques(index).scientifiques.ToModel()
         } catch (e: Exception) {
-            Log.e("Requete API",e.message.toString())
+            Log.e("Requete API Scientifiqu", e.message.toString())
         }
     }
 }

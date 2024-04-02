@@ -18,8 +18,9 @@ class PenduViewModel(
     fun InitPartie() {
         Log.d("PenduViewModel","Un utilisateur initialise une partie")
         viewModelScope.launch {
-            scientifiqueRepo.fetchScientifiqueById(1).collect {
-                val nomComplet = it.prenom + " " + it.nom
+            scientifiqueRepo.fetchScientifiqueById(1)
+            val scientifique = scientifiqueRepo.scientifique.value
+            val nomComplet = scientifique.prenom + " " + scientifique.nom
                 Log.d("ViewModelPendu",nomComplet)
                 var motATrou = ""
                 for (chr in nomComplet) {
@@ -36,7 +37,6 @@ class PenduViewModel(
                 )
             }
         }
-    }
 
     // mot : mot à trouver
     // motAct : état actuel du mot trouvé par l'utilisateur

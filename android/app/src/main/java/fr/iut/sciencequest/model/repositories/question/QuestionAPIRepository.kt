@@ -21,11 +21,6 @@ class QuestionAPIRepository : IQuestionRepository {
         get() = _questions.asStateFlow()
 
     override suspend fun fetchQuestions(index: Int) {
-        //1. appel à l'api QuestionRequestService
-        //2. fill _questions with QuestionRequestService response
-//        _questions.update {
-//
-//        }
         val serviceClient = createRequestService().create<QuestionRequestService>()
         try {
             _questions.value = serviceClient.getQuestions(index).questions.ToModel()

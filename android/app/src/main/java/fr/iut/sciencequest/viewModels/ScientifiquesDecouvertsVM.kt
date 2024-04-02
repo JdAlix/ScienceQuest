@@ -20,9 +20,8 @@ class ScientifiquesDecouvertsVM(
     fun getScientifiques(page: Int) {
         Log.d("ViewModelScientifique","Recup la liste de scientifiques")
         viewModelScope.launch {
-            repository.fetchScientifiques(page).collect {
-                _listeScientifique.value = ScientifiqueDecouvertsUIState(it.toMutableList())
-            }
+            repository.fetchScientifiques(page)
+            _listeScientifique.value = ScientifiqueDecouvertsUIState(repository.scientifiques.value.toMutableList())
         }
     }
     companion object {
