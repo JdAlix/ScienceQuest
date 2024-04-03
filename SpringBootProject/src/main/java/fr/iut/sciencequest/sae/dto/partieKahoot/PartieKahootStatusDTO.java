@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.hateoas.RepresentationModel;
 
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -19,4 +20,6 @@ public class PartieKahootStatusDTO extends RepresentationModel<PartieKahootStatu
     private Status status;
 
     private List<ScorePartieKahootJoueurDTO> scores;
+
+    private Calendar tempsAffichageScore;
 }
