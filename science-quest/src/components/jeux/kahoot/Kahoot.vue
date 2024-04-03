@@ -38,10 +38,6 @@ export default {
     methods: {
         // TODO : demander a l'api de creer un kahoot (et rediriger vers la partie si possible via HATEOAS)
         creerKahoot: function () {
-            console.log("yay");
-            //this.titreKahoot et this.nbQuestions synchronisés avec v-model
-            console.log(this.titreKahoot);
-            console.log(this.nbQuestions);
             const partie=new KahootPartie({
                 "thematiques": this.choixThematiques,
                 "idDifficulte": this.choixDifficulte
@@ -104,14 +100,14 @@ export default {
                 </div>
                 <form @submit.prevent>
                 <div class="modal-body">
-                    <div>
+                    <!--div>
                     <label for="Kahoot-Create-Title">Titre</label>
                     <input class="form-control" type="text" id="Kahoot-Create-Title" name="Kahoot-Create-Title" v-model="titreKahoot" required minlength="2" maxlength="255">
                     </div>
                     <div>
                     <label for="Kahoot-Create-Questions">Nombre de questions</label>
                     <input class="form-control" type="number" id="Kahoot-Create-Questions" name="Kahoot-Create-Questions" v-model="nbQuestions" required min="1" max="99">
-                    </div>
+                    </div-->
                     <div class="checkbox mb-3">
             <label for="thematiquesInput">Thématiques</label>
             <br/>
