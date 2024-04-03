@@ -32,6 +32,7 @@ export default {
 			},
 			//variables pour les scores
 			score:{
+				score:0,
 				pointsGagne:0,
 			},
 			pointsAnimation:0,
@@ -81,7 +82,7 @@ export default {
 		},
 		obtenirScores(){
 			this.resetEtats() //cacher l'etat precedent
-			this.kahootAPI.obtenirScore().then(response=>{
+			this.kahootAPI.obtenirScore(this.score.score).then(response=>{
 				this.tempsLimite=response.tempsLimite
 				this.score=response
 				//afficher cet etat
