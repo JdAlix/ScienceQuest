@@ -46,7 +46,13 @@ export default {
                 "thematiques": this.choixThematiques,
                 "idDifficulte": this.choixDifficulte
             })
-            partie.creerPartie().then(a=>console.log(a))
+            partie.creerPartie().then(kahoot=>{
+                //fermer la popup
+                fermerPopup.click()
+                //rejoindre sa propre partie
+                this.codeKahootARejoindre=kahoot.codeInvitation
+                this.rejoindrePartie()
+            })
         },
         // TODO : demander a l'api de rejoindre un kahoot (et rediriger vers la partie si possible via HATEOAS)
         rejoindrePartie(){
@@ -126,7 +132,7 @@ export default {
         </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button id="fermerPopup" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                     <button class="btn btn-primary" v-on:click="creerKahoot">Créer</button>
                 </div>
                 </form>
