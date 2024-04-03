@@ -127,6 +127,6 @@ export class KahootQuestion extends DataObject{
 export class KahootScore extends DataObject{
 	constructor(parsedJSON){
     super(parsedJSON)
-    this.tempsLimite=Date.now()+10000
+    this.tempsLimite=new Date(this.tempsAffichageScore).getTime()
 }
 }
