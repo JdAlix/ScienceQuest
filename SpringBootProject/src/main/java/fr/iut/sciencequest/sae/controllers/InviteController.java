@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1/invite")
@@ -23,5 +25,19 @@ public class InviteController {
     public InviteSimpleDTO createInvite(@RequestBody @Valid InviteWithPseudoOnlyDTO inviteRequest){
         Invite invite = this.modelMapper.map(inviteRequest, Invite.class);
         return this.modelMapper.map(this.inviteService.create(invite), InviteSimpleDTO.class);
+    }
+
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public InviteSimpleDTO getInvite(@PathVariable int id){
+        return this.modelMapper.map(this.inviteService.findById(id), InviteSimpleDTO.class);
+    }
+
+    @PatchMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public InviteSimpleDTO updateInvite(@PathVariable int id, @RequestBody @Valid InviteWithPseudoOnlyDTO updatedInvite){
+        Invite invite = this.inviteService.findById(id);
+        invite.setPseudo(updatedInvite.getPseudo());
+        return this.modelMapper.map(this.inviteService.update(invite), InviteSimpleDTO.class);
     }
 }

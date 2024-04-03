@@ -20,6 +20,10 @@ public class InviteService {
     private final InviteRepository inviteRepository;
     private final JoueurRepository joueurRepository;
 
+    public Invite findById(int id){
+        return this.inviteRepository.findById(id).orElseThrow(() -> new InviteNotFoundException(id));
+    }
+
     private void checkFieldsConstraints(Invite invite){
         if(this.joueurRepository.existsByPseudo(invite.getPseudo())){
             throw new DuplicatedFieldException("pseudo");
