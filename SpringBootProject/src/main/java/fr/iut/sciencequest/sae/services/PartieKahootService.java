@@ -129,7 +129,7 @@ public class PartieKahootService {
         Calendar actualDate = Calendar.getInstance();
         actualDate.setTime(new Date());
         long secondsPourRepondre = ChronoUnit.SECONDS.between(actualDate.toInstant(), tempsLimiteReponse.toInstant());
-        return Math.round(1f/secondsPourRepondre*PartieKahootService.TEMPS_REPONSE_QUESTION);
+        return Math.round((1f/secondsPourRepondre*PartieKahootService.TEMPS_REPONSE_QUESTION)*100);
     }
 
 }
