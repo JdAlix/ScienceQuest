@@ -16,8 +16,12 @@ export class Kahoot{
 		return new KahootQuestion(await response.json())
   }
   async obtenirScore(){
+    const user = await Utilisateur.utilisateurConnecteOuCreerInvite()
 		const response=await fetch(`${REST_API}/partie/kahoot/${this.codeInvitation}/status`)
-		return new KahootScore(await response.json())
+    let json=await response.json()
+    json.score=json.scores.find(score=>score.joueur.id==user.id).score
+    json.pointsGagne=0
+		return new KahootScore(json)
   }
   async repondreQuestion(id){
     const user = await Utilisateur.utilisateurConnecteOuCreerInvite()
@@ -115,6 +119,8 @@ export class KahootQuestion extends DataObject{
   {"joueur": {"id": 0, "pseudo": 0},
    "score": 0},
   ],
+  "pointsGagne":100,
+  "score":1337,
   "tempsLimite":${Date.now()+this.DEBUG_temps maintenant + 10 secondes le temps de regarder les scores}
 }
 */
