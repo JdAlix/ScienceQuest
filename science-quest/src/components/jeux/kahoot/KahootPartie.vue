@@ -34,7 +34,8 @@ export default {
 			score:{
 				pointsGagne:0,
 			},
-			pointsAnimation:0
+			pointsAnimation:0,
+			partieTerminee:false,
 		}
 	},
 	mounted(){
@@ -76,7 +77,7 @@ export default {
 					this.compteAReboursId=window.setInterval(this.calculerCompteARebours,22)
 				}
 			}
-			)
+			).catch(ex=>this.partieTerminee=true)
 		},
 		obtenirScores(){
 			this.resetEtats() //cacher l'etat precedent
@@ -174,6 +175,7 @@ export default {
 		<button v-for="reponse in question.reponses" @click="repondre(reponse.id)">{{ reponse.reponse }}</button>
 	</div>
 	<div v-show="etats.score">
+		<h2 v-if="partieTerminee">Partie Terminée</h2>
 		<h2>Votre score : {{ pointsAnimation }} (+{{ score.pointsGagne }})</h2>
 		<ol class="leaderboard">
 			<li v-for="scorejoueur in score.scores">
