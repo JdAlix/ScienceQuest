@@ -21,7 +21,10 @@ export default {
       })
     },
     seDeconnecter(){
-      Utilisateur.deconnecter().then()
+      Utilisateur.deconnecter().then(location.reload())
+    },
+    creerInvite(){
+      Utilisateur.utilisateurConnecteOuCreerInvite().then(user=>{location.reload()})
     }
   },
   mounted() {
@@ -80,7 +83,7 @@ export default {
             <ul class="dropdown-menu dropdown-menu-end">
               <div v-if="!estConnecte">
                 <li><router-link class="dropdown-item" to="/login">Se connecter</router-link></li>
-                <li><router-link class="dropdown-item" to="/login">Se connecter en tant qu'invité</router-link></li>
+                <li><a @click="creerInvite">Se connecter en tant qu'invité</a></li>
               </div>
               <div v-if="estConnecte">
                 <li><router-link class="dropdown-item" to="/profil">Profil</router-link></li>
