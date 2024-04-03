@@ -45,6 +45,8 @@ class LoginViewModelTest(
                 arrayOf("jean2"),
                 arrayOf("jean_"),
                 arrayOf("jean+"),
+                arrayOf("jean+<<>"),
+                arrayOf("jean;//;"),
             )
         }
     }
