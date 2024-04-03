@@ -16,6 +16,7 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import kotlin.concurrent.thread
 import kotlin.time.Duration
 
 class KahootLancerPartieTest {
@@ -25,6 +26,10 @@ class KahootLancerPartieTest {
 
     @Before
     fun setup() {
+    }
+
+    @Test
+    fun KahootLancerPartieTest() = runTest (timeout = Duration.parse("15s")) {
         mockkStatic(Looper::class)
 
         val looper = mockk<Looper> {
@@ -32,10 +37,6 @@ class KahootLancerPartieTest {
         }
 
         every { Looper.getMainLooper() } returns looper
-    }
-
-    @Test
-    fun KahootLancerPartieTest() = runTest (timeout = Duration.parse("15s")) {
         val question = StubQuestionWithReponses.ToModel()
         val repo = QuestionStubRepository()
         repo.setQuestionsStub(arrayListOf(
