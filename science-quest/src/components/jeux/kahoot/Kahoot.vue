@@ -51,6 +51,8 @@ export default {
                 //rejoindre sa propre partie
                 this.codeKahootARejoindre=kahoot.codeInvitation
                 this.rejoindrePartie()
+                //afficher le bouton qui uniquement la pour le créateur de la partie
+                window.setTimeout(function(){boutonDemarrerKahoot.style.visibility=""}, 1000)
             })
         },
         // TODO : demander a l'api de rejoindre un kahoot (et rediriger vers la partie si possible via HATEOAS)

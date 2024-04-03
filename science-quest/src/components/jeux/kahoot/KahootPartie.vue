@@ -106,9 +106,6 @@ export default {
 			//afficher cet etat
 			this.etats.salleAttente=true
 			this.kahootAPI.obtenirSalleAttente().then(response=>{
-				//TODO ENLEVER 
-				this.kahootAPI.demarrerPartie().then()
-				//FIN DEBUG
 				this.tempsLimite=response.tempsLimite
 				this.salleAttente=response
 
@@ -148,6 +145,9 @@ export default {
 				window.setTimeout(this.animerIncrementationPoints,5)
 			}
 		},
+		demarrerPartie(){
+			this.kahootAPI.demarrerPartie().then(boutonDemarrerKahoot.style.visibility="hidden")
+		}
 	}
 }
 
@@ -192,6 +192,7 @@ export default {
 				{{ joueur }}
 			</li>
 		</ul>
+		<button style="visibility: hidden" id="boutonDemarrerKahoot" @click="demarrerPartie()">Démarrer la partie</button>
 	</div>
 </div>
 </template>
