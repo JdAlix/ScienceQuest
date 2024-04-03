@@ -36,7 +36,7 @@ class ScientifiqueDecouvertsViewModelTest(
     companion object {
         @JvmStatic
         @Parameterized.Parameters(
-            name = "Quand on ajoute {O}"
+            name = "Quand on ajoute {0}"
         )
         fun getTestActionData(): Iterable<Array<Any>> {
             return arrayListOf(
