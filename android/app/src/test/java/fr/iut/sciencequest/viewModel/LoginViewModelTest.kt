@@ -35,7 +35,7 @@ class LoginViewModelTest(
     companion object {
         @JvmStatic
         @Parameterized.Parameters(
-            name = "Quand joueur joue {0}, le jeu est censé trouvé que {1} est {3} et il lui reste {2} "
+            name = "Quand on utilise {0} dans le champ"
         )
         fun getTestActionData(): Iterable<Array<Any>> {
             return arrayListOf(
