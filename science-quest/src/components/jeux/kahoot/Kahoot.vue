@@ -38,6 +38,9 @@ export default {
     methods: {
         // TODO : demander a l'api de creer un kahoot (et rediriger vers la partie si possible via HATEOAS)
         creerKahoot: function () {
+            if(!formCreerKahoot.checkValidity()){
+                return
+            }
             const partie=new KahootPartie({
                 "thematiques": this.choixThematiques,
                 "idDifficulte": this.choixDifficulte
@@ -98,7 +101,7 @@ export default {
                 <div class="modal-header">
                     <h2 class="modal-title" id="creationKahoot">Créer un Kahoot</h2>
                 </div>
-                <form @submit.prevent>
+                <form id="formCreerKahoot" @submit.prevent>
                 <div class="modal-body">
                     <!--div>
                     <label for="Kahoot-Create-Title">Titre</label>
