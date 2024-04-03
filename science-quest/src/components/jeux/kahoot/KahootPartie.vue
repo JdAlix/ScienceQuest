@@ -32,8 +32,6 @@ export default {
 			},
 			//variables pour les scores
 			score:{
-				leaderboard:{},
-				score:0,
 				pointsGagne:0,
 			},
 			pointsAnimation:0
@@ -63,14 +61,13 @@ export default {
 			return this.obtenirQuestion
 		},
 		obtenirQuestion(){
-			this.resetEtats() //cacher l'etat precedent
 			this.kahootAPI.obtenirQuestion().then(response=>{
+				this.resetEtats() //cacher l'etat precedent
 				this.tempsLimite=response.tempsLimite
 				//afficher cet etat
 				this.etats.question=true
 
 				this.question=response.questionActuel
-				console.log(this.question)
 
 				if(this.tempsLimite!=-1){
 					//executer la fonction en boucle jusqu'a ce que la partie se termine
@@ -82,7 +79,6 @@ export default {
 			)
 		},
 		obtenirScores(){
-			/*
 			this.resetEtats() //cacher l'etat precedent
 			this.kahootAPI.obtenirScore().then(response=>{
 				this.tempsLimite=response.tempsLimite
@@ -101,7 +97,7 @@ export default {
 					this.compteAReboursId=window.setInterval(this.calculerCompteARebours,22)
 				}
 			}
-			)*/
+			)
 		},
 		obtenirSalleAttente(){
 			this.resetEtats() //cacher l'etat precedent
@@ -180,8 +176,8 @@ export default {
 	<div v-show="etats.score">
 		<h2>Votre score : {{ pointsAnimation }} (+{{ score.pointsGagne }})</h2>
 		<ol class="leaderboard">
-			<li v-for="joueur in Object.keys(score.leaderboard)">
-				{{ joueur }} : {{score.leaderboard[joueur]}}
+			<li v-for="scorejoueur in score.scores">
+				{{ scorejoueur.joueur.pseudo }} : {{scorejoueur.score}}
 			</li>
 		</ol>
 	</div>

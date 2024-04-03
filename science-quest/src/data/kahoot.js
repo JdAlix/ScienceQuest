@@ -15,6 +15,10 @@ export class Kahoot{
 		const response=await fetch(`${REST_API}/partie/kahoot/${this.codeInvitation}/question`)
 		return new KahootQuestion(await response.json())
   }
+  async obtenirScore(){
+		const response=await fetch(`${REST_API}/partie/kahoot/${this.codeInvitation}/status`)
+		return new KahootScore(await response.json())
+  }
   async repondreQuestion(id){
     const user = await Utilisateur.utilisateurConnecteOuCreerInvite()
     const response = await fetch(`${REST_API}/partie/kahoot/${this.codeInvitation}/reponse`,{
@@ -106,9 +110,17 @@ export class KahootQuestion extends DataObject{
 
 /* JSON de reference (score)
 {
-  "score":1337,
-  "pointsGagne":100,
-  "leaderboard":{"Moi":1337, "Titouan":320},
+  "status": "Pending|Started|Ended", 
+  "scores": [
+  {"joueur": {"id": 0, "pseudo": 0},
+   "score": 0},
+  ],
   "tempsLimite":${Date.now()+this.DEBUG_temps maintenant + 10 secondes le temps de regarder les scores}
 }
 */
+export class KahootScore extends DataObject{
+	constructor(parsedJSON){
+    super(parsedJSON)
+    this.tempsLimite=Date.now()+10000
+}
+}
