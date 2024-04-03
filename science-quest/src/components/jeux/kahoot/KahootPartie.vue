@@ -125,8 +125,9 @@ export default {
 		},
 		repondre(reponse){
 			this.kahootAPI.repondreQuestion(reponse).then()
-			
-			this.question.question=`Réponse "${reponse}" envoyée`
+
+			const reponseEnvoyee=this.question.reponses.find(r=>r.id==reponse).reponse
+			this.question.question=`Réponse "${reponseEnvoyee}" envoyée`
 			this.question.reponses=[]
 		},
 		calculerCompteARebours(){
