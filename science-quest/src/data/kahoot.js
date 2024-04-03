@@ -11,6 +11,19 @@ export class Kahoot{
 		const response=await fetch(`${REST_API}/partie/kahoot/${this.codeInvitation}/status`)
 		return new KahootSalleAttente(await response.json())
   }
+  async obtenirQuestion(){
+		const response=await fetch(`${REST_API}/partie/kahoot/${this.codeInvitation}/question`)
+		return new KahootQuestion(await response.json())
+  }
+  async repondreQuestion(id){
+    const user = await Utilisateur.utilisateurConnecteOuCreerInvite()
+    const response = await fetch(`${REST_API}/partie/kahoot/${this.codeInvitation}/reponse`,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({"idJoueur":user.id, "idReponse":id})
+    })
+    return null
+  }
   async rejoindrePartie(){
     const user = await Utilisateur.utilisateurConnecteOuCreerInvite()
 		const response = await fetch(`${REST_API}/partie/kahoot/${this.codeInvitation}`,{
@@ -18,7 +31,14 @@ export class Kahoot{
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify({"idJoueur":user.id})
         })
-        return new this(await response.json())
+    return null
+	}
+  async demarrerPartie(){
+		const response = await fetch(`${REST_API}/partie/kahoot/${this.codeInvitation}/demarrer`,{
+            method:"POST",
+            headers:{"Content-Type":"application/json"}
+        })
+    return null
 	}
 }
 
@@ -77,6 +97,13 @@ export class KahootPartie extends DataObject{
   "tempsLimite":${Date.now()+this.DEBUG_temps maintenant + 10 secondes pour repondre}
 }
 */
+export class KahootQuestion extends DataObject{
+	constructor(parsedJSON){
+        super(parsedJSON)
+        this.tempsLimite=new Date(this.tempsLimiteReponse).getTime()
+  }
+}
+
 /* JSON de reference (score)
 {
   "score":1337,

@@ -23,7 +23,7 @@ export default {
 			//variables pour l'etat question
 			question:{
 				question:"",
-				reponses:[],
+				reponses:{},
 			},
 			//variables pour la salle d'attente
 			salleAttente:{
@@ -40,9 +40,9 @@ export default {
 		}
 	},
 	mounted(){
-		//TODO : s'ajouter a la partie
 		this.kahootAPI=new Kahoot(this.codePartie)
 		this.obtenirSalleAttente()
+		
 	},
 	unmounted(){
 		//arreter le jeu quand la page n'est plus affichée
@@ -64,12 +64,13 @@ export default {
 		},
 		obtenirQuestion(){
 			this.resetEtats() //cacher l'etat precedent
-			Kahoot.obtenirQuestion().then(response=>{
+			this.kahootAPI.obtenirQuestion().then(response=>{
 				this.tempsLimite=response.tempsLimite
 				//afficher cet etat
 				this.etats.question=true
 
-				this.question=response
+				this.question=response.questionActuel
+				console.log(this.question)
 
 				if(this.tempsLimite!=-1){
 					//executer la fonction en boucle jusqu'a ce que la partie se termine
@@ -81,8 +82,9 @@ export default {
 			)
 		},
 		obtenirScores(){
+			/*
 			this.resetEtats() //cacher l'etat precedent
-			Kahoot.obtenirScore().then(response=>{
+			this.kahootAPI.obtenirScore().then(response=>{
 				this.tempsLimite=response.tempsLimite
 				this.score=response
 				//afficher cet etat
@@ -99,13 +101,16 @@ export default {
 					this.compteAReboursId=window.setInterval(this.calculerCompteARebours,22)
 				}
 			}
-			)
+			)*/
 		},
 		obtenirSalleAttente(){
 			this.resetEtats() //cacher l'etat precedent
 			//afficher cet etat
 			this.etats.salleAttente=true
 			this.kahootAPI.obtenirSalleAttente().then(response=>{
+				//TODO ENLEVER 
+				this.kahootAPI.demarrerPartie().then()
+				//FIN DEBUG
 				this.tempsLimite=response.tempsLimite
 				this.salleAttente=response
 
@@ -119,6 +124,8 @@ export default {
 
 		},
 		repondre(reponse){
+			this.kahootAPI.repondreQuestion(reponse).then()
+			
 			this.question.question=`Réponse "${reponse}" envoyée`
 			this.question.reponses=[]
 		},
@@ -167,7 +174,7 @@ export default {
 	<p v-if="salleAttente.partieDemarree">Temps : {{ compteARebours }}s</p>
 	<div v-show="etats.question">
 		<p>{{ question.question }}</p>
-		<button v-for="reponse in question.reponses" @click="repondre(reponse)">{{ reponse }}</button>
+		<button v-for="reponse in question.reponses" @click="repondre(reponse.id)">{{ reponse.reponse }}</button>
 	</div>
 	<div v-show="etats.score">
 		<h2>Votre score : {{ pointsAnimation }} (+{{ score.pointsGagne }})</h2>
