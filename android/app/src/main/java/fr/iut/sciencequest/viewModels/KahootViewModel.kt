@@ -49,7 +49,6 @@ class KahootViewModel(
 
     // NOTE : tpsReponse en ms
     fun ajouterPoints(tpsReponse: Long) {
-        Log.d("KahootViewModel",tpsReponse.toString())
         if (tpsReponse < 0) {
             throw IllegalArgumentException("ERREUR: Temps négatif donné à l'ajout de points")
         } else if (tpsReponse > uiState.value.dureePartie) {
