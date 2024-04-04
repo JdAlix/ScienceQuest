@@ -15,4 +15,4 @@ steps:
       sonar_host:
         from_secret: sonar_host
       sonar_token:
-        from_secret: sonar_token
+        from_secret: sonar_sae_token
