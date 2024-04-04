@@ -75,7 +75,7 @@ fun KahootPlayer(question: QuestionWithSimpleReponse,
     ) {
         KahootQuestion(question = question.question)
         KahootReponses(reponses = question.reponses) {
-            sendReponse(currTime - System.currentTimeMillis())
+            sendReponse(System.currentTimeMillis() - currTime)
             Toast.makeText(context, it.reponse, Toast.LENGTH_SHORT).show()
         }
     }

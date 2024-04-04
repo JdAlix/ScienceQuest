@@ -2,6 +2,7 @@ package fr.iut.sciencequest.viewModels
 
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -48,6 +49,7 @@ class KahootViewModel(
 
     // NOTE : tpsReponse en ms
     fun ajouterPoints(tpsReponse: Long) {
+        Log.d("KahootViewModel",tpsReponse.toString())
         if (tpsReponse < 0) {
             throw IllegalArgumentException("ERREUR: Temps négatif donné à l'ajout de points")
         } else if (tpsReponse > uiState.value.dureePartie) {
