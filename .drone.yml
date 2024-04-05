@@ -72,3 +72,11 @@ steps:
       CODEFIRST_CLIENTDRONE_ENV_SPRING_DATASOURCE_PASSWORD: 
         from_secret: postgres_password_secret
       ADMINS: alixjeudi--lemoine,victorsoulier,gwenaelplanchon
+
+  - name: code-analysis-android
+    image: aosapps/drone-sonar-plugin
+    settings: 
+      sonar_host:
+        from_secret: sonar_host
+      sonar_token:
+        from_secret: sonar_sae_token
