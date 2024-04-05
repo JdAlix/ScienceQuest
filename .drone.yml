@@ -73,10 +73,12 @@ steps:
         from_secret: postgres_password_secret
       ADMINS: alixjeudi--lemoine,victorsoulier,gwenaelplanchon
 
-  - name: code-analysis-android
+  - name: code-analysis-api
     image: aosapps/drone-sonar-plugin
-    settings: 
+    depends_on: [deploy-container-app]
+    settings:
       sonar_host:
         from_secret: sonar_host
       sonar_token:
         from_secret: sonar_sae_token
+      inclusions: **/SpringBootProject/target/**
