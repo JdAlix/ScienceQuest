@@ -21,6 +21,7 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -61,5 +62,11 @@ public class ScientifiqueController {
         Indice indice = this.modelMapper.map(indiceWithLibelleOnly, Indice.class);
         indice.setScientifique(this.scientifiqueService.findById(id));
         return this.modelMapper.map(this.indiceService.create(indice), IndiceSimpleWithScientifiquesIdDTO.class);
+    }
+
+    @DeleteMapping(value="/{id}/indices/{indiceId}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void deleteIndice(@PathVariable Integer id, @PathVariable Integer indiceId) {
+        this.indiceService.delete(indiceId);
     }
 }

@@ -48,4 +48,11 @@ public class IndiceService {
         }
         return destIndice;
     }
+
+    public void delete(int id){
+        if(!this.indiceRepository.existsById(id)){
+            throw new IndiceNotFoundException(id);
+        }
+        this.indiceRepository.deleteById(id);
+    }
 }
