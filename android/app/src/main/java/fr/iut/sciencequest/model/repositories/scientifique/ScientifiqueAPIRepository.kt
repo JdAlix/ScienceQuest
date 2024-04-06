@@ -1,17 +1,14 @@
 package fr.iut.sciencequest.model.repositories.scientifique
 
 import android.util.Log
-import fr.iut.sciencequest.model.buisness.Question.QuestionRequestService
-import fr.iut.sciencequest.model.buisness.Scientifique.ScientifiqueRequestService
+import fr.iut.sciencequest.model.buisness.ScientifiqueRequestService
 import fr.iut.sciencequest.model.buisness.createRequestService
 import fr.iut.sciencequest.model.dto.extensions.ToModel
 import fr.iut.sciencequest.model.metier.Scientifique
 import fr.iut.sciencequest.stub.StubScientifique1
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.flow
 import retrofit2.create
 
 class ScientifiqueAPIRepository: IScientifiqueRepository {

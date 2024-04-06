@@ -1,4 +1,4 @@
-package fr.iut.sciencequest.model.buisness.Scientifique
+package fr.iut.sciencequest.model.buisness
 
 import fr.iut.sciencequest.model.dto.ScientifiqueDTOs.ScientifiqueDTO
 import fr.iut.sciencequest.model.dto.ScientifiqueDTOs.ScientifiqueListDTO

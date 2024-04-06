@@ -1,4 +1,4 @@
-package fr.iut.sciencequest.model.buisness.Question
+package fr.iut.sciencequest.model.buisness
 
 import fr.iut.sciencequest.model.dto.question.QuestionListDTO
 import retrofit2.Call

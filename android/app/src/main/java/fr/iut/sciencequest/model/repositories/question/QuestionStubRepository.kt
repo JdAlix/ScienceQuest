@@ -1,15 +1,9 @@
 package fr.iut.sciencequest.model.repositories.question
 
-import android.util.Log
-import fr.iut.sciencequest.model.buisness.Question.QuestionRequestService
-import fr.iut.sciencequest.model.buisness.createRequestService
-import fr.iut.sciencequest.model.dto.extensions.ToModel
-import fr.iut.sciencequest.model.metier.question.Question
 import fr.iut.sciencequest.model.metier.question.QuestionWithSimpleReponse
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import retrofit2.create
 
 class QuestionStubRepository: IQuestionRepository {
 
