@@ -13,6 +13,6 @@ val httpClient = OkHttpClient()
 fun createRequestService(): Retrofit =
     Retrofit.Builder()
         .baseUrl(API_BASE_URL)
-        .addConverterFactory(Json {  ignoreUnknownKeys = true }.asConverterFactory(MediaType.get("application/json")))
+        .addConverterFactory(Json {  ignoreUnknownKeys = true; coerceInputValues = true }.asConverterFactory(MediaType.get("application/json")))
         .client(httpClient)
         .build()

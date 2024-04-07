@@ -10,3 +10,11 @@ fun ThematiqueDTO.ToModel(): Thematique {
     )
     return model
 }
+
+fun List<ThematiqueDTO>.toModel(): List<Thematique> {
+    val liste = mutableListOf<Thematique>()
+    for (thematique in this) {
+        liste.add(thematique.ToModel())
+    }
+    return liste
+}

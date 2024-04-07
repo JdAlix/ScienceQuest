@@ -1,5 +1,6 @@
-package fr.iut.sciencequest.view.games
+package fr.iut.sciencequest.view.games.kahoot
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -31,40 +32,44 @@ import fr.iut.sciencequest.stub.StubQuestionWithReponses
 import fr.iut.sciencequest.view.TopBar
 
 @Composable
-fun KahootScreen(viewModel: KahootViewModel = viewModel(factory = KahootViewModel.ApiFactory),
+fun KahootScreen(viewModel: KahootViewModel,
                  goToAccount: () -> Unit,
-                 goToHome: () -> Unit) {
-    val state = viewModel.uiState.collectAsState()
+                 goToHome: () -> Unit,
+                 goToResult: () -> Unit) {
     LaunchedEffect(key1 = Unit) {
+        Log.d("Kahoot","Je lance la partie")
         viewModel.lancerPartie()
+        Log.d("Kahoot","Je vais chercher la question")
+        viewModel.updateQuestion(goToResult)
     }
+    val state = viewModel.uiState.collectAsState()
     Column(modifier = Modifier.fillMaxWidth()) {
         TopBar(goToAccount, goToHome, stringResource(id = R.string.kahoot))
-
-        KahootPlayer(state.value.question) {
-            viewModel.ajouterPoints(it)
+        Log.d("Kahoot",state.value.questionPartie.question!!.question)
+        KahootPlayer(state.value.questionPartie.question) { pts, rep ->
+            viewModel.ajouterPoints(pts, rep)
         }
     }
 }
 
-@Preview
+// @Preview
+// @Composable
+// fun KahootScreenPreview(){
+//     KahootScreen(goToAccount = {}, goToHome = {}, goToResult = {})
+// }
+
+
+// @Preview
+// @Composable
+// fun KahootPlayerPreview(){
+//     val i = 0
+//     KahootPlayer(question = StubQuestionWithReponses.ToModel()) {}
+// }
+
+
 @Composable
-fun KahootScreenPreview(){
-    KahootScreen(goToAccount = {}, goToHome = {})
-}
-
-
-@Preview
-@Composable
-fun KahootPlayerPreview(){
-    val i = 0
-    KahootPlayer(question = StubQuestionWithReponses.ToModel()) {}
-}
-
-
-@Composable
-fun KahootPlayer(question: QuestionWithSimpleReponse,
-                 sendReponse: (Long) -> Unit){
+fun KahootPlayer(question: QuestionWithSimpleReponse?,
+                 sendReponse: (Long, Int) -> Unit){
 
     val context = LocalContext.current;
     val currTime = System.currentTimeMillis()
@@ -73,10 +78,12 @@ fun KahootPlayer(question: QuestionWithSimpleReponse,
         verticalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier.fillMaxHeight()
     ) {
-        KahootQuestion(question = question.question)
-        KahootReponses(reponses = question.reponses) {
-            sendReponse(System.currentTimeMillis() - currTime)
-            Toast.makeText(context, it.reponse, Toast.LENGTH_SHORT).show()
+        if (question != null) {
+            KahootQuestion(question = question.question)
+            KahootReponses(reponses = question.reponses) {
+                sendReponse(System.currentTimeMillis() - currTime, it.id)
+                Toast.makeText(context, it.reponse, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

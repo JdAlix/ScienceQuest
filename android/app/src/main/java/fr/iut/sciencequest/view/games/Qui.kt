@@ -37,8 +37,8 @@ fun QuiScreen(viewModel: KahootViewModel = viewModel(),
     val state = viewModel.uiState.collectAsState()
     Column(modifier = Modifier.fillMaxWidth()) {
         TopBar(goToAccount, goToHome, stringResource(id = R.string.kahoot))
-        QuiPlayer(state.value.question) {
-            viewModel.ajouterPoints(it)
+        QuiPlayer(state.value.questionPartie.question) {
+            // viewModel.ajouterPoints(it)
         }
     }
 }
@@ -59,16 +59,16 @@ fun QuiPlayerPreview(){
 
 
 @Composable
-fun QuiPlayer(question: QuestionWithSimpleReponse,
+fun QuiPlayer(question: QuestionWithSimpleReponse?,
                  sendReponse: (Long) -> Unit){
     val context = LocalContext.current;
     val currTime = System.currentTimeMillis()
     Column (horizontalAlignment = Alignment.CenterHorizontally){
-        QuiQuestion(question = question.question)
-        QuiReponses(reponses = question.reponses) {
-            sendReponse(currTime - System.currentTimeMillis())
-            Toast.makeText(context, it.reponse, Toast.LENGTH_SHORT).show()
-        }
+        //QuiQuestion(question = question.question)
+        //QuiReponses(reponses = question.reponses) {
+        //    sendReponse(currTime - System.currentTimeMillis())
+        //    Toast.makeText(context, it.reponse, Toast.LENGTH_SHORT).show()
+        //}
     }
 }
 

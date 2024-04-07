@@ -1,6 +1,6 @@
 package fr.iut.sciencequest.model.dto.joueur
 
-import fr.iut.sciencequest.model.dto.PartieDTO
+import fr.iut.sciencequest.model.dto.partie.PartieDTO
 
 class JoueurDTO (
     val id: Int,
