@@ -3,6 +3,7 @@ package fr.iut.sciencequest.viewModel.kahoot
 import android.os.Looper
 import androidx.compose.runtime.collectAsState
 import fr.iut.sciencequest.model.dto.extensions.ToModel
+import fr.iut.sciencequest.model.repositories.kahootPartie.KahootStubRepository
 import fr.iut.sciencequest.model.repositories.question.QuestionStubRepository
 import fr.iut.sciencequest.stub.StubQuestionWithReponses
 import fr.iut.sciencequest.stub.StubQuestionWithReponses2
@@ -38,19 +39,15 @@ class KahootLancerPartieTest {
 
         every { Looper.getMainLooper() } returns looper
         val question = StubQuestionWithReponses.ToModel()
-        val repo = QuestionStubRepository()
-        repo.setQuestionsStub(arrayListOf(
-                StubQuestionWithReponses.ToModel(),
-                StubQuestionWithReponses2.ToModel()
-        ))
+        val repo = KahootStubRepository()
         val viewModel = KahootViewModel(repo)
-        Assert.assertEquals(StubQuestionWithReponses.id, viewModel.uiState.value.question.id)
-        Assert.assertEquals(StubQuestionWithReponses.question, viewModel.uiState.value.question.question)
-        Assert.assertEquals(StubQuestionWithReponses.reponses.count(), viewModel.uiState.value.question.reponses.count())
+        Assert.assertEquals(StubQuestionWithReponses.id, viewModel.uiState.value.questionPartie.question!!.id)
+        Assert.assertEquals(StubQuestionWithReponses.question, viewModel.uiState.value.questionPartie.question!!.question)
+        Assert.assertEquals(StubQuestionWithReponses.reponses.count(), viewModel.uiState.value.questionPartie.question!!.reponses.count())
         // On simule l'attente de la fin de la question
         Thread.sleep(12_000)
-        Assert.assertEquals(StubQuestionWithReponses2.id, viewModel.uiState.value.question.id)
-        Assert.assertEquals(StubQuestionWithReponses2.question, viewModel.uiState.value.question.question)
-        Assert.assertEquals(StubQuestionWithReponses2.reponses.count(), viewModel.uiState.value.question.reponses.count())
+        Assert.assertEquals(StubQuestionWithReponses2.id, viewModel.uiState.value.questionPartie.question!!.id)
+        Assert.assertEquals(StubQuestionWithReponses2.question, viewModel.uiState.value.questionPartie.question!!.question)
+        Assert.assertEquals(StubQuestionWithReponses2.reponses.count(), viewModel.uiState.value.questionPartie.question!!.reponses.count())
     }
 }

@@ -2,6 +2,7 @@ package fr.iut.sciencequest.viewModel.kahoot
 
 import android.os.Looper
 import fr.iut.sciencequest.model.dto.extensions.ToModel
+import fr.iut.sciencequest.model.repositories.kahootPartie.KahootStubRepository
 import fr.iut.sciencequest.model.repositories.question.QuestionStubRepository
 import fr.iut.sciencequest.stub.StubQuestionWithReponses
 import fr.iut.sciencequest.stub.StubQuestionWithReponses2
@@ -37,30 +38,27 @@ class KahootAjouterPointTest(
         }
 
         every { Looper.getMainLooper() } returns looper
-        val repo = QuestionStubRepository()
-        repo.setQuestionsStub(arrayListOf(
-            StubQuestionWithReponses.ToModel()
-        ))
+        val repo = KahootStubRepository()
         viewModel = KahootViewModel(repo)
     }
 
     @Test
     fun ajouterPointsJustes() {
-        viewModel.ajouterPoints(duree.toLong())
+        viewModel.ajouterPoints(duree.toLong(),1)
         Assert.assertEquals(expectedPoints, viewModel.uiState.value.nbPoints)
     }
 
     @Test
     fun ajouterPointsAvecTempsNegatif() {
         Assert.assertThrows(IllegalArgumentException::class.java) {
-            viewModel.ajouterPoints(-1)
+            viewModel.ajouterPoints(-1,1)
         }
     }
 
     @Test
     fun ajouterPointsAvecTempsTropLent() {
         Assert.assertThrows(IllegalArgumentException::class.java) {
-            viewModel.ajouterPoints(11_000)
+            viewModel.ajouterPoints(11_000,1)
         }
     }
 
