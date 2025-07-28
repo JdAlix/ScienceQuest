@@ -1,14 +1,14 @@
 # Science Quest
 
-## Accés rapide
+## Accès rapide
 
-- ### [Android](https://codefirst.iut.uca.fr/git/tom.biard/ScienceQuest/src/branch/Android/android)
+- ### [Android](https://github.com/JdAlix/ScienceQuest/tree/Android/android)
 
-- ### [API](https://codefirst.iut.uca.fr/git/tom.biard/ScienceQuest/src/branch/Springboot/SpringBootProject/)
+- ### [API](https://github.com/JdAlix/ScienceQuest/tree/Springboot/SpringBootProject/)
 
-- ### [Site Internet](https://codefirst.iut.uca.fr/git/tom.biard/ScienceQuest/src/branch/front/science-quest)
+- ### [Site Internet](https://github.com/JdAlix/ScienceQuest/tree/front/science-quest)
 
-- ### [Documents](https://codefirst.iut.uca.fr/git/tom.biard/ScienceQuest/src/branch/master/Documentation)
+- ### [Documents](https://github.com/JdAlix/ScienceQuest/tree/master/Documentation)
 
 ## Description
 
